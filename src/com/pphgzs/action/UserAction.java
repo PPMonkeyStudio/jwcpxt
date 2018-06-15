@@ -53,7 +53,7 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 
 	}
 
-	public void addUser() throws IOException {
+	public void save_user() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
@@ -65,7 +65,7 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 		}
 	}
 
-	public void deleteUser() throws IOException {
+	public void delete_user() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
@@ -77,7 +77,7 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 		}
 	}
 
-	public void updateUser() throws IOException {
+	public void update_user() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();

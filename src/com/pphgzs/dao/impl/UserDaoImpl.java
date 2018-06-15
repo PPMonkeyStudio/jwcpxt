@@ -80,7 +80,7 @@ public class UserDaoImpl implements UserDao {
 		Query query = session.createQuery(hql);
 		jwcpxt_user newUser = (jwcpxt_user) query.uniqueResult();
 		session.clear();
-		if (newUser == null) {
+		if (newUser != null) {
 			return true;
 		} else {
 			return false;
