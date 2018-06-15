@@ -30,4 +30,10 @@ public class MyTest {
 		user.setUser_account("12547854");
 		userService.save_user(user);
 	}
+
+	@Test
+	public void list_user_all() {
+
+		System.out.println(userService.list_user_all());
+	}
 }
