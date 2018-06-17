@@ -32,6 +32,13 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	ServiceInstanceVO serviceInstanceVO;
 	ServiceDistributionVO serviceDistributionVO;
 
+	/*
+	 * 
+	 */
+	public String serviceList() {
+		return "serviceList";
+	}
+
 	/**
 	 * 查询业务定义VO类
 	 * 

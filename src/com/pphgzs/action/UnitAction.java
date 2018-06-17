@@ -27,6 +27,13 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 	private jwcpxt_unit unit;
 
 	/*
+	 * 
+	 */
+	public String unitList() {
+		return "unitList";
+	}
+
+	/*
 	 * 没写
 	 */
 	public void get_unitVO() throws IOException {

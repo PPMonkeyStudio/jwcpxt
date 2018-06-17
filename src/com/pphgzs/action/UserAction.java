@@ -31,6 +31,13 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	/*
 	 * 
 	 */
+	public String userList() {
+		return "userList";
+	}
+
+	/*
+	 * 
+	 */
 	public void get_userVO() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据

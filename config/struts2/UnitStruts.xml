@@ -3,10 +3,10 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	<package name="Unit" namespace="/Unit"
-		extends="struts-default">
-		<action name="*" class="com.pphgzs.action.UnitAction"
-			method="{1}">
+	<package name="Unit" namespace="/Unit" extends="struts-default">
+		<action name="*" class="com.pphgzs.action.UnitAction" method="{1}">
+			<result name="unitList">/WEB-INF/view/unit/unitList.jsp
+			</result>
 		</action>
 	</package>
 </struts>
