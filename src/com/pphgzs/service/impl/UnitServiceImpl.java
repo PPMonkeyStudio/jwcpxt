@@ -1,25 +1,29 @@
 package com.pphgzs.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.UnitDao;
-import com.pphgzs.dao.UserDao;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DTO.UnitDTO;
+import com.pphgzs.domain.VO.UnitVO;
 import com.pphgzs.service.UnitService;
+import com.pphgzs.service.UserService;
 import com.pphgzs.util.TimeUtil;
 import com.pphgzs.util.uuidUtil;
 
 public class UnitServiceImpl implements UnitService {
 
 	private UnitDao unitDao;
-	private UserDao userDao;
 
-	public UserDao getUserDao() {
-		return userDao;
+	private UserService userService;
+
+	public UserService getUserService() {
+		return userService;
 	}
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 	public UnitDao getUnitDao() {
@@ -76,6 +80,32 @@ public class UnitServiceImpl implements UnitService {
 	public List<jwcpxt_unit> list_unit_all() {
 		List<jwcpxt_unit> unitList = unitDao.list_unit_all();
 		return unitList;
+	}
+
+	@Override
+	public jwcpxt_unit get_unit_byUnitID(String unitID) {
+		return unitDao.get_unit_byUnitID(unitID);
+	}
+
+	@Override
+	public UnitVO get_unitVO() {
+		UnitVO unitVO = new UnitVO();
+
+		UnitDTO unitDTO;
+		List<UnitDTO> unitDTOList = new ArrayList<UnitDTO>();
+		List<jwcpxt_unit> unitList = unitDao.list_unit_all();
+
+		for (jwcpxt_unit unit : unitList) {
+			unitDTO = new UnitDTO();
+			unitDTO.setUnit(unit);
+			unitDTO.setUser(userService.get_user_byUserID(unit.getUnit_reorganizer()));
+			unitDTOList.add(unitDTO);
+		}
+
+		unitVO.setUnitDTOList(unitDTOList);
+		unitVO.setTotalRecords(unitDao.get_unitTotalRecords());
+
+		return unitVO;
 	}
 
 }

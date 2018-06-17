@@ -11,7 +11,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
-import com.pphgzs.domain.DO.mypcxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceDistributionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
@@ -24,22 +24,22 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private ServiceService serviceService;
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
-    private mypcxt_service_definition ServiceDefinition;
+	private jwcpxt_service_definition serviceDefinition;
 	/* 
 	 * 
 	 */
 	ServiceDefinitionVO serviceDefinitionVO;
 	ServiceInstanceVO serviceInstanceVO;
 	ServiceDistributionVO serviceDistributionVO;
-    
+
 	/**
 	 * 查询业务定义VO类
 	 * 
 	 * @throws IOException
 	 */
-	public void getServiceDefinitionVO() throws IOException {
+	public void get_serviceDefinitionVO() throws IOException {
 
-		serviceDefinitionVO = serviceService.getServiceDefinitionVO();
+		serviceDefinitionVO = serviceService.get_serviceDefinitionVO();
 
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
@@ -53,8 +53,8 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 * 
 	 * @throws IOException
 	 */
-	public void getServiceInstanceVO() throws IOException {
-		serviceInstanceVO = serviceService.getServiceInstanceVO();
+	public void get_serviceInstanceVO() throws IOException {
+		serviceInstanceVO = serviceService.get_serviceInstanceVO();
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
@@ -67,8 +67,8 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 * 
 	 * @throws IOException
 	 */
-	public void getServiceDistributionVO() throws IOException {
-		serviceDistributionVO = serviceService.getServiceDistributionVO();
+	public void get_serviceDistributionVO() throws IOException {
+		serviceDistributionVO = serviceService.get_serviceDistributionVO();
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
@@ -76,7 +76,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.getWriter().write(gson.toJson(serviceDistributionVO));
 	}
 
-	public void getServiceDistributionThreadState() throws IOException {
+	public void get_serviceDistributionThreadState() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
@@ -101,18 +101,20 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson("1"));
 	}
+
 	/*
 	 * 创建业务定义
 	 */
-	public void addServiceDefinition() throws IOException{
-		if(serviceService.addServiceDefinition(ServiceDefinition)){
+	public void add_serviceDefinition() throws IOException {
+		if (serviceService.add_serviceDefinition(serviceDefinition)) {
 			http_response.setContentType("text/html;charset=utf-8");
 			http_response.getWriter().write("1");
-		}else{
+		} else {
 			http_response.setContentType("text/html;charset=utf-8");
 			http_response.getWriter().write("-1");
 		}
 	}
+
 	/*
 	 * 
 	 */
@@ -163,12 +165,12 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		this.serviceDistributionVO = serviceDistributionVO;
 	}
 
-	public mypcxt_service_definition getServiceDefinition() {
-		return ServiceDefinition;
+	public jwcpxt_service_definition getServiceDefinition() {
+		return serviceDefinition;
 	}
 
-	public void setServiceDefinition(mypcxt_service_definition serviceDefinition) {
-		ServiceDefinition = serviceDefinition;
+	public void setServiceDefinition(jwcpxt_service_definition serviceDefinition) {
+		this.serviceDefinition = serviceDefinition;
 	}
 
 	/*

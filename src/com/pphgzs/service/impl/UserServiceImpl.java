@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pphgzs.dao.UserDao;
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.VO.UserVO;
 import com.pphgzs.service.UserService;
 import com.pphgzs.util.TimeUtil;
 import com.pphgzs.util.uuidUtil;
@@ -70,7 +71,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<jwcpxt_user> list_user_all() {
-		return userDao.list_User_all();
+		return userDao.list_user_all();
+	}
+
+	@Override
+	public jwcpxt_user get_user_byUserID(String userID) {
+		return userDao.get_user_byUserID(userID);
+	}
+
+	@Override
+	public UserVO get_userVO() {
+		UserVO userVO = new UserVO();
+		userVO.setUser_List(userDao.list_user_all());
+		userVO.setTotalRecords(userDao.get_userTotalRecords_all());
+		return userVO;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.pphgzs.service;
 import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.VO.UserVO;
 
 public interface UserService {
 
@@ -13,5 +14,9 @@ public interface UserService {
 	public boolean update_user(jwcpxt_user newUser);
 
 	public List<jwcpxt_user> list_user_all();
+
+	public jwcpxt_user get_user_byUserID(String userID);
+
+	public UserVO get_userVO();
 
 }

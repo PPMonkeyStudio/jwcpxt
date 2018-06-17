@@ -67,8 +67,8 @@ public class ServiceServiceImpl implements ServiceService {
 
 		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
 
-			serviceDefinitionDTOList.add(
-					getServiceDefinitionDTO_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id()));
+			serviceDefinitionDTOList.add(get_serviceDefinitionDTO_byServiceDefinitionID(
+					serviceDefinition.getJwcpxt_service_definition_id()));
 		}
 		serviceDefinitionVO.setServiceDefinitionDTOList(serviceDefinitionDTOList);
 		serviceDefinitionVO.setTotalRecords(serviceDao.get_serviceDefinitionTotalRecords());
@@ -83,7 +83,7 @@ public class ServiceServiceImpl implements ServiceService {
 		List<jwcpxt_service_instance> serviceInstanceList = serviceDao.list_serviceInstance_all();
 		// 根据实例查询实例DTO
 		for (jwcpxt_service_instance serviceInstance : serviceInstanceList) {
-			ServiceInstanceDTO serviceInstanceDTO = getServiceInstanceDTO_byServiceInstanceID(
+			ServiceInstanceDTO serviceInstanceDTO = get_serviceInstanceDTO_byServiceInstanceID(
 					serviceInstance.getJwcpxt_service_instance_id());
 			serviceInstanceDTOList.add(serviceInstanceDTO);
 		}
@@ -98,7 +98,7 @@ public class ServiceServiceImpl implements ServiceService {
 		List<ServiceDistributionDTO> serviceDistributionDTOList = new ArrayList<ServiceDistributionDTO>();
 		List<jwcpxt_service_distribution> serviceDistributionList = serviceDao.list_serviceDistribution_all();
 		for (jwcpxt_service_distribution serviceDistribution : serviceDistributionList) {
-			ServiceDistributionDTO serviceDistributionDTO = getServiceDistributionDTO_byServiceDistributionID(
+			ServiceDistributionDTO serviceDistributionDTO = get_serviceDistributionDTO_byServiceDistributionID(
 					serviceDistribution.getJwcpxt_service_distribution_id());
 			serviceDistributionDTOList.add(serviceDistributionDTO);
 		}
@@ -108,7 +108,7 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
-	public ServiceDefinitionDTO getServiceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
+	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
 		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO();
 		//
 		jwcpxt_service_definition serviceDefinition = serviceDao.get_serviceDefinition_byID(serviceDefinitionID);
@@ -121,46 +121,47 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
-	public List<ServiceDefinitionDTO> listServiceDefinitionDTO_all() {
+	public List<ServiceDefinitionDTO> list_serviceDefinitionDTO_all() {
 		List<ServiceDefinitionDTO> serviceDefinitionDTOList = new ArrayList<ServiceDefinitionDTO>();
-		List<jwcpxt_service_definition> serviceDefinitionList = serviceDao.listServiceDefinitionAll();
+		List<jwcpxt_service_definition> serviceDefinitionList = serviceDao.list_serviceDefinition_all();
 		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
-			ServiceDefinitionDTO serviceDefinitionDTO = getServiceDefinitionDTO_byServiceDefinitionID(
-					serviceDefinition.getMypcxt_service_definition_id());
+			ServiceDefinitionDTO serviceDefinitionDTO = get_serviceDefinitionDTO_byServiceDefinitionID(
+					serviceDefinition.getJwcpxt_service_definition_id());
 			serviceDefinitionDTOList.add(serviceDefinitionDTO);
 		}
 		return serviceDefinitionDTOList;
 	}
 
 	@Override
-	public ServiceInstanceDTO getServiceInstanceDTO_byServiceInstanceID(String serviceInstanceID) {
+	public ServiceInstanceDTO get_serviceInstanceDTO_byServiceInstanceID(String serviceInstanceID) {
 		ServiceInstanceDTO serviceInstanceDTO = new ServiceInstanceDTO();
 		// 根据ID获取实例
-		jwcpxt_service_instance serviceInstance = serviceDao.getServiceInstanceByID(serviceInstanceID);
+		jwcpxt_service_instance serviceInstance = serviceDao.get_serviceInstance_byID(serviceInstanceID);
 		serviceInstanceDTO.setServiceInstance(serviceInstance);
 		// 实例中的定义DTO
-		ServiceDefinitionDTO serviceDefinitionDTO = getServiceDefinitionDTO_byServiceDefinitionID(
+		ServiceDefinitionDTO serviceDefinitionDTO = get_serviceDefinitionDTO_byServiceDefinitionID(
 				serviceInstanceDTO.getServiceInstance().getService_instance_service_definition());
 		serviceInstanceDTO.setServiceDefinitionDTO(serviceDefinitionDTO);
 		// 实例的当事人列表
 		List<jwcpxt_service_client> serviceClientList = serviceDao
-				.listServiceClientByInstance(serviceInstance.getMypcxt_service_instance_id());
+				.list_serviceClient_byInstance(serviceInstance.getJwcpxt_service_instance_id());
 		serviceInstanceDTO.setServiceClientList(serviceClientList);
 		//
 		return serviceInstanceDTO;
 	}
 
 	@Override
-	public ServiceDistributionDTO getServiceDistributionDTO_byServiceDistributionID(String serviceDistributionID) {
+	public ServiceDistributionDTO get_serviceDistributionDTO_byServiceDistributionID(String serviceDistributionID) {
 		ServiceDistributionDTO serviceDistributionDTO = new ServiceDistributionDTO();
 		// 分配
-		jwcpxt_service_distribution serviceDistribution = serviceDao.getServiceDistributionByID(serviceDistributionID);
+		jwcpxt_service_distribution serviceDistribution = serviceDao
+				.get_serviceDistribution_byID(serviceDistributionID);
 		serviceDistributionDTO.setServiceDistribution(serviceDistribution);
 		// 分配中的测评员
-		jwcpxt_user user = userDao.getUserByUserID(serviceDistribution.getService_distribution_judge());
+		jwcpxt_user user = userService.get_user_byUserID(serviceDistribution.getService_distribution_judge());
 		serviceDistributionDTO.setUser(user);
 		// 分配中的业务实例
-		ServiceInstanceDTO serviceInstanceDTO = getServiceInstanceDTO_byServiceInstanceID(
+		ServiceInstanceDTO serviceInstanceDTO = get_serviceInstanceDTO_byServiceInstanceID(
 				serviceDistribution.getService_distribution_service_instance());
 		serviceDistributionDTO.setServiceInstanceDTO(serviceInstanceDTO);
 		//
@@ -168,12 +169,12 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
-	public boolean addServiceDefinition(jwcpxt_service_definition serviceDefinition) {
-		serviceDefinition.setMypcxt_service_definition_id(uuidUtil.getUuid());
+	public boolean add_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
+		serviceDefinition.setJwcpxt_service_definition_id(uuidUtil.getUuid());
 		String time = TimeUtil.getStringSecond();
 		serviceDefinition.setService_definition_gmt_create(time);
 		serviceDefinition.setService_definition_gmt_modified(time);
-		if (serviceDao.addServiceDefinition(serviceDefinition)) {
+		if (serviceDao.add_serviceDefinition(serviceDefinition)) {
 			return true;
 		} else {
 			return false;

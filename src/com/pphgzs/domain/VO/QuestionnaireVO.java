@@ -1,37 +1,35 @@
 package com.pphgzs.domain.VO;
+
 import java.util.List;
 
 import com.pphgzs.domain.DTO.QuestionnaireDTO;
+
 public class QuestionnaireVO {
-	
-  private List<QuestionnaireDTO> questionnaireDTOList;
-  
-  private int totalRecords;
 
-public List<QuestionnaireDTO> getQuestionnaireDTOList() {
-	return questionnaireDTOList;
-}
+	private List<QuestionnaireDTO> questionnaireDTOList;
 
-public void setQuestionnaireDTOList(List<QuestionnaireDTO> questionnaireDTOList) {
-	this.questionnaireDTOList = questionnaireDTOList;
-}
+	private int totalRecords;
 
+	@Override
+	public String toString() {
+		return "QuestionnaireVO 【\nquestionnaireDTOList=" + questionnaireDTOList + ", \ntotalRecords=" + totalRecords
+				+ "\n】";
+	}
 
-public int getTotalRecords() {
-	return totalRecords;
-}
+	public List<QuestionnaireDTO> getQuestionnaireDTOList() {
+		return questionnaireDTOList;
+	}
 
-public void setTotalRecords(int totalRecords) {
-	this.totalRecords = totalRecords;
-}
+	public void setQuestionnaireDTOList(List<QuestionnaireDTO> questionnaireDTOList) {
+		this.questionnaireDTOList = questionnaireDTOList;
+	}
 
-@Override
-public String toString() {
-	return "QuestionnaireVO [questionnaireDTOList=" + questionnaireDTOList + ", totalRecords=" + totalRecords + "]";
-}
+	public int getTotalRecords() {
+		return totalRecords;
+	}
 
+	public void setTotalRecords(int totalRecords) {
+		this.totalRecords = totalRecords;
+	}
 
-
-
-  
 }

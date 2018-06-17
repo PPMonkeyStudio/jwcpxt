@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<jwcpxt_user> list_User_all() {
+	public List<jwcpxt_user> list_user_all() {
 		List<jwcpxt_user> user_List = new ArrayList<jwcpxt_user>();
 
 		Session session = getSession();

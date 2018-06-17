@@ -11,6 +11,8 @@
 
 	<bean id="serviceService" class="com.pphgzs.service.impl.ServiceServiceImpl">
 		<property name="serviceDao" ref="serviceDao"></property>
+		<property name="userService" ref="userService"></property>
+		<property name="unitService" ref="unitService"></property>
 	</bean>
 
 	<bean id="serviceDao" class="com.pphgzs.dao.impl.ServiceDaoImpl">
