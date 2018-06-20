@@ -12,6 +12,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_distribution;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.VO.ServiceDefinitionVO;
 
 public class ServiceDaoImpl implements ServiceDao {
 	private SessionFactory sessionFactory;
@@ -22,6 +23,39 @@ public class ServiceDaoImpl implements ServiceDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinition_ByPage(ServiceDefinitionVO serviceDefinitionVO) {
+		String screen_unit = serviceDefinitionVO.getScreen_unit();
+		if ("".equals(screen_unit)) {
+			screen_unit = "%%";
+		}
+
+		String hql = "from jwcpxt_service_definition  where service_definition_unit like :service_definition_unit  order by service_definition_gmt_create desc";
+		Session session = getSession();
+		Query query = session.createQuery(hql);
+		query.setParameter("service_definition_unit", screen_unit);
+
+		query.setFirstResult((serviceDefinitionVO.getPageIndex() - 1) * serviceDefinitionVO.getPageSize());
+
+		query.setMaxResults(serviceDefinitionVO.getPageSize());
+		List<jwcpxt_service_definition> serviceDefinitionList = query.list();
+
+		session.clear();
+
+		return serviceDefinitionList;
+	}
+
+	@Override
+	public int get_serviceDefinition_TotalRecords_ByPage(ServiceDefinitionVO serviceDefinitionVO) {
+
+		String hql = "select count(*) from jwcpxt_service_definition  where service_definition_unit='"
+				+ serviceDefinitionVO.getScreen_unit() + "'  order by service_definition_gmt_create desc ";
+		Session session = getSession();
+		Query query = session.createQuery(hql);
+		int count = ((Number) query.uniqueResult()).intValue();
+		return count;
 	}
 
 	@Override

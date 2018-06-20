@@ -6,6 +6,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_distribution;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.VO.ServiceDefinitionVO;
 
 public interface ServiceDao {
 
@@ -30,5 +31,9 @@ public interface ServiceDao {
 	public List<jwcpxt_service_distribution> list_serviceDistribution_all();
 
 	public boolean add_serviceDefinition(jwcpxt_service_definition serviceDefinition);
+
+	public int get_serviceDefinition_TotalRecords_ByPage(ServiceDefinitionVO serviceDefinitionVO);
+
+	public List<jwcpxt_service_definition> list_serviceDefinition_ByPage(ServiceDefinitionVO serviceDefinitionVO);
 
 }

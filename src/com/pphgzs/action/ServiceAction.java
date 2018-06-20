@@ -46,7 +46,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 	public void get_serviceDefinitionVO() throws IOException {
 
-		serviceDefinitionVO = serviceService.get_serviceDefinitionVO();
+		serviceDefinitionVO = serviceService.get_serviceDefinitionVO(serviceDefinitionVO);
 
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
@@ -162,6 +162,18 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public void setServiceDefinitionVO(ServiceDefinitionVO serviceDefinitionVO) {
 		this.serviceDefinitionVO = serviceDefinitionVO;
+	}
+
+	public ServiceDefinitionVO getServiceDefinitionVO() {
+		return serviceDefinitionVO;
+	}
+
+	public ServiceInstanceVO getServiceInstanceVO() {
+		return serviceInstanceVO;
+	}
+
+	public ServiceDistributionVO getServiceDistributionVO() {
+		return serviceDistributionVO;
 	}
 
 	public void setServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {

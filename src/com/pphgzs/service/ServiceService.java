@@ -12,7 +12,7 @@ import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public interface ServiceService {
 
-	public ServiceDefinitionVO get_serviceDefinitionVO();
+	public ServiceDefinitionVO get_serviceDefinitionVO(ServiceDefinitionVO serviceDefinitionVO);
 
 	public ServiceInstanceVO get_serviceInstanceVO();
 

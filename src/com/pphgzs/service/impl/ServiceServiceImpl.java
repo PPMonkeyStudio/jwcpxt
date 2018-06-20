@@ -59,12 +59,28 @@ public class ServiceServiceImpl implements ServiceService {
 	 */
 
 	@Override
-	public ServiceDefinitionVO get_serviceDefinitionVO() {
+	public ServiceDefinitionVO get_serviceDefinitionVO(ServiceDefinitionVO serviceDefinitionVO) {
 
-		ServiceDefinitionVO serviceDefinitionVO = new ServiceDefinitionVO();
 		List<ServiceDefinitionDTO> serviceDefinitionDTOList = new ArrayList<ServiceDefinitionDTO>();
-		List<jwcpxt_service_definition> serviceDefinitionList = serviceDao.list_serviceDefinition_all();
+		List<jwcpxt_service_definition> serviceDefinitionList = serviceDao
+				.list_serviceDefinition_ByPage(serviceDefinitionVO);
 
+		// 封装总记录数
+		serviceDefinitionVO.setTotalRecords(serviceDao.get_serviceDefinition_TotalRecords_ByPage(serviceDefinitionVO));
+		// 封装总页数
+		serviceDefinitionVO
+				.setTotalPages(((serviceDefinitionVO.getTotalRecords() - 1) / serviceDefinitionVO.getPageSize()) + 1);
+		if (serviceDefinitionVO.getPageIndex() <= 1) {
+			serviceDefinitionVO.setHavePrePage(false);
+		} else {
+			serviceDefinitionVO.setHavePrePage(true);
+		}
+		if (serviceDefinitionVO.getPageIndex() >= serviceDefinitionVO.getTotalPages()) {
+			serviceDefinitionVO.setHaveNextPage(false);
+		} else {
+			serviceDefinitionVO.setHaveNextPage(true);
+		}
+		//
 		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
 
 			serviceDefinitionDTOList.add(get_serviceDefinitionDTO_byServiceDefinitionID(
