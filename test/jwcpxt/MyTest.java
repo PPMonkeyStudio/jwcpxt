@@ -7,7 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.VO.ServiceDefinitionVO;
+import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -15,6 +17,16 @@ import com.pphgzs.service.UserService;
 public class MyTest {
 	@Resource
 	private UserService userService;
+	@Resource
+	private ServiceService serviceService;
+
+	public ServiceService getServiceService() {
+		return serviceService;
+	}
+
+	public void setServiceService(ServiceService serviceService) {
+		this.serviceService = serviceService;
+	}
 
 	public UserService getUserService() {
 		return userService;
@@ -25,9 +37,17 @@ public class MyTest {
 	}
 
 	@Test
-	public void save_user() {
-		jwcpxt_user user = new jwcpxt_user();
-		user.setUser_account("12547854");
-		userService.save_user(user);
+	public void tttt() {
+		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
+		serviceDefinition.setService_definition_describe("asdasdasdasdasdsfasf");
+		serviceDefinition.setService_definition_unit("adsafsdf");
+		serviceService.add_serviceDefinition(serviceDefinition);
+	}
+
+	@Test
+	public void ttt() {
+		ServiceDefinitionVO serviceDefinitionVO = new ServiceDefinitionVO();
+		serviceDefinitionVO = serviceService.get_serviceDefinitionVO(serviceDefinitionVO);
+		System.out.println(serviceDefinitionVO);
 	}
 }

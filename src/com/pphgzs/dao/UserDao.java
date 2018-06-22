@@ -6,7 +6,7 @@ import com.pphgzs.domain.DO.jwcpxt_user;
 
 public interface UserDao {
 
-	public List<jwcpxt_user> list_User_all();
+	public List<jwcpxt_user> list_user_all();
 
 	public int get_userTotalRecords_all();
 
