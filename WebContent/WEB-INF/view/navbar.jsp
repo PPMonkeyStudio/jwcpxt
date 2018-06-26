@@ -26,7 +26,7 @@
 				<li><a href="#"> 
 						<p>业务</p>
 				</a></li>
-				<li><a href="#">
+				<li><a href="<%=basePath %>Skip/skipManagerUser">
 						<p>警员</p>
 				</a></li>
 				<li><a href="<%=basePath %>Skip/skipManagerUnit">

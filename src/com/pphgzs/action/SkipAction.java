@@ -24,4 +24,8 @@ public class SkipAction {
 	public String skipManagerUnit() {
 		return "skipManagerUnit";
 	}
+
+	public String skipManagerUser() {
+		return "skipManagerUser";
+	}
 }

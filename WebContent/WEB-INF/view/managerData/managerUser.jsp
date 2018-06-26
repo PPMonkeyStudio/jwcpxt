@@ -53,10 +53,28 @@ a:hover {
 											</tr>
 										</thead>
 										<tbody>
-											
+
 										</tbody>
 									</table>
-									
+									<!-- 分页 -->
+									<div id="bottomPage" style="padding: 20px;">
+										<span>当前页数:<span id="currPage">1</span></span> <span>共:<span id="totalPage">1</span>页
+										</span> <span onclick="skipToIndexPage()" id="indexPage"
+											class="pageOperation">首页</span> <span
+											onclick="skipToPrimaryPage()" id="previousPage"
+											class="pageOperation">上一页</span> <span
+											onclick="skipToNextPage()" id="nextPage"
+											class="pageOperation">下一页</span> <span
+											onclick="skipToLastPage()" id="lastPage"
+											class="pageOperation">末页</span> <span> <input
+											id="skipPage" type="text"
+											style="text-align: center; width: 60px; height: 30px;"
+											class="queryInput">
+											<button onclick="skipToArbitrarilyPage()"
+												class="btn btn-default"
+												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
