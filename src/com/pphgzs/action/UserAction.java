@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.UserDTO;
 import com.pphgzs.service.UserService;
 
 @SuppressWarnings("serial")
@@ -46,6 +47,22 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 		http_response.getWriter().write(gson.toJson(userService.get_userVO()));
 	}
 
+	/**
+	 * 获得所有用户的DTO列表
+	 * 
+	 * @throws IOException
+	 */
+	public void list_userDTO_all() throws IOException {
+		List<UserDTO> userDTOList = userService.list_userDTO_all();
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(userDTOList));
+	}
+
 	public void list_user_all() throws IOException {
 
 		List<jwcpxt_user> userList = new ArrayList<jwcpxt_user>();
@@ -55,6 +72,7 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
+		//
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson(userList));
 
