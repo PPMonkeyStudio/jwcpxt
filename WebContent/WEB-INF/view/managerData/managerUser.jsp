@@ -79,8 +79,8 @@ a:hover {
 												<td>禁用</td>
 												</template>
 												<td><a :id="dto.user.jwcpxt_user_id"
-													onclick="updateUnit(this)"><i class="ti-pencil-alt"></i></a>
-													<a :id="dto.user.jwcpxt_user_id" onclick="deleteUnit(this)"><i
+													onclick="updateUser(this)"><i class="ti-pencil-alt"></i></a>
+													<a :id="dto.user.jwcpxt_user_id" onclick="deleteUser(this)"><i
 														class="ti-trash"></i></a></td>
 											</tr>
 											</template>

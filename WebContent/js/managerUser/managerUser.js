@@ -42,8 +42,9 @@ function updateUser(event) {
 									processData : false,
 									contentType : false,
 									success : function(data) {
-										if (data == 1) {
+										if (data =='1') {
 											toastr.success("保存成功");
+											loadData();
 										} else {
 											toastr.error("保存失败");
 										}
@@ -107,7 +108,7 @@ function deleteUser(event){
 	            	   url:'/jwcpxt/User/delete_user?user.jwcpxt_user_id='+event.id,
 	            	   type:'GET',
 	            	   success:function(data){
-	            		   if(data==1){
+	            		   if(data=='1'){
 	            			   toastr.success("删除成功");
 	            			   loadData();
 	            		   }else{
