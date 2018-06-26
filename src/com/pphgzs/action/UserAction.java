@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.UserDTO;
+import com.pphgzs.domain.VO.UserVO;
 import com.pphgzs.service.UserService;
 
 @SuppressWarnings("serial")
@@ -28,6 +29,7 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	 * 
 	 */
 	private jwcpxt_user user;
+	private UserVO userVO;
 
 	/*
 	 * 
@@ -40,11 +42,14 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	 * 
 	 */
 	public void get_userVO() throws IOException {
+		userVO = userService.get_userVO();
+		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
+		//
 		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(userService.get_userVO()));
+		http_response.getWriter().write(gson.toJson());
 	}
 
 	/**
