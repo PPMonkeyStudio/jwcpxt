@@ -72,17 +72,17 @@ function updateUser(event) {
 												+ "</option>");
 							}
 							$.ajax({
-								url:'/jwcpxt/User/get_userDTO_byUserID?user_jwcpxt_user_id='+event.id,
+								url:'/jwcpxt/User/get_userDTO_byUserID?user.jwcpxt_user_id='+event.id,
 								type:'get',
 								success:function(data){
-									var user  = JSON.parse(data);
-									document.getElementsByName("user.user_account")[0].value=user.user_account;
-									document.getElementsByName("user.user_name")[0].value=user.user_name;
-									document.getElementsByName("user.user_unit")[0].value=user.user_unit;
-									document.getElementsByName("user.user_Jurisdiction_evaluate")[0].value=user.user_Jurisdiction_evaluate;
-									document.getElementsByName("user.user_Jurisdiction_statistics")[0].value=user.user_Jurisdiction_statistics;
-									document.getElementsByName("user.user_Jurisdiction_review")[0].value=user.user_Jurisdiction_review;
-									document.getElementsByName("user.user_state")[0].value=user.user_state;
+									var dto  = JSON.parse(data);
+									document.getElementsByName("user.user_account")[0].value=dto.user.user_account;
+									document.getElementsByName("user.user_name")[0].value=dto.user.user_name;
+									document.getElementsByName("user.user_unit")[0].value=dto.user.user_unit;
+									document.getElementsByName("user.user_Jurisdiction_evaluate")[0].value=dto.user.user_Jurisdiction_evaluate;
+									document.getElementsByName("user.user_Jurisdiction_statistics")[0].value=dto.user.user_Jurisdiction_statistics;
+									document.getElementsByName("user.user_Jurisdiction_review")[0].value=dto.user.user_Jurisdiction_review;
+									document.getElementsByName("user.user_state")[0].value=dto.user.user_state;
 								}
 							})
 						}

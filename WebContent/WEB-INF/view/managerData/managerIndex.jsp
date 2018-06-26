@@ -25,7 +25,7 @@
 				<!-- 主内容 -->
 				<div class="row">
 					<div class="col-md-12">
-						<div class="card" style="text-align: center;">
+						<div class="card" style="text-align: center; height: 300px; padding-top: 70px;">
 							<h1>管理数据</h1>
 							<h3>请选择上面导航条进入对应模块</h3>
 						</div>
