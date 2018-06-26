@@ -99,7 +99,7 @@ function updateUnit(event){
 					$('.selectpicker').selectpicker('render');
 					$('.selectpicker').selectpicker('refresh');	
 					$.ajax({
-						url:'/wlmtxt/Unit/Unit_get_unit_byID?unit.jwcpxt_unit_id='+event.id,
+						url:'/jwcpxt/Unit/get_unit_byID?unit.jwcpxt_unit_id='+event.id,
 						type:'GET',
 						success:function(data){
 							var unit = JSON.parse(data);
