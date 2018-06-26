@@ -75,7 +75,7 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	 * 
 	 * @throws IOException
 	 */
-	public void get_userDTO_byID() throws IOException {
+	public void get_userDTO_byUserID() throws IOException {
 		UserDTO userDTO = userService.get_userDTO_byUserID(user.getJwcpxt_user_id());
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
