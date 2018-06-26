@@ -16,4 +16,12 @@ public class SkipAction {
 	public String skipUserList() {
 		return "skipUserList";
 	}
+
+	public String skipManagerIndex() {
+		return "skipManagerIndex";
+	}
+
+	public String skipManagerUnit() {
+		return "skipManagerUnit";
+	}
 }

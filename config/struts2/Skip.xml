@@ -9,6 +9,8 @@
 			<result name="skipFooter">/WEB-INF/view/footer.jsp</result>
 			<result name="skipNavbar">/WEB-INF/view/navbar.jsp</result>
 			<result name="skipUserList">/WEB-INF/view/user/userList.jsp</result>
+			<result name="skipManagerIndex">/WEB-INF/view/managerData/managerIndex.jsp</result>
+			<result name="skipManagerUnit">/WEB-INF/view/managerData/managerUnit.jsp</result>
 		</action>
 	</package>
 </struts>

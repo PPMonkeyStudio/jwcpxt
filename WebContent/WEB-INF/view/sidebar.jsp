@@ -9,25 +9,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type"
-	content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 项目公用css -->
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="<%=basePath%>css/bootstrap-select.min.css">
-	<link rel="stylesheet"
 	href="<%=basePath%>css/navbar/chartist-custom.css">
-<link rel="stylesheet" href="<%=basePath%>css/navbar/main.css">
-<link rel="stylesheet"
-	href="<%=basePath%>css/navbar/font-awesome.min.css">
-<link rel="stylesheet" href="<%=basePath%>css/navbar/style.css">
-<link rel="stylesheet" href="<%=basePath%>css/table.css">
 <link rel="stylesheet" href="<%=basePath%>css/jquery-confirm.css" />
 <link rel="stylesheet" href="<%=basePath%>css/toastr.css" />
 <link rel="stylesheet" href="<%=basePath%>css/demo.css" />
 <link rel="stylesheet" href="<%=basePath%>css/paper-dashboard.css" />
 <link rel="stylesheet" href="<%=basePath%>css/themify-icons.css" />
+<link rel="stylesheet" href="<%=basePath%>css/navbar/font-awesome.css">
+<link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=basePath%>css/bootstrap-select.min.css">
 <!-- 项目公用js -->
 <script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 <script src="<%=basePath%>js/bootstrap.min.js"></script>
@@ -41,6 +35,7 @@
 <script src="<%=basePath%>js/chartist.min.js"></script>
 <script src="<%=basePath%>js/demo.js"></script>
 <script src="<%=basePath%>js/paper-dashboard.js"></script>
+<script src="<%=basePath%>js/vue.js"></script>
 <!---页面公用------------------------------------------------------------------------------>
 
 <title>Insert title here</title>
@@ -55,16 +50,17 @@
 			</div>
 
 			<ul class="nav">
-				<li><a href="#"> <i class="ti-world"></i>
+				<li id="sideIndex"><a href="#"> <i class="ti-world"></i>
 						<p>首页</p>
 				</a></li>
-				<li class="active"><a href="<%=basePath %>Skip/skipUserList"> <i class="ti-user"></i>
+				<li id="sidePolice"><a href="#"> <i class="ti-user"></i>
 						<p>测评警务</p>
 				</a></li>
-				<li><a href="#"> <i class="ti-stats-up"></i>
+				<li id="sideStatis"><a href="#"> <i class="ti-stats-up"></i>
 						<p>统计数据</p>
 				</a></li>
-				<li><a href="#"> <i class="ti-panel"></i>
+				<li id="sideManager"><a
+					href="<%=basePath%>Skip/skipManagerIndex"> <i class="ti-panel"></i>
 						<p>管理数据</p>
 				</a></li>
 			</ul>

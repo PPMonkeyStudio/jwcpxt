@@ -23,6 +23,14 @@
 		<div class="content">
 			<div class="container-fluid">
 				<!-- 主内容 -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card" style="text-align: center;">
+							<h1>管理数据</h1>
+							<h3>请选择上面导航条进入对应模块</h3>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- 引入底部 -->
@@ -30,4 +38,8 @@
 	</div>
 </div>
 </body>
+<script type="text/javascript">
+/* 处理侧边栏选项 */
+$('#sideManager').attr("class","active");
+</script>
 </html>

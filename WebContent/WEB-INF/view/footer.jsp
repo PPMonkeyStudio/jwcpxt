@@ -14,19 +14,19 @@
 </head>
 <body>
 	<footer class="footer">
-	<div class="container-fluid">
-		<nav class="pull-left">
-		<ul>
-
-			<li><a href="#"> 萍乡市政府 </a></li>
-			<li><a href="#"> 萍乡市公安 </a></li>
-			<li><a href="#"> 江西省公安 </a></li>
-		</ul>
-		</nav>
-		<div class="copyright pull-right">
-			Copyright &copy; 2018.萍乡市公安局 
+		<div class="container-fluid">
+			<nav class="pull-left">
+			<ul>
+	
+				<li><a href="#"> 萍乡市政府 </a></li>
+				<li><a href="#"> 萍乡市公安 </a></li>
+				<li><a href="#"> 江西省公安 </a></li>
+			</ul>
+			</nav>
+			<div class="copyright pull-right">
+				Copyright &copy; 2018.萍乡市公安局 
+			</div>
 		</div>
-	</div>
 	</footer>
 </body>
 </html>
