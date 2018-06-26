@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.UserDao;
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.VO.UserVO;
 
 public class UserDaoImpl implements UserDao {
 	private SessionFactory sessionFactory;
@@ -22,16 +23,49 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public List<jwcpxt_user> list_user_byUserVO(UserVO userVO) {
+
+		Session session = getSession();
+		String hql = "from jwcpxt_user where user_account like :user_account and user_unit like :user_unit order by user_gmt_create";
+		Query query = session.createQuery(hql);
+		//
+		if (userVO.getScreenSearch().equals("")) {
+			query.setParameter("user_account", "%%");
+		} else {
+			query.setParameter("user_account", "%" + userVO.getScreenSearch() + "%");
+		}
+		if (userVO.getScreenUnit().endsWith("")) {
+			query.setParameter("user_unit", "%%");
+		} else {
+			query.setParameter("user_unit", "%" + userVO.getScreenUnit() + "%");
+		}
+		query.setFirstResult((userVO.getCurrPage() - 1) * userVO.getPageSize());
+		query.setMaxResults(userVO.getPageSize());
+		//
+		List<jwcpxt_user> userList = null;
+		try {
+			userList = query.list();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		session.clear();
+		System.out.println(userList);
+		return userList;
+	}
+
+	@Override
 	public List<jwcpxt_user> list_user_all() {
-		List<jwcpxt_user> user_List = new ArrayList<jwcpxt_user>();
+		List<jwcpxt_user> userList = new ArrayList<jwcpxt_user>();
 
 		Session session = getSession();
 		String hql = "from jwcpxt_user";
 		Query query = session.createQuery(hql);
-		user_List = query.list();
+		userList = query.list();
 		session.clear();
 
-		return user_List;
+		return userList;
 	}
 
 	@Override

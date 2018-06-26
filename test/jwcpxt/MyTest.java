@@ -7,8 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.pphgzs.domain.DO.jwcpxt_service_definition;
-import com.pphgzs.domain.VO.ServiceDefinitionVO;
+import com.pphgzs.domain.VO.UserVO;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UserService;
 
@@ -37,17 +36,8 @@ public class MyTest {
 	}
 
 	@Test
-	public void tttt() {
-		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
-		serviceDefinition.setService_definition_describe("asdasdasdasdasdsfasf");
-		serviceDefinition.setService_definition_unit("adsafsdf");
-		serviceService.add_serviceDefinition(serviceDefinition);
-	}
-
-	@Test
 	public void ttt() {
-		ServiceDefinitionVO serviceDefinitionVO = new ServiceDefinitionVO();
-		serviceDefinitionVO = serviceService.get_serviceDefinitionVO(serviceDefinitionVO);
-		System.out.println(serviceDefinitionVO);
+		UserVO userVO = new UserVO();
+		userVO = userService.get_userVO(userVO);
 	}
 }

@@ -42,14 +42,17 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	 * 
 	 */
 	public void get_userVO() throws IOException {
-		userVO = userService.get_userVO();
+		if (userVO == null) {
+			userVO = new UserVO();
+		}
+		userVO = userService.get_userVO(userVO);
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson());
+		http_response.getWriter().write(gson.toJson(userVO));
 	}
 
 	/**
@@ -163,6 +166,14 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 
 	public void setUser(jwcpxt_user user) {
 		this.user = user;
+	}
+
+	public UserVO getUserVO() {
+		return userVO;
+	}
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
 	}
 
 	/*

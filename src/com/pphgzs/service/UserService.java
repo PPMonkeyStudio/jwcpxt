@@ -18,12 +18,12 @@ public interface UserService {
 
 	public jwcpxt_user get_user_byUserID(String userID);
 
-	public UserVO get_userVO();
-
 	public List<UserDTO> list_userDTO_all();
 
 	List<UserDTO> list_userDTOList_byUserList(List<jwcpxt_user> userList);
 
 	UserDTO get_userDTO_byUserID(String userID);
+
+	public UserVO get_userVO(UserVO userVO);
 
 }
