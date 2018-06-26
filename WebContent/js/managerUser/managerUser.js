@@ -72,7 +72,7 @@ function updateUser(event) {
 												+ "</option>");
 							}
 							$.ajax({
-								url:'/jwcpxt/User/?user_jwcpxt_user_id='+event.id,
+								url:'/jwcpxt/User/get_userDTO_byUserID?user_jwcpxt_user_id='+event.id,
 								type:'get',
 								success:function(data){
 									var user  = JSON.parse(data);
