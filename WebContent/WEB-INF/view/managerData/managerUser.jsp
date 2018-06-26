@@ -48,7 +48,7 @@ a:hover {
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
 									<table id="userTable" class="table table-striped"
-										style="display: none;">
+										style="display: none; text-align: center;">
 										<thead>
 											<tr>
 												<td>账号</td>
