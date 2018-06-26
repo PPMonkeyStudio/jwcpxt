@@ -55,7 +55,7 @@ a:hover {
 											<template v-for="unitDTO in unitVO.unitDTOList">
 											<tr>
 												<td>{{ unitDTO.unit.unit_name }}</td>
-												<template v-if="unitDTO.user==undified">
+												<template v-if="unitDTO.user==undifined">
 													<td></td>						
 												</template>
 												<template v-else>

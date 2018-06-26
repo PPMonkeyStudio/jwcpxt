@@ -14,6 +14,10 @@
 a:hover {
 	cursor: pointer;
 }
+
+.pageOperation:hover {
+	cursor: pointer;
+}
 </style>
 <title>用户信息</title>
 </head>
@@ -37,6 +41,9 @@ a:hover {
 									<button onclick="addUser()" class="btn btn-default">
 										<i class="ti-plus"></i>新建一个警员
 									</button>
+									<input oninput="changeQuery()" id="searchContent"
+										placeholder="请输入搜索内容" class="form-control"
+										style="float: right; width: 250px;">
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
@@ -46,19 +53,44 @@ a:hover {
 											<tr>
 												<td>账号</td>
 												<td>姓名</td>
-												<td>所属单位</td>
-												<td>修改时间</td>
+												<td><select onchange="changeQuery()" id="searchUnit"
+													class="form-control">
+														<option value="">请选择单位</option>
+												</select></td>
 												<td>状态</td>
 												<td>操作</td>
 											</tr>
 										</thead>
 										<tbody>
-
+											<template v-for="dto in userVO.UserDTOList">
+											<tr>
+												<td>{{ dto.user.user_account }}</td>
+												<td>{{ dto.user.user_name }}</td>
+												<template v-if="dto.unit==undifined">
+												<td></td>
+												</template>
+												<template v-else>
+												<td>{{ dto.unit.unit_name }}</td>
+												</template>
+												<template v-if="dto.user.user_state==1">
+												<td>正常</td>
+												</template>
+												<template v-else>
+												<td>禁用</td>
+												</template>
+												<td><a :id="dto.user.jwcpxt_user_id"
+													onclick="updateUnit(this)"><i class="ti-pencil-alt"></i></a>
+													<a :id="dto.user.jwcpxt_user_id" onclick="deleteUnit(this)"><i
+														class="ti-trash"></i></a></td>
+											</tr>
+											</template>
 										</tbody>
 									</table>
 									<!-- 分页 -->
 									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage">1</span></span> <span>共:<span id="totalPage">1</span>页
+										<span>当前页数:<span id="currPage">{{
+												userVO.currPage }}</span></span> <span>共:<span id="totalPage">{{
+												userVO.totalPage }}</span>页
 										</span> <span onclick="skipToIndexPage()" id="indexPage"
 											class="pageOperation">首页</span> <span
 											onclick="skipToPrimaryPage()" id="previousPage"
@@ -90,4 +122,8 @@ a:hover {
 	/* 处理侧边栏选项 */
 	$('#sideManager').attr("class", "active");
 </script>
+<script type="text/javascript"
+	src="<%=basePath%>js/managerUser/showUser.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>js/managerUser/managerUser.js"></script>
 </html>
