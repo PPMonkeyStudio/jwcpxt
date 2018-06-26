@@ -107,10 +107,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean delete_user(jwcpxt_user user) {
+	public boolean delete_user(String userID) {
 		Session session = getSession();
-		String hql = "delete from jwcpxt_user where jwcpxt_user_id='" + user.getJwcpxt_user_id() + "'";
+		String hql = "delete from jwcpxt_user where jwcpxt_user_id=:userID";
 		Query query = session.createQuery(hql);
+		//
+		query.setParameter("userID", "userID");
+		//
 		query.executeUpdate();
 		session.flush();
 		return true;
@@ -119,8 +122,12 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public jwcpxt_user get_user_byUserID(String userID) {
 		Session session = getSession();
-		String hql = "from jwcpxt_user where jwcpxt_user_id='" + userID + "'";
+		String hql = "from jwcpxt_user where jwcpxt_user_id=:userID ";
+		//
 		Query query = session.createQuery(hql);
+		//
+		query.setParameter("userID", userID);
+		//
 		jwcpxt_user newUser = (jwcpxt_user) query.uniqueResult();
 		session.clear();
 		return newUser;
@@ -130,8 +137,11 @@ public class UserDaoImpl implements UserDao {
 	public boolean ifExist_user_byUserAccount(String account) {
 		Session session = getSession();
 
-		String hql = "from jwcpxt_user where user_account='" + account + "'";
+		String hql = "from jwcpxt_user where user_account=:account";
 		Query query = session.createQuery(hql);
+		//
+		query.setParameter("account", account);
+		//
 		jwcpxt_user newUser = (jwcpxt_user) query.uniqueResult();
 		session.clear();
 		if (newUser != null) {

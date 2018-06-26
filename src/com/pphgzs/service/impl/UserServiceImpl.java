@@ -46,6 +46,10 @@ public class UserServiceImpl implements UserService {
 			user.setJwcpxt_user_id(uuidUtil.getUuid());
 			// 账号作为密码
 			user.setUser_password(user.getUser_account());
+			//
+			user.setUser_Jurisdiction_evaluate("none");
+			user.setUser_Jurisdiction_statistics("none");
+			user.setUser_Jurisdiction_review("none");
 			// 时间初始化
 			String time = TimeUtil.getStringSecond();
 			user.setUser_gmt_create(time);
@@ -59,7 +63,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean delete_user(jwcpxt_user user) {
 
-		if (userDao.delete_user(user)) {
+		if (userDao.delete_user(user.getJwcpxt_user_id())) {
 			return true;
 		} else {
 			return false;

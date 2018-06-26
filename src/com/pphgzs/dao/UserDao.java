@@ -7,7 +7,7 @@ import com.pphgzs.domain.VO.UserVO;
 
 public interface UserDao {
 
-	public boolean delete_user(jwcpxt_user user);
+	public boolean delete_user(String userID);
 
 	public jwcpxt_user get_user_byUserID(String userID);
 

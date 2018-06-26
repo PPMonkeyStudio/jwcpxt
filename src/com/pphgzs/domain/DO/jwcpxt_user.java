@@ -6,9 +6,9 @@ public class jwcpxt_user {
 	private String user_password;
 	private String user_name;
 	private String user_unit;
-	private String user_Jurisdiction_evaluate;
-	private String user_Jurisdiction_statistics;
-	private String user_Jurisdiction_review;
+	private String user_Jurisdiction_evaluate = "none";
+	private String user_Jurisdiction_statistics = "none";
+	private String user_Jurisdiction_review = "none";
 	private String user_state;
 	private String user_gmt_create;
 	private String user_gmt_modified;
