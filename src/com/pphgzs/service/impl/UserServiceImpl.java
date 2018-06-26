@@ -125,10 +125,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserVO get_userVO() {
-		UserVO userVO = new UserVO();
-		// userVO.setUser_List(userDao.list_user_all());
-		// userVO.setTotalRecords(userDao.get_userTotalRecords_all());
+	public UserVO get_userVO(UserVO userVO) {
+		userDao.list_user_byUserVO(userVO);
 		return userVO;
 	}
 

@@ -19,24 +19,10 @@
 		<property name="initialPoolSize" value="${jdbc.initPoolSize}"></property>
 		<property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
 	</bean>
-	<bean id="dataSource_2" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="user" value="${jdbc_2.user}"></property>
-		<property name="password" value="${jdbc_2.password}"></property>
-		<property name="driverClass" value="${jdbc_2.driverClass}"></property>
-		<property name="jdbcUrl" value="${jdbc_2.jdbcUrl}"></property>
-		<property name="initialPoolSize" value="${jdbc_2.initPoolSize}"></property>
-		<property name="maxPoolSize" value="${jdbc_2.maxPoolSize}"></property>
-	</bean>
 	<!-- 配置SessionFactory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
-		<property name="mappingLocations" value="classpath:com/pphgzs/domain/DO/*.hbm.xml"></property>
-	</bean>
-	<bean id="sessionFactory_2"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource_2"></property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
 		<property name="mappingLocations" value="classpath:com/pphgzs/domain/DO/*.hbm.xml"></property>
 	</bean>

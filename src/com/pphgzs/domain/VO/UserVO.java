@@ -11,9 +11,9 @@ public class UserVO {
 	 * 
 	 */
 	// 搜索
-	private String screenSearch = "none";
+	private String screenSearch = "";
 	// 单位
-	private String screenUnit = "none";
+	private String screenUnit = "";
 	/*
 	 * 
 	 */
