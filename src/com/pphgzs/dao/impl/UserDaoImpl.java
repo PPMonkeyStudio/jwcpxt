@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
 		} else {
 			query.setParameter("screenSearch", "%" + userVO.getScreenSearch() + "%");
 		}
-		if (userVO.getScreenUnit().endsWith("")) {
+		if (userVO.getScreenUnit().equals("")) {
 			query.setParameter("screenUnit", "%%");
 		} else {
 			query.setParameter("screenUnit", "%" + userVO.getScreenUnit() + "%");
