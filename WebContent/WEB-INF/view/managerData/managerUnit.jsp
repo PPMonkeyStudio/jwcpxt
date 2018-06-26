@@ -63,9 +63,9 @@ a:hover {
 												</template>
 												<td>{{ unitDTO.unit.unit_gmt_create }}</td>
 												<td>{{ unitDTO.unit.unit_gmt_modified }}</td>
-												<td><a :id="unitDTO.unit.unit_id" onclick=""><i
-														class="ti-pencil-alt"></i></a> <a :id="unitDTO.unit.unit_id"
-													onclick=""><i class="ti-trash"></i></a></td>
+												<td><a :id="unitDTO.unit.jwcpxt_unit_id" onclick="updateUnit(this)"><i
+														class="ti-pencil-alt"></i></a> <a :id="unitDTO.unit.jwcpxt_unit_id"
+													onclick="deleteUnit(this)"><i class="ti-trash"></i></a></td>
 											</tr>
 											</template>
 										</tbody>
