@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="Skip" namespace="/Skip" extends="struts-default">
+		<action name="*" class="com.pphgzs.action.SkipAction" method="{1}">
+			<result name="skipSidebar">/WEB-INF/view/sidebar.jsp</result>
+			<result name="skipFooter">/WEB-INF/view/footer.jsp</result>
+			<result name="skipNavbar">/WEB-INF/view/navbar.jsp</result>
+			<result name="skipUserList">/WEB-INF/view/user/userList.jsp</result>
+		</action>
+	</package>
+</struts>
