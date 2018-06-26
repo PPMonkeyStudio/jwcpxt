@@ -22,4 +22,6 @@ public interface UserDao {
 	public boolean save_user(jwcpxt_user user);
 
 	public boolean update_user(jwcpxt_user user);
+
+	public int get_userTotalCount_byUserVO(UserVO userVO);
 }

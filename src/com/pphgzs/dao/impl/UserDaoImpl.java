@@ -23,35 +23,55 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<jwcpxt_user> list_user_byUserVO(UserVO userVO) {
-
+	public int get_userTotalCount_byUserVO(UserVO userVO) {
 		Session session = getSession();
-		String hql = "from jwcpxt_user where user_account like :user_account and user_unit like :user_unit order by user_gmt_create";
+		String hql = "select count(*) from jwcpxt_user "
+				+ " where ( user_account like :screenSearch or user_name like :screenSearch ) "
+				+ " and user_unit like :screenUnit " + " order by user_gmt_create";
 		Query query = session.createQuery(hql);
 		//
 		if (userVO.getScreenSearch().equals("")) {
-			query.setParameter("user_account", "%%");
+			query.setParameter("screenSearch", "%%");
 		} else {
-			query.setParameter("user_account", "%" + userVO.getScreenSearch() + "%");
+			query.setParameter("screenSearch", "%" + userVO.getScreenSearch() + "%");
 		}
 		if (userVO.getScreenUnit().endsWith("")) {
-			query.setParameter("user_unit", "%%");
+			query.setParameter("screenUnit", "%%");
 		} else {
-			query.setParameter("user_unit", "%" + userVO.getScreenUnit() + "%");
+			query.setParameter("screenUnit", "%" + userVO.getScreenUnit() + "%");
+		}
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public List<jwcpxt_user> list_user_byUserVO(UserVO userVO) {
+
+		Session session = getSession();
+		String hql = "from jwcpxt_user " + " where ( user_account like :screenSearch or user_name like :screenSearch ) "
+				+ " and user_unit like :screenUnit " + " order by user_gmt_create";
+		Query query = session.createQuery(hql);
+		//
+		if (userVO.getScreenSearch().equals("")) {
+			query.setParameter("screenSearch", "%%");
+		} else {
+			query.setParameter("screenSearch", "%" + userVO.getScreenSearch() + "%");
+		}
+		if (userVO.getScreenUnit().endsWith("")) {
+			query.setParameter("screenUnit", "%%");
+		} else {
+			query.setParameter("screenUnit", "%" + userVO.getScreenUnit() + "%");
 		}
 		query.setFirstResult((userVO.getCurrPage() - 1) * userVO.getPageSize());
 		query.setMaxResults(userVO.getPageSize());
 		//
 		List<jwcpxt_user> userList = null;
-		try {
-			userList = query.list();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		userList = query.list();
+		//
 		session.clear();
-		System.out.println(userList);
 		return userList;
 	}
 
