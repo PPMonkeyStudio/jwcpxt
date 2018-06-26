@@ -129,8 +129,10 @@ public class UserServiceImpl implements UserService {
 		List<jwcpxt_user> userList = userDao.list_user_byUserVO(userVO);
 		List<UserDTO> userDTOList = list_userDTOList_byUserList(userList);
 		userVO.setUserDTOList(userDTOList);
-		//
-
+		// 总记录数
+		userVO.setTotalCount(userDao.get_userTotalCount_byUserVO(userVO));
+		// 总页数
+		userVO.setTotalPage(((userVO.getTotalCount() - 1) / userVO.getPageSize()) + 1);
 		//
 		return userVO;
 	}

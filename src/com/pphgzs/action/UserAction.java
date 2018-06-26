@@ -76,7 +76,7 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 		List<jwcpxt_user> userList = new ArrayList<jwcpxt_user>();
 
 		userList = userService.list_user_all();
-
+		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
@@ -87,26 +87,20 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	}
 
 	public void save_user() throws IOException {
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
 		http_response.setContentType("text/html;charset=utf-8");
 		if (userService.save_user(user)) {
-			http_response.getWriter().write(gson.toJson("1"));
+			http_response.getWriter().write("1");
 		} else {
-			http_response.getWriter().write(gson.toJson("-1"));
+			http_response.getWriter().write("-1");
 		}
 	}
 
 	public void delete_user() throws IOException {
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
 		http_response.setContentType("text/html;charset=utf-8");
 		if (userService.delete_user(user)) {
-			http_response.getWriter().write(gson.toJson("1"));
+			http_response.getWriter().write("1");
 		} else {
-			http_response.getWriter().write(gson.toJson("-1"));
+			http_response.getWriter().write("-1");
 		}
 	}
 
@@ -116,9 +110,9 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 		Gson gson = gsonBuilder.create();
 		http_response.setContentType("text/html;charset=utf-8");
 		if (userService.update_user(user)) {
-			http_response.getWriter().write(gson.toJson("1"));
+			http_response.getWriter().write("1");
 		} else {
-			http_response.getWriter().write(gson.toJson("-1"));
+			http_response.getWriter().write("-1");
 		}
 	}
 
