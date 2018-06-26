@@ -126,7 +126,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO get_userVO(UserVO userVO) {
-		userDao.list_user_byUserVO(userVO);
+		List<jwcpxt_user> userList = userDao.list_user_byUserVO(userVO);
+		List<UserDTO> userDTOList = list_userDTOList_byUserList(userList);
+		userVO.setUserDTOList(userDTOList);
+		//
+
+		//
 		return userVO;
 	}
 
