@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 
@@ -72,4 +73,33 @@ public class ServiceDaoImpl implements ServiceDao {
 		session.clear();
 		return list;
 	}
+
+	@Override
+	public boolean ifExist_serviceDefinition_byServiceDefinitionDescribe(String service_definition_describe) {
+		Session session = getSession();
+
+		String hql = "from jwcpxt_service_definition where service_definition_describe=:definitionDescribe";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("definitionDescribe", service_definition_describe);
+		//
+		jwcpxt_service_definition serviceDefinition = (jwcpxt_service_definition) query.uniqueResult();
+		session.clear();
+		if (serviceDefinition != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
+		Session session = getSession();
+		session.save(serviceDefinition);
+		session.flush();
+		return true;
+	}
+	/*
+	 * 
+	 */
 }

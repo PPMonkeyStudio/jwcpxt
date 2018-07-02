@@ -23,13 +23,16 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private ServiceService serviceService;
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
+	/*
+	 * 
+	 */
 	private jwcpxt_service_definition serviceDefinition;
 	/* 
 	 * 
 	 */
-	ServiceDefinitionVO serviceDefinitionVO;
-	ServiceInstanceVO serviceInstanceVO;
-	ServiceDistributionVO serviceDistributionVO;
+	private ServiceDefinitionVO serviceDefinitionVO;
+	private ServiceInstanceVO serviceInstanceVO;
+	private ServiceDistributionVO serviceDistributionVO;
 
 	/*
 	 * 
@@ -49,6 +52,14 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		Gson gson = gsonBuilder.create();
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson(serviceDefinitionVO));
+	}
+
+	public void save_serviceDefinition() throws IOException {
+		if (serviceService.save_serviceDefinition(serviceDefinition)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
 	/*
