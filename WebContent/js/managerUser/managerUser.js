@@ -5,7 +5,7 @@
 function updateUser(event) {
 	$
 			.confirm({
-				title : '新建用户',
+				title : '修改用户',
 				type : 'blue',
 				boxWidth : '500px',
 				useBootstrap : false,
@@ -170,6 +170,7 @@ function addUser() {
 									success : function(data) {
 										if (data == 1) {
 											toastr.success("保存成功");
+											loadData();
 										} else {
 											toastr.error("保存失败");
 										}
