@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_question;
-import com.pphgzs.domain.DTO.OptionDTO;
-import com.pphgzs.domain.DTO.QuestionDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
@@ -48,7 +46,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// 新建
 		List<jwcpxt_question> questionList = new ArrayList<>();
 		// 根据业务Id获取业务对象
-		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO();
+		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO(null,null);
 		// 首先根据业务定义Id获取业务定义对象
 		serviceDefinitionDTO = serviceService.get_serviceDefinitionDTO_byServiceDefinitionID(
 				questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id());
