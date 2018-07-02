@@ -59,7 +59,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("screenSearch", "%" + serviceDefinitionVO.getScreenSearch() + "%");
 		}
-		if (serviceDefinitionVO.getScreenUnit().endsWith("")) {
+		if (serviceDefinitionVO.getScreenUnit().equals("")) {
 			query.setParameter("screenUnit", "%%");
 		} else {
 			query.setParameter("screenUnit", "%" + serviceDefinitionVO.getScreenUnit() + "%");

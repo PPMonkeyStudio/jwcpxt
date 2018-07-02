@@ -9,4 +9,6 @@ public interface ServiceService {
 
 	boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition);
 
+	boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinition);
+
 }

@@ -38,7 +38,9 @@ public class MyTest {
 	@Test
 	public void ttt() {
 		ServiceDefinitionVO serviceDefinitionVO = new ServiceDefinitionVO();
+		serviceDefinitionVO.setScreenUnit("asdfgasdg");
 		serviceDefinitionVO = serviceService.get_serviceDefinitionVO(serviceDefinitionVO);
 		System.out.println(serviceDefinitionVO);
 	}
+
 }

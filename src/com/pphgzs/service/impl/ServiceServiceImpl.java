@@ -76,4 +76,10 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 
 	}
+
+	@Override
+	public boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

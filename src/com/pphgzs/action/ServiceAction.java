@@ -62,6 +62,14 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		}
 	}
 
+	public void update_serviceDefinition() throws IOException {
+		if (serviceService.update_serviceDefinition(serviceDefinition)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
 	/*
 	 * 
 	 */
