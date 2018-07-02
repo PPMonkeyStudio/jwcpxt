@@ -12,6 +12,7 @@
 			<result name="skipManagerIndex">/WEB-INF/view/managerData/managerIndex.jsp</result>
 			<result name="skipManagerUnit">/WEB-INF/view/managerData/managerUnit.jsp</result>
 			<result name="skipManagerUser">/WEB-INF/view/managerData/managerUser.jsp</result>
+			<result name="skipManagerService">/WEB-INF/view/managerData/managerService.jsp</result>
 		</action>
 	</package>
 </struts>
