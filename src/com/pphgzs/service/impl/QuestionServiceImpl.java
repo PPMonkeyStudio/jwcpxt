@@ -34,5 +34,4 @@ public class QuestionServiceImpl implements QuestionService {
 	public void setUnitService(UnitService unitService) {
 		this.unitService = unitService;
 	}
-
 }
