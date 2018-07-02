@@ -112,4 +112,6 @@ a:hover {
 </script>
 <script type="text/javascript"
 	src="<%=basePath%>js/managerService/showService.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>js/managerService/managerService.js"></script>
 </html>
