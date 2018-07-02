@@ -78,7 +78,7 @@ function updateService(event) {
 				boxWidth : '500px',
 				useBootstrap : false,
 				content : '<div><form id="update_service">'
-						+ '<label>业务名：</label><input id="serviceDefinition_name_add" class="form-control" name="serviceDefinition.service_definition_describe">'
+						+ '<label>业务名：</label><input id="serviceDefinition_name_update" class="form-control" name="serviceDefinition.service_definition_describe">'
 						+ '</form></div>',
 				buttons : {
 					cancel : {
@@ -125,10 +125,11 @@ function updateService(event) {
 				},
 				onContentReady : function() {
 					$.ajax({
-						url : '/jwcpxt/Service/get_serviceDefinition_byserviceDefinitionID',
+						url : '/jwcpxt/Service/get_serviceDefinition_byserviceDefinitionID?serviceDefinition.jwcpxt_service_definition_id='+event.id,
 						type : 'GET',
 						success : function(data) {
-							
+							var serviceDO = JSON.parse(data); 
+							$('#serviceDefinition_name_update').val(serviceDO.service_definition_describe);
 						}
 					})
 				}
