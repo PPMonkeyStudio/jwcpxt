@@ -28,4 +28,8 @@ public class SkipAction {
 	public String skipManagerUser() {
 		return "skipManagerUser";
 	}
+
+	public String skipManagerService() {
+		return "skipManagerService";
+	}
 }

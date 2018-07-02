@@ -27,7 +27,7 @@ public class UserDaoImpl implements UserDao {
 		Session session = getSession();
 		String hql = "select count(*) from jwcpxt_user "
 				+ " where ( user_account like :screenSearch or user_name like :screenSearch ) "
-				+ " and user_unit like :screenUnit " + " order by user_gmt_create";
+				+ " and user_unit like :screenUnit ";
 		Query query = session.createQuery(hql);
 		//
 		if (userVO.getScreenSearch().equals("")) {
@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 		} else {
 			query.setParameter("screenSearch", "%" + userVO.getScreenSearch() + "%");
 		}
-		if (userVO.getScreenUnit().endsWith("")) {
+		if (userVO.getScreenUnit().equals("")) {
 			query.setParameter("screenUnit", "%%");
 		} else {
 			query.setParameter("screenUnit", "%" + userVO.getScreenUnit() + "%");
@@ -68,11 +68,11 @@ public class UserDaoImpl implements UserDao {
 		query.setFirstResult((userVO.getCurrPage() - 1) * userVO.getPageSize());
 		query.setMaxResults(userVO.getPageSize());
 		//
-		List<jwcpxt_user> userList = null;
-		userList = query.list();
+		List<jwcpxt_user> list = null;
+		list = query.list();
 		//
 		session.clear();
-		return userList;
+		return list;
 	}
 
 	@Override

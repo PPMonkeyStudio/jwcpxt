@@ -7,83 +7,31 @@ import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 public class ServiceDefinitionVO {
 
 	private List<ServiceDefinitionDTO> serviceDefinitionDTOList;
-
+	/*
+	 * 
+	 */
+	// 搜索
+	private String screenSearch = "";
 	// 筛选单位
+	private String screenUnit = "";
 
-	private String screen_unit = "";
-
+	/*
+	 * 
+	 */
 	// 当前页
-	private int pageIndex = 1;
-
-	// 总记录数
-	private int totalRecords = 0;
-
-	// 每页显示记录数
-	private int pageSize = 10;
-
+	private int currPage = 1;
 	// 总页数
-	private int totalPages = 1;
-
-	// 是否有上一页
-	private boolean HavePrePage = false;
-
-	// 是否有下一页
-	private boolean HaveNextPage = false;
+	private int totalPage = 1;
+	// 总记录数
+	private int totalCount = 0;
+	// 每页记录数
+	private int pageSize = 10;
 
 	@Override
 	public String toString() {
-		return "ServiceDefinitionVO 【\nserviceDefinitionDTOList=" + serviceDefinitionDTOList + ", \nscreen_unit="
-				+ screen_unit + ", \npageIndex=" + pageIndex + ", \ntotalRecords=" + totalRecords + ", \npageSize="
-				+ pageSize + ", \ntotalPages=" + totalPages + ", \nHavePrePage=" + HavePrePage + ", \nHaveNextPage="
-				+ HaveNextPage + "\n】";
-	}
-
-	public String getScreen_unit() {
-		return screen_unit;
-	}
-
-	public void setScreen_unit(String screen_unit) {
-		this.screen_unit = screen_unit;
-	}
-
-	public int getPageIndex() {
-		return pageIndex;
-	}
-
-	public void setPageIndex(int pageIndex) {
-		this.pageIndex = pageIndex;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public int getTotalPages() {
-		return totalPages;
-	}
-
-	public void setTotalPages(int totalPages) {
-		this.totalPages = totalPages;
-	}
-
-	public boolean isHavePrePage() {
-		return HavePrePage;
-	}
-
-	public void setHavePrePage(boolean havePrePage) {
-		HavePrePage = havePrePage;
-	}
-
-	public boolean isHaveNextPage() {
-		return HaveNextPage;
-	}
-
-	public void setHaveNextPage(boolean haveNextPage) {
-		HaveNextPage = haveNextPage;
+		return "ServiceDefinitionVO 【\nserviceDefinitionDTOList=" + serviceDefinitionDTOList + ", \nscreenSearch="
+				+ screenSearch + ", \nscreenUnit=" + screenUnit + ", \ncurrPage=" + currPage + ", \ntotalPage="
+				+ totalPage + ", \ntotalCount=" + totalCount + ", \npageSize=" + pageSize + "\n】";
 	}
 
 	public List<ServiceDefinitionDTO> getServiceDefinitionDTOList() {
@@ -94,12 +42,52 @@ public class ServiceDefinitionVO {
 		this.serviceDefinitionDTOList = serviceDefinitionDTOList;
 	}
 
-	public int getTotalRecords() {
-		return totalRecords;
+	public String getScreenSearch() {
+		return screenSearch;
 	}
 
-	public void setTotalRecords(int totalRecords) {
-		this.totalRecords = totalRecords;
+	public void setScreenSearch(String screenSearch) {
+		this.screenSearch = screenSearch;
+	}
+
+	public String getScreenUnit() {
+		return screenUnit;
+	}
+
+	public void setScreenUnit(String screenUnit) {
+		this.screenUnit = screenUnit;
+	}
+
+	public int getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
+
+	public int getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 
 }

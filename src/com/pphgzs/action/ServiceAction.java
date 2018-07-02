@@ -16,7 +16,6 @@ import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceDistributionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
-import com.pphgzs.thread.ServiceDistributionThread;
 
 @SuppressWarnings("serial")
 public class ServiceAction extends ActionSupport implements ServletResponseAware, ServletRequestAware {
@@ -24,20 +23,20 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private ServiceService serviceService;
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
+	/*
+	 * 
+	 */
 	private jwcpxt_service_definition serviceDefinition;
 	/* 
 	 * 
 	 */
-	ServiceDefinitionVO serviceDefinitionVO;
-	ServiceInstanceVO serviceInstanceVO;
-	ServiceDistributionVO serviceDistributionVO;
+	private ServiceDefinitionVO serviceDefinitionVO;
+	private ServiceInstanceVO serviceInstanceVO;
+	private ServiceDistributionVO serviceDistributionVO;
 
 	/*
 	 * 
 	 */
-	public String serviceList() {
-		return "serviceList";
-	}
 
 	/**
 	 * 查询业务定义VO类
@@ -55,69 +54,18 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.getWriter().write(gson.toJson(serviceDefinitionVO));
 	}
 
-	/**
-	 * 查询业务实例的VO类
-	 * 
-	 * @throws IOException
-	 */
-	public void get_serviceInstanceVO() throws IOException {
-		serviceInstanceVO = serviceService.get_serviceInstanceVO();
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(serviceInstanceVO));
-	}
-
-	/**
-	 * 查询业务分配的VO类
-	 * 
-	 * @throws IOException
-	 */
-	public void get_serviceDistributionVO() throws IOException {
-		serviceDistributionVO = serviceService.get_serviceDistributionVO();
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(serviceDistributionVO));
-	}
-
-	public void get_serviceDistributionThreadState() throws IOException {
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(ServiceDistributionThread.getServiceDistributionThreadState()));
-	}
-
-	public void startServiceDistributionThread() throws IOException {
-		ServiceDistributionThread.startServiceDistributionThread();
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson("1"));
-	}
-
-	public void stopServiceDistributionThread() throws IOException {
-		ServiceDistributionThread.stopServiceDistributionThread();
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson("1"));
-	}
-
-	/*
-	 * 创建业务定义
-	 */
-	public void add_serviceDefinition() throws IOException {
-		if (serviceService.add_serviceDefinition(serviceDefinition)) {
-			http_response.setContentType("text/html;charset=utf-8");
+	public void save_serviceDefinition() throws IOException {
+		if (serviceService.save_serviceDefinition(serviceDefinition)) {
 			http_response.getWriter().write("1");
 		} else {
-			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	public void update_serviceDefinition() throws IOException {
+		if (serviceService.update_serviceDefinition(serviceDefinition)) {
+			http_response.getWriter().write("1");
+		} else {
 			http_response.getWriter().write("-1");
 		}
 	}
