@@ -50,6 +50,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
+		//
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson(serviceDefinitionVO));
 	}
@@ -68,6 +69,18 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		} else {
 			http_response.getWriter().write("-1");
 		}
+	}
+
+	public void get_serviceDefinition_byserviceDefinitionID() throws IOException {
+		serviceDefinition = serviceService
+				.get_serviceDefinition_byserviceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
+
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceDefinition));
 	}
 
 	/*
