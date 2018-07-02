@@ -90,4 +90,12 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 		return false;
 	}
+
+	@Override
+	public jwcpxt_service_definition get_serviceDefinition_byserviceDefinitionID(String serviceDefinitionID) {
+		return serviceDao.get_serviceDefinition_byServiceDefinitionID(serviceDefinitionID);
+	}
+	/*
+	 * 
+	 */
 }
