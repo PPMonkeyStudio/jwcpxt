@@ -52,23 +52,33 @@ a:hover {
 										<thead>
 											<tr>
 												<td>业务名</td>
+												<td><select onchange="changeQuery()" id="searchUnit"
+													class="form-control">
+														<option value="">请选择单位</option>
+												</select></td>
 												<td>创建时间</td>
 												<td>操作</td>
 											</tr>
 										</thead>
 										<tbody>
-											<template>
+											<template
+												v-for="serviceDefinitionDTO in serviceVO.serviceDefinitionDTOList">
 											<tr>
-
+												<td>{{
+													serviceDefinitionDTO.serviceDefinition.service_definition_describe
+													}}</td>
+												<td>{{
+													serviceDefinitionDTO.serviceDefinition.service_definition_gmt_create
+													}}</td>
+												<td>{{ serviceDefinitionDTO.unit.unit_name }}</td>
 											</tr>
 											</template>
 										</tbody>
 									</table>
 									<!-- 分页 -->
 									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage">{{
-												userVO.currPage }}</span></span> <span>共:<span id="totalPage">{{
-												userVO.totalPage }}</span>页
+										<span>当前页数:<span id="currPage"></span></span> <span>共:<span
+											id="totalPage"></span>页
 										</span> <span onclick="skipToIndexPage()" id="indexPage"
 											class="pageOperation">首页</span> <span
 											onclick="skipToPrimaryPage()" id="previousPage"
@@ -100,4 +110,6 @@ a:hover {
 	/* 处理侧边栏选项 */
 	$('#sideManager').attr("class", "active");
 </script>
+<script type="text/javascript"
+	src="<%=basePath%>js/managerService/showService.js"></script>
 </html>
