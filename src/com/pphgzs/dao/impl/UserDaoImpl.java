@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.UserDao;
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.VO.UserVO;
 
 public class UserDaoImpl implements UserDao {
 	private SessionFactory sessionFactory;
@@ -22,16 +23,69 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public int get_userTotalCount_byUserVO(UserVO userVO) {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_user "
+				+ " where ( user_account like :screenSearch or user_name like :screenSearch ) "
+				+ " and user_unit like :screenUnit " + " order by user_gmt_create";
+		Query query = session.createQuery(hql);
+		//
+		if (userVO.getScreenSearch().equals("")) {
+			query.setParameter("screenSearch", "%%");
+		} else {
+			query.setParameter("screenSearch", "%" + userVO.getScreenSearch() + "%");
+		}
+		if (userVO.getScreenUnit().equals("")) {
+			query.setParameter("screenUnit", "%%");
+		} else {
+			query.setParameter("screenUnit", "%" + userVO.getScreenUnit() + "%");
+		}
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public List<jwcpxt_user> list_user_byUserVO(UserVO userVO) {
+
+		Session session = getSession();
+		String hql = "from jwcpxt_user " + " where ( user_account like :screenSearch or user_name like :screenSearch ) "
+				+ " and user_unit like :screenUnit " + " order by user_gmt_create";
+		Query query = session.createQuery(hql);
+		//
+		if (userVO.getScreenSearch().equals("")) {
+			query.setParameter("screenSearch", "%%");
+		} else {
+			query.setParameter("screenSearch", "%" + userVO.getScreenSearch() + "%");
+		}
+		if (userVO.getScreenUnit().endsWith("")) {
+			query.setParameter("screenUnit", "%%");
+		} else {
+			query.setParameter("screenUnit", "%" + userVO.getScreenUnit() + "%");
+		}
+		query.setFirstResult((userVO.getCurrPage() - 1) * userVO.getPageSize());
+		query.setMaxResults(userVO.getPageSize());
+		//
+		List<jwcpxt_user> userList = null;
+		userList = query.list();
+		//
+		session.clear();
+		return userList;
+	}
+
+	@Override
 	public List<jwcpxt_user> list_user_all() {
-		List<jwcpxt_user> user_List = new ArrayList<jwcpxt_user>();
+		List<jwcpxt_user> userList = new ArrayList<jwcpxt_user>();
 
 		Session session = getSession();
 		String hql = "from jwcpxt_user";
 		Query query = session.createQuery(hql);
-		user_List = query.list();
+		userList = query.list();
 		session.clear();
 
-		return user_List;
+		return userList;
 	}
 
 	@Override
@@ -53,10 +107,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean delete_user(jwcpxt_user user) {
+	public boolean delete_user(String userID) {
 		Session session = getSession();
-		String hql = "delete from jwcpxt_user where jwcpxt_user_id='" + user.getJwcpxt_user_id() + "'";
+		String hql = "delete from jwcpxt_user where jwcpxt_user_id=:userID";
 		Query query = session.createQuery(hql);
+		//
+		query.setParameter("userID", "userID");
+		//
 		query.executeUpdate();
 		session.flush();
 		return true;
@@ -65,8 +122,12 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public jwcpxt_user get_user_byUserID(String userID) {
 		Session session = getSession();
-		String hql = "from jwcpxt_user where jwcpxt_user_id='" + userID + "'";
+		String hql = "from jwcpxt_user where jwcpxt_user_id=:userID ";
+		//
 		Query query = session.createQuery(hql);
+		//
+		query.setParameter("userID", userID);
+		//
 		jwcpxt_user newUser = (jwcpxt_user) query.uniqueResult();
 		session.clear();
 		return newUser;
@@ -76,8 +137,11 @@ public class UserDaoImpl implements UserDao {
 	public boolean ifExist_user_byUserAccount(String account) {
 		Session session = getSession();
 
-		String hql = "from jwcpxt_user where user_account='" + account + "'";
+		String hql = "from jwcpxt_user where user_account=:account";
 		Query query = session.createQuery(hql);
+		//
+		query.setParameter("account", account);
+		//
 		jwcpxt_user newUser = (jwcpxt_user) query.uniqueResult();
 		session.clear();
 		if (newUser != null) {

@@ -43,7 +43,9 @@ public class UnitServiceImpl implements UnitService {
 
 		if (unitDao.get_unit_byUnitID(unit.getJwcpxt_unit_id()) == null) {
 			unit.setJwcpxt_unit_id(uuidUtil.getUuid());
-			unit.setUnit_reorganizer("none");
+			if (unit.getUnit_reorganizer() == null) {
+				unit.setUnit_reorganizer("none");
+			}
 			String time = TimeUtil.getStringSecond();
 			unit.setUnit_gmt_create(time);
 			unit.setUnit_gmt_modified(time);
