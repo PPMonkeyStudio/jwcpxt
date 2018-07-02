@@ -60,7 +60,7 @@ function changeQuery() {
 
 // 首页
 function skipToIndexPage() {
-	if (serviceVue.serviceVOcurrPage == '1') {
+	if (serviceVue.serviceVO.currPage == 1) {
 		toastr.error("已经是首页");
 	} else {
 		queryTemp.currPage = '1'
@@ -69,7 +69,7 @@ function skipToIndexPage() {
 }
 // 上一页
 function skipToPrimaryPage() {
-	if (serviceVue.serviceVO.currPage <= '1') {
+	if (serviceVue.serviceVO.currPage <= 1) {
 		toastr.error("没有上一页了哦");
 	} else {
 		queryTemp.currPage = --serviceVue.serviceVO.currPage;

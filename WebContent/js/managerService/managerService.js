@@ -28,7 +28,7 @@ function addService() {
 								var formData = new FormData(document
 										.getElementById("add_service"));
 								$.ajax({
-									url : '',
+									url : '/jwcpxt/Service/save_serviceDefinition',
 									type : 'POST',
 									data : formData,
 									processData : false,
@@ -44,6 +44,7 @@ function addService() {
 								})
 							} else {
 								toastr.error("不能有空项");
+								return false;
 							}
 
 						}

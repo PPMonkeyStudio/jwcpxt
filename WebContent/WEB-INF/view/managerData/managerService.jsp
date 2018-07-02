@@ -67,18 +67,20 @@ a:hover {
 												<td>{{
 													serviceDefinitionDTO.serviceDefinition.service_definition_describe
 													}}</td>
+												<td>{{ serviceDefinitionDTO.unit.unit_name }}</td>
 												<td>{{
 													serviceDefinitionDTO.serviceDefinition.service_definition_gmt_create
 													}}</td>
-												<td>{{ serviceDefinitionDTO.unit.unit_name }}</td>
+												<td><a :id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
+													onclick="updateUser(this)"><i class="ti-pencil-alt"></i></a></td>
 											</tr>
 											</template>
 										</tbody>
 									</table>
 									<!-- 分页 -->
 									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage"></span></span> <span>共:<span
-											id="totalPage"></span>页
+										<span>当前页数:<span id="currPage"></span>{{ serviceVO.currPage }}</span> <span>共:<span
+											id="totalPage">{{ serviceVO.totalPage }}</span>页
 										</span> <span onclick="skipToIndexPage()" id="indexPage"
 											class="pageOperation">首页</span> <span
 											onclick="skipToPrimaryPage()" id="previousPage"
