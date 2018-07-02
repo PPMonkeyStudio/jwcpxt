@@ -78,8 +78,16 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
-	public boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
-		// TODO Auto-generated method stub
+	public boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinitionNew) {
+		jwcpxt_service_definition serviceDefinitionOld = serviceDao
+				.get_serviceDefinition_byServiceDefinitionID(serviceDefinitionNew.getJwcpxt_service_definition_id());
+		if (serviceDefinitionOld == null) {
+			return false;
+		}
+		serviceDefinitionOld.setService_definition_describe(serviceDefinitionNew.getService_definition_describe());
+		if (serviceDao.update_serviceDefinition(serviceDefinitionOld)) {
+			return true;
+		}
 		return false;
 	}
 }
