@@ -1,14 +1,20 @@
 package com.pphgzs.action;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
 
 @SuppressWarnings("serial")
@@ -23,6 +29,8 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	 */
 	private jwcpxt_question question;
 	private jwcpxt_option option;
+	private jwcpxt_service_definition serviceDefinition;
+	private QuestionVO questionVO;
 	private int moveOptionAction;
 	private int moveQuestionAction;
 
@@ -41,8 +49,30 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 		// TODO
 	}
 
-	public void list_questionDTO_byServiceDefinition() {
-		// TODO
+	/**
+	 * 
+	 */
+	public void list_questionDTO_byServiceDefinitionID() {
+
+	}
+
+	/**
+	 * 获取问题VO
+	 * 
+	 * @throws IOException
+	 */
+	public void get_questionVO() throws IOException {
+		if (questionVO == null) {
+			questionVO = new QuestionVO();
+		}
+		questionVO = questionService.get_questionVO(questionVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(questionVO));
 	}
 
 	/*
@@ -113,6 +143,22 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 
 	public void setMoveQuestionAction(int moveQuestionAction) {
 		this.moveQuestionAction = moveQuestionAction;
+	}
+
+	public jwcpxt_service_definition getServiceDefinition() {
+		return serviceDefinition;
+	}
+
+	public void setServiceDefinition(jwcpxt_service_definition serviceDefinition) {
+		this.serviceDefinition = serviceDefinition;
+	}
+
+	public QuestionVO getQuestionVO() {
+		return questionVO;
+	}
+
+	public void setQuestionVO(QuestionVO questionVO) {
+		this.questionVO = questionVO;
 	}
 
 }
