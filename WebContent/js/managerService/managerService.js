@@ -79,7 +79,6 @@ function updateService(event) {
 				useBootstrap : false,
 				content : '<div><form id="update_service">'
 						+ '<label>业务名：</label><input id="serviceDefinition_name_add" class="form-control" name="serviceDefinition.service_definition_describe">'
-						+ '<label>所属单位：</label><select id="unit_" class="form-control" name="serviceDefinition.service_definition_unit"></select>'
 						+ '</form></div>',
 				buttons : {
 					cancel : {
@@ -122,19 +121,6 @@ function updateService(event) {
 					}
 				},
 				onContentReady : function() {
-					$.ajax({
-						url : '/jwcpxt/Unit/list_unit_all',
-						type : 'GET',
-						success : function(data) {
-							var unitList = JSON.parse(data);
-							for (var i = 0; i < unitList.length; i++) {
-								$('#unit_').html(
-										$('#unit_').html() + "<option value='"
-												+ unitList[i].jwcpxt_unit_id
-												+ "'>" + unitList[i].unit_name
-												+ "</option>");
-							}
-							
 						
 							$.ajax({
 								url:'',
@@ -142,9 +128,6 @@ function updateService(event) {
 								success:function(data){
 									
 								}
-							})
-							
-						}
 					})
 				}
 			})
