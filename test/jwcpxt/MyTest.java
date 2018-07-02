@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.pphgzs.domain.VO.UserVO;
+import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UserService;
 
@@ -37,7 +37,8 @@ public class MyTest {
 
 	@Test
 	public void ttt() {
-		UserVO userVO = new UserVO();
-		userVO = userService.get_userVO(userVO);
+		ServiceDefinitionVO serviceDefinitionVO = new ServiceDefinitionVO();
+		serviceDefinitionVO = serviceService.get_serviceDefinitionVO(serviceDefinitionVO);
+		System.out.println(serviceDefinitionVO);
 	}
 }
