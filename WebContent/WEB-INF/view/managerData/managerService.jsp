@@ -72,7 +72,7 @@ a:hover {
 													serviceDefinitionDTO.serviceDefinition.service_definition_gmt_create
 													}}</td>
 												<td><a :id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
-													onclick="updateUser(this)"><i class="ti-pencil-alt"></i></a></td>
+													onclick="updateService(this)"><i class="ti-pencil-alt"></i></a></td>
 											</tr>
 											</template>
 										</tbody>
