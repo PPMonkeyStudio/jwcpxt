@@ -125,7 +125,7 @@ function updateService(event) {
 				},
 				onContentReady : function() {
 					$.ajax({
-						url : '/jwcpxt/Service/get_serviceDefinition_byserviceDefinitionID?serviceDefinition.jwcpxt_service_definition_id='+event.id,
+						url : '/jwcpxt/Service/get_serviceDefinition_byServiceDefinitionID?serviceDefinition.jwcpxt_service_definition_id='+event.id,
 						type : 'GET',
 						success : function(data) {
 							var serviceDO = JSON.parse(data); 
