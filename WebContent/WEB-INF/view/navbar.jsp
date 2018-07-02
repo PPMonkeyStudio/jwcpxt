@@ -23,7 +23,7 @@
 				<li><a href="#"> 
 						<p>问卷</p>
 				</a></li>
-				<li><a href="#"> 
+				<li><a href="<%=basePath %>Skip/skipManagerService"> 
 						<p>业务</p>
 				</a></li>
 				<li><a href="<%=basePath %>Skip/skipManagerUser">
