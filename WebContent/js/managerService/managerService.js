@@ -95,7 +95,10 @@ function updateService(event) {
 							if ($('#serviceDefinition_name_add').val() != '') {
 								var formData = new FormData(document
 										.getElementById("update_service"));
-								formData.append("serviceDefinition.jwcpxt_service_definition_id",event.id);
+								formData
+										.append(
+												"serviceDefinition.jwcpxt_service_definition_id",
+												event.id);
 								$
 										.ajax({
 											url : '/jwcpxt/Service/update_serviceDefinition',
@@ -121,15 +124,13 @@ function updateService(event) {
 					}
 				},
 				onContentReady : function() {
-						
-							$.ajax({
-								url:'',
-								type:'GET',
-								success:function(data){
-									
-								}
+					$.ajax({
+						url : '/jwcpxt/Service/get_serviceDefinition_byserviceDefinitionID',
+						type : 'GET',
+						success : function(data) {
+							
+						}
 					})
 				}
 			})
 }
-
