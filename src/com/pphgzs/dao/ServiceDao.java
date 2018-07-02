@@ -16,4 +16,8 @@ public interface ServiceDao {
 
 	boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition);
 
+	jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String jwcpxt_service_definition_id);
+
+	boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinitionOld);
+
 }

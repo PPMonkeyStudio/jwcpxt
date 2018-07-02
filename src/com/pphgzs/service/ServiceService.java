@@ -11,4 +11,6 @@ public interface ServiceService {
 
 	boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinition);
 
+	jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String serviceDefinitionID);
+
 }
