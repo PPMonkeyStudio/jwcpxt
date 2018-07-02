@@ -71,9 +71,9 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		}
 	}
 
-	public void get_serviceDefinition_byserviceDefinitionID() throws IOException {
+	public void get_serviceDefinition_byServiceDefinitionID() throws IOException {
 		serviceDefinition = serviceService
-				.get_serviceDefinition_byserviceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
+				.get_serviceDefinition_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
 
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据

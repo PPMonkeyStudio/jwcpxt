@@ -92,7 +92,7 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
-	public jwcpxt_service_definition get_serviceDefinition_byserviceDefinitionID(String serviceDefinitionID) {
+	public jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String serviceDefinitionID) {
 		return serviceDao.get_serviceDefinition_byServiceDefinitionID(serviceDefinitionID);
 	}
 	/*
