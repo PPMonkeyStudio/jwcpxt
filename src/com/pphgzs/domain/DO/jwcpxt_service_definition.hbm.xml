@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-6-15 13:27:48 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-7-3 11:35:01 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_service_definition" table="JWCPXT_SERVICE_DEFINITION">
         <id name="jwcpxt_service_definition_id" type="java.lang.String">
@@ -13,6 +13,9 @@
         </property>
         <property name="service_definition_unit" type="java.lang.String">
             <column name="SERVICE_DEFINITION_UNIT" />
+        </property>
+        <property name="service_definition_sampling_proportion" type="int">
+            <column name="SERVICE_DEFINITION_SAMPLING_PROPORTION" />
         </property>
         <property name="service_definition_gmt_create" type="java.lang.String">
             <column name="SERVICE_DEFINITION_GMT_CREATE" />
