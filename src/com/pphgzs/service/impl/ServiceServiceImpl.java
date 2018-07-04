@@ -3,6 +3,7 @@ package com.pphgzs.service.impl;
 import java.util.List;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -98,6 +99,11 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String serviceDefinitionID) {
 		return serviceDao.get_serviceDefinition_byServiceDefinitionID(serviceDefinitionID);
+	}
+
+	@Override
+	public List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID) {
+		return serviceDao.list_client_byServiceInstanceID(serviceInstanceID);
 	}
 	/*
 	 * 

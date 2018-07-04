@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -44,6 +45,22 @@ public class ServiceDaoImpl implements ServiceDao {
 		//
 		session.clear();
 		return count;
+	}
+
+	@Override
+	public List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID) {
+
+		Session session = getSession();
+		String hql = "from jwcpxt_service_client serviceClient where serviceClient.service_client_service_instance=:serviceInstanceID";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceInstanceID", serviceInstanceID);
+		//
+		List<jwcpxt_service_client> list = query.list();
+
+		session.clear();
+
+		return list;
 	}
 
 	@Override
