@@ -84,7 +84,11 @@ public class ServiceServiceImpl implements ServiceService {
 		if (serviceDefinitionOld == null) {
 			return false;
 		}
+		// 修改描述
 		serviceDefinitionOld.setService_definition_describe(serviceDefinitionNew.getService_definition_describe());
+		// 修改比例
+		serviceDefinitionOld.setService_definition_sampling_proportion(
+				serviceDefinitionNew.getService_definition_sampling_proportion());
 		if (serviceDao.update_serviceDefinition(serviceDefinitionOld)) {
 			return true;
 		}
