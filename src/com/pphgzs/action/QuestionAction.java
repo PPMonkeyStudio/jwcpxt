@@ -34,25 +34,10 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private int moveOptionAction;
 	private int moveQuestionAction;
 
-	/*
-	 * 创建选择题选项
-	 * 
-	 */
-	public void add_option() {
-		// TODO
-	}
-
-	/*
-	 * 移动选择题选项
-	 */
-	public void move_option() {
-		// TODO
-	}
-
 	/**
-	 * 
+	 * 上移问题顺序
 	 */
-	public void list_questionDTO_byServiceDefinitionID() {
+	public void moveup_question_sort() {
 
 	}
 
@@ -91,7 +76,8 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 
 	/**
 	 * 修改问题
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void update_question() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
