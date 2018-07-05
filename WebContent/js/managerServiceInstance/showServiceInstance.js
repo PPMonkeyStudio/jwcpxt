@@ -20,6 +20,18 @@ $(function(){
 			instanceVO:''
 		}
 	})
+	$.ajax({
+		url:'/jwcpxt/User/list_user_byJurisdiction',
+		type:'POST',
+		data:{
+			'user.user_Jurisdiction_evaluate':'have',
+			'user.user_Jurisdiction_statistics':'',
+			'user.user_Jurisdiction_review':''
+		},
+		success:function(data){
+			
+		}
+	})
 	loadData();
 })
 

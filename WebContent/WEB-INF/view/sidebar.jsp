@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="<%=basePath%>css/navbar/font-awesome.css">
 <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=basePath%>css/bootstrap-select.min.css">
+<link rel="stylesheet" href="<%=basePath%>css/jquery.datetimepicker.css">
 <!-- 项目公用js -->
 <script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 <script src="<%=basePath%>js/bootstrap.min.js"></script>
@@ -31,6 +32,7 @@
 <script src="<%=basePath%>js/jquery.bootstrap.wizard.js"></script>
 <script src="<%=basePath%>js/jquery.slimscroll.min.js"></script>
 <script src="<%=basePath%>js/bootstrap-checkbox-radio.js"></script>
+<script src="<%=basePath%>js/jquery.datetimepicker.full.js"></script>
 <script src="<%=basePath%>js/bootstrap-notify.js"></script>
 <script src="<%=basePath%>js/chartist.min.js"></script>
 <script src="<%=basePath%>js/demo.js"></script>

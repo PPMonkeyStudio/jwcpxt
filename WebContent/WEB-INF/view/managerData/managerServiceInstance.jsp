@@ -44,6 +44,14 @@ a:hover {
 									<input oninput="changeQuery()" id="searchContent"
 										placeholder="请输入搜索内容" class="form-control"
 										style="float: right; width: 250px;">
+									<div style="float: right; margin-right: 10px;">
+										<label>业务发生时间</label> <input oninput="changeQuery()"
+											id="searchContent" placeholder="请输入搜索内容" class="mydate form-control"
+											style="display: inline; width: 150px;"><label>至</label><input
+											oninput="changeQuery()" id="searchContent"
+											placeholder="请输入搜索内容" class="mydate form-control"
+											style="display: inline; width: 150px;">
+									</div>
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
@@ -61,12 +69,36 @@ a:hover {
 												</tr>
 											</thead>
 											<tbody>
+												<template
+													v-for="serviceInstanceDTO in instanceVO.serviceInstanceDTOList">
+												<tr>
+													<td>{{
+														serviceInstanceDTO.serviceInstance.service_instance_nid }}</td>
+													<td>{{
+														serviceInstanceDTO.serviceInstance.service_instance_date
+														}}</td>
+
+													<template v-if="serviceInstanceDTO.judge == undefined">
+													<td><a
+														:id="serviceInstanceDTO.serviceInstance.jwcpxt_service_instance_id"
+														onclick="">分配测评员</a></td>
+													</template>
+													<template v-else>
+													<td>{{ serviceInstanceDTO.judge.user_name }}</td>
+													</template>
+													<td><a
+														:id="serviceInstanceDTO.serviceInstance.jwcpxt_service_instance_id"
+														onclick="">查看</a></td>
+												</tr>
+												</template>
 											</tbody>
 										</table>
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;">
-											<span>当前页数:<span id="currPage"></span>
-											</span> <span>共:<span id="totalPage"></span>页
+											<span>当前页数:<span id="currPage">{{
+													instanceVO.currPage }}</span>
+											</span> <span>共:<span id="totalPage">{{
+													instanceVO.totalPage }}</span>页
 											</span> <span onclick="skipToIndexPage()" id="indexPage"
 												class="pageOperation">首页</span> <span
 												onclick="skipToPrimaryPage()" id="previousPage"
@@ -98,6 +130,27 @@ a:hover {
 <script type="text/javascript">
 	/* 处理侧边栏选项 */
 	$('#sideManager').attr("class", "active");
+</script>
+<script type="text/javascript">
+	$.datetimepicker.setLocale('ch');
+	$('.mydate').datetimepicker({
+		yearStart : 1900, // 设置最小年份
+		yearEnd : 2050, // 设置最大年份
+		yearOffset : 0, // 年偏差
+		timepicker : false, // 关闭时间选项
+		format : 'Y-m-d', // 格式化日期年-月-日
+		minDate : '1900/01/01', // 设置最小日期
+		maxDate : '2050/01/01', // 设置最大日期
+	});
+	$('.mydate_minute').datetimepicker({
+		yearStart : 1900, // 设置最小年份
+		yearEnd : 2050, // 设置最大年份
+		yearOffset : 0, // 年偏差
+		timepicker : true, // 关闭时间选项
+		format : 'Y-m-d H:i', // 格式化日期年-月-日
+		minDate : '1900/01/01', // 设置最小日期
+		maxDate : '2050/01/01', // 设置最大日期
+	});
 </script>
 <script type="text/javascript"
 	src="<%=basePath%>js/managerServiceInstance/managerServiceInstance.js"></script>
