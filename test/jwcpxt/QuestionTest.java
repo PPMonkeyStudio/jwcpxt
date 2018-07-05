@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
@@ -23,6 +24,19 @@ public class QuestionTest {
 	private ServiceService serviceService;
 	@Resource
 	private QuestionService questionService;
+
+	/**
+	 * 测试保存问题
+	 */
+	@Test
+	public void save_questionTest() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setQuestion_describe("我的问题");
+		question.setQuestion_type("1");
+		question.setQuestion_service_definition("d0d75dfd-32b4-4fdd-b56e-d6af20107625");
+		questionService.save_question(question);
+		System.out.println("jieguo");
+	}
 
 	/**
 	 * VO 测试
