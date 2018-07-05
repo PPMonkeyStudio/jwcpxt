@@ -3,6 +3,8 @@ package com.pphgzs.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.test.annotation.Timed;
+
 import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
@@ -148,7 +150,7 @@ public class QuestionServiceImpl implements QuestionService {
 		if (question == null) {
 			return false;
 		}
-		if (question.getQuestion_service_definition() != null && question.getQuestion_service_definition() != null
+		if (question != null && question.getQuestion_service_definition() != null
 				&& question.getQuestion_service_definition().trim().length() > 0) {
 			// 根据业务id获取该问题的最小排序以及最大排序
 			maxQuestionSort = questionDao.get_question_max_sort(question.getQuestion_service_definition());
@@ -314,6 +316,79 @@ public class QuestionServiceImpl implements QuestionService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public boolean move_option(jwcpxt_option option, String moveOptionType) {
+		// 定义
+		int maxOptionSort = 0;
+		int minOptionSort = 0;
+		int currentOptionSort = 0;
+		jwcpxt_option moveOption = new jwcpxt_option();
+		// 判断参数
+		if (option != null && option.getJwcpxt_option_id() != null
+				&& option.getJwcpxt_option_id().trim().length() > 0) {
+			// 获取选项对象
+			option = questionDao.get_option_byOptionId(option.getJwcpxt_option_id().trim());
+		} else {
+			return false;
+		}
+
+		if (option == null) {
+			return false;
+		}
+
+		if (option != null && option.getOption_question() != null && option.getOption_question().trim().length() > 0) {
+			// 根据业务id获取该问题的最小排序以及最大排序
+			maxOptionSort = questionDao.get_option_max_sort(option.getOption_question().trim());
+			minOptionSort = questionDao.get_option_min_sort(option.getOption_question().trim());
+		} else {
+			return false;
+		}
+		if (moveOptionType != null && moveOptionType.trim().length() > 0) {
+			// 1 为上移
+			// 将当前值的位置进行存储
+			currentOptionSort = option.getOption_sort();
+			if ("1".equals(moveOptionType.trim())) {
+				// 如果是最上面的就不能进行移动
+				if (minOptionSort == currentOptionSort) {
+					System.out.println("当前已经是第一个");
+					return false;
+				}
+				// 否则就能进行移动
+				// 获取比他小的最大的问题对象
+				moveOption = questionDao.get_option_moveUpPosition_sort(option);
+			} else if ("2".equals(moveOptionType.trim())) {
+				// 如果是最小面的就不能进行移动
+				if (maxOptionSort == currentOptionSort) {
+					System.out.println("当前已经是最后一个");
+					return false;
+				}
+				// 否则就能进行移动
+				// 获取比他大的最小的那个对象
+				moveOption = questionDao.get_option_moveDownPosition_sort(option);
+			}
+		} else {
+			return false;
+		}
+		// 分别进行存储
+		// 存储当前行
+		option.setOption_sort(moveOption.getOption_sort());
+		option.setOption_gmt_modified(TimeUtil.getStringSecond());
+		try {
+			questionDao.saveOrUpdateObject(option);
+		} catch (Exception e) {
+			return false;
+		}
+		moveOption.setOption_sort(currentOptionSort);
+		moveOption.setOption_gmt_modified(TimeUtil.getStringSecond());
+		try {
+			questionDao.saveOrUpdateObject(moveOption);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 }

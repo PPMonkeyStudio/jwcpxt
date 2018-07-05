@@ -141,10 +141,6 @@ public class QuestionDaoImpl implements QuestionDao {
 	@Override
 	public int get_question_min_sort(String question_service_definition) {
 		Session session = getSession();
-		// String hql = "select question_sort from jwcpxt_question where"
-		// + " question_service_definition = :questionServiceDefinition order by
-		// --question_sort desc limit 1";
-		// Query query = session.createSQLQuery(hql);
 		String hql = "select Min(question_sort) from jwcpxt_question where "
 				+ " question_service_definition = :questionServiceDefinition ";
 		Query query = session.createQuery(hql);
@@ -247,6 +243,52 @@ public class QuestionDaoImpl implements QuestionDao {
 		optionInfo = (jwcpxt_option) query.uniqueResult();
 		session.clear();
 		return optionInfo;
+	}
+
+	@Override
+	public int get_option_min_sort(String questionId) {
+		Session session = getSession();
+		String hql = "select Min(option_sort) from jwcpxt_option where " + " option_question = :questionId ";
+		Query query = session.createQuery(hql);
+		query.setParameter("questionId", questionId);
+		int num = (int) query.uniqueResult();
+		return num;
+	}
+
+	@Override
+	public jwcpxt_option get_option_moveUpPosition_sort(jwcpxt_option option) {
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_option where " + " option_question = :questionId and"
+				+ " option_sort < :currentPosition order by option_sort desc";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(1);
+		query.setParameter("questionId", option.getOption_question());
+		query.setParameter("currentPosition", option.getOption_sort());
+		listOption = query.list();
+		if (listOption.size() > 0) {
+			return listOption.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public jwcpxt_option get_option_moveDownPosition_sort(jwcpxt_option option) {
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_option where " + " option_question = :questionId and"
+				+ " option_sort > :currentPosition order by option_sort desc";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(1);
+		query.setParameter("questionId", option.getOption_question());
+		query.setParameter("currentPosition", option.getOption_sort());
+		listOption = query.list();
+		if (listOption.size() > 0) {
+			return listOption.get(0);
+		} else {
+			return null;
+		}
 	}
 
 }

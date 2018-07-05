@@ -35,4 +35,10 @@ public interface QuestionDao {
 
 	public jwcpxt_option get_option_byOptionId(String trim);
 
+	public int get_option_min_sort(String trim);
+
+	public jwcpxt_option get_option_moveUpPosition_sort(jwcpxt_option option);
+
+	public jwcpxt_option get_option_moveDownPosition_sort(jwcpxt_option option);
+
 }

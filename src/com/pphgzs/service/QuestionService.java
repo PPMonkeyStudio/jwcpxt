@@ -26,4 +26,6 @@ public interface QuestionService {
 
 	public boolean update_option(jwcpxt_option option);
 
+	public boolean move_option(jwcpxt_option option, String moveOptionType);
+
 }

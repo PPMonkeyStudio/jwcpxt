@@ -37,6 +37,16 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	// private int moveQuestionAction;
 	private String moveQuestionType;
 	private List<OptionDTO> listOptionDTO;
+	private String moveOptionType;
+
+	public void move_option() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.move_option(option, moveOptionType)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
 
 	/**
 	 * 修改选项
@@ -192,6 +202,14 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 
 	public void setHttp_response(HttpServletResponse http_response) {
 		this.http_response = http_response;
+	}
+
+	public String getMoveOptionType() {
+		return moveOptionType;
+	}
+
+	public void setMoveOptionType(String moveOptionType) {
+		this.moveOptionType = moveOptionType;
 	}
 
 	public HttpServletRequest getHttp_request() {
