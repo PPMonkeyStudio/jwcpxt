@@ -115,4 +115,76 @@ public class QuestionServiceImpl implements QuestionService {
 		return true;
 	}
 
+	/**
+	 * 移动问题
+	 */
+	@Override
+	public boolean move_question_sort(jwcpxt_question question, String moveQuestionType) {
+		// 定义
+		int maxQuestionSort = 0;
+		int minQuestionSort = 0;
+		int currentQuestionSort = 0;
+		jwcpxt_question moveQuestion = new jwcpxt_question();
+		// 判断参数
+		if (question != null && question.getJwcpxt_question_id() != null
+				&& question.getJwcpxt_question_id().trim().length() > 0) {
+			// 获取问题对象
+			question = questionDao.get_question_byQuestionId(question.getQuestion_service_definition().trim());
+		} else {
+			return false;
+		}
+		if (question == null) {
+			return false;
+		}
+		if (question.getQuestion_service_definition() != null && question.getQuestion_service_definition() != null
+				&& question.getQuestion_service_definition().trim().length() > 0) {
+			// 根据业务id获取该问题的最小排序以及最大排序
+			maxQuestionSort = questionDao.get_question_max_sort(question.getQuestion_service_definition());
+			minQuestionSort = questionDao.get_question_min_sort(question.getQuestion_service_definition());
+		} else {
+			return false;
+		}
+		if (moveQuestionType != null && moveQuestionType.trim().length() > 0) {
+			// 1 为上移
+			// 将当前值的位置进行存储
+			currentQuestionSort = question.getQuestion_sort();
+			if ("1".equals(moveQuestionType.trim())) {
+				// 如果是最上面的就不能进行移动
+				if (minQuestionSort == currentQuestionSort) {
+					return false;
+				}
+				// 否则就能进行移动
+				// 获取比他小的最大的问题对象
+				moveQuestion = questionDao.get_question_moveUpPosition_sort(question);
+			} else if ("2".equals(moveQuestionType.trim())) {
+				// 如果是最小面的就不能进行移动
+				if (maxQuestionSort == currentQuestionSort) {
+					return false;
+				}
+				// 否则就能进行移动
+				// 获取比他大的最小的那个对象
+				moveQuestion = questionDao.get_question_moveDownPosition_sort(question);
+			}
+		} else {
+			return false;
+		}
+		// 分别进行存储
+		// 存储当前行
+		question.setQuestion_sort(moveQuestion.getQuestion_sort());
+		question.setQuestion_gmt_modified(TimeUtil.getStringSecond());
+		try {
+			questionDao.saveOrUpdateObject(question);
+		} catch (Exception e) {
+			return false;
+		}
+		moveQuestion.setQuestion_sort(currentQuestionSort);
+		moveQuestion.setQuestion_gmt_modified(TimeUtil.getStringSecond());
+		try {
+			questionDao.saveOrUpdateObject(moveQuestion);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 }

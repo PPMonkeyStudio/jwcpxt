@@ -17,4 +17,10 @@ public interface QuestionDao {
 
 	public jwcpxt_question get_question_byQuestionId(String trim);
 
+	public int get_question_min_sort(String question_service_definition);
+
+	public jwcpxt_question get_question_moveUpPosition_sort(jwcpxt_question question);
+
+	public jwcpxt_question get_question_moveDownPosition_sort(jwcpxt_question question);
+
 }

@@ -112,9 +112,13 @@ public class QuestionDaoImpl implements QuestionDao {
 	@Override
 	public int get_question_max_sort(String question_service_definition) {
 		Session session = getSession();
-		String hql = "select question_sort from jwcpxt_question where"
-				+ " question_service_definition = :questionServiceDefinition order by --question_sort desc limit 1";
-		Query query = session.createSQLQuery(hql);
+		// String hql = "select question_sort from jwcpxt_question where"
+		// + " question_service_definition = :questionServiceDefinition order by
+		// --question_sort desc limit 1";
+		// Query query = session.createSQLQuery(hql);
+		String hql = "select Max(question_sort) from jwcpxt_question where "
+				+ " question_service_definition = :questionServiceDefinition ";
+		Query query = session.createQuery(hql);
 		query.setParameter("questionServiceDefinition", question_service_definition);
 		int num = (int) query.uniqueResult();
 		return num;
@@ -133,6 +137,57 @@ public class QuestionDaoImpl implements QuestionDao {
 		questionInfo = (jwcpxt_question) query.uniqueResult();
 		session.clear();
 		return questionInfo;
+	}
+
+	@Override
+	public int get_question_min_sort(String question_service_definition) {
+		Session session = getSession();
+		// String hql = "select question_sort from jwcpxt_question where"
+		// + " question_service_definition = :questionServiceDefinition order by
+		// --question_sort desc limit 1";
+		// Query query = session.createSQLQuery(hql);
+		String hql = "select Min(question_sort) from jwcpxt_question where "
+				+ " question_service_definition = :questionServiceDefinition ";
+		Query query = session.createQuery(hql);
+		query.setParameter("questionServiceDefinition", question_service_definition);
+		int num = (int) query.uniqueResult();
+		return num;
+	}
+
+	@Override
+	public jwcpxt_question get_question_moveUpPosition_sort(jwcpxt_question question) {
+		List<jwcpxt_question> listQuestion = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_question where " + " question_service_definition = :questionServiceDefinition and "
+				+ "question_sort < :currentPosition order by question_sort desc";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(1);
+		query.setParameter("questionServiceDefinition", question.getQuestion_service_definition());
+		query.setParameter("currentPosition", question.getQuestion_sort());
+		listQuestion = query.list();
+		if (listQuestion.size() > 0) {
+			return listQuestion.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public jwcpxt_question get_question_moveDownPosition_sort(jwcpxt_question question) {
+		List<jwcpxt_question> listQuestion = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_question where " + " question_service_definition = :questionServiceDefinition and"
+				+ " question_sort > :currentPosition order by question_sort";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(1);
+		query.setParameter("questionServiceDefinition", question.getQuestion_service_definition());
+		query.setParameter("currentPosition", question.getQuestion_sort());
+		listQuestion = query.list();
+		if (listQuestion.size() > 0) {
+			return listQuestion.get(0);
+		} else {
+			return null;
+		}
 	}
 
 }

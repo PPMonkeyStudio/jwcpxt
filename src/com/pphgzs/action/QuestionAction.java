@@ -33,12 +33,20 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private QuestionVO questionVO;
 	private int moveOptionAction;
 	private int moveQuestionAction;
+	private String moveQuestionType;
 
 	/**
-	 * 上移问题顺序
+	 * 移动问题顺序
+	 * 
+	 * @throws IOException
 	 */
-	public void moveup_question_sort() {
-
+	public void move_question_sort() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.move_question_sort(question,moveQuestionType)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
 	/**
@@ -94,9 +102,18 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	/*
 	 *  
 	 */
+
 	@Override
 	public void setServletRequest(HttpServletRequest http_request) {
 		this.http_request = http_request;
+	}
+
+	public String getMoveQuestionType() {
+		return moveQuestionType;
+	}
+
+	public void setMoveQuestionType(String moveQuestionType) {
+		this.moveQuestionType = moveQuestionType;
 	}
 
 	@Override
