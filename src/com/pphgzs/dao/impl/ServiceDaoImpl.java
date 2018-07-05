@@ -12,6 +12,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
+import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public class ServiceDaoImpl implements ServiceDao {
 	private SessionFactory sessionFactory;
@@ -22,6 +23,38 @@ public class ServiceDaoImpl implements ServiceDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	@Override
+	public int get_serviceInstanceTotalCount_byServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_service_instance "
+				+ " where service_instance_judge like :screenServiceInstanceJudge "
+				+ " and service_instance_date >= :screenServiceInstanceStartDate "
+				+ " and service_instance_date <= :screenServiceInstanceStopDate ";
+		Query query = session.createQuery(hql);
+		//
+		if (serviceInstanceVO.getScreenServiceInstanceJudge().equals("")) {
+			query.setParameter("screenServiceInstanceJudge", "%%");
+		} else {
+			query.setParameter("screenServiceInstanceJudge",
+					"%" + serviceInstanceVO.getScreenServiceInstanceJudge() + "%");
+		}
+		if (serviceInstanceVO.getScreenServiceInstanceStartDate().equals("")) {
+			query.setParameter("screenServiceInstanceStartDate", "0000-00-00");
+		} else {
+			query.setParameter("screenServiceInstanceStartDate", serviceInstanceVO.getScreenServiceInstanceStartDate());
+		}
+		if (serviceInstanceVO.getScreenServiceInstanceStopDate().equals("")) {
+			query.setParameter("screenServiceInstanceStopDate", "9999-99-99");
+		} else {
+			query.setParameter("screenServiceInstanceStopDate", serviceInstanceVO.getScreenServiceInstanceStopDate());
+		}
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
 	}
 
 	@Override
@@ -104,7 +137,42 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
-	public List<ServiceDefinitionDTO> list_serviceDefinitionDTO_byUserVO(ServiceDefinitionVO serviceDefinitionVO) {
+	public List<jwcpxt_service_instance> list_serviceInstance_byServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_instance " + " where service_instance_judge like :screenServiceInstanceJudge "
+				+ " and service_instance_date >= :screenServiceInstanceStartDate "
+				+ " and service_instance_date <= :screenServiceInstanceStopDate "
+				+ " order by service_instance_gmt_create";
+		Query query = session.createQuery(hql);
+		//
+		if (serviceInstanceVO.getScreenServiceInstanceJudge().equals("")) {
+			query.setParameter("screenServiceInstanceJudge", "%%");
+		} else {
+			query.setParameter("screenServiceInstanceJudge",
+					"%" + serviceInstanceVO.getScreenServiceInstanceJudge() + "%");
+		}
+		if (serviceInstanceVO.getScreenServiceInstanceStartDate().equals("")) {
+			query.setParameter("screenServiceInstanceStartDate", "0000-00-00");
+		} else {
+			query.setParameter("screenServiceInstanceStartDate", serviceInstanceVO.getScreenServiceInstanceStartDate());
+		}
+		if (serviceInstanceVO.getScreenServiceInstanceStopDate().equals("")) {
+			query.setParameter("screenServiceInstanceStopDate", "9999-99-99");
+		} else {
+			query.setParameter("screenServiceInstanceStopDate", serviceInstanceVO.getScreenServiceInstanceStopDate());
+		}
+		query.setFirstResult((serviceInstanceVO.getCurrPage() - 1) * serviceInstanceVO.getPageSize());
+		query.setMaxResults(serviceInstanceVO.getPageSize());
+		//
+		List<jwcpxt_service_instance> list = null;
+		list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
+	public List<ServiceDefinitionDTO> list_serviceDefinitionDTO_byServiceDefinitionVO(
+			ServiceDefinitionVO serviceDefinitionVO) {
 		Session session = getSession();
 		String hql = "select new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition,unit)  from jwcpxt_service_definition serviceDefinition , jwcpxt_unit unit"
 				+ " where serviceDefinition.service_definition_unit=unit.jwcpxt_unit_id and serviceDefinition.service_definition_describe like :screenSearch and serviceDefinition.service_definition_unit like :screenUnit "

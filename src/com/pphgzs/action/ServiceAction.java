@@ -59,6 +59,18 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.getWriter().write(gson.toJson(serviceDefinitionVO));
 	}
 
+	public void get_serviceInstanceVO() throws IOException {
+
+		serviceInstanceVO = serviceService.get_serviceInstanceVO(serviceInstanceVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceInstanceVO));
+	}
+
 	/**
 	 * 添加业务定义
 	 * 
