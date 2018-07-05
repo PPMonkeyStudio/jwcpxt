@@ -24,4 +24,7 @@ public interface UserDao {
 	public boolean update_user(jwcpxt_user user);
 
 	public int get_userTotalCount_byUserVO(UserVO userVO);
+
+	public List<jwcpxt_user> list_user_byJurisdiction(String userJurisdictionEvaluate, String userJurisdictionReview,
+			String userJurisdictionStatistics);
 }

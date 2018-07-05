@@ -26,4 +26,6 @@ public interface UserService {
 
 	public UserVO get_userVO(UserVO userVO);
 
+	public List<jwcpxt_user> list_user_byJurisdiction(jwcpxt_user user);
+
 }
