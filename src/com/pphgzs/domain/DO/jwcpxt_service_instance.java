@@ -5,7 +5,7 @@ public class jwcpxt_service_instance {
 	private String service_instance_service_definition;
 	private String service_instance_nid;
 	private String service_instance_date;
-	private String service_instance_judge;
+	private String service_instance_judge = "none";
 	private String service_instance_gmt_create;
 	private String service_instance_gmt_modified;
 

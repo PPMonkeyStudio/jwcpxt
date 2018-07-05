@@ -11,6 +11,7 @@ import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
+import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UnitService;
 import com.pphgzs.service.UserService;
@@ -52,7 +53,7 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public ServiceDefinitionVO get_serviceDefinitionVO(ServiceDefinitionVO serviceDefinitionVO) {
 		List<ServiceDefinitionDTO> serviceDefinitionDTOList = serviceDao
-				.list_serviceDefinitionDTO_byUserVO(serviceDefinitionVO);
+				.list_serviceDefinitionDTO_byServiceDefinitionVO(serviceDefinitionVO);
 		serviceDefinitionVO.setServiceDefinitionDTOList(serviceDefinitionDTOList);
 		// 总记录数
 		serviceDefinitionVO
@@ -65,11 +66,29 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
+	public ServiceInstanceVO get_serviceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
+		List<jwcpxt_service_instance> serviceInstanceList = serviceDao
+				.list_serviceInstance_byServiceInstanceVO(serviceInstanceVO);
+		//
+		List<ServiceInstanceDTO> serviceInstanceDTOList = list_ServiceInstanceDTO_byServiceInstanceList(
+				serviceInstanceList);
+		serviceInstanceVO.setServiceInstanceDTOList(serviceInstanceDTOList);
+		// 总记录数
+		serviceInstanceVO
+				.setTotalCount(serviceDao.get_serviceInstanceTotalCount_byServiceInstanceVO(serviceInstanceVO));
+		// 总页数
+		serviceInstanceVO.setTotalPage(((serviceInstanceVO.getTotalCount() - 1) / serviceInstanceVO.getPageSize()) + 1);
+		//
+		return serviceInstanceVO;
+	}
+
+	@Override
 	public boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
 		if (serviceDao.ifExist_serviceDefinition_byServiceDefinitionDescribe(
 				serviceDefinition.getService_definition_describe())) {
 			return false;
 		} else {
+			// uuid
 			serviceDefinition.setJwcpxt_service_definition_id(uuidUtil.getUuid());
 			// 时间初始化
 			String time = TimeUtil.getStringSecond();
