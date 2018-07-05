@@ -63,6 +63,19 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public List<jwcpxt_service_client> list_serviceClient_byServiceInstanceID(String serviceInstanceID) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_client serviceClient where serviceClient.service_client_service_instance=:serviceInstanceID";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceInstanceID", serviceInstanceID);
+		//
+		List<jwcpxt_service_client> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
 	public List<jwcpxt_service_instance> list_serviceInstance_byServiceDefinitionID(String serviceDefinitionID) {
 		Session session = getSession();
 		String hql = "from jwcpxt_service_instance serviceInstance where serviceInstance.service_instance_service_definition=:serviceDefinitionID";
