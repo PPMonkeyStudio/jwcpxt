@@ -1,10 +1,15 @@
 package com.pphgzs.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
+import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UnitService;
@@ -84,7 +89,11 @@ public class ServiceServiceImpl implements ServiceService {
 		if (serviceDefinitionOld == null) {
 			return false;
 		}
+		// 修改描述
 		serviceDefinitionOld.setService_definition_describe(serviceDefinitionNew.getService_definition_describe());
+		// 修改比例
+		serviceDefinitionOld.setService_definition_sampling_proportion(
+				serviceDefinitionNew.getService_definition_sampling_proportion());
 		if (serviceDao.update_serviceDefinition(serviceDefinitionOld)) {
 			return true;
 		}
@@ -95,7 +104,66 @@ public class ServiceServiceImpl implements ServiceService {
 	public jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String serviceDefinitionID) {
 		return serviceDao.get_serviceDefinition_byServiceDefinitionID(serviceDefinitionID);
 	}
+
+	@Override
+	public List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID) {
+		return serviceDao.list_client_byServiceInstanceID(serviceInstanceID);
+	}
+
+	@Override
+	public List<ServiceInstanceDTO> list_serviceInstanceDTO_byServiceDefinitionID(String serviceDefinitionID) {
+
+		// 通过业务定义ID获取所有相关的业务实例
+		List<jwcpxt_service_instance> serviceInstanceList = serviceDao
+				.list_serviceInstance_byServiceDefinitionID(serviceDefinitionID);
+		//
+		List<ServiceInstanceDTO> serviceInstanceDTOList = list_ServiceInstanceDTO_byServiceInstanceList(
+				serviceInstanceList);
+		//
+		return serviceInstanceDTOList;
+	}
+
+	@Override
+	public List<ServiceInstanceDTO> list_ServiceInstanceDTO_byServiceInstanceList(
+			List<jwcpxt_service_instance> serviceInstanceList) {
+
+		List<ServiceInstanceDTO> serviceInstanceDTOList = new ArrayList<ServiceInstanceDTO>();
+
+		for (jwcpxt_service_instance serviceInstance : serviceInstanceList) {
+			ServiceInstanceDTO serviceInstanceDTO = new ServiceInstanceDTO();
+			//
+			serviceInstanceDTO = get_serviceInstanceDTO_byServiceInstanceID(
+					serviceInstance.getJwcpxt_service_instance_id());
+			//
+			serviceInstanceDTOList.add(serviceInstanceDTO);
+
+		}
+
+		return serviceInstanceDTOList;
+	}
+
+	@Override
+	public ServiceInstanceDTO get_serviceInstanceDTO_byServiceInstanceID(String serviceInstanceID) {
+
+		ServiceInstanceDTO serviceInstanceDTO = new ServiceInstanceDTO();
+		//
+		jwcpxt_service_instance serviceInstance = serviceDao.get_serviceInstance_byServiceInstanceID(serviceInstanceID);
+		serviceInstanceDTO.setServiceInstance(serviceInstance);
+		// 获取业务定义DTO
+		ServiceDefinitionDTO serviceDefinitionDTO = serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(
+				serviceInstance.getService_instance_service_definition());
+		serviceInstanceDTO.setServiceDefinitionDTO(serviceDefinitionDTO);
+		//
+		jwcpxt_user judge = userService.get_user_byUserID(serviceInstance.getService_instance_judge());
+		serviceInstanceDTO.setJudge(judge);
+		//
+
+		//
+		return serviceInstanceDTO;
+	}
+
 	/*
 	 * 
 	 */
+
 }

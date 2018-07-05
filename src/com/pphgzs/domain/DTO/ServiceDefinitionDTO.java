@@ -8,9 +8,11 @@ public class ServiceDefinitionDTO {
 	private jwcpxt_unit unit;
 
 	public ServiceDefinitionDTO(jwcpxt_service_definition serviceDefinition, jwcpxt_unit unit) {
-		super();
 		this.serviceDefinition = serviceDefinition;
 		this.unit = unit;
+	}
+
+	public ServiceDefinitionDTO() {
 	}
 
 	@Override

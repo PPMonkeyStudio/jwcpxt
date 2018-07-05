@@ -5,7 +5,7 @@ public class jwcpxt_service_instance {
 	private String service_instance_service_definition;
 	private String service_instance_nid;
 	private String service_instance_date;
-	private String service_instance_distribution;
+	private String service_instance_judge;
 	private String service_instance_gmt_create;
 	private String service_instance_gmt_modified;
 
@@ -41,12 +41,12 @@ public class jwcpxt_service_instance {
 		this.service_instance_date = service_instance_date;
 	}
 
-	public String getService_instance_distribution() {
-		return service_instance_distribution;
+	public String getService_instance_judge() {
+		return service_instance_judge;
 	}
 
-	public void setService_instance_distribution(String service_instance_distribution) {
-		this.service_instance_distribution = service_instance_distribution;
+	public void setService_instance_judge(String service_instance_judge) {
+		this.service_instance_judge = service_instance_judge;
 	}
 
 	public String getService_instance_gmt_create() {
@@ -70,7 +70,7 @@ public class jwcpxt_service_instance {
 		return "jwcpxt_service_instance 【\njwcpxt_service_instance_id=" + jwcpxt_service_instance_id
 				+ ", \nservice_instance_service_definition=" + service_instance_service_definition
 				+ ", \nservice_instance_nid=" + service_instance_nid + ", \nservice_instance_date="
-				+ service_instance_date + ", \nservice_instance_distribution=" + service_instance_distribution
+				+ service_instance_date + ", \nservice_instance_judge=" + service_instance_judge
 				+ ", \nservice_instance_gmt_create=" + service_instance_gmt_create
 				+ ", \nservice_instance_gmt_modified=" + service_instance_gmt_modified + "\n】";
 	}
