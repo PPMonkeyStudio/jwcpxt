@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.service.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
 
 import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_question;
@@ -36,10 +37,10 @@ public class QuestionDaoImpl implements QuestionDao {
 		 * end
 		 */
 		Session session = getSession();
-		String hql = "from jwcpxt_question" + " where question_service_definition = :jwcpxt_service_definition_id and"
-				+ " question_type like :screenType and :screenSearch like :question_describe order by question_sort";
+		String hql = "from jwcpxt_question" + " where question_service_definition = :definitionId and"
+				+ " question_type like :screenType and question_describe like :screenSearch order by question_sort";
 		Query query = session.createQuery(hql);
-		query.setParameter("jwcpxt_service_definition_id", "%"
+		query.setParameter("definitionId", "%"
 				+ questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id() + "%");
 		// 类型筛选
 		if (questionVO.getScreenType().equals("")) {
@@ -70,7 +71,7 @@ public class QuestionDaoImpl implements QuestionDao {
 		Session session = getSession();
 		String hql = "select count(*) from jwcpxt_question"
 				+ " where question_service_definition = :jwcpxt_service_definition_id and"
-				+ " question_type like :screenType and :screenSearch like :question_describe";
+				+ " question_type like :screenType and question_describe like :screenSearch";
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_service_definition_id", "%"
 				+ questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id() + "%");
