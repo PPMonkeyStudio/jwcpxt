@@ -6,9 +6,10 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.service.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
 
 import com.pphgzs.dao.QuestionDao;
+import com.pphgzs.domain.DO.jwcpxt_option;
+import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.VO.QuestionVO;
 
@@ -49,7 +50,7 @@ public class QuestionDaoImpl implements QuestionDao {
 		 * end
 		 */
 		Session session = getSession();
-		String hql = "from jwcpxt_question" + " where question_service_definition = :definitionId and"
+		String hql = "from jwcpxt_question" + " where question_service_definition like :definitionId and"
 				+ " question_type like :screenType and question_describe like :screenSearch order by question_sort";
 		Query query = session.createQuery(hql);
 		query.setParameter("definitionId", "%"
@@ -82,7 +83,7 @@ public class QuestionDaoImpl implements QuestionDao {
 		int count = 0;
 		Session session = getSession();
 		String hql = "select count(*) from jwcpxt_question"
-				+ " where question_service_definition = :jwcpxt_service_definition_id and"
+				+ " where question_service_definition like :jwcpxt_service_definition_id and"
 				+ " question_type like :screenType and question_describe like :screenSearch";
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_service_definition_id", "%"
@@ -99,7 +100,6 @@ public class QuestionDaoImpl implements QuestionDao {
 		} else {
 			query.setParameter("screenSearch", "%" + questionVO.getScreenSearch() + "%");
 		}
-		//
 		count = ((Number) query.uniqueResult()).intValue();
 		//
 		session.clear();
@@ -112,10 +112,6 @@ public class QuestionDaoImpl implements QuestionDao {
 	@Override
 	public int get_question_max_sort(String question_service_definition) {
 		Session session = getSession();
-		// String hql = "select question_sort from jwcpxt_question where"
-		// + " question_service_definition = :questionServiceDefinition order by
-		// --question_sort desc limit 1";
-		// Query query = session.createSQLQuery(hql);
 		String hql = "select Max(question_sort) from jwcpxt_question where "
 				+ " question_service_definition = :questionServiceDefinition ";
 		Query query = session.createQuery(hql);
@@ -204,6 +200,53 @@ public class QuestionDaoImpl implements QuestionDao {
 		query.executeUpdate();
 		session.flush();
 		return true;
+	}
+
+	@Override
+	public List<jwcpxt_option> get_option_byQuestionId(String questionId) {
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_option where option_question = :questionId order by option_sort";
+		Query query = session.createQuery(hql);
+		query.setParameter("questionId", questionId);
+		listOption = query.list();
+		return listOption;
+	}
+
+	@Override
+	public List<jwcpxt_option_inquiries> get_optionInquireies_byOptionId(String optionId) {
+		List<jwcpxt_option_inquiries> listOptionInquiries = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_option_inquiries where option_inquiries_option = :optionId order by option_inquiries_gmt_create";
+		Query query = session.createQuery(hql);
+		query.setParameter("optionId", optionId);
+		listOptionInquiries = query.list();
+		return listOptionInquiries;
+	}
+
+	@Override
+	public int get_option_max_sort(String option_question) {
+		Session session = getSession();
+		String hql = "select Max(option_sort) from jwcpxt_option where option_question = :questionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("questionId", option_question);
+		if (query.uniqueResult() == null) {
+			return 0;
+		}
+		int num = ((Number) query.uniqueResult()).intValue();
+		return num;
+	}
+
+	@Override
+	public jwcpxt_option get_option_byOptionId(String optionId) {
+		jwcpxt_option optionInfo = new jwcpxt_option();
+		Session session = getSession();
+		String hql = "from jwcpxt_option where jwcpxt_option_id = :optionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("optionId", optionId);
+		optionInfo = (jwcpxt_option) query.uniqueResult();
+		session.clear();
+		return optionInfo;
 	}
 
 }

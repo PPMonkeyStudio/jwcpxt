@@ -11,7 +11,7 @@ public class OptionDTO {
 
 	@Override
 	public String toString() {
-		return "OptionDTO 【\noption=" + option + ", \ninquiriesList=" + inquiriesList + "\n】";
+		return "OptionDTO [option=" + option + ", inquiriesList=" + inquiriesList + "]";
 	}
 
 	public jwcpxt_option getOption() {
