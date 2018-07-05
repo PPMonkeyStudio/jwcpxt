@@ -46,10 +46,10 @@ public class QuestionServiceImpl implements QuestionService {
 		// 新建
 		List<jwcpxt_question> questionList = new ArrayList<>();
 		// 根据业务Id获取业务对象
-		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO(null,null);
+		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO(null, null);
 		// 首先根据业务定义Id获取业务定义对象
-		serviceDefinitionDTO = serviceService.get_serviceDefinitionDTO_byServiceDefinitionID(
-				questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id());
+		/*serviceDefinitionDTO = serviceService.get_serviceDefinitionDTO_byServiceDefinitionID(
+				questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id());*/
 		// 获取分页里面的question
 		questionList = questionDao.list_question_byQuestionVO(questionVO);
 		// 获取总记录数
