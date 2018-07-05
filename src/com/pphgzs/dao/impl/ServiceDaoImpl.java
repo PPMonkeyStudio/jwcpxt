@@ -30,6 +30,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		Session session = getSession();
 		String hql = "select count(*) from jwcpxt_service_instance "
 				+ " where service_instance_judge like :screenServiceInstanceJudge "
+				+ " and service_instance_service_definition like :screenServiceDefinition"
 				+ " and service_instance_date >= :screenServiceInstanceStartDate "
 				+ " and service_instance_date <= :screenServiceInstanceStopDate ";
 		Query query = session.createQuery(hql);
@@ -39,6 +40,11 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("screenServiceInstanceJudge",
 					"%" + serviceInstanceVO.getScreenServiceInstanceJudge() + "%");
+		}
+		if (serviceInstanceVO.getScreenServiceDefinition().equals("")) {
+			query.setParameter("screenServiceDefinition", "%%");
+		} else {
+			query.setParameter("screenServiceDefinition", "%" + serviceInstanceVO.getScreenServiceDefinition() + "%");
 		}
 		if (serviceInstanceVO.getScreenServiceInstanceStartDate().equals("")) {
 			query.setParameter("screenServiceInstanceStartDate", "0000-00-00");
@@ -140,6 +146,7 @@ public class ServiceDaoImpl implements ServiceDao {
 	public List<jwcpxt_service_instance> list_serviceInstance_byServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
 		Session session = getSession();
 		String hql = "from jwcpxt_service_instance " + " where service_instance_judge like :screenServiceInstanceJudge "
+				+ " and service_instance_service_definition like :screenServiceDefinition"
 				+ " and service_instance_date >= :screenServiceInstanceStartDate "
 				+ " and service_instance_date <= :screenServiceInstanceStopDate "
 				+ " order by service_instance_gmt_create";
@@ -150,6 +157,11 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("screenServiceInstanceJudge",
 					"%" + serviceInstanceVO.getScreenServiceInstanceJudge() + "%");
+		}
+		if (serviceInstanceVO.getScreenServiceDefinition().equals("")) {
+			query.setParameter("screenServiceDefinition", "%%");
+		} else {
+			query.setParameter("screenServiceDefinition", "%" + serviceInstanceVO.getScreenServiceDefinition() + "%");
 		}
 		if (serviceInstanceVO.getScreenServiceInstanceStartDate().equals("")) {
 			query.setParameter("screenServiceInstanceStartDate", "0000-00-00");

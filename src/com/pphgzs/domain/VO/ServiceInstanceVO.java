@@ -15,6 +15,8 @@ public class ServiceInstanceVO {
 	// 筛选业务办理时间
 	private String screenServiceInstanceStartDate = "";
 	private String screenServiceInstanceStopDate = "";
+	// 筛选业务定义
+	private String screenServiceDefinition = "";
 	/*
 	 * 
 	 */
@@ -27,16 +29,21 @@ public class ServiceInstanceVO {
 	// 每页记录数
 	private int pageSize = 10;
 
-	/*
-	 * 
-	 */
 	@Override
 	public String toString() {
 		return "ServiceInstanceVO 【\nserviceInstanceDTOList=" + serviceInstanceDTOList
 				+ ", \nscreenServiceInstanceJudge=" + screenServiceInstanceJudge + ", \nscreenServiceInstanceStartDate="
 				+ screenServiceInstanceStartDate + ", \nscreenServiceInstanceStopDate=" + screenServiceInstanceStopDate
-				+ ", \ncurrPage=" + currPage + ", \ntotalPage=" + totalPage + ", \ntotalCount=" + totalCount
-				+ ", \npageSize=" + pageSize + "\n】";
+				+ ", \nscreenServiceDefinition=" + screenServiceDefinition + ", \ncurrPage=" + currPage
+				+ ", \ntotalPage=" + totalPage + ", \ntotalCount=" + totalCount + ", \npageSize=" + pageSize + "\n】";
+	}
+
+	public String getScreenServiceDefinition() {
+		return screenServiceDefinition;
+	}
+
+	public void setScreenServiceDefinition(String screenServiceDefinition) {
+		this.screenServiceDefinition = screenServiceDefinition;
 	}
 
 	public List<ServiceInstanceDTO> getServiceInstanceDTOList() {
