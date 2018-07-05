@@ -4,8 +4,17 @@ public class jwcpxt_service_definition {
 	private String jwcpxt_service_definition_id;
 	private String service_definition_describe;
 	private String service_definition_unit;
+	private int service_definition_sampling_proportion = 0;
 	private String service_definition_gmt_create;
 	private String service_definition_gmt_modified;
+
+	public int getService_definition_sampling_proportion() {
+		return service_definition_sampling_proportion;
+	}
+
+	public void setService_definition_sampling_proportion(int service_definition_sampling_proportion) {
+		this.service_definition_sampling_proportion = service_definition_sampling_proportion;
+	}
 
 	public String getJwcpxt_service_definition_id() {
 		return jwcpxt_service_definition_id;

@@ -7,9 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
+import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public class ServiceDaoImpl implements ServiceDao {
 	private SessionFactory sessionFactory;
@@ -20,6 +23,38 @@ public class ServiceDaoImpl implements ServiceDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	@Override
+	public int get_serviceInstanceTotalCount_byServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_service_instance "
+				+ " where service_instance_judge like :screenServiceInstanceJudge "
+				+ " and service_instance_date >= :screenServiceInstanceStartDate "
+				+ " and service_instance_date <= :screenServiceInstanceStopDate ";
+		Query query = session.createQuery(hql);
+		//
+		if (serviceInstanceVO.getScreenServiceInstanceJudge().equals("")) {
+			query.setParameter("screenServiceInstanceJudge", "%%");
+		} else {
+			query.setParameter("screenServiceInstanceJudge",
+					"%" + serviceInstanceVO.getScreenServiceInstanceJudge() + "%");
+		}
+		if (serviceInstanceVO.getScreenServiceInstanceStartDate().equals("")) {
+			query.setParameter("screenServiceInstanceStartDate", "0000-00-00");
+		} else {
+			query.setParameter("screenServiceInstanceStartDate", serviceInstanceVO.getScreenServiceInstanceStartDate());
+		}
+		if (serviceInstanceVO.getScreenServiceInstanceStopDate().equals("")) {
+			query.setParameter("screenServiceInstanceStopDate", "9999-99-99");
+		} else {
+			query.setParameter("screenServiceInstanceStopDate", serviceInstanceVO.getScreenServiceInstanceStopDate());
+		}
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
 	}
 
 	@Override
@@ -47,7 +82,97 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
-	public List<ServiceDefinitionDTO> list_serviceDefinitionDTO_byUserVO(ServiceDefinitionVO serviceDefinitionVO) {
+	public List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID) {
+
+		Session session = getSession();
+		String hql = "from jwcpxt_service_client serviceClient where serviceClient.service_client_service_instance=:serviceInstanceID";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceInstanceID", serviceInstanceID);
+		//
+		List<jwcpxt_service_client> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
+	public List<jwcpxt_service_client> list_serviceClient_byServiceInstanceID(String serviceInstanceID) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_client serviceClient where serviceClient.service_client_service_instance=:serviceInstanceID";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceInstanceID", serviceInstanceID);
+		//
+		List<jwcpxt_service_client> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
+	public List<jwcpxt_service_instance> list_serviceInstance_byServiceDefinitionID(String serviceDefinitionID) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_instance serviceInstance where serviceInstance.service_instance_service_definition=:serviceDefinitionID";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		//
+		List<jwcpxt_service_instance> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
+	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
+		Session session = getSession();
+		String hql = "select new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition,unit) from jwcpxt_service_definition serviceDefinition , jwcpxt_unit unit"
+				+ " where serviceDefinition.service_definition_unit=unit.jwcpxt_unit_id and serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionID ";
+		//
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		//
+		ServiceDefinitionDTO serviceDefinitionDTO = (ServiceDefinitionDTO) query.uniqueResult();
+		session.clear();
+		return serviceDefinitionDTO;
+	}
+
+	@Override
+	public List<jwcpxt_service_instance> list_serviceInstance_byServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_instance " + " where service_instance_judge like :screenServiceInstanceJudge "
+				+ " and service_instance_date >= :screenServiceInstanceStartDate "
+				+ " and service_instance_date <= :screenServiceInstanceStopDate "
+				+ " order by service_instance_gmt_create";
+		Query query = session.createQuery(hql);
+		//
+		if (serviceInstanceVO.getScreenServiceInstanceJudge().equals("")) {
+			query.setParameter("screenServiceInstanceJudge", "%%");
+		} else {
+			query.setParameter("screenServiceInstanceJudge",
+					"%" + serviceInstanceVO.getScreenServiceInstanceJudge() + "%");
+		}
+		if (serviceInstanceVO.getScreenServiceInstanceStartDate().equals("")) {
+			query.setParameter("screenServiceInstanceStartDate", "0000-00-00");
+		} else {
+			query.setParameter("screenServiceInstanceStartDate", serviceInstanceVO.getScreenServiceInstanceStartDate());
+		}
+		if (serviceInstanceVO.getScreenServiceInstanceStopDate().equals("")) {
+			query.setParameter("screenServiceInstanceStopDate", "9999-99-99");
+		} else {
+			query.setParameter("screenServiceInstanceStopDate", serviceInstanceVO.getScreenServiceInstanceStopDate());
+		}
+		query.setFirstResult((serviceInstanceVO.getCurrPage() - 1) * serviceInstanceVO.getPageSize());
+		query.setMaxResults(serviceInstanceVO.getPageSize());
+		//
+		List<jwcpxt_service_instance> list = null;
+		list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
+	public List<ServiceDefinitionDTO> list_serviceDefinitionDTO_byServiceDefinitionVO(
+			ServiceDefinitionVO serviceDefinitionVO) {
 		Session session = getSession();
 		String hql = "select new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition,unit)  from jwcpxt_service_definition serviceDefinition , jwcpxt_unit unit"
 				+ " where serviceDefinition.service_definition_unit=unit.jwcpxt_unit_id and serviceDefinition.service_definition_describe like :screenSearch and serviceDefinition.service_definition_unit like :screenUnit "
@@ -69,7 +194,6 @@ public class ServiceDaoImpl implements ServiceDao {
 		//
 		List<ServiceDefinitionDTO> list = null;
 		list = query.list();
-		//
 		session.clear();
 		return list;
 	}
@@ -90,6 +214,50 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String serviceDefinitionID) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_definition where jwcpxt_service_definition_id=:serviceDefinitionID ";
+		//
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		//
+		jwcpxt_service_definition serviceDefinition = (jwcpxt_service_definition) query.uniqueResult();
+		session.clear();
+		return serviceDefinition;
+	}
+
+	@Override
+	public jwcpxt_service_instance get_serviceInstance_byServiceInstanceID(String serviceInstanceID) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_instance where service_instance_service_definition=:serviceInstanceID ";
+		//
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceInstanceID", serviceInstanceID);
+		//
+		jwcpxt_service_instance serviceInstance = (jwcpxt_service_instance) query.uniqueResult();
+		session.clear();
+		return serviceInstance;
+	}
+
+	@Override
+	public boolean update_serviceInstance(jwcpxt_service_instance serviceInstance) {
+		Session session = getSession();
+		session.update(serviceInstance);
+		session.flush();
+		return true;
+	}
+
+	@Override
+	public boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinitionOld) {
+		Session session = getSession();
+		session.update(serviceDefinitionOld);
+		session.flush();
+		return true;
 	}
 
 	@Override
