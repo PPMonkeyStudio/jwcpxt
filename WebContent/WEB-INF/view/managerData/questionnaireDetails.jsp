@@ -20,7 +20,7 @@
 		<div class="main-panel">
 			<!-- 引入导航条  -->
 			<s:action name="skipNavbar" namespace="/Skip" executeResult="true" />
-			<div class="content">
+			<div class="content" id="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
 					<div class="row">
@@ -47,6 +47,8 @@
 												<td>问题描述</td>
 												<td><select class="form-control">
 														<option value="">请选择问题类型</option>
+														<option value="1">选择题</option>
+														<option value="2">开放题</option>
 												</select></td>
 												<td>操作</td>
 											</tr>
@@ -160,8 +162,8 @@
 										<tr>
 											<td>
 												<div class="form-group">
-													<label for="questionType">问题类型</label> <select
-														class="form-control" id="questionType">
+													<label for="questionType">问题类型</label> 
+													<select class="form-control" id="questionType">
 														<option value="">请选择问题类型</option>
 														<option value="1">选择题</option>
 														<option value="2">开放题</option>
@@ -169,7 +171,15 @@
 												</div>
 											</td>
 										</tr>
-										
+										<template v-if="false">
+										<tr v-for="index in 0">
+											<td><label for="questionType">答案</label></td>
+											<td><i class="ti-pencil-alt"></i> <i
+												class="fa fa-arrow-up" aria-hidden="true"></i> <i
+												class="fa fa-arrow-down" aria-hidden="true"></i> <i
+												class="ti-trash"></i></td>
+										</tr>
+										</template>
 									</tbody>
 								</table>
 							</div>
@@ -184,6 +194,12 @@
 					<!-- /.modal-dialog -->
 				</div>
 				<!-- /.modal -->
+
+
+
+
+
+
 
 
 			</div>
