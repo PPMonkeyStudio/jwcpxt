@@ -11,4 +11,10 @@ public interface QuestionDao {
 
 	public int get_questionTotalCount_byQuestionVO(QuestionVO questionVO);
 
+	public int get_question_max_sort(String question_service_definition);
+
+	public void saveOrUpdateObject(Object obj);
+
+	public jwcpxt_question get_question_byQuestionId(String trim);
+
 }

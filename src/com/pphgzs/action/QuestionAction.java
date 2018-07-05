@@ -75,8 +75,36 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 		http_response.getWriter().write(gson.toJson(questionVO));
 	}
 
-	
-	
+	/**
+	 * 创建一个问题
+	 * 
+	 * @throws IOException
+	 */
+	public void save_question() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.save_question(question)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 修改问题
+	 * @throws IOException 
+	 */
+	public void update_question() throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.update_question(question)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
 	/*
 	 *  
 	 */

@@ -10,6 +10,8 @@ import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UnitService;
+import com.pphgzs.util.TimeUtil;
+import com.pphgzs.util.uuidUtil;
 
 public class QuestionServiceImpl implements QuestionService {
 	QuestionDao questionDao;
@@ -65,7 +67,52 @@ public class QuestionServiceImpl implements QuestionService {
 		questionVO.setTotalPage(totalPages);
 		return questionVO;
 	}
-	
-	
-	
+
+	/**
+	 * 保存问题
+	 */
+	public boolean save_question(jwcpxt_question question) {
+		question.setJwcpxt_question_id(uuidUtil.getUuid());
+		question.setQuestion_gmt_create(TimeUtil.getStringSecond());
+		question.setQuestion_gmt_modified(TimeUtil.getStringSecond());
+		// 问题顺序
+		// 根据业务定义id获取该业务的最大问题顺序
+		int questionSort = questionDao.get_question_max_sort(question.getQuestion_service_definition());
+		question.setQuestion_sort(questionSort + 1);
+		try {
+			questionDao.saveOrUpdateObject(question);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
+	 * 更新问题
+	 */
+	@Override
+	public boolean update_question(jwcpxt_question question) {
+		// 根据问题Id获取问题信息
+		jwcpxt_question oldQuestion = new jwcpxt_question();
+		if (question != null && question.getQuestion_service_definition() != null
+				&& question.getQuestion_service_definition().trim().length() > 0) {
+			oldQuestion = questionDao.get_question_byQuestionId(question.getQuestion_service_definition().trim());
+		} else {
+			return false;
+		}
+		if (oldQuestion == null) {
+			return false;
+		}
+		// 更改信息
+		oldQuestion.setQuestion_describe(question.getQuestion_describe());
+		oldQuestion.setQuestion_type(question.getQuestion_type());
+		oldQuestion.setQuestion_gmt_modified(TimeUtil.getStringSecond());
+		try {
+			questionDao.saveOrUpdateObject(question);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
 }

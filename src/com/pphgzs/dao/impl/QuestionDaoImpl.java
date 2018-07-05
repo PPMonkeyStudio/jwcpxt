@@ -25,6 +25,18 @@ public class QuestionDaoImpl implements QuestionDao {
 	}
 
 	/**
+	 * 保存
+	 * 
+	 * @param obj
+	 */
+	@Override
+	public void saveOrUpdateObject(Object obj) {
+		Session session = getSession();
+		session.saveOrUpdate(obj);
+		session.flush();
+	}
+
+	/**
 	 * 获取questionVO
 	 */
 	@Override
@@ -92,6 +104,35 @@ public class QuestionDaoImpl implements QuestionDao {
 		//
 		session.clear();
 		return count;
+	}
+
+	/**
+	 * 获取最大问题序号
+	 */
+	@Override
+	public int get_question_max_sort(String question_service_definition) {
+		Session session = getSession();
+		String hql = "select question_sort from jwcpxt_question where"
+				+ " question_service_definition = :questionServiceDefinition order by --question_sort desc limit 1";
+		Query query = session.createSQLQuery(hql);
+		query.setParameter("questionServiceDefinition", question_service_definition);
+		int num = (int) query.uniqueResult();
+		return num;
+	}
+
+	/**
+	 * 根据问题id获取问题对象
+	 */
+	@Override
+	public jwcpxt_question get_question_byQuestionId(String trim) {
+		jwcpxt_question questionInfo = new jwcpxt_question();
+		Session session = getSession();
+		String hql = "from jwcpxt_question where jwcpxt_question_id = :questionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("questionId", trim);
+		questionInfo = (jwcpxt_question) query.uniqueResult();
+		session.clear();
+		return questionInfo;
 	}
 
 }
