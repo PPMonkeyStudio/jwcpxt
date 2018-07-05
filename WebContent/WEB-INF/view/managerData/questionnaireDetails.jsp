@@ -186,7 +186,6 @@
 				<!-- /.modal -->
 
 
-
 			</div>
 			<!-- 引入底部 -->
 			<s:action name="skipFooter" namespace="/Skip" executeResult="true" />
