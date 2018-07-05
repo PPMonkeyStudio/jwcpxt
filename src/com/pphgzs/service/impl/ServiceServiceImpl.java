@@ -146,22 +146,28 @@ public class ServiceServiceImpl implements ServiceService {
 	public ServiceInstanceDTO get_serviceInstanceDTO_byServiceInstanceID(String serviceInstanceID) {
 
 		ServiceInstanceDTO serviceInstanceDTO = new ServiceInstanceDTO();
-		//
+		// 获取业务实例
 		jwcpxt_service_instance serviceInstance = serviceDao.get_serviceInstance_byServiceInstanceID(serviceInstanceID);
 		serviceInstanceDTO.setServiceInstance(serviceInstance);
 		// 获取业务定义DTO
 		ServiceDefinitionDTO serviceDefinitionDTO = serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(
 				serviceInstance.getService_instance_service_definition());
 		serviceInstanceDTO.setServiceDefinitionDTO(serviceDefinitionDTO);
-		//
+		// 获取分配的人
 		jwcpxt_user judge = userService.get_user_byUserID(serviceInstance.getService_instance_judge());
 		serviceInstanceDTO.setJudge(judge);
-		//
-
+		// 获取所有当事人列表
+		List<jwcpxt_service_client> serviceClientList = serviceDao
+				.list_serviceClient_byServiceInstanceID(serviceInstance.getJwcpxt_service_instance_id());
+		serviceInstanceDTO.setServiceClientList(serviceClientList);
 		//
 		return serviceInstanceDTO;
 	}
 
+	@Override
+	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
+		return serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(serviceDefinitionID);
+	}
 	/*
 	 * 
 	 */

@@ -30,4 +30,6 @@ public interface ServiceDao {
 
 	ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID);
 
+	List<jwcpxt_service_client> list_serviceClient_byServiceInstanceID(String serviceInstanceID);
+
 }
