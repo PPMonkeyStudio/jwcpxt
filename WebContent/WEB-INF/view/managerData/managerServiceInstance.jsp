@@ -65,10 +65,8 @@ a:hover {
 										</table>
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;">
-											<span>当前页数:<span id="currPage"></span>{{
-												serviceVO.currPage }}
-											</span> <span>共:<span id="totalPage">{{
-													serviceVO.totalPage }}</span>页
+											<span>当前页数:<span id="currPage"></span>
+											</span> <span>共:<span id="totalPage"></span>页
 											</span> <span onclick="skipToIndexPage()" id="indexPage"
 												class="pageOperation">首页</span> <span
 												onclick="skipToPrimaryPage()" id="previousPage"

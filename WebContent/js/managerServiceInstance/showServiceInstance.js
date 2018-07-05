@@ -12,7 +12,8 @@ var instanceVue;
 var jwcpxt_service_definition_id;
 $(function(){
 	var url = window.location.href
-	var jwcpxt_service_definition_id = url.substring(url.indexOf("=")+1);	
+	jwcpxt_service_definition_id = url.substring(url.indexOf("=")+1);
+	console.log(jwcpxt_service_definition_id);
 	instanceVue = new Vue({
 		el:'#showContent',
 		data:{
@@ -23,6 +24,8 @@ $(function(){
 })
 
 function loadData(){
+	$('#serviceTable').hide();
+	$('#loadingLayer').show();
 	var queryCondition  = {
 			'serviceInstanceVO.screenServiceInstanceStartDate':queryTemp.screenServiceInstanceStartDate,
 			'serviceInstanceVO.screenServiceInstanceStopDate':queryTemp.screenServiceInstanceStopDate,
@@ -35,7 +38,9 @@ function loadData(){
 		type:'POST',
 		data:queryCondition,
 		success:function(data){
-			
+			instanceVue.instanceVO = JSON.parse(data);
+			$('#loadingLayer').hide();
+			$('#serviceTable').show();
 		}
 	})
 }
