@@ -176,8 +176,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		query.setFirstResult((serviceInstanceVO.getCurrPage() - 1) * serviceInstanceVO.getPageSize());
 		query.setMaxResults(serviceInstanceVO.getPageSize());
 		//
-		List<jwcpxt_service_instance> list = null;
-		list = query.list();
+		List<jwcpxt_service_instance> list = query.list();
 		session.clear();
 		return list;
 	}
@@ -245,7 +244,7 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public jwcpxt_service_instance get_serviceInstance_byServiceInstanceID(String serviceInstanceID) {
 		Session session = getSession();
-		String hql = "from jwcpxt_service_instance where service_instance_service_definition=:serviceInstanceID ";
+		String hql = "from jwcpxt_service_instance where jwcpxt_service_instance_id=:serviceInstanceID ";
 		//
 		Query query = session.createQuery(hql);
 		//
