@@ -7,13 +7,36 @@ import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 public class ServiceInstanceVO {
 
 	private List<ServiceInstanceDTO> serviceInstanceDTOList;
+	/*
+	 * 
+	 */
+	// 筛选测评人员
+	private String screenServiceInstanceJudge = "";
+	// 筛选业务办理时间
+	private String screenServiceInstanceStartDate = "";
+	private String screenServiceInstanceStopDate = "";
+	/*
+	 * 
+	 */
+	// 当前页
+	private int currPage = 1;
+	// 总页数
+	private int totalPage = 1;
+	// 总记录数
+	private int totalCount = 0;
+	// 每页记录数
+	private int pageSize = 10;
 
-	private int totalRecords = 0;
-
+	/*
+	 * 
+	 */
 	@Override
 	public String toString() {
-		return "ServiceInstanceVO 【\nserviceInstanceDTOList=" + serviceInstanceDTOList + ", \ntotalRecords="
-				+ totalRecords + "\n】";
+		return "ServiceInstanceVO 【\nserviceInstanceDTOList=" + serviceInstanceDTOList
+				+ ", \nscreenServiceInstanceJudge=" + screenServiceInstanceJudge + ", \nscreenServiceInstanceStartDate="
+				+ screenServiceInstanceStartDate + ", \nscreenServiceInstanceStopDate=" + screenServiceInstanceStopDate
+				+ ", \ncurrPage=" + currPage + ", \ntotalPage=" + totalPage + ", \ntotalCount=" + totalCount
+				+ ", \npageSize=" + pageSize + "\n】";
 	}
 
 	public List<ServiceInstanceDTO> getServiceInstanceDTOList() {
@@ -24,12 +47,60 @@ public class ServiceInstanceVO {
 		this.serviceInstanceDTOList = serviceInstanceDTOList;
 	}
 
-	public int getTotalRecords() {
-		return totalRecords;
+	public String getScreenServiceInstanceJudge() {
+		return screenServiceInstanceJudge;
 	}
 
-	public void setTotalRecords(int totalRecords) {
-		this.totalRecords = totalRecords;
+	public void setScreenServiceInstanceJudge(String screenServiceInstanceJudge) {
+		this.screenServiceInstanceJudge = screenServiceInstanceJudge;
+	}
+
+	public String getScreenServiceInstanceStartDate() {
+		return screenServiceInstanceStartDate;
+	}
+
+	public void setScreenServiceInstanceStartDate(String screenServiceInstanceStartDate) {
+		this.screenServiceInstanceStartDate = screenServiceInstanceStartDate;
+	}
+
+	public String getScreenServiceInstanceStopDate() {
+		return screenServiceInstanceStopDate;
+	}
+
+	public void setScreenServiceInstanceStopDate(String screenServiceInstanceStopDate) {
+		this.screenServiceInstanceStopDate = screenServiceInstanceStopDate;
+	}
+
+	public int getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
+
+	public int getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 
 }
