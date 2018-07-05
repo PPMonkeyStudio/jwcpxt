@@ -17,7 +17,6 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
-import com.pphgzs.domain.VO.ServiceDistributionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
 
@@ -38,7 +37,6 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 	private ServiceDefinitionVO serviceDefinitionVO;
 	private ServiceInstanceVO serviceInstanceVO;
-	private ServiceDistributionVO serviceDistributionVO;
 
 	/*
 	 * 
@@ -189,16 +187,8 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		return serviceInstanceVO;
 	}
 
-	public ServiceDistributionVO getServiceDistributionVO() {
-		return serviceDistributionVO;
-	}
-
 	public void setServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
 		this.serviceInstanceVO = serviceInstanceVO;
-	}
-
-	public void setServiceDistributionVO(ServiceDistributionVO serviceDistributionVO) {
-		this.serviceDistributionVO = serviceDistributionVO;
 	}
 
 	public jwcpxt_service_definition getServiceDefinition() {
