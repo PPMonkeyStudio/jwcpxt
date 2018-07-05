@@ -70,6 +70,7 @@ public class ServiceServiceImpl implements ServiceService {
 				serviceDefinition.getService_definition_describe())) {
 			return false;
 		} else {
+			// uuid
 			serviceDefinition.setJwcpxt_service_definition_id(uuidUtil.getUuid());
 			// 时间初始化
 			String time = TimeUtil.getStringSecond();
