@@ -46,10 +46,6 @@ public class UserServiceImpl implements UserService {
 			user.setJwcpxt_user_id(uuidUtil.getUuid());
 			// 账号作为密码
 			user.setUser_password(user.getUser_account());
-			//
-			user.setUser_Jurisdiction_evaluate("none");
-			user.setUser_Jurisdiction_statistics("none");
-			user.setUser_Jurisdiction_review("none");
 			// 时间初始化
 			String time = TimeUtil.getStringSecond();
 			user.setUser_gmt_create(time);
