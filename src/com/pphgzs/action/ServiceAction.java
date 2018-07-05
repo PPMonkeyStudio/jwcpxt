@@ -15,6 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceDistributionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
@@ -119,6 +120,23 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson(serviceClientList));
 
+	}
+
+	/**
+	 * 通过业务定义id获得相关业务实例DTO列表
+	 * 
+	 * @throws IOException
+	 */
+	public void list_serviceInstanceDTO_byServiceDefinitionID() throws IOException {
+		List<ServiceInstanceDTO> serviceInstanceDTOList = serviceService
+				.list_serviceInstanceDTO_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceInstanceDTOList));
 	}
 
 	/*
