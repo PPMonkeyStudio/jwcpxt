@@ -83,6 +83,24 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
+	public boolean distribution_judge(String serviceInstanceID, String serviceInstanceJudge) {
+
+		jwcpxt_service_instance serviceInstanceOld = serviceDao
+				.get_serviceInstance_byServiceInstanceID(serviceInstanceID);
+		if (serviceInstanceOld == null) {
+			return false;
+		}
+		//
+		serviceInstanceOld.setService_instance_judge(serviceInstanceJudge);
+		//
+		if (serviceDao.update_serviceInstance(serviceInstanceOld)) {
+			return true;
+		}
+		return false;
+
+	}
+
+	@Override
 	public boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinitionNew) {
 		jwcpxt_service_definition serviceDefinitionOld = serviceDao
 				.get_serviceDefinition_byServiceDefinitionID(serviceDefinitionNew.getJwcpxt_service_definition_id());

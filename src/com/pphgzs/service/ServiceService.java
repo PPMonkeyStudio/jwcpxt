@@ -41,4 +41,6 @@ public interface ServiceService {
 	ServiceInstanceDTO get_serviceInstanceDTO_byServiceInstanceID(String serviceInstanceID);
 
 	ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID);
+
+	boolean distribution_judge(String serviceInstanceID, String serviceInstanceJudge);
 }

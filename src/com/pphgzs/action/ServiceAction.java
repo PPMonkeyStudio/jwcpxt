@@ -137,6 +137,19 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.getWriter().write(gson.toJson(serviceInstanceDTOList));
 	}
 
+	/**
+	 * @throws IOException
+	 * 
+	 */
+	public void distribution_judge() throws IOException {
+		if (serviceService.distribution_judge(serviceInstance.getJwcpxt_service_instance_id(),
+				serviceInstance.getService_instance_judge())) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
 	/*
 	 * 
 	 */

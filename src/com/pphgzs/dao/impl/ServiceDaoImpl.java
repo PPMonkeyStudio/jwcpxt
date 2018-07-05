@@ -177,6 +177,14 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public boolean update_serviceInstance(jwcpxt_service_instance serviceInstance) {
+		Session session = getSession();
+		session.update(serviceInstance);
+		session.flush();
+		return true;
+	}
+
+	@Override
 	public boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinitionOld) {
 		Session session = getSession();
 		session.update(serviceDefinitionOld);

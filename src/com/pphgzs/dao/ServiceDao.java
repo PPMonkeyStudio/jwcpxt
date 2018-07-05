@@ -32,4 +32,6 @@ public interface ServiceDao {
 
 	List<jwcpxt_service_client> list_serviceClient_byServiceInstanceID(String serviceInstanceID);
 
+	boolean update_serviceInstance(jwcpxt_service_instance serviceInstance);
+
 }
