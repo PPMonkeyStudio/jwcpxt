@@ -19,7 +19,7 @@ a:hover {
 	cursor: pointer;
 }
 </style>
-<title>用户信息</title>
+<title>业务管理</title>
 </head>
 <body>
 	<div class="wrapper">
