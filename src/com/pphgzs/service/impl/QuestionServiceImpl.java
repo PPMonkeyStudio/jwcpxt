@@ -94,9 +94,9 @@ public class QuestionServiceImpl implements QuestionService {
 	public boolean update_question(jwcpxt_question question) {
 		// 根据问题Id获取问题信息
 		jwcpxt_question oldQuestion = new jwcpxt_question();
-		if (question != null && question.getQuestion_service_definition() != null
-				&& question.getQuestion_service_definition().trim().length() > 0) {
-			oldQuestion = questionDao.get_question_byQuestionId(question.getQuestion_service_definition().trim());
+		if (question != null && question.getJwcpxt_question_id() != null
+				&& question.getJwcpxt_question_id().trim().length() > 0) {
+			oldQuestion = questionDao.get_question_byQuestionId(question.getJwcpxt_question_id());
 		} else {
 			return false;
 		}
@@ -108,7 +108,7 @@ public class QuestionServiceImpl implements QuestionService {
 		oldQuestion.setQuestion_type(question.getQuestion_type());
 		oldQuestion.setQuestion_gmt_modified(TimeUtil.getStringSecond());
 		try {
-			questionDao.saveOrUpdateObject(question);
+			questionDao.saveOrUpdateObject(oldQuestion);
 		} catch (Exception e) {
 			return false;
 		}
@@ -129,7 +129,7 @@ public class QuestionServiceImpl implements QuestionService {
 		if (question != null && question.getJwcpxt_question_id() != null
 				&& question.getJwcpxt_question_id().trim().length() > 0) {
 			// 获取问题对象
-			question = questionDao.get_question_byQuestionId(question.getQuestion_service_definition().trim());
+			question = questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim());
 		} else {
 			return false;
 		}
@@ -151,6 +151,7 @@ public class QuestionServiceImpl implements QuestionService {
 			if ("1".equals(moveQuestionType.trim())) {
 				// 如果是最上面的就不能进行移动
 				if (minQuestionSort == currentQuestionSort) {
+					System.out.println("当前已经是第一个");
 					return false;
 				}
 				// 否则就能进行移动
@@ -159,6 +160,7 @@ public class QuestionServiceImpl implements QuestionService {
 			} else if ("2".equals(moveQuestionType.trim())) {
 				// 如果是最小面的就不能进行移动
 				if (maxQuestionSort == currentQuestionSort) {
+					System.out.println("当前已经是最后一个");
 					return false;
 				}
 				// 否则就能进行移动
@@ -183,6 +185,15 @@ public class QuestionServiceImpl implements QuestionService {
 			questionDao.saveOrUpdateObject(moveQuestion);
 			return true;
 		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean delete_question(jwcpxt_question question) {
+		if (questionDao.delete_question(question.getJwcpxt_question_id())) {
+			return true;
+		} else {
 			return false;
 		}
 	}

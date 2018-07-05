@@ -42,7 +42,7 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	 */
 	public void move_question_sort() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
-		if (questionService.move_question_sort(question,moveQuestionType)) {
+		if (questionService.move_question_sort(question, moveQuestionType)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");
@@ -90,9 +90,22 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	public void update_question() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
 		http_response.setContentType("text/html;charset=utf-8");
 		if (questionService.update_question(question)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+	/**
+	 * 
+	 * @throws IOException
+	 */
+	public void delete_question() throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.delete_question(question)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");

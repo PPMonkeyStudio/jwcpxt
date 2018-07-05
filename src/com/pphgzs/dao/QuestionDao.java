@@ -23,4 +23,6 @@ public interface QuestionDao {
 
 	public jwcpxt_question get_question_moveDownPosition_sort(jwcpxt_question question);
 
+	public boolean delete_question(String jwcpxt_question_id);
+
 }

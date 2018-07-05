@@ -13,4 +13,6 @@ public interface QuestionService {
 
 	public boolean move_question_sort(jwcpxt_question question, String moveQuestionType);
 
+	public boolean delete_question(jwcpxt_question question);
+
 }

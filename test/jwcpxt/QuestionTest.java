@@ -26,14 +26,56 @@ public class QuestionTest {
 	private QuestionService questionService;
 
 	/**
+	 * 下移问题测试
+	 */
+	@Test
+	public void movedown_question() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setJwcpxt_question_id("1c123449-e062-4326-9e85-e2808c4940a7");
+		System.out.println(questionService.move_question_sort(question, "2"));
+	}
+
+	/**
+	 * 上移问题测试
+	 */
+	@Test
+	public void moveup_question() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setJwcpxt_question_id("1c123449-e062-4326-9e85-e2808c4940a7");
+		System.out.println(questionService.move_question_sort(question, "1"));
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public void delete_question() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setJwcpxt_question_id("eb3009af-be16-4a10-9b99-f555507da3f0");
+		System.out.println(questionService.delete_question(question));
+	}
+
+	/**
+	 * 更新问题
+	 */
+	@Test
+	public void update_questionTest() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setQuestion_type("2");
+		question.setQuestion_describe("我的问题3");
+		question.setJwcpxt_question_id("eb3009af-be16-4a10-9b99-f555507da3f0");
+		System.out.println(questionService.update_question(question));
+	}
+
+	/**
 	 * 测试保存问题
 	 */
 	@Test
 	public void save_questionTest() {
 		jwcpxt_question question = new jwcpxt_question();
-		question.setQuestion_describe("我的问题");
+		question.setQuestion_describe("1我的问题1");
 		question.setQuestion_type("1");
-		question.setQuestion_service_definition("d0d75dfd-32b4-4fdd-b56e-d6af20107625");
+		question.setQuestion_service_definition("sfsdfsadf");
 		questionService.save_question(question);
 		System.out.println("jieguo");
 	}

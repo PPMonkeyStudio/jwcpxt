@@ -120,7 +120,10 @@ public class QuestionDaoImpl implements QuestionDao {
 				+ " question_service_definition = :questionServiceDefinition ";
 		Query query = session.createQuery(hql);
 		query.setParameter("questionServiceDefinition", question_service_definition);
-		int num = (int) query.uniqueResult();
+		if (query.uniqueResult() == null) {
+			return 0;
+		}
+		int num = ((Number) query.uniqueResult()).intValue();
 		return num;
 	}
 
@@ -188,6 +191,19 @@ public class QuestionDaoImpl implements QuestionDao {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public boolean delete_question(String question_id) {
+		Session session = getSession();
+		String hql = "delete from jwcpxt_question where jwcpxt_question_id=:questionId";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("questionId", question_id);
+		//
+		query.executeUpdate();
+		session.flush();
+		return true;
 	}
 
 }
