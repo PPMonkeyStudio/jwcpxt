@@ -76,6 +76,38 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public List<jwcpxt_user> list_user_byJurisdiction(String userJurisdictionEvaluate, String userJurisdictionReview,
+			String userJurisdictionStatistics) {
+		Session session = getSession();
+		String hql = "from jwcpxt_user " + " where  user_Jurisdiction_evaluate like :userJurisdictionEvaluate "
+				+ " and user_Jurisdiction_statistics like :userJurisdictionStatistics "
+				+ " and user_Jurisdiction_review like :userJurisdictionReview " + " order by user_gmt_create";
+		Query query = session.createQuery(hql);
+		//
+		if (userJurisdictionEvaluate.equals("")) {
+			query.setParameter("userJurisdictionEvaluate", "%%");
+		} else {
+			query.setParameter("userJurisdictionEvaluate", "%" + userJurisdictionEvaluate + "%");
+		}
+		if (userJurisdictionReview.equals("")) {
+			query.setParameter("userJurisdictionReview", "%%");
+		} else {
+			query.setParameter("userJurisdictionReview", "%" + userJurisdictionReview + "%");
+		}
+		if (userJurisdictionStatistics.equals("")) {
+			query.setParameter("userJurisdictionStatistics", "%%");
+		} else {
+			query.setParameter("userJurisdictionStatistics", "%" + userJurisdictionStatistics + "%");
+		}
+		//
+		List<jwcpxt_user> list = null;
+		list = query.list();
+		//
+		session.clear();
+		return list;
+	}
+
+	@Override
 	public List<jwcpxt_user> list_user_all() {
 		List<jwcpxt_user> userList = new ArrayList<jwcpxt_user>();
 

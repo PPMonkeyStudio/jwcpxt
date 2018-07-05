@@ -92,6 +92,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<jwcpxt_user> list_user_byJurisdiction(jwcpxt_user user) {
+		return userDao.list_user_byJurisdiction(user.getUser_Jurisdiction_evaluate(),
+				user.getUser_Jurisdiction_review(), user.getUser_Jurisdiction_statistics());
+	}
+
+	@Override
 	public List<UserDTO> list_userDTO_all() {
 		List<jwcpxt_user> userList = list_user_all();
 		List<UserDTO> userDTOList = list_userDTOList_byUserList(userList);
