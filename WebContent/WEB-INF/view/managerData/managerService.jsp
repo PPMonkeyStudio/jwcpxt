@@ -19,7 +19,7 @@ a:hover {
 	cursor: pointer;
 }
 </style>
-<title>用户信息</title>
+<title>业务管理</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -48,7 +48,7 @@ a:hover {
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
 									<table id="serviceTable" class="table table-striped"
-										style="text-align: center;">
+										style="text-align: center; display: none;">
 										<thead>
 											<tr>
 												<td>业务名</td>
@@ -56,6 +56,7 @@ a:hover {
 													class="form-control">
 														<option value="">请选择单位</option>
 												</select></td>
+												<td>抽样比例</td>
 												<td>创建时间</td>
 												<td>操作</td>
 											</tr>
@@ -64,10 +65,11 @@ a:hover {
 											<template
 												v-for="serviceDefinitionDTO in serviceVO.serviceDefinitionDTOList">
 											<tr>
-												<td>{{
+												<td><a :id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id" onclick="intoInstance(this)">{{
 													serviceDefinitionDTO.serviceDefinition.service_definition_describe
-													}}</td>
+													}}</a></td>
 												<td>{{ serviceDefinitionDTO.unit.unit_name }}</td>
+												<td>{{ serviceDefinitionDTO.serviceDefinition.service_definition_sampling_proportion }}%</td>
 												<td>{{
 													serviceDefinitionDTO.serviceDefinition.service_definition_gmt_create
 													}}</td>

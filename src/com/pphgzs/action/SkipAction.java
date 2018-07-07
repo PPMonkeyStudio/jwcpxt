@@ -32,4 +32,8 @@ public class SkipAction {
 	public String skipManagerService() {
 		return "skipManagerService";
 	}
+
+	public String skipServiceInstance() {
+		return "skipServiceInstance";
+	}
 }
