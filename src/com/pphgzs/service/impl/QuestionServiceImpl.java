@@ -3,8 +3,13 @@ package com.pphgzs.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.test.annotation.Timed;
+
 import com.pphgzs.dao.QuestionDao;
+import com.pphgzs.domain.DO.jwcpxt_option;
+import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DTO.OptionDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
@@ -59,6 +64,7 @@ public class QuestionServiceImpl implements QuestionService {
 		questionList = questionDao.list_question_byQuestionVO(questionVO);
 		// 获取总记录数
 		int totalRecords = questionDao.get_questionTotalCount_byQuestionVO(questionVO);
+		System.out.println("totalRecords:" + totalRecords);
 		// 总页数
 		int totalPages = ((questionVO.getTotalCount() - 1) / questionVO.getPageSize()) + 1;
 		questionVO.setServiceDefinitionDTO(serviceDefinitionDTO);
@@ -74,7 +80,7 @@ public class QuestionServiceImpl implements QuestionService {
 	public boolean save_question(jwcpxt_question question) {
 		question.setJwcpxt_question_id(uuidUtil.getUuid());
 		question.setQuestion_gmt_create(TimeUtil.getStringSecond());
-		question.setQuestion_gmt_modified(TimeUtil.getStringSecond());
+		question.setQuestion_gmt_modified(question.getQuestion_gmt_create());
 		// 问题顺序
 		// 根据业务定义id获取该业务的最大问题顺序
 		int questionSort = questionDao.get_question_max_sort(question.getQuestion_service_definition());
@@ -94,6 +100,11 @@ public class QuestionServiceImpl implements QuestionService {
 	public boolean update_question(jwcpxt_question question) {
 		// 根据问题Id获取问题信息
 		jwcpxt_question oldQuestion = new jwcpxt_question();
+		// 定义标识是否更改了问题类型
+		// ==0 没有更改
+		// ==1 从开放题变成选择题
+		// int flag = 0;
+
 		if (question != null && question.getJwcpxt_question_id() != null
 				&& question.getJwcpxt_question_id().trim().length() > 0) {
 			oldQuestion = questionDao.get_question_byQuestionId(question.getJwcpxt_question_id());
@@ -103,6 +114,8 @@ public class QuestionServiceImpl implements QuestionService {
 		if (oldQuestion == null) {
 			return false;
 		}
+		// 原有类型
+		// String oldType = oldQuestion.getQuestion_type();
 		// 更改信息
 		oldQuestion.setQuestion_describe(question.getQuestion_describe());
 		oldQuestion.setQuestion_type(question.getQuestion_type());
@@ -112,6 +125,7 @@ public class QuestionServiceImpl implements QuestionService {
 		} catch (Exception e) {
 			return false;
 		}
+		// 是否更改了问题类型
 		return true;
 	}
 
@@ -136,7 +150,7 @@ public class QuestionServiceImpl implements QuestionService {
 		if (question == null) {
 			return false;
 		}
-		if (question.getQuestion_service_definition() != null && question.getQuestion_service_definition() != null
+		if (question != null && question.getQuestion_service_definition() != null
 				&& question.getQuestion_service_definition().trim().length() > 0) {
 			// 根据业务id获取该问题的最小排序以及最大排序
 			maxQuestionSort = questionDao.get_question_max_sort(question.getQuestion_service_definition());
@@ -189,6 +203,9 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 	}
 
+	/**
+	 * 删除问题、删除选项以及追问等等。。。。
+	 */
 	@Override
 	public boolean delete_question(jwcpxt_question question) {
 		if (questionDao.delete_question(question.getJwcpxt_question_id())) {
@@ -196,6 +213,182 @@ public class QuestionServiceImpl implements QuestionService {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * 获取选项列表
+	 */
+	@Override
+	public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
+		// 定义
+		OptionDTO optionDTO = new OptionDTO();
+		List<OptionDTO> listOptionDTO = new ArrayList<>();
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>();
+		// 1.获取问题对象
+		if (question != null && question.getJwcpxt_question_id() != null
+				&& question.getJwcpxt_question_id().trim().length() > 0) {
+			// 获取问题对象
+			question = questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim());
+		} else {
+			return null;
+		}
+		// 2.判断问题类型是否是选择题类型
+		if ("1".equals(question.getQuestion_type())) {
+			// 获取选项列表
+			listOption = questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim());
+			// 遍历选项
+			for (jwcpxt_option jwcpxt_option : listOption) {
+				optionDTO = new OptionDTO();
+				listOptionInquireies = new ArrayList<>();
+				// 根据选项获取选项追问表
+				if (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null
+						&& jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) {
+					// 获取选项追问
+					listOptionInquireies = questionDao
+							.get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim());
+				}
+				optionDTO.setOption(jwcpxt_option);
+				optionDTO.setInquiriesList(listOptionInquireies);
+				listOptionDTO.add(optionDTO);
+			}
+		} else {
+			return null;
+		}
+		return listOptionDTO;
+	}
+
+	/**
+	 * 保存选项
+	 */
+	@Override
+	public boolean save_option(jwcpxt_option option) {
+		jwcpxt_question question = new jwcpxt_question();
+		// 1.保证所添加到的问题Id正确性
+		if (option != null && option.getOption_question() != null && option.getOption_question().trim().length() > 0) {
+			// 获取问题对象
+			question = questionDao.get_question_byQuestionId(option.getOption_question().trim());
+		} else {
+			return false;
+		}
+		if (question == null) {
+			// 所添加到的问题有误
+			return false;
+		}
+		option.setJwcpxt_option_id(uuidUtil.getUuid());
+		option.setOption_gmt_create(TimeUtil.getStringSecond());
+		option.setOption_gmt_modified(option.getOption_gmt_create());
+		// 选项顺序
+		// 根据问题id获取该问题选项中的最大选项顺序
+		int optionSort = questionDao.get_option_max_sort(option.getOption_question());
+		option.setOption_sort(optionSort + 1);
+		try {
+			questionDao.saveOrUpdateObject(option);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
+	 * 更新选项
+	 */
+	@Override
+	public boolean update_option(jwcpxt_option option) {
+		// 根据选项Id获取选项信息
+		jwcpxt_option oldOption = new jwcpxt_option();
+		if (option != null && option.getJwcpxt_option_id() != null
+				&& option.getJwcpxt_option_id().trim().length() > 0) {
+			oldOption = questionDao.get_option_byOptionId(option.getJwcpxt_option_id().trim());
+		} else {
+			return false;
+		}
+		if (oldOption == null) {
+			return false;
+		}
+		// 更改信息
+		oldOption.setOption_describe(option.getOption_describe());
+		oldOption.setOption_grade(option.getOption_grade());
+		oldOption.setOption_gmt_modified(TimeUtil.getStringSecond());
+		try {
+			questionDao.saveOrUpdateObject(oldOption);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean move_option(jwcpxt_option option, String moveOptionType) {
+		// 定义
+		int maxOptionSort = 0;
+		int minOptionSort = 0;
+		int currentOptionSort = 0;
+		jwcpxt_option moveOption = new jwcpxt_option();
+		// 判断参数
+		if (option != null && option.getJwcpxt_option_id() != null
+				&& option.getJwcpxt_option_id().trim().length() > 0) {
+			// 获取选项对象
+			option = questionDao.get_option_byOptionId(option.getJwcpxt_option_id().trim());
+		} else {
+			return false;
+		}
+
+		if (option == null) {
+			return false;
+		}
+
+		if (option != null && option.getOption_question() != null && option.getOption_question().trim().length() > 0) {
+			// 根据业务id获取该问题的最小排序以及最大排序
+			maxOptionSort = questionDao.get_option_max_sort(option.getOption_question().trim());
+			minOptionSort = questionDao.get_option_min_sort(option.getOption_question().trim());
+		} else {
+			return false;
+		}
+		if (moveOptionType != null && moveOptionType.trim().length() > 0) {
+			// 1 为上移
+			// 将当前值的位置进行存储
+			currentOptionSort = option.getOption_sort();
+			if ("1".equals(moveOptionType.trim())) {
+				// 如果是最上面的就不能进行移动
+				if (minOptionSort == currentOptionSort) {
+					System.out.println("当前已经是第一个");
+					return false;
+				}
+				// 否则就能进行移动
+				// 获取比他小的最大的问题对象
+				moveOption = questionDao.get_option_moveUpPosition_sort(option);
+			} else if ("2".equals(moveOptionType.trim())) {
+				// 如果是最小面的就不能进行移动
+				if (maxOptionSort == currentOptionSort) {
+					System.out.println("当前已经是最后一个");
+					return false;
+				}
+				// 否则就能进行移动
+				// 获取比他大的最小的那个对象
+				moveOption = questionDao.get_option_moveDownPosition_sort(option);
+			}
+		} else {
+			return false;
+		}
+		// 分别进行存储
+		// 存储当前行
+		option.setOption_sort(moveOption.getOption_sort());
+		option.setOption_gmt_modified(TimeUtil.getStringSecond());
+		try {
+			questionDao.saveOrUpdateObject(option);
+		} catch (Exception e) {
+			return false;
+		}
+		moveOption.setOption_sort(currentOptionSort);
+		moveOption.setOption_gmt_modified(TimeUtil.getStringSecond());
+		try {
+			questionDao.saveOrUpdateObject(moveOption);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 }

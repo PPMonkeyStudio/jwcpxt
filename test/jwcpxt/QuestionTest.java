@@ -1,5 +1,8 @@
 package jwcpxt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -7,8 +10,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DTO.OptionDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
@@ -24,6 +29,38 @@ public class QuestionTest {
 	private ServiceService serviceService;
 	@Resource
 	private QuestionService questionService;
+
+	/**
+	 * 上移
+	 */
+	@Test
+	public void moveup_option() {
+		jwcpxt_option option = new jwcpxt_option();
+		
+	}
+
+	/**
+	 * 添加选项
+	 */
+	@Test
+	public void save_optionTest() {
+		jwcpxt_option option = new jwcpxt_option();
+		option.setOption_describe("选项5");
+		option.setOption_question("ef2a25bc-fd97-4dad-9e5a-715809198650");
+		option.setOption_grade(2);
+		System.out.println(questionService.save_option(option));
+	}
+
+	/**
+	 * 选项列表
+	 */
+	@Test
+	public void list_optionDTOTest() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setJwcpxt_question_id("ef2a25bc-fd97-4dad-9e5a-715809198650");
+		List<OptionDTO> listOptionDTO = new ArrayList<>();
+		listOptionDTO = questionService.list_optionDTO(question);
+	}
 
 	/**
 	 * 下移问题测试

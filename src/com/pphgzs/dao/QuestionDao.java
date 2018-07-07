@@ -2,6 +2,8 @@ package com.pphgzs.dao;
 
 import java.util.List;
 
+import com.pphgzs.domain.DO.jwcpxt_option;
+import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.VO.QuestionVO;
 
@@ -24,5 +26,19 @@ public interface QuestionDao {
 	public jwcpxt_question get_question_moveDownPosition_sort(jwcpxt_question question);
 
 	public boolean delete_question(String jwcpxt_question_id);
+
+	public List<jwcpxt_option> get_option_byQuestionId(String trim);
+
+	public List<jwcpxt_option_inquiries> get_optionInquireies_byOptionId(String trim);
+
+	public int get_option_max_sort(String option_question);
+
+	public jwcpxt_option get_option_byOptionId(String trim);
+
+	public int get_option_min_sort(String trim);
+
+	public jwcpxt_option get_option_moveUpPosition_sort(jwcpxt_option option);
+
+	public jwcpxt_option get_option_moveDownPosition_sort(jwcpxt_option option);
 
 }
