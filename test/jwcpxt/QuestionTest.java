@@ -31,6 +31,27 @@ public class QuestionTest {
 	private QuestionService questionService;
 
 	/**
+	 * 删除选项测试
+	 */
+	@Test
+	public void delete_option() {
+		jwcpxt_option option = new jwcpxt_option();
+		option.setJwcpxt_option_id("a64f8153-1a75-47b3-95bb-f40e35367e71");
+		System.out.println(questionService.delete_option(option));
+	}
+
+	/**
+	 * 删除追问选择题
+	 * 
+	 */
+	@Test
+	public void delete_zhuiWen() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setJwcpxt_question_id("814f9663-6f8d-4455-94ca-33a809d087c0");
+		System.out.println(questionService.delete_questionInquiries(question));
+	}
+
+	/**
 	 * 上移
 	 */
 	@Test
@@ -56,8 +77,8 @@ public class QuestionTest {
 	@Test
 	public void save_optionTest() {
 		jwcpxt_option option = new jwcpxt_option();
-		option.setOption_describe("选项5");
-		option.setOption_question("ef2a25bc-fd97-4dad-9e5a-715809198650");
+		option.setOption_describe("追问选项2");
+		option.setOption_question("be999b67-ce64-45b6-8c46-fa2a9d2e9e1a");
 		option.setOption_grade(2);
 		System.out.println(questionService.save_option(option));
 	}
@@ -94,12 +115,12 @@ public class QuestionTest {
 	}
 
 	/**
-	 * 
+	 * 删除问题
 	 */
 	@Test
 	public void delete_question() {
 		jwcpxt_question question = new jwcpxt_question();
-		question.setJwcpxt_question_id("d56e37b7-c3ea-4ead-9561-11dfa10a8d1f");
+		question.setJwcpxt_question_id("ef2a25bc-fd97-4dad-9e5a-715809198650");
 		System.out.println(questionService.delete_question(question));
 	}
 
@@ -121,9 +142,9 @@ public class QuestionTest {
 	@Test
 	public void save_questionTest() {
 		jwcpxt_question question = new jwcpxt_question();
-		question.setQuestion_describe("我的追问选择题3");
-		question.setQuestion_type("4");
-		question.setQuestion_service_definition("a64f8153-1a75-47b3-95bb-f40e35367e71");
+		question.setQuestion_describe("我的追问开放题1");
+		question.setQuestion_type("3");
+		question.setQuestion_service_definition("40391b04-333a-4d71-8d87-c45fe43b4b45");
 		questionService.save_question(question);
 	}
 

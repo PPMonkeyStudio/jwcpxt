@@ -342,6 +342,7 @@ public class QuestionDaoImpl implements QuestionDao {
 		Session session = getSession();
 		String hql = "from jwcpxt_answer_open where answer_open_question = :questionId";
 		Query query = session.createQuery(hql);
+		query.setParameter("questionId", questionId);
 		listOpenAnswer = query.list();
 		return listOpenAnswer;
 	}
@@ -374,9 +375,14 @@ public class QuestionDaoImpl implements QuestionDao {
 	}
 
 	@Override
-	public List<jwcpxt_question> list_question_byServiceDefinition(String trim) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<jwcpxt_question> list_question_byServiceDefinition(String serviceDefinitionId) {
+		List<jwcpxt_question> listQuestion = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_question where question_service_definition = :serviceDefinitionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("serviceDefinitionId", serviceDefinitionId);
+		listQuestion = query.list();
+		return listQuestion;
 	}
 
 }
