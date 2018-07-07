@@ -378,7 +378,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	public List<jwcpxt_question> list_question_byServiceDefinition(String serviceDefinitionId) {
 		List<jwcpxt_question> listQuestion = new ArrayList<>();
 		Session session = getSession();
-		String hql = "from jwcpxt_question where question_service_definition = :serviceDefinitionId";
+		String hql = "from jwcpxt_question where question_service_definition = :serviceDefinitionId order by question_sort";
 		Query query = session.createQuery(hql);
 		query.setParameter("serviceDefinitionId", serviceDefinitionId);
 		listQuestion = query.list();

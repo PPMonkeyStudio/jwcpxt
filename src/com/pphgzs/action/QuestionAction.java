@@ -26,28 +26,38 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private QuestionService questionService;
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
-
-	/* 
-	 * 
-	 */
+	//
 	private jwcpxt_question question;
 	private jwcpxt_option option;
 	private jwcpxt_service_definition serviceDefinition;
 	private QuestionVO questionVO;
-	// private int moveOptionAction;
-	// private int moveQuestionAction;
 	private String moveQuestionType;
-	// private List<OptionDTO> listOptionDTO;
 	private String moveOptionType;
+	// 一个问题的所有内容
+	private QuestionDTO questionDTO;
+	// 一个业务定义的所有问题
+	private List<QuestionDTO> listQuestionDTO;
 
 	/**
-	 * 一个问题的所有内容
+	 * 根据业务定义Id 获取所有该业务的所有问题
+	 * 
+	 * @throws IOException
 	 */
-	private QuestionDTO questionDTO;
+	public void list_questionDTO_byServiceDefinition() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		listQuestionDTO = questionService.list_questionDTO_byServiceDefinition(serviceDefinition);
+		http_response.getWriter().write(gson.toJson(listQuestionDTO));
+	}
 
 	/**
 	 * 根据问题Id 获取该问题的所有内容
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void get_questionDTO_byQuestionId() throws IOException {
 		//
@@ -129,20 +139,6 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 			http_response.getWriter().write("-1");
 		}
 	}
-
-	/**
-	 * 获取该问题的选项列表
-	 * 
-	 * @throws IOException
-	 */
-	/*
-	 * public void list_optionDTO() throws IOException { // GsonBuilder gsonBuilder
-	 * = new GsonBuilder(); gsonBuilder.setPrettyPrinting();// 格式化json数据 Gson gson =
-	 * gsonBuilder.serializeNulls().create(); //
-	 * http_response.setContentType("text/html;charset=utf-8");
-	 * http_response.getWriter().write(gson.toJson(questionService.list_optionDTO(
-	 * question))); }
-	 */
 
 	/**
 	 * 移动问题顺序
@@ -228,12 +224,21 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 		this.http_request = http_request;
 	}
 
-	/*
-	 * public List<OptionDTO> getListOptionDTO() { return listOptionDTO; }
-	 * 
-	 * public void setListOptionDTO(List<OptionDTO> listOptionDTO) {
-	 * this.listOptionDTO = listOptionDTO; }
-	 */
+	public QuestionDTO getQuestionDTO() {
+		return questionDTO;
+	}
+
+	public void setQuestionDTO(QuestionDTO questionDTO) {
+		this.questionDTO = questionDTO;
+	}
+
+	public List<QuestionDTO> getListQuestionDTO() {
+		return listQuestionDTO;
+	}
+
+	public void setListQuestionDTO(List<QuestionDTO> listQuestionDTO) {
+		this.listQuestionDTO = listQuestionDTO;
+	}
 
 	public String getMoveQuestionType() {
 		return moveQuestionType;

@@ -7,8 +7,8 @@ import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
-import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.InquiriesOptionDTO;
 import com.pphgzs.domain.DTO.OptionDTO;
 import com.pphgzs.domain.DTO.QuestionDTO;
@@ -564,6 +564,31 @@ public class QuestionServiceImpl implements QuestionService {
 		questionDTO.setListOptionDTO(listOptionDTO);
 		questionDTO.setQuestion(jQuestion);
 		return questionDTO;
+	}
+
+	/**
+	 * 获取一个业务的所有问题
+	 */
+	@Override
+	public List<QuestionDTO> list_questionDTO_byServiceDefinition(jwcpxt_service_definition serviceDefinition) {
+		// 获取一个业务定义里面的所有问题
+		List<jwcpxt_question> listQuestion = new ArrayList<>();
+		List<QuestionDTO> list_questionDTO = new ArrayList<>();
+		QuestionDTO questionDTO = new QuestionDTO();
+		if (serviceDefinition != null && serviceDefinition.getJwcpxt_service_definition_id() != null
+				&& serviceDefinition.getJwcpxt_service_definition_id().trim().length() > 0) {
+			listQuestion = questionDao
+					.list_question_byServiceDefinition(serviceDefinition.getJwcpxt_service_definition_id().trim());
+		}
+		for (jwcpxt_question jwcpxt_question : listQuestion) {
+			questionDTO = new QuestionDTO();
+			if (jwcpxt_question != null && jwcpxt_question.getJwcpxt_question_id() != null
+					&& jwcpxt_question.getJwcpxt_question_id().trim().length() > 0) {
+				questionDTO = get_questionDTO_byQuestionId(jwcpxt_question);
+			}
+			list_questionDTO.add(questionDTO);
+		}
+		return list_questionDTO;
 	}
 
 }
