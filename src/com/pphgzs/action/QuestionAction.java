@@ -39,6 +39,12 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private List<OptionDTO> listOptionDTO;
 	private String moveOptionType;
 
+	
+	
+	/**
+	 * 移动选项
+	 * @throws IOException
+	 */
 	public void move_option() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
 		if (questionService.move_option(option, moveOptionType)) {
