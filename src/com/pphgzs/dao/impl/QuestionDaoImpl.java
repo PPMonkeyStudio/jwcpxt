@@ -278,7 +278,7 @@ public class QuestionDaoImpl implements QuestionDao {
 		List<jwcpxt_option> listOption = new ArrayList<>();
 		Session session = getSession();
 		String hql = "from jwcpxt_option where " + " option_question = :questionId and"
-				+ " option_sort > :currentPosition order by option_sort desc";
+				+ " option_sort > :currentPosition order by option_sort";
 		Query query = session.createQuery(hql);
 		query.setMaxResults(1);
 		query.setParameter("questionId", option.getOption_question());

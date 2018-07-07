@@ -36,7 +36,18 @@ public class QuestionTest {
 	@Test
 	public void moveup_option() {
 		jwcpxt_option option = new jwcpxt_option();
-		
+		option.setJwcpxt_option_id("e61e2cbd-32e2-4719-9f8f-f58429e6e15c");
+		System.out.println(questionService.move_option(option, "1"));
+	}
+
+	/**
+	 * 下移
+	 */
+	@Test
+	public void movedown_option() {
+		jwcpxt_option option = new jwcpxt_option();
+		option.setJwcpxt_option_id("e61e2cbd-32e2-4719-9f8f-f58429e6e15c");
+		System.out.println(questionService.move_option(option, "2"));
 	}
 
 	/**
