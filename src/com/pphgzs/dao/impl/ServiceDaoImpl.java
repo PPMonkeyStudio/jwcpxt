@@ -13,6 +13,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
+import com.pphgzs.util.TimeUtil;
 
 public class ServiceDaoImpl implements ServiceDao {
 	private SessionFactory sessionFactory;
@@ -64,6 +65,55 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public int get_serviceInstanceDistributionCount_byDateAndServiceDefinitionID(String date,
+			String serviceDefinitionID) {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_service_instance "
+				+ " where service_instance_service_definition = :serviceDefinitionID "
+				+ " and service_instance_gmt_create >= :date " + " and service_instance_judge != 'none' ";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("date", date);
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public int get_serviceInstanceTotalCount_byDateAndServiceDefinitionID(String date, String serviceDefinitionID) {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_service_instance "
+				+ " where service_instance_service_definition = :serviceDefinitionID "
+				+ " and service_instance_gmt_create >= :date ";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("date", date);
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public int get_serviceInstanceTotalCount_byToday() {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_service_instance  " + " where  service_instance_gmt_create >= :date";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("date", TimeUtil.getStringDay());
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
 	public int get_serviceDefinitionTotalCount_byServiceDefinitionVO(ServiceDefinitionVO serviceDefinitionVO) {
 		Session session = getSession();
 		String hql = "select count(*) from jwcpxt_service_definition serviceDefinition "
@@ -88,6 +138,17 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinitionDO_all() {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_definition ";
+		Query query = session.createQuery(hql);
+		//
+		List<jwcpxt_service_definition> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
 	public List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID) {
 
 		Session session = getSession();
@@ -102,9 +163,29 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public List<jwcpxt_service_instance> list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(
+			int num, String serviceDefinitionID, String date) {
+		Session session = getSession();
+		String hql = " from jwcpxt_service_instance "//
+				+ " where service_instance_judge = 'none' "//
+				+ " and service_instance_service_definition = :serviceInstanceID "//
+				+ " and service_instance_gmt_create >= :date "//
+				+ " order by rand() ";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceInstanceID", serviceDefinitionID);
+		query.setParameter("date", date);
+		query.setMaxResults(num);
+		//
+		List<jwcpxt_service_instance> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
 	public List<jwcpxt_service_client> list_serviceClient_byServiceInstanceID(String serviceInstanceID) {
 		Session session = getSession();
-		String hql = "from jwcpxt_service_client serviceClient where serviceClient.service_client_service_instance=:serviceInstanceID";
+		String hql = "from jwcpxt_service_client serviceClient where serviceClient.service_client_service_instance = :serviceInstanceID";
 		Query query = session.createQuery(hql);
 		//
 		query.setParameter("serviceInstanceID", serviceInstanceID);

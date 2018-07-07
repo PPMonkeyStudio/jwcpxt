@@ -21,4 +21,20 @@ public class TimeUtil {
 		}
 
 	}
+
+	// 获得精确到天的时间
+	public static String getStringDay() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date secondDate = new Date();
+		String date = formatter.format(secondDate);
+		try {
+			secondDate = formatter.parse(date);
+			return date;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 }

@@ -14,7 +14,6 @@ import com.pphgzs.util.TimeUtil;
 import com.pphgzs.util.uuidUtil;
 
 public class UserServiceImpl implements UserService {
-
 	private UserDao userDao;
 	private UnitService unitService;
 
@@ -33,10 +32,15 @@ public class UserServiceImpl implements UserService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+
 	/*
 	 * 
 	 * 
 	 */
+	@Override
+	public int get_userDistributionNum_byToday(String userID) {
+		return userDao.get_userDistributionNum_byToday(userID);
+	}
 
 	@Override
 	public boolean save_user(jwcpxt_user user) {

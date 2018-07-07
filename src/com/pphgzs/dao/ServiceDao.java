@@ -39,4 +39,15 @@ public interface ServiceDao {
 
 	boolean update_serviceInstance(jwcpxt_service_instance serviceInstance);
 
+	List<jwcpxt_service_definition> list_serviceDefinitionDO_all();
+
+	int get_serviceInstanceDistributionCount_byDateAndServiceDefinitionID(String date, String serviceDefinitionID);
+
+	int get_serviceInstanceTotalCount_byDateAndServiceDefinitionID(String date, String serviceDefinitionID);
+
+	List<jwcpxt_service_instance> list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(int num,
+			String serviceDefinitionID, String date);
+
+	int get_serviceInstanceTotalCount_byToday();
+
 }
