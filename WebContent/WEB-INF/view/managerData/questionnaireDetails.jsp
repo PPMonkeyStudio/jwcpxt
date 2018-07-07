@@ -55,8 +55,8 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td>{{ dto.user.user_account }}</td>
-												<td>{{ dto.user.user_name }}</td>
+												<td>{{ '' }}</td>
+												<td>{{ '' }}</td>
 												<td><i class="ti-pencil-alt"></i> <i
 													class="fa fa-arrow-up" aria-hidden="true"></i> <i
 													class="fa fa-arrow-down" aria-hidden="true"></i> <i
@@ -66,8 +66,8 @@
 									</table>
 									<!-- 分页 -->
 									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage">{{userVO.currPage}}</span></span>
-										<span>共:<span id="totalPage">{{userVO.totalPage}}</span>页
+										<span>当前页数:<span id="currPage">{{'1'}}</span></span>
+										<span>共:<span id="totalPage">{{'1'}}</span>页
 										</span> <span class="pageOperation">首页</span> <span
 											class="pageOperation">上一页</span> <span class="pageOperation">下一页</span>
 										<span class="pageOperation">末页</span> <span> <input

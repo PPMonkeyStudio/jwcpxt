@@ -13,6 +13,14 @@
 			<result name="skipManagerUnit">/WEB-INF/view/managerData/managerUnit.jsp</result>
 			<result name="skipManagerUser">/WEB-INF/view/managerData/managerUser.jsp</result>
 			<result name="skipManagerService">/WEB-INF/view/managerData/managerService.jsp</result>
+
+			<!-- hy -->
+			<result name="skipQuestionnaireDetails" type="redirectAction">
+				skipQuestionnaireDetailsJsp?definitionId=${definitionId}
+			</result>
+			<result name="skipQuestionnaireDetailsJsp">
+				/WEB-INF/view/managerData/questionnaireDetails.jsp
+			</result>
 		</action>
 	</package>
 </struts>
