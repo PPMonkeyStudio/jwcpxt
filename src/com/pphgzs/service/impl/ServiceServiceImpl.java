@@ -96,7 +96,7 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public void distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(int num,
 			String serviceDefinitionID, String date) {
-		jwcpxt_service_definition serviceDefinition = get_serviceDefinition_byServiceDefinitionID(serviceDefinitionID);
+		jwcpxt_service_definition serviceDefinition = get_serviceDefinitionDO_byServiceDefinitionID(serviceDefinitionID);
 		// 获取随机到的业务实例
 		List<jwcpxt_service_instance> serviceInstanceSampleList = list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(
 				num, serviceDefinitionID, date);
@@ -257,12 +257,12 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
-	public jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String serviceDefinitionID) {
+	public jwcpxt_service_definition get_serviceDefinitionDO_byServiceDefinitionID(String serviceDefinitionID) {
 		return serviceDao.get_serviceDefinition_byServiceDefinitionID(serviceDefinitionID);
 	}
 
 	@Override
-	public List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID) {
+	public List<jwcpxt_service_client> list_clientDO_byServiceInstanceID(String serviceInstanceID) {
 		return serviceDao.list_client_byServiceInstanceID(serviceInstanceID);
 	}
 

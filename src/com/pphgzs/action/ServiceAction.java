@@ -104,7 +104,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 	public void get_serviceDefinition_byServiceDefinitionID() throws IOException {
 		serviceDefinition = serviceService
-				.get_serviceDefinition_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
+				.get_serviceDefinitionDO_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
@@ -121,7 +121,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 	public void list_client_byServiceInstanceID() throws IOException {
 		List<jwcpxt_service_client> serviceClientList = serviceService
-				.list_client_byServiceInstanceID(serviceInstance.getJwcpxt_service_instance_id());
+				.list_clientDO_byServiceInstanceID(serviceInstance.getJwcpxt_service_instance_id());
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
