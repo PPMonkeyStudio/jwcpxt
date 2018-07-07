@@ -1,8 +1,5 @@
 package jwcpxt;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -13,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
-import com.pphgzs.domain.DTO.OptionDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
@@ -29,6 +25,16 @@ public class QuestionTest {
 	private ServiceService serviceService;
 	@Resource
 	private QuestionService questionService;
+
+	/**
+	 * 测试根据问题Id获取问题的其他内容
+	 */
+	@Test
+	public void get_questionDTO_byQuestionId() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setJwcpxt_question_id("ef2a25bc-fd97-4dad-9e5a-715809198650");
+		System.out.println("fd:" + questionService.get_questionDTO_byQuestionId(question));
+	}
 
 	/**
 	 * 删除选项测试
@@ -86,13 +92,13 @@ public class QuestionTest {
 	/**
 	 * 选项列表
 	 */
-	/*@Test
-	public void list_optionDTOTest() {
-		jwcpxt_question question = new jwcpxt_question();
-		question.setJwcpxt_question_id("ef2a25bc-fd97-4dad-9e5a-715809198650");
-		List<OptionDTO> listOptionDTO = new ArrayList<>();
-		listOptionDTO = questionService.list_optionDTO(question);
-	}*/
+	/*
+	 * @Test public void list_optionDTOTest() { jwcpxt_question question = new
+	 * jwcpxt_question();
+	 * question.setJwcpxt_question_id("ef2a25bc-fd97-4dad-9e5a-715809198650");
+	 * List<OptionDTO> listOptionDTO = new ArrayList<>(); listOptionDTO =
+	 * questionService.list_optionDTO(question); }
+	 */
 
 	/**
 	 * 下移问题测试
