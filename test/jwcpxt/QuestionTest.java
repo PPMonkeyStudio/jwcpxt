@@ -27,6 +27,17 @@ public class QuestionTest {
 	private QuestionService questionService;
 
 	/**
+	 * 
+	 */
+	@Test
+	public void list_questionDTO_byServiceDefinitionId() {
+		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
+		serviceDefinition.setJwcpxt_service_definition_id("d0d75dfd-32b4-4fdd-b56e-d6af20107625");
+		System.out.println(questionService.list_questionDTO_byServiceDefinition(serviceDefinition));
+		System.out.println(questionService.list_questionDTO_byServiceDefinition(serviceDefinition).size());
+	}
+
+	/**
 	 * 测试根据问题Id获取问题的其他内容
 	 */
 	@Test
