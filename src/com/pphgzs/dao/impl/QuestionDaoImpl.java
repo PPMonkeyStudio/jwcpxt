@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_answer_choice;
+import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
@@ -301,6 +302,7 @@ public class QuestionDaoImpl implements QuestionDao {
 		Session session = getSession();
 		String hql = "from jwcpxt_answer_choice where answer_choice_question = :questionId";
 		Query query = session.createQuery(hql);
+		query.setParameter("questionId", questionId);
 		listChoiceAnswer = query.list();
 		return listChoiceAnswer;
 	}
@@ -329,6 +331,52 @@ public class QuestionDaoImpl implements QuestionDao {
 		query.executeUpdate();
 		session.flush();
 		return true;
+	}
+
+	/**
+	 * 根据问题Id获取开放题回答
+	 */
+	@Override
+	public List<jwcpxt_answer_open> get_answerOpen_byQuestionId(String questionId) {
+		List<jwcpxt_answer_open> listOpenAnswer = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_answer_open where answer_open_question = :questionId";
+		Query query = session.createQuery(hql);
+		listOpenAnswer = query.list();
+		return listOpenAnswer;
+	}
+
+	/**
+	 * 根据问题Id删除 问题所属选项
+	 */
+	@Override
+	public boolean delete_option_byQuestionId(String questionId) {
+		Session session = getSession();
+		String hql = "delete from jwcpxt_option where option_question = :questionId";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("questionId", questionId);
+		//
+		query.executeUpdate();
+		session.flush();
+		return true;
+	}
+
+	@Override
+	public List<jwcpxt_answer_choice> list_choice_byOptionId(String optionId) {
+		List<jwcpxt_answer_choice> listChoiceAnswer = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_answer_choice where answer_choice_option = :optionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("optionId", optionId);
+		listChoiceAnswer = query.list();
+		return listChoiceAnswer;
+	}
+
+	@Override
+	public List<jwcpxt_question> list_question_byServiceDefinition(String trim) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

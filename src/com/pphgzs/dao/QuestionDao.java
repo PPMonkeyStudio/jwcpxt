@@ -3,6 +3,7 @@ package com.pphgzs.dao;
 import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_answer_choice;
+import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
@@ -47,5 +48,19 @@ public interface QuestionDao {
 	public boolean delete_question_byOptionId(String trim);
 
 	public boolean delete_option_byOptionId(String trim);
+
+	public List<jwcpxt_answer_open> get_answerOpen_byQuestionId(String trim);
+
+	public boolean delete_option_byQuestionId(String trim);
+
+	/**
+	 * 根据选项Id获取 选择题回答列表
+	 * 
+	 * @param trim
+	 * @return
+	 */
+	public List<jwcpxt_answer_choice> list_choice_byOptionId(String optionId);
+
+	public List<jwcpxt_question> list_question_byServiceDefinition(String trim);
 
 }

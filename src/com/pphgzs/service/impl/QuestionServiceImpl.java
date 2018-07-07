@@ -120,7 +120,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// String oldType = oldQuestion.getQuestion_type();
 		// 更改信息
 		oldQuestion.setQuestion_describe(question.getQuestion_describe());
-		oldQuestion.setQuestion_type(question.getQuestion_type());
+		// oldQuestion.setQuestion_type(question.getQuestion_type());
 		oldQuestion.setQuestion_gmt_modified(TimeUtil.getStringSecond());
 		try {
 			questionDao.saveOrUpdateObject(oldQuestion);
@@ -236,25 +236,17 @@ public class QuestionServiceImpl implements QuestionService {
 			// 如果没有回答,那么就是进行删除选项、删除追问
 			// 获取对应问题的所有选项
 			listOption = questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim());
-			// 遍历选项,进行删除追问
-			for (jwcpxt_option jwcpxtOption : listOption) {
-				// 删除所有追问
-				if (jwcpxtOption != null && jwcpxtOption.getJwcpxt_option_id() != null
-						&& jwcpxtOption.getJwcpxt_option_id().trim().length() > 0) {
-					// 删除追问,如果删除失败？如何操作
-					/*
-					 * if
-					 * (!questionDao.delete_question_byOptionId(jwcpxtOption.getJwcpxt_option_id().
-					 * trim())) { throw new RuntimeException("删除追问失败"); }
-					 */
-					// 删除追问
-				}
+			// 遍历进行删除选项
+			for (jwcpxt_option deleteOption : listOption) {
+				delete_option(deleteOption);
 			}
-			// 删除选项
-
-			//
 		} else if ("2".equals(deleteQuestion.getQuestion_type())) {
-
+			// 如果是开放题
+			// 判断是否有回答
+			listOpenAnswer = questionDao.get_answerOpen_byQuestionId(question.getJwcpxt_question_id().trim());
+			if (listOpenAnswer.size() > 0) {
+				return false;
+			}
 		}
 		if (questionDao.delete_question(question.getJwcpxt_question_id())) {
 			return true;
@@ -437,6 +429,82 @@ public class QuestionServiceImpl implements QuestionService {
 			return false;
 		}
 
+	}
+
+	/**
+	 * 删除追问
+	 */
+	@Override
+	public boolean delete_questionInquiries(jwcpxt_question question) {
+		// 定义
+		List<jwcpxt_answer_open> listAnswerOpen = new ArrayList<>();
+		List<jwcpxt_answer_choice> listChoiceAnswer = new ArrayList<>();
+		// 根据追问的id获取追问对象
+		jwcpxt_question questionInquiries = new jwcpxt_question();
+		if (question != null && question.getJwcpxt_question_id() != null
+				&& question.getJwcpxt_question_id().trim().length() > 0) {
+			questionInquiries = questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim());
+		}
+		// 判断对象
+		if (questionInquiries == null) {
+			return false;
+		}
+		// 判断追问的类型
+		if (questionInquiries.getQuestion_type() != null && questionInquiries.getQuestion_type().trim().length() > 0) {
+			// 如果追问是开放题
+			if ("3".equals(questionInquiries.getQuestion_type().trim())) {
+				// 判断是否有该追问的回答
+				listAnswerOpen = questionDao.get_answerOpen_byQuestionId(question.getJwcpxt_question_id().trim());
+				if (listAnswerOpen.size() > 0) {
+					return false;
+				}
+			} else if ("4".equals(questionInquiries.getQuestion_type().trim())) {
+				// 如果是选择题
+				// 判断是否有该追问的回答
+				listChoiceAnswer = questionDao.list_choiceAnswer_byQuestionId(question.getJwcpxt_question_id().trim());
+				if (listChoiceAnswer.size() > 0) {
+					return false;
+				}
+				// 删除该追问的选择题选项
+				questionDao.delete_option_byQuestionId(question.getJwcpxt_question_id().trim());
+			}
+		}
+		// 删除追问本身
+		questionDao.delete_question(question.getJwcpxt_question_id().trim());
+		return true;
+	}
+
+	/**
+	 * 删除选项
+	 */
+	@Override
+	public boolean delete_option(jwcpxt_option option) {
+		// 定义
+		List<jwcpxt_answer_choice> listChoiceAnswer = new ArrayList<>();
+		List<jwcpxt_question> listInQuestion = new ArrayList<>();
+		// 根据选项id获取选项对象
+		jwcpxt_option deleteOption = new jwcpxt_option();
+		if (option != null && option.getJwcpxt_option_id() != null
+				&& option.getJwcpxt_option_id().trim().length() > 0) {
+			deleteOption = questionDao.get_option_byOptionId(option.getJwcpxt_option_id().trim());
+		}
+		if (deleteOption == null) {
+			return false;
+		}
+		// 判断该选项是否有回答
+		listChoiceAnswer = questionDao.list_choice_byOptionId(option.getJwcpxt_option_id().trim());
+		if (listChoiceAnswer.size() > 0) {
+			return false;
+		}
+		// 获取该选项所有追问
+		listInQuestion = questionDao.list_question_byServiceDefinition(option.getJwcpxt_option_id().trim());
+		// 遍历追问进行删除
+		for (jwcpxt_question deleteQuestion : listInQuestion) {
+			delete_questionInquiries(deleteQuestion);
+		}
+		// 删除选项
+		questionDao.delete_option_byOptionId(option.getJwcpxt_option_id().trim());
+		return true;
 	}
 
 }

@@ -28,4 +28,8 @@ public interface QuestionService {
 
 	public boolean move_option(jwcpxt_option option, String moveOptionType);
 
+	public boolean delete_questionInquiries(jwcpxt_question question);
+
+	public boolean delete_option(jwcpxt_option option);
+
 }

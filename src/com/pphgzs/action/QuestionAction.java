@@ -40,6 +40,34 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private String moveOptionType;
 
 	/**
+	 * 删除选项
+	 * 
+	 * @throws IOException
+	 */
+	public void delete_option() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.delete_option(option)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 删除追问
+	 * 
+	 * @throws IOException
+	 */
+	public void delete_questionInquiries() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.delete_questionInquiries(question)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
 	 * 移动选项
 	 * 
 	 * @throws IOException
