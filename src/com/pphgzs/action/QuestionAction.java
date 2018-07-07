@@ -16,6 +16,7 @@ import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.OptionDTO;
+import com.pphgzs.domain.DTO.QuestionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
 
@@ -36,8 +37,28 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	// private int moveOptionAction;
 	// private int moveQuestionAction;
 	private String moveQuestionType;
-	private List<OptionDTO> listOptionDTO;
+	// private List<OptionDTO> listOptionDTO;
 	private String moveOptionType;
+
+	/**
+	 * 一个问题的所有内容
+	 */
+	private QuestionDTO questionDTO;
+
+	/**
+	 * 根据问题Id 获取该问题的所有内容
+	 * @throws IOException 
+	 */
+	public void get_questionDTO_byQuestionId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		questionDTO = questionService.get_questionDTO_byQuestionId(question);
+		http_response.getWriter().write(gson.toJson(questionDTO));
+	}
 
 	/**
 	 * 删除选项
@@ -114,15 +135,14 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	 * 
 	 * @throws IOException
 	 */
-	public void list_optionDTO() throws IOException {
-		//
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.serializeNulls().create();
-		//
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(questionService.list_optionDTO(question)));
-	}
+	/*
+	 * public void list_optionDTO() throws IOException { // GsonBuilder gsonBuilder
+	 * = new GsonBuilder(); gsonBuilder.setPrettyPrinting();// 格式化json数据 Gson gson =
+	 * gsonBuilder.serializeNulls().create(); //
+	 * http_response.setContentType("text/html;charset=utf-8");
+	 * http_response.getWriter().write(gson.toJson(questionService.list_optionDTO(
+	 * question))); }
+	 */
 
 	/**
 	 * 移动问题顺序
@@ -208,13 +228,12 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 		this.http_request = http_request;
 	}
 
-	public List<OptionDTO> getListOptionDTO() {
-		return listOptionDTO;
-	}
-
-	public void setListOptionDTO(List<OptionDTO> listOptionDTO) {
-		this.listOptionDTO = listOptionDTO;
-	}
+	/*
+	 * public List<OptionDTO> getListOptionDTO() { return listOptionDTO; }
+	 * 
+	 * public void setListOptionDTO(List<OptionDTO> listOptionDTO) {
+	 * this.listOptionDTO = listOptionDTO; }
+	 */
 
 	public String getMoveQuestionType() {
 		return moveQuestionType;

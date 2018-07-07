@@ -9,7 +9,9 @@ import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DTO.InquiriesOptionDTO;
 import com.pphgzs.domain.DTO.OptionDTO;
+import com.pphgzs.domain.DTO.QuestionDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
@@ -258,46 +260,28 @@ public class QuestionServiceImpl implements QuestionService {
 	/**
 	 * 获取选项列表
 	 */
-	@Override
-	public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
-		// 定义
-		OptionDTO optionDTO = new OptionDTO();
-		List<OptionDTO> listOptionDTO = new ArrayList<>();
-		List<jwcpxt_option> listOption = new ArrayList<>();
-		List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>();
-		// 1.获取问题对象
-		if (question != null && question.getJwcpxt_question_id() != null
-				&& question.getJwcpxt_question_id().trim().length() > 0) {
-			// 获取问题对象
-			question = questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim());
-		} else {
-			return null;
-		}
-		// 2.判断问题类型是否是选择题类型
-		if ("1".equals(question.getQuestion_type())) {
-			// 获取选项列表
-			listOption = questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim());
-			// 遍历选项
-			for (jwcpxt_option jwcpxt_option : listOption) {
-				optionDTO = new OptionDTO();
-				listOptionInquireies = new ArrayList<>();
-				// 根据选项获取选项追问表
-				if (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null
-						&& jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) {
-					// 获取选项追问
-					listOptionInquireies = questionDao
-							.get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim());
-				}
-				optionDTO.setOption(jwcpxt_option);
-				optionDTO.setInquiriesList(listOptionInquireies);
-				listOptionDTO.add(optionDTO);
-			}
-		} else {
-			return null;
-		}
-		return listOptionDTO;
-	}
-
+	/*
+	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
+	 * // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO> listOptionDTO =
+	 * new ArrayList<>(); List<jwcpxt_option> listOption = new ArrayList<>();
+	 * List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>(); //
+	 * 1.获取问题对象 if (question != null && question.getJwcpxt_question_id() != null &&
+	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象 question =
+	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim()
+	 * ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
+	 * ("1".equals(question.getQuestion_type())) { // 获取选项列表 listOption =
+	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim());
+	 * // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO = new
+	 * OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表 if
+	 * (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null &&
+	 * jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
+	 * listOptionInquireies = questionDao
+	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim());
+	 * } optionDTO.setOption(jwcpxt_option);
+	 * optionDTO.setInquiriesList(listOptionInquireies);
+	 * listOptionDTO.add(optionDTO); } } else { return null; } return listOptionDTO;
+	 * }
+	 */
 	/**
 	 * 保存选项
 	 */
@@ -505,6 +489,81 @@ public class QuestionServiceImpl implements QuestionService {
 		// 删除选项
 		questionDao.delete_option_byOptionId(option.getJwcpxt_option_id().trim());
 		return true;
+	}
+
+	/**
+	 * 根据问题id
+	 */
+	@Override
+	public QuestionDTO get_questionDTO_byQuestionId(jwcpxt_question question) {
+		// 定义
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		List<jwcpxt_question> listZhuiWenQuestion = new ArrayList<>();
+		QuestionDTO questionDTO = new QuestionDTO();
+		List<OptionDTO> listOptionDTO = new ArrayList<>();
+		OptionDTO optionDTO = new OptionDTO();
+		List<InquiriesOptionDTO> listInquiriesOptionDTO = new ArrayList<>();
+		InquiriesOptionDTO inquiriesOptionDTO = new InquiriesOptionDTO();
+		List<jwcpxt_option> listInquiriesOption = new ArrayList<>();
+		// 根据问题id获取问题对象
+		jwcpxt_question jQuestion = new jwcpxt_question();
+		if (question != null && question.getJwcpxt_question_id() != null
+				&& question.getJwcpxt_question_id().length() > 0) {
+			jQuestion = questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim());
+		}
+		if (jQuestion == null) {
+			return null;
+		}
+		// 根据问题类型来判断下面的内容
+		if (jQuestion.getQuestion_type() == null || jQuestion.getQuestion_type().trim().length() <= 0) {
+			return null;
+		}
+		// 如果是选择题
+		if ("1".equals(jQuestion.getQuestion_type())) {
+			// 获取选项
+			listOption = questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim());
+			// 遍历所有选项，获取其中的内容值
+			for (jwcpxt_option jwcpxtOption : listOption) {
+				// 定义
+				optionDTO = new OptionDTO();
+				listInquiriesOptionDTO = new ArrayList<>();
+				listZhuiWenQuestion = new ArrayList<>();
+				// 获取该选项的所有追问
+				if (jwcpxtOption != null && jwcpxtOption.getJwcpxt_option_id() != null
+						&& jwcpxtOption.getJwcpxt_option_id().trim().length() > 0) {
+					// 所有追问
+					listZhuiWenQuestion = questionDao
+							.list_question_byServiceDefinition(jwcpxtOption.getJwcpxt_option_id().trim());
+					// 遍历追问
+					for (jwcpxt_question jwcpxt_question : listZhuiWenQuestion) {
+						// 定义
+						listInquiriesOption = new ArrayList<>();
+						inquiriesOptionDTO = new InquiriesOptionDTO();
+						// 判断追问类型
+						if (jwcpxt_question != null && jwcpxt_question.getQuestion_type() != null
+								&& jwcpxt_question.getQuestion_type().trim().length() > 0) {
+							// 如果是开放追问,不做操作
+							if ("4".equals(jwcpxt_question.getQuestion_type().trim())) {
+								// 如果是选择追问
+								// 获取该追问的所有选项
+								listInquiriesOption = questionDao
+										.get_option_byQuestionId(jwcpxt_question.getJwcpxt_question_id().trim());
+
+							}
+						}
+						inquiriesOptionDTO.setInquiriesQuestion(jwcpxt_question);
+						inquiriesOptionDTO.setListInquiriesOption(listInquiriesOption);
+						listInquiriesOptionDTO.add(inquiriesOptionDTO);
+					}
+				}
+				optionDTO.setListInquiriesOptionDTO(listInquiriesOptionDTO);
+				optionDTO.setOption(jwcpxtOption);
+				listOptionDTO.add(optionDTO);
+			}
+		}
+		questionDTO.setListOptionDTO(listOptionDTO);
+		questionDTO.setQuestion(jQuestion);
+		return questionDTO;
 	}
 
 }

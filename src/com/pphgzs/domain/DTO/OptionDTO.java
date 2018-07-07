@@ -3,16 +3,15 @@ package com.pphgzs.domain.DTO;
 import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_option;
-import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 
+/**
+ * 
+ * @author JXX
+ *
+ */
 public class OptionDTO {
 	private jwcpxt_option option;
-	private List<jwcpxt_option_inquiries> inquiriesList;
-
-	@Override
-	public String toString() {
-		return "OptionDTO [option=" + option + ", inquiriesList=" + inquiriesList + "]";
-	}
+	private List<InquiriesOptionDTO> listInquiriesOptionDTO;
 
 	public jwcpxt_option getOption() {
 		return option;
@@ -22,12 +21,17 @@ public class OptionDTO {
 		this.option = option;
 	}
 
-	public List<jwcpxt_option_inquiries> getInquiriesList() {
-		return inquiriesList;
+	public List<InquiriesOptionDTO> getListInquiriesOptionDTO() {
+		return listInquiriesOptionDTO;
 	}
 
-	public void setInquiriesList(List<jwcpxt_option_inquiries> inquiriesList) {
-		this.inquiriesList = inquiriesList;
+	public void setListInquiriesOptionDTO(List<InquiriesOptionDTO> listInquiriesOptionDTO) {
+		this.listInquiriesOptionDTO = listInquiriesOptionDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "OptionDTO [option=" + option + ", listInquiriesOptionDTO=" + listInquiriesOptionDTO + "]";
 	}
 
 }

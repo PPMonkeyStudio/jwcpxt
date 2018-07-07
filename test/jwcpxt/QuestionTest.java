@@ -86,13 +86,13 @@ public class QuestionTest {
 	/**
 	 * 选项列表
 	 */
-	@Test
+	/*@Test
 	public void list_optionDTOTest() {
 		jwcpxt_question question = new jwcpxt_question();
 		question.setJwcpxt_question_id("ef2a25bc-fd97-4dad-9e5a-715809198650");
 		List<OptionDTO> listOptionDTO = new ArrayList<>();
 		listOptionDTO = questionService.list_optionDTO(question);
-	}
+	}*/
 
 	/**
 	 * 下移问题测试

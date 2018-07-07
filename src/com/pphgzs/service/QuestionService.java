@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DTO.OptionDTO;
+import com.pphgzs.domain.DTO.QuestionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 
 public interface QuestionService {
@@ -20,7 +21,7 @@ public interface QuestionService {
 
 	public boolean delete_question(jwcpxt_question question);
 
-	public List<OptionDTO> list_optionDTO(jwcpxt_question question);
+	// public List<OptionDTO> list_optionDTO(jwcpxt_question question);
 
 	public boolean save_option(jwcpxt_option option);
 
@@ -31,5 +32,7 @@ public interface QuestionService {
 	public boolean delete_questionInquiries(jwcpxt_question question);
 
 	public boolean delete_option(jwcpxt_option option);
+
+	public QuestionDTO get_questionDTO_byQuestionId(jwcpxt_question question);
 
 }
