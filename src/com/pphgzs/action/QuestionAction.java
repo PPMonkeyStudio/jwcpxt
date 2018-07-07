@@ -14,8 +14,9 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
-import com.pphgzs.domain.DTO.OptionDTO;
+import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.QuestionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
@@ -37,6 +38,24 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private QuestionDTO questionDTO;
 	// 一个业务定义的所有问题
 	private List<QuestionDTO> listQuestionDTO;
+	// 业务当事人
+	private jwcpxt_service_client serviceClient;
+	// 回答
+	private List<AnswerDTO> listAnswerDTO;
+
+	/**
+	 * 回答问题
+	 * 
+	 * @throws IOException
+	 */
+	public void save_answer() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.save_answer(listAnswerDTO, serviceClient)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
 
 	/**
 	 * 根据业务定义Id 获取所有该业务的所有问题
@@ -222,6 +241,22 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	@Override
 	public void setServletRequest(HttpServletRequest http_request) {
 		this.http_request = http_request;
+	}
+
+	public List<AnswerDTO> getListAnswerDTO() {
+		return listAnswerDTO;
+	}
+
+	public void setListAnswerDTO(List<AnswerDTO> listAnswerDTO) {
+		this.listAnswerDTO = listAnswerDTO;
+	}
+
+	public jwcpxt_service_client getServiceClient() {
+		return serviceClient;
+	}
+
+	public void setServiceClient(jwcpxt_service_client serviceClient) {
+		this.serviceClient = serviceClient;
 	}
 
 	public QuestionDTO getQuestionDTO() {

@@ -5,7 +5,9 @@ import java.util.List;
 import com.google.gson.JsonElement;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.OptionDTO;
 import com.pphgzs.domain.DTO.QuestionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
@@ -35,5 +37,7 @@ public interface QuestionService {
 	public QuestionDTO get_questionDTO_byQuestionId(jwcpxt_question question);
 
 	public List<QuestionDTO> list_questionDTO_byServiceDefinition(jwcpxt_service_definition serviceDefinition);
+
+	public boolean save_answer(List<AnswerDTO> listAnswerDTO, jwcpxt_service_client serviceClient);
 
 }

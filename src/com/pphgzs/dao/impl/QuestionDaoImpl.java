@@ -13,6 +13,7 @@ import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.VO.QuestionVO;
 
 @SuppressWarnings("unchecked")
@@ -383,6 +384,21 @@ public class QuestionDaoImpl implements QuestionDao {
 		query.setParameter("serviceDefinitionId", serviceDefinitionId);
 		listQuestion = query.list();
 		return listQuestion;
+	}
+
+	/**
+	 * 根据id获取当事人对象
+	 */
+	@Override
+	public jwcpxt_service_client get_serviceClient_byClientId(String clientId) {
+		jwcpxt_service_client serviceClient = new jwcpxt_service_client();
+		Session session = getSession();
+		String hql = "from jwcpxt_service_client where jwcpxt_service_client_id = :clientId";
+		Query query = session.createQuery(hql);
+		query.setParameter("clientId", clientId);
+		serviceClient = (jwcpxt_service_client) query.uniqueResult();
+		session.clear();
+		return serviceClient;
 	}
 
 }

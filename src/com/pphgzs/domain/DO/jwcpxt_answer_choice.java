@@ -3,6 +3,7 @@ package com.pphgzs.domain.DO;
 public class jwcpxt_answer_choice {
 	private String jwcpxt_answer_choice_id;
 	private String answer_choice_mypcxt_service_instance;
+	private String answer_choice_client;
 	private String answer_choice_option;
 	private String answer_choice_question;
 	private String answer_choice_gmt_create;
@@ -18,6 +19,14 @@ public class jwcpxt_answer_choice {
 
 	public String getAnswer_choice_mypcxt_service_instance() {
 		return answer_choice_mypcxt_service_instance;
+	}
+
+	public String getAnswer_choice_client() {
+		return answer_choice_client;
+	}
+
+	public void setAnswer_choice_client(String answer_choice_client) {
+		this.answer_choice_client = answer_choice_client;
 	}
 
 	public void setAnswer_choice_mypcxt_service_instance(String answer_choice_mypcxt_service_instance) {
@@ -58,11 +67,11 @@ public class jwcpxt_answer_choice {
 
 	@Override
 	public String toString() {
-		return "jwcpxt_answer_choice 【\njwcpxt_answer_choice_id=" + jwcpxt_answer_choice_id
-				+ ", \nanswer_choice_mypcxt_service_instance=" + answer_choice_mypcxt_service_instance
-				+ ", \nanswer_choice_option=" + answer_choice_option + ", \nanswer_choice_question="
-				+ answer_choice_question + ", \nanswer_choice_gmt_create=" + answer_choice_gmt_create
-				+ ", \nanswer_choice_gmt_modified=" + answer_choice_gmt_modified + "\n】";
+		return "jwcpxt_answer_choice [jwcpxt_answer_choice_id=" + jwcpxt_answer_choice_id
+				+ ", answer_choice_mypcxt_service_instance=" + answer_choice_mypcxt_service_instance
+				+ ", answer_choice_client=" + answer_choice_client + ", answer_choice_option=" + answer_choice_option
+				+ ", answer_choice_question=" + answer_choice_question + ", answer_choice_gmt_create="
+				+ answer_choice_gmt_create + ", answer_choice_gmt_modified=" + answer_choice_gmt_modified + "]";
 	}
 
 }

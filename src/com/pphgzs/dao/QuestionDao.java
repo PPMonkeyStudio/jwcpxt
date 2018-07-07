@@ -7,6 +7,7 @@ import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.VO.QuestionVO;
 
 public interface QuestionDao {
@@ -62,5 +63,13 @@ public interface QuestionDao {
 	public List<jwcpxt_answer_choice> list_choice_byOptionId(String optionId);
 
 	public List<jwcpxt_question> list_question_byServiceDefinition(String trim);
+
+	/**
+	 * 根据id获取当事人对象
+	 * 
+	 * @param clientId
+	 * @return
+	 */
+	public jwcpxt_service_client get_serviceClient_byClientId(String clientId);
 
 }

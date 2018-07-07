@@ -1,5 +1,6 @@
 package com.pphgzs.service.impl;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.InquiriesOptionDTO;
 import com.pphgzs.domain.DTO.OptionDTO;
 import com.pphgzs.domain.DTO.QuestionDTO;
@@ -589,6 +592,69 @@ public class QuestionServiceImpl implements QuestionService {
 			list_questionDTO.add(questionDTO);
 		}
 		return list_questionDTO;
+	}
+
+	/**
+	 * 保存回答
+	 */
+	@Override
+	public boolean save_answer(List<AnswerDTO> listAnswerDTO, jwcpxt_service_client serviceClient) {
+		// 定义
+		jwcpxt_question question = new jwcpxt_question();
+		jwcpxt_option option = new jwcpxt_option();
+		jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
+		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
+		// 根据当事人id获取当事人信息 确保当事人信息正确
+		jwcpxt_service_client client = new jwcpxt_service_client();
+		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
+				&& serviceClient.getJwcpxt_service_client_id().trim().length() > 0) {
+			client = questionDao.get_serviceClient_byClientId(serviceClient.getJwcpxt_service_client_id().trim());
+		}
+		if (client == null) {
+			return false;
+		}
+		// 遍历回答列表
+		for (AnswerDTO answerDTO : listAnswerDTO) {
+			// 定义
+			question = new jwcpxt_question();
+			option = new jwcpxt_option();
+			answerChoice = new jwcpxt_answer_choice();
+			answerOpen = new jwcpxt_answer_open();
+			//
+			// 根据问题id获取问题对象
+			if (answerDTO.getQuestion() != null && answerDTO.getQuestion().getJwcpxt_question_id() != null
+					&& answerDTO.getQuestion().getJwcpxt_question_id().trim().length() > 0) {
+				question = questionDao
+						.get_question_byQuestionId(answerDTO.getQuestion().getJwcpxt_question_id().trim());
+			}
+			if (question == null)
+				continue;
+			// 如果是选择题
+			if ("1".equals(question.getQuestion_type().trim()) || "4".equals(question.getQuestion_type().trim())) {
+				// 获取选中的选项表
+				if (answerDTO.getOption() != null && answerDTO.getOption().getJwcpxt_option_id() != null
+						&& answerDTO.getOption().getJwcpxt_option_id().trim().length() > 0) {
+					option = questionDao.get_option_byOptionId(answerDTO.getOption().getJwcpxt_option_id().trim());
+				}
+				if (option == null) {
+					continue;
+				}
+				// 存储选择题回答
+				answerChoice.setJwcpxt_answer_choice_id(uuidUtil.getUuid());
+				answerChoice.setAnswer_choice_client(serviceClient.getJwcpxt_service_client_id());
+				answerChoice.setAnswer_choice_option(option.getJwcpxt_option_id());
+				answerChoice.setAnswer_choice_question(question.getJwcpxt_question_id());
+				answerChoice.setAnswer_choice_gmt_create(TimeUtil.getStringSecond());
+				answerChoice.setAnswer_choice_gmt_modified(TimeUtil.getStringSecond());
+				questionDao.saveOrUpdateObject(answerChoice);
+			} else if ("2".equals(question.getQuestion_type().trim())
+					|| "3".equals(question.getQuestion_type().trim())) {
+				// 如果是开放题
+
+			}
+
+		}
+		return false;
 	}
 
 }
