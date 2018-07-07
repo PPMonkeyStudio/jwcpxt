@@ -324,6 +324,20 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public jwcpxt_service_grab get_serviceGrab_byServiceGrabID(String serviceGrabId) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_grab where jwcpxt_service_grab_id=:serviceGrabId ";
+		//
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceGrabId", serviceGrabId);
+		//
+		jwcpxt_service_grab serviceInstance = (jwcpxt_service_grab) query.uniqueResult();
+		session.clear();
+		return serviceInstance;
+	}
+
+	@Override
 	public jwcpxt_service_instance get_serviceInstance_byServiceInstanceID(String serviceInstanceID) {
 		Session session = getSession();
 		String hql = "from jwcpxt_service_instance where jwcpxt_service_instance_id=:serviceInstanceID ";
@@ -349,6 +363,14 @@ public class ServiceDaoImpl implements ServiceDao {
 	public boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinitionOld) {
 		Session session = getSession();
 		session.update(serviceDefinitionOld);
+		session.flush();
+		return true;
+	}
+
+	@Override
+	public boolean update_serviceGrab(jwcpxt_service_grab serviceGrabOld) {
+		Session session = getSession();
+		session.update(serviceGrabOld);
 		session.flush();
 		return true;
 	}

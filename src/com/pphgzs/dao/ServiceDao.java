@@ -53,4 +53,8 @@ public interface ServiceDao {
 
 	boolean update_serviceInstance(jwcpxt_service_instance serviceInstance);
 
+	jwcpxt_service_grab get_serviceGrab_byServiceGrabID(String serviceGrabId);
+
+	boolean update_serviceGrab(jwcpxt_service_grab serviceGrabOld);
+
 }

@@ -90,4 +90,6 @@ public interface ServiceService {
 
 	boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinition);
 
+	boolean update_serviceGrab(jwcpxt_service_grab serviceGrab);
+
 }

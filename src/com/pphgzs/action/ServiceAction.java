@@ -99,6 +99,19 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	}
 
 	/**
+	 * 修改业务抓取的抓取字段
+	 * 
+	 * @throws IOException
+	 */
+	public void update_serviceGrab() throws IOException {
+		if (serviceService.update_serviceGrab(serviceGrab)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
 	 * 获得一个业务定义
 	 * 
 	 * @throws IOException

@@ -267,7 +267,31 @@ public class ServiceServiceImpl implements ServiceService {
 		// 修改比例
 		serviceDefinitionOld.setService_definition_sampling_proportion(
 				serviceDefinitionNew.getService_definition_sampling_proportion());
+		//
+		serviceDefinitionOld.setService_definition_gmt_modified(TimeUtil.getStringSecond());
 		if (serviceDao.update_serviceDefinition(serviceDefinitionOld)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean update_serviceGrab(jwcpxt_service_grab serviceGrabNew) {
+		jwcpxt_service_grab serviceGrabOld = serviceDao
+				.get_serviceGrab_byServiceGrabID(serviceGrabNew.getJwcpxt_service_grab_id());
+		if (serviceGrabOld == null) {
+			return false;
+		}
+		serviceGrabOld.setService_grab_table(serviceGrabNew.getService_grab_table());
+		serviceGrabOld.setService_grab_field_nid(serviceGrabNew.getService_grab_field_nid());
+		serviceGrabOld.setService_grab_field_client_name(serviceGrabNew.getService_grab_field_client_name());
+		serviceGrabOld.setService_grab_field_client_sex(serviceGrabNew.getService_grab_field_client_sex());
+		serviceGrabOld.setService_grab_field_client_phone(serviceGrabNew.getService_grab_field_client_phone());
+		serviceGrabOld.setService_grab_field_date(serviceGrabNew.getService_grab_field_date());
+
+		//
+		serviceGrabOld.setService_grab_gmt_modified(TimeUtil.getStringSecond());
+		if (serviceDao.update_serviceGrab(serviceGrabOld)) {
 			return true;
 		}
 		return false;
