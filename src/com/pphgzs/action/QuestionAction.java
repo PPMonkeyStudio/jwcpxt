@@ -39,10 +39,9 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private List<OptionDTO> listOptionDTO;
 	private String moveOptionType;
 
-	
-	
 	/**
 	 * 移动选项
+	 * 
 	 * @throws IOException
 	 */
 	public void move_option() throws IOException {
@@ -159,6 +158,7 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	}
 
 	/**
+	 * 删除问题
 	 * 
 	 * @throws IOException
 	 */

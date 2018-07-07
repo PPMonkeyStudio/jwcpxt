@@ -3,9 +3,9 @@ package com.pphgzs.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.test.annotation.Timed;
-
 import com.pphgzs.dao.QuestionDao;
+import com.pphgzs.domain.DO.jwcpxt_answer_choice;
+import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
@@ -66,7 +66,9 @@ public class QuestionServiceImpl implements QuestionService {
 		int totalRecords = questionDao.get_questionTotalCount_byQuestionVO(questionVO);
 		System.out.println("totalRecords:" + totalRecords);
 		// 总页数
-		int totalPages = ((questionVO.getTotalCount() - 1) / questionVO.getPageSize()) + 1;
+		// staffManagerVO.setTotalPages(((userInfoCount - 1) /
+		// staffManagerVO.getPageSize()) + 1);
+		int totalPages = ((totalRecords - 1) / questionVO.getPageSize()) + 1;
 		questionVO.setServiceDefinitionDTO(serviceDefinitionDTO);
 		questionVO.setQuestionList(questionList);
 		questionVO.setTotalCount(totalRecords);
@@ -204,10 +206,56 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	/**
-	 * 删除问题、删除选项以及追问等等。。。。
+	 * 删除的前提是没有回答，如果有回答的话 那么就是删除失败的情况 删除问题
 	 */
 	@Override
 	public boolean delete_question(jwcpxt_question question) {
+		// 定义
+		jwcpxt_question deleteQuestion = new jwcpxt_question();
+		List<jwcpxt_answer_choice> listChoiceAnswer = new ArrayList<>();
+		List<jwcpxt_answer_open> listOpenAnswer = new ArrayList<>();
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		// 获取问题对象
+		if (question != null && question.getJwcpxt_question_id() != null
+				&& question.getJwcpxt_question_id().trim().length() > 0) {
+			deleteQuestion = questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim());
+		} else {
+			return false;
+		}
+		if (deleteQuestion == null) {
+			return false;
+		}
+		// 根据问题的类型去查找,选择题
+		if ("1".equals(deleteQuestion.getQuestion_type())) {
+			// 根据问题查找
+			listChoiceAnswer = questionDao.list_choiceAnswer_byQuestionId(question.getJwcpxt_question_id().trim());
+			// 如果已经有回答了
+			if (listChoiceAnswer.size() > 0) {
+				return false;
+			}
+			// 如果没有回答,那么就是进行删除选项、删除追问
+			// 获取对应问题的所有选项
+			listOption = questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim());
+			// 遍历选项,进行删除追问
+			for (jwcpxt_option jwcpxtOption : listOption) {
+				// 删除所有追问
+				if (jwcpxtOption != null && jwcpxtOption.getJwcpxt_option_id() != null
+						&& jwcpxtOption.getJwcpxt_option_id().trim().length() > 0) {
+					// 删除追问,如果删除失败？如何操作
+					/*
+					 * if
+					 * (!questionDao.delete_question_byOptionId(jwcpxtOption.getJwcpxt_option_id().
+					 * trim())) { throw new RuntimeException("删除追问失败"); }
+					 */
+					// 删除追问
+				}
+			}
+			// 删除选项
+
+			//
+		} else if ("2".equals(deleteQuestion.getQuestion_type())) {
+
+		}
 		if (questionDao.delete_question(question.getJwcpxt_question_id())) {
 			return true;
 		} else {

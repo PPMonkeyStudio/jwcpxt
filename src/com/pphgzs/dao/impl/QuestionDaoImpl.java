@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.QuestionDao;
+import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
@@ -289,6 +290,45 @@ public class QuestionDaoImpl implements QuestionDao {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * 获取某个问题的所有选择题回答对象
+	 */
+	@Override
+	public List<jwcpxt_answer_choice> list_choiceAnswer_byQuestionId(String questionId) {
+		List<jwcpxt_answer_choice> listChoiceAnswer = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_answer_choice where answer_choice_question = :questionId";
+		Query query = session.createQuery(hql);
+		listChoiceAnswer = query.list();
+		return listChoiceAnswer;
+	}
+
+	@Override
+	public boolean delete_question_byOptionId(String optionId) {
+		Session session = getSession();
+		String hql = "delete from jwcpxt_question where question_service_definition = :optionId";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("optionId", optionId);
+		//
+		query.executeUpdate();
+		session.flush();
+		return true;
+	}
+
+	@Override
+	public boolean delete_option_byOptionId(String optionId) {
+		Session session = getSession();
+		String hql = "delete from jwcpxt_option where jwcpxt_option_id = :optionId";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("optionId", optionId);
+		//
+		query.executeUpdate();
+		session.flush();
+		return true;
 	}
 
 }
