@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import com.pphgzs.dao.ServiceDao;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -350,6 +351,15 @@ public class ServiceDaoImpl implements ServiceDao {
 		session.update(serviceDefinitionOld);
 		session.flush();
 		return true;
+	}
+
+	@Override
+	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab) {
+		Session session = getSession();
+		session.save(serviceGrab);
+		session.flush();
+		return true;
+
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.List;
 import com.pphgzs.dao.ServiceDao;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
@@ -96,7 +97,8 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public void distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(int num,
 			String serviceDefinitionID, String date) {
-		jwcpxt_service_definition serviceDefinition = get_serviceDefinitionDO_byServiceDefinitionID(serviceDefinitionID);
+		jwcpxt_service_definition serviceDefinition = get_serviceDefinitionDO_byServiceDefinitionID(
+				serviceDefinitionID);
 		// 获取随机到的业务实例
 		List<jwcpxt_service_instance> serviceInstanceSampleList = list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(
 				num, serviceDefinitionID, date);
@@ -202,11 +204,15 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
-	public boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
+	public boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition,
+			jwcpxt_service_grab serviceGrab) {
 		if (serviceDao.ifExist_serviceDefinition_byServiceDefinitionDescribe(
 				serviceDefinition.getService_definition_describe())) {
 			return false;
 		} else {
+			/*
+			 * 业务定义
+			 */
 			// uuid
 			serviceDefinition.setJwcpxt_service_definition_id(uuidUtil.getUuid());
 			// 时间初始化
@@ -215,6 +221,17 @@ public class ServiceServiceImpl implements ServiceService {
 			serviceDefinition.setService_definition_gmt_modified(time);
 			// 存入
 			serviceDao.save_serviceDefinition(serviceDefinition);
+			/*
+			 * 业务抓取
+			 */
+			serviceGrab.setJwcpxt_service_grab_id(uuidUtil.getUuid());
+			serviceGrab.setService_grab_service_definition(serviceDefinition.getJwcpxt_service_definition_id());
+			serviceGrab.setService_grab_gmt_create(time);
+			serviceGrab.setService_grab_gmt_modified(time);
+			serviceDao.save_serviceGrab(serviceGrab);
+			/*
+			 * 
+			 */
 			return true;
 		}
 

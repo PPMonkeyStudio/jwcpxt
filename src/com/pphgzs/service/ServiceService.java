@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
@@ -85,7 +86,7 @@ public interface ServiceService {
 	List<ServiceInstanceDTO> list_ServiceInstanceDTO_byServiceInstanceList(
 			List<jwcpxt_service_instance> serviceInstanceList);
 
-	boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition);
+	boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition, jwcpxt_service_grab serviceGrab);
 
 	boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinition);
 

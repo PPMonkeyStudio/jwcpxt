@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -31,7 +32,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 	private jwcpxt_service_definition serviceDefinition;
 	private jwcpxt_service_instance serviceInstance;
-
+	private jwcpxt_service_grab serviceGrab;
 	/* 
 	 * 
 	 */
@@ -77,7 +78,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 * @throws IOException
 	 */
 	public void save_serviceDefinition() throws IOException {
-		if (serviceService.save_serviceDefinition(serviceDefinition)) {
+		if (serviceService.save_serviceDefinition(serviceDefinition, serviceGrab)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");
@@ -230,6 +231,14 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public void setServiceInstance(jwcpxt_service_instance serviceInstance) {
 		this.serviceInstance = serviceInstance;
+	}
+
+	public jwcpxt_service_grab getServiceGrab() {
+		return serviceGrab;
+	}
+
+	public void setServiceGrab(jwcpxt_service_grab serviceGrab) {
+		this.serviceGrab = serviceGrab;
 	}
 
 	/*
