@@ -92,4 +92,5 @@ public interface ServiceService {
 
 	boolean update_serviceGrab(jwcpxt_service_grab serviceGrab);
 
+	boolean if_grabServiceInstance_byDate(String date);
 }
