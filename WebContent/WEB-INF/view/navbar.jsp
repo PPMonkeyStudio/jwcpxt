@@ -17,12 +17,12 @@
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<ul id="changeNavbar" class="nav navbar-nav navbar-left">
-				<li><a href="#">
+				<li><a href="<%=basePath %>Skip/skipManagerIndex">
 						<p>管理</p>
 				</a></li>
-				<li><a href="#"> 
+	<!-- 			<li><a href="#"> 
 						<p>问卷</p>
-				</a></li>
+				</a></li> -->
 				<li><a href="<%=basePath %>Skip/skipManagerService"> 
 						<p>业务</p>
 				</a></li>

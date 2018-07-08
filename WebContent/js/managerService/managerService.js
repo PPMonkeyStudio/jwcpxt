@@ -2,8 +2,76 @@
  * 
  */
 
-function intoInstance(event){
-	window.location.href="/jwcpxt/Skip/skipServiceInstance?serviceDefinition.jwcpxt_service_definition_id="+event.id;
+function intoInstance(event) {
+	window.location.href = "/jwcpxt/Skip/skipServiceInstance?serviceDefinition.jwcpxt_service_definition_id="
+			+ event.id;
+}
+
+function updateInterface(event) {
+	$
+			.confirm({
+				title : '修改数据抓取接口',
+				type : 'blue',
+				boxWidth : '500px',
+				useBootstrap : false,
+				content : '<div><form id="update_interface">'
+						+ '<label>接口名：</label><input class="form-control" name="serviceGrab.service_grab_service_definition">'
+						+ '<label>数据表名：</label><input class="form-control" name="serviceGrab.service_grab_table">'
+						+ '<label>唯一编号：</label><input class="form-control" name="serviceGrab.service_grab_field_nid">'
+						+ '<label>当事人姓名：</label><input class="form-control" name="serviceGrab.service_grab_field_client_name">'
+						+ '<label>当事人性别：</label><input class="form-control" name="serviceGrab.service_grab_field_client_sex">'
+						+ '<label>当事人电话：</label><input class="form-control" name="serviceGrab.service_grab_field_client_phone">'
+						+ '<label>业务办理时间：</label><input class="form-control" name="serviceGrab.service_grab_field_date">'
+						+ '</div></form>',
+				buttons : {
+					cancel : {
+						text : '关闭',
+						btnClass : 'btn-red',
+						action : function() {
+
+						}
+					},
+					save : {
+						text : '保存',
+						btnClass : 'btn-blue',
+						action : function() {
+							var formData = new FormData(document
+									.getElementById("update_interface"));
+							formData
+									.append(
+											'serviceGrab.service_grab_service_definition',
+											event.id);
+							$.ajax({
+								url : '/jwcpxt/Service/update_serviceGrab',
+								type : 'POST',
+								data : formData,
+								processData : false,
+								contentType : false,
+								success : function(data) {
+									if (data == 1) {
+										toastr.success("保存成功");
+										loadData();
+									} else {
+										toastr.error("保存失败");
+									}
+								}
+							})
+						}
+					}
+				},
+				onContentReady : function() {
+					$.ajax({
+						url:'/jwcpxt/Service/get_serviceGrabDO_byServiceDefinitionID',
+						type:'POST',
+						data:{
+							
+						},
+						success:function(data){
+							
+						}
+					})
+				}
+			})
 }
 
 function addService() {

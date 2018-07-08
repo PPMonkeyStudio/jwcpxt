@@ -58,31 +58,46 @@ a:hover {
 												</select></td>
 												<td>抽样比例</td>
 												<td>创建时间</td>
-												<td>操作</td>
+												<td>进入问题</td>
+												<td>修改业务</td>
+												<td>修改接口</td>
 											</tr>
 										</thead>
 										<tbody>
 											<template
 												v-for="serviceDefinitionDTO in serviceVO.serviceDefinitionDTOList">
 											<tr>
-												<td><a :id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id" onclick="intoInstance(this)">{{
-													serviceDefinitionDTO.serviceDefinition.service_definition_describe
-													}}</a></td>
+												<td><a
+													:id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
+													onclick="intoInstance(this)">{{
+														serviceDefinitionDTO.serviceDefinition.service_definition_describe
+														}}</a></td>
 												<td>{{ serviceDefinitionDTO.unit.unit_name }}</td>
-												<td>{{ serviceDefinitionDTO.serviceDefinition.service_definition_sampling_proportion }}%</td>
+												<td>{{
+													serviceDefinitionDTO.serviceDefinition.service_definition_sampling_proportion
+													}}%</td>
 												<td>{{
 													serviceDefinitionDTO.serviceDefinition.service_definition_gmt_create
 													}}</td>
-												<td><a :id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
+												<td><a
+													:id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
+													onclick="intoQuestion(this)"><i class="ti-arrow-right"></i></a></td>
+												<td><a
+													:id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
 													onclick="updateService(this)"><i class="ti-pencil-alt"></i></a></td>
+												<td><a
+													:id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
+													onclick="updateInterface(this)"><i class="ti-pencil"></i></a></td>
 											</tr>
 											</template>
 										</tbody>
 									</table>
 									<!-- 分页 -->
 									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage"></span>{{ serviceVO.currPage }}</span> <span>共:<span
-											id="totalPage">{{ serviceVO.totalPage }}</span>页
+										<span>当前页数:<span id="currPage"></span>{{
+											serviceVO.currPage }}
+										</span> <span>共:<span id="totalPage">{{
+												serviceVO.totalPage }}</span>页
 										</span> <span onclick="skipToIndexPage()" id="indexPage"
 											class="pageOperation">首页</span> <span
 											onclick="skipToPrimaryPage()" id="previousPage"

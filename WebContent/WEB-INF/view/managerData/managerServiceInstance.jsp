@@ -41,14 +41,11 @@ a:hover {
 									<button onclick="returnService()" class="btn btn-default">
 										<i class="ti-back-left"></i>返回业务管理
 									</button>
-									<input oninput="changeQuery()" id="searchContent"
-										placeholder="请输入搜索内容" class="form-control"
-										style="float: right; width: 250px;">
 									<div style="float: right; margin-right: 10px;">
-										<label>业务发生时间</label> <input oninput="changeQuery()"
-											id="searchContent" placeholder="请输入搜索内容" class="mydate form-control"
-											style="display: inline; width: 150px;"><label>至</label><input
-											oninput="changeQuery()" id="searchContent"
+										<label>业务发生时间</label> <input onchange="changeQuery()"
+											id="screenServiceInstanceStartDate" placeholder="请输入搜索内容" class="mydate form-control"
+											style="display: inline; width: 150px;"><label>&nbsp;至&nbsp;</label><input
+											onchange="changeQuery()" id="screenServiceInstanceStopDate"
 											placeholder="请输入搜索内容" class="mydate form-control"
 											style="display: inline; width: 150px;">
 									</div>
@@ -62,8 +59,9 @@ a:hover {
 												<tr>
 													<td>业务编号</td>
 													<td>业务办理时间</td>
-													<td><select class="form-control" id="humanSelect">
-															<option value="">是否分配测评员</option>
+													<td><select class="form-control" id="humanSelect"
+														onchange="changeQuery()" style="text-align: center;">
+															<option value="" style="text-align: center;">是否分配测评员</option>
 													</select></td>
 													<td>查看当事人</td>
 												</tr>
@@ -81,14 +79,14 @@ a:hover {
 													<template v-if="serviceInstanceDTO.judge == undefined">
 													<td><a
 														:id="serviceInstanceDTO.serviceInstance.jwcpxt_service_instance_id"
-														onclick="">分配测评员</a></td>
+														onclick="allocationHuman(this)">分配测评员</a></td>
 													</template>
 													<template v-else>
 													<td>{{ serviceInstanceDTO.judge.user_name }}</td>
 													</template>
 													<td><a
 														:id="serviceInstanceDTO.serviceInstance.jwcpxt_service_instance_id"
-														onclick="">查看</a></td>
+														onclick="viewParties(this)">查看</a></td>
 												</tr>
 												</template>
 											</tbody>
