@@ -604,6 +604,7 @@ public class QuestionServiceImpl implements QuestionService {
 		jwcpxt_option option = new jwcpxt_option();
 		jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
 		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
+		
 		// 根据当事人id获取当事人信息 确保当事人信息正确
 		jwcpxt_service_client client = new jwcpxt_service_client();
 		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
@@ -620,6 +621,7 @@ public class QuestionServiceImpl implements QuestionService {
 			option = new jwcpxt_option();
 			answerChoice = new jwcpxt_answer_choice();
 			answerOpen = new jwcpxt_answer_open();
+			answerOpen = answerDTO.getAnswerOpen();
 			//
 			// 根据问题id获取问题对象
 			if (answerDTO.getQuestion() != null && answerDTO.getQuestion().getJwcpxt_question_id() != null
@@ -645,16 +647,24 @@ public class QuestionServiceImpl implements QuestionService {
 				answerChoice.setAnswer_choice_option(option.getJwcpxt_option_id());
 				answerChoice.setAnswer_choice_question(question.getJwcpxt_question_id());
 				answerChoice.setAnswer_choice_gmt_create(TimeUtil.getStringSecond());
-				answerChoice.setAnswer_choice_gmt_modified(TimeUtil.getStringSecond());
+				answerChoice.setAnswer_choice_gmt_modified(answerChoice.getAnswer_choice_gmt_create());
 				questionDao.saveOrUpdateObject(answerChoice);
+				if ("1".equals(option.getOption_push())) {
+					
+				}
 			} else if ("2".equals(question.getQuestion_type().trim())
 					|| "3".equals(question.getQuestion_type().trim())) {
 				// 如果是开放题
-
+				answerOpen.setJwcpxt_answer_open_id(uuidUtil.getUuid());
+				answerOpen.setAnswer_open_client(serviceClient.getJwcpxt_service_client_id());
+				answerOpen.setAnswer_open_content(answerDTO.getAnswerOpen().getAnswer_open_content());
+				answerOpen.setAnswer_open_question(question.getJwcpxt_question_id());
+				answerOpen.setAnswer_open_gmt_create(TimeUtil.getStringSecond());
+				answerOpen.setAnswer_open_gmt_modified(answerOpen.getAnswer_open_gmt_create());
+				questionDao.saveOrUpdateObject(answerOpen);
 			}
-
 		}
-		return false;
+		return true;
 	}
 
 }

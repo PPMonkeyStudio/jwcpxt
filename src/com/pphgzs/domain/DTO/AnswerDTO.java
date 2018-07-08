@@ -30,20 +30,20 @@ public class AnswerDTO {
 		this.question = question;
 	}
 
-	public jwcpxt_answer_choice getAnswerChoice() {
-		return answerChoice;
-	}
-
-	public void setAnswerChoice(jwcpxt_answer_choice answerChoice) {
-		this.answerChoice = answerChoice;
-	}
-
 	public jwcpxt_option getOption() {
 		return option;
 	}
 
 	public void setOption(jwcpxt_option option) {
 		this.option = option;
+	}
+
+	public jwcpxt_answer_choice getAnswerChoice() {
+		return answerChoice;
+	}
+
+	public void setAnswerChoice(jwcpxt_answer_choice answerChoice) {
+		this.answerChoice = answerChoice;
 	}
 
 	public jwcpxt_answer_open getAnswerOpen() {
