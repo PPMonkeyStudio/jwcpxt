@@ -1,7 +1,6 @@
 package com.pphgzs.thread;
 
 import com.pphgzs.service.impl.ServiceServiceImpl;
-import com.pphgzs.util.TimeUtil;
 
 public class ServiceGrabThread {
 
@@ -26,12 +25,6 @@ public class ServiceGrabThread {
 					try {
 
 						ServiceServiceImpl serviceServiceImpl = new ServiceServiceImpl();
-
-						if (serviceServiceImpl.if_grabServiceInstance_byDate(TimeUtil.getStringDay())) {
-
-						} else {
-							// serviceServiceImpl.grab_serviceInstance_auto();
-						}
 
 						// 30分钟——1800000毫秒
 						Thread.sleep(1800000);

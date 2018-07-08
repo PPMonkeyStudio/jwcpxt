@@ -365,14 +365,6 @@ public class ServiceServiceImpl implements ServiceService {
 	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
 		return serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(serviceDefinitionID);
 	}
-
-	@Override
-	public boolean if_grabServiceInstance_byDate(String date) {
-
-		//
-
-		return false;
-	}
 	/*
 	 * 
 	 */
