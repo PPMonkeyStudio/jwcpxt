@@ -1,12 +1,12 @@
 package com.pphgzs.service.impl;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_answer_open;
+import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
@@ -604,7 +604,7 @@ public class QuestionServiceImpl implements QuestionService {
 		jwcpxt_option option = new jwcpxt_option();
 		jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
 		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
-		
+		jwcpxt_dissatisfied_feedback dissatisfiedFeedback = new jwcpxt_dissatisfied_feedback();
 		// 根据当事人id获取当事人信息 确保当事人信息正确
 		jwcpxt_service_client client = new jwcpxt_service_client();
 		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
@@ -622,6 +622,7 @@ public class QuestionServiceImpl implements QuestionService {
 			answerChoice = new jwcpxt_answer_choice();
 			answerOpen = new jwcpxt_answer_open();
 			answerOpen = answerDTO.getAnswerOpen();
+			dissatisfiedFeedback = new jwcpxt_dissatisfied_feedback();
 			//
 			// 根据问题id获取问题对象
 			if (answerDTO.getQuestion() != null && answerDTO.getQuestion().getJwcpxt_question_id() != null
@@ -649,9 +650,19 @@ public class QuestionServiceImpl implements QuestionService {
 				answerChoice.setAnswer_choice_gmt_create(TimeUtil.getStringSecond());
 				answerChoice.setAnswer_choice_gmt_modified(answerChoice.getAnswer_choice_gmt_create());
 				questionDao.saveOrUpdateObject(answerChoice);
+				// 如果属于需要推送的选项，则生成
 				if ("1".equals(option.getOption_push())) {
-					
+					dissatisfiedFeedback.setJwcpxt_dissatisfied_feedback_id(uuidUtil.getUuid());
+					dissatisfiedFeedback
+							.setDissatisfied_feedback_answer_choice(answerChoice.getJwcpxt_answer_choice_id());
+					dissatisfiedFeedback.setDissatisfied_feedback_time(TimeUtil.getStringSecond());
+					dissatisfiedFeedback.setDissatisfied_feedback_state("1");
+					dissatisfiedFeedback.setDissatisfied_feedback_gmt_create(TimeUtil.getStringSecond());
+					dissatisfiedFeedback.setDissatisfied_feedback_gmt_modified(
+							dissatisfiedFeedback.getDissatisfied_feedback_gmt_create());
+					questionDao.saveOrUpdateObject(answerChoice);
 				}
+				// 此时应该还需要生成通知表，但是通知还没有确定，所有暂时还没有写 7.8 9:23 AM
 			} else if ("2".equals(question.getQuestion_type().trim())
 					|| "3".equals(question.getQuestion_type().trim())) {
 				// 如果是开放题
