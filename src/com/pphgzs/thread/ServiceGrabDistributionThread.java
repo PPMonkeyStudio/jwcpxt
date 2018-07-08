@@ -5,7 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.pphgzs.service.ServiceService;
 
-public class ServiceGrabThread {
+public class ServiceGrabDistributionThread {
 
 	private final static String RUN = "run";
 
@@ -32,7 +32,8 @@ public class ServiceGrabThread {
 						ServiceService serviceService = (ServiceService) ctx.getBean("serviceService");
 						serviceService.grab_serviceInstance_auto();
 						serviceService.distribution_serviceInstance_auto();
-						// 30分钟——1800000毫秒
+						// 10分钟——600秒——600000毫秒
+						// 60分钟——3600秒——3600000毫秒
 						Thread.sleep(3600000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -59,7 +60,7 @@ public class ServiceGrabThread {
 	}
 
 	public static void setThreadState(String threadState) {
-		ServiceGrabThread.threadState = threadState;
+		ServiceGrabDistributionThread.threadState = threadState;
 	}
 
 	public static String getStop() {
