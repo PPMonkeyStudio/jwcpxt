@@ -60,7 +60,16 @@ function updateInterface(event) {
 					}
 				},
 				onContentReady : function() {
-					
+					$.ajax({
+						url:'/jwcpxt/Service/get_serviceGrabDO_byServiceDefinitionID',
+						type:'POST',
+						data:{
+							
+						},
+						success:function(data){
+							
+						}
+					})
 				}
 			})
 }
