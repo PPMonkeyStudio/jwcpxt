@@ -303,6 +303,11 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
+	public jwcpxt_service_grab get_serviceGrabDO_byServiceDefinitionID(String serviceDefinitionID) {
+		return serviceDao.get_serviceGrabDO_byServiceDefinitionID(serviceDefinitionID);
+	}
+
+	@Override
 	public List<jwcpxt_service_client> list_clientDO_byServiceInstanceID(String serviceInstanceID) {
 		return serviceDao.list_client_byServiceInstanceID(serviceInstanceID);
 	}

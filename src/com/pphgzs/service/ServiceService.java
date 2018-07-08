@@ -92,4 +92,6 @@ public interface ServiceService {
 
 	boolean update_serviceGrab(jwcpxt_service_grab serviceGrab);
 
+	jwcpxt_service_grab get_serviceGrabDO_byServiceDefinitionID(String serviceDefinitionID);
+
 }

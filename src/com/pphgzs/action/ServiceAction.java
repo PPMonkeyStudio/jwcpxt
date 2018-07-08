@@ -112,6 +112,23 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	}
 
 	/**
+	 * 根据业务定义id获取抓取字段表DO
+	 * 
+	 * @throws IOException
+	 */
+	public void get_serviceGrabDO_byServiceDefinitionID() throws IOException {
+		serviceGrab = serviceService
+				.get_serviceGrabDO_byServiceDefinitionID(serviceGrab.getService_grab_service_definition());
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceGrab));
+	}
+
+	/**
 	 * 获得一个业务定义
 	 * 
 	 * @throws IOException
