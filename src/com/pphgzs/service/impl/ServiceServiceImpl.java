@@ -282,13 +282,13 @@ public class ServiceServiceImpl implements ServiceService {
 		if (serviceGrabOld == null) {
 			return false;
 		}
+		serviceGrabOld.setService_grab_Interface(serviceGrabNew.getService_grab_Interface());
 		serviceGrabOld.setService_grab_table(serviceGrabNew.getService_grab_table());
 		serviceGrabOld.setService_grab_field_nid(serviceGrabNew.getService_grab_field_nid());
 		serviceGrabOld.setService_grab_field_client_name(serviceGrabNew.getService_grab_field_client_name());
 		serviceGrabOld.setService_grab_field_client_sex(serviceGrabNew.getService_grab_field_client_sex());
 		serviceGrabOld.setService_grab_field_client_phone(serviceGrabNew.getService_grab_field_client_phone());
 		serviceGrabOld.setService_grab_field_date(serviceGrabNew.getService_grab_field_date());
-
 		//
 		serviceGrabOld.setService_grab_gmt_modified(TimeUtil.getStringSecond());
 		if (serviceDao.update_serviceGrab(serviceGrabOld)) {
@@ -364,6 +364,12 @@ public class ServiceServiceImpl implements ServiceService {
 		serviceInstanceDTO.setServiceClientList(serviceClientList);
 		//
 		return serviceInstanceDTO;
+	}
+
+	@Override
+	public void grab_serviceInstance_auto() {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
