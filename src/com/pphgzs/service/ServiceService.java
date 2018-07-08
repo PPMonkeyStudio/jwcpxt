@@ -94,4 +94,9 @@ public interface ServiceService {
 
 	jwcpxt_service_grab get_serviceGrabDO_byServiceDefinitionID(String serviceDefinitionID);
 
+	void grab_serviceInstance_auto();
+
+	/*
+	 * 
+	 */
 }
