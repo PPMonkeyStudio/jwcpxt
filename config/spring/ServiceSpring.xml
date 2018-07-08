@@ -9,6 +9,7 @@
 		<property name="serviceService" ref="serviceService"></property>
 	</bean>
 
+
 	<bean id="serviceService" class="com.pphgzs.service.impl.ServiceServiceImpl">
 		<property name="serviceDao" ref="serviceDao"></property>
 		<property name="userService" ref="userService"></property>

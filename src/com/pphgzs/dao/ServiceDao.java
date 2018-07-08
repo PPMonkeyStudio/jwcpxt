@@ -2,6 +2,7 @@ package com.pphgzs.dao;
 
 import java.util.List;
 
+import com.pphgzs.domain.DO.jwcpxt_grab_journal;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
@@ -59,4 +60,7 @@ public interface ServiceDao {
 
 	jwcpxt_service_grab get_serviceGrabDO_byServiceDefinitionID(String serviceDefinitionID);
 
+	jwcpxt_grab_journal get_grabJournal_byServiceDefinitionIDAndDate(String serviceDefinitionID, String date);
+
+	boolean save_grabJournal(jwcpxt_grab_journal grabJournal);
 }

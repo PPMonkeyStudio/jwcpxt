@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_grab_journal;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
@@ -368,8 +369,54 @@ public class ServiceServiceImpl implements ServiceService {
 
 	@Override
 	public void grab_serviceInstance_auto() {
-		// TODO Auto-generated method stub
+		// 获取所有的业务定义
+		List<jwcpxt_service_definition> serviceDefinitionList = list_serviceDefinitionDO_all();
+		// 分别查出所有业务定义的日志和抓取情况
+		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
+			//
+			jwcpxt_grab_journal grabJournal = serviceDao.get_grabJournal_byServiceDefinitionIDAndDate(
+					serviceDefinition.getJwcpxt_service_definition_id(), TimeUtil.getStringDay());
+			if (grabJournal == null) {
+				// 创建此业务当天的抓取日志记录
+				grabJournal = new jwcpxt_grab_journal();
+				grabJournal.setJwcpxt_grab_journal_id(uuidUtil.getUuid());
+				grabJournal.setGrab_journal_date(TimeUtil.getStringDay());
+				grabJournal.setGrab_journal_if_grab("2");
+				grabJournal.setGrab_journal_service_definition(serviceDefinition.getJwcpxt_service_definition_id());
+				grabJournal.setGrab_journal_time("none");
+				String time = TimeUtil.getStringSecond();
+				grabJournal.setGrab_journal_gmt_modified(time);
+				grabJournal.setGrab_journal_gmt_create(time);
+				serviceDao.save_grabJournal(grabJournal);
+				// 抓取这个业务
+				List<jwcpxt_service_instance> serviceInstanceList = grab_serviceInstance_byServiceDefinitionID(
+						serviceDefinition.getJwcpxt_service_definition_id());
+				// 然后保存进数据库
+				// TODO
+				/*
+				 * 
+				 */
+			} else {
+				// 判断这个业务是否抓取
+				if (grabJournal.getGrab_journal_if_grab().equals("1")) {
+					// 已抓取
+				} else {
+					// 抓取这个业务
+					List<jwcpxt_service_instance> serviceInstanceList = grab_serviceInstance_byServiceDefinitionID(
+							serviceDefinition.getJwcpxt_service_definition_id());
+					// 然后保存进数据库
+					// TODO
+				}
+			}
+			//
+		}
 
+	}
+
+	@Override
+	public List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

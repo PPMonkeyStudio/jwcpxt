@@ -25,7 +25,7 @@ public class ServiceDistributionThread {
 					try {
 						System.out.println("正在执行分配线程");
 						ServiceServiceImpl serviceServiceImpl = new ServiceServiceImpl();
-						serviceServiceImpl.distribution_serviceInstance_auto();
+
 						// 10分钟——600秒——600000毫秒
 						// 60分钟——3600秒——3600000毫秒
 						Thread.sleep(3600000);
