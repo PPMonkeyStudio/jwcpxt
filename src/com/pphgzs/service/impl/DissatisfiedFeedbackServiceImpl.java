@@ -1,6 +1,7 @@
 package com.pphgzs.service.impl;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
@@ -47,7 +48,20 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	public void setDissatisfiedFeedbackDao(DissatisfiedFeedbackDao dissatisfiedFeedbackDao) {
 		this.dissatisfiedFeedbackDao = dissatisfiedFeedbackDao;
 	}
+
 	/**
-	 * 
+	 * 获取反馈整改VO
 	 */
+	@Override
+	public DissatisfiedFeedbackVO get_questionVO(DissatisfiedFeedbackVO dissatisfiedFeedbackVO) {
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
 }
