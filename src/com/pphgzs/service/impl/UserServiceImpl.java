@@ -14,7 +14,6 @@ import com.pphgzs.util.TimeUtil;
 import com.pphgzs.util.uuidUtil;
 
 public class UserServiceImpl implements UserService {
-
 	private UserDao userDao;
 	private UnitService unitService;
 
@@ -33,10 +32,15 @@ public class UserServiceImpl implements UserService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+
 	/*
 	 * 
 	 * 
 	 */
+	@Override
+	public int get_userDistributionNum_byToday(String userID) {
+		return userDao.get_userDistributionNum_byToday(userID);
+	}
 
 	@Override
 	public boolean save_user(jwcpxt_user user) {
@@ -46,10 +50,6 @@ public class UserServiceImpl implements UserService {
 			user.setJwcpxt_user_id(uuidUtil.getUuid());
 			// 账号作为密码
 			user.setUser_password(user.getUser_account());
-			//
-			user.setUser_Jurisdiction_evaluate("none");
-			user.setUser_Jurisdiction_statistics("none");
-			user.setUser_Jurisdiction_review("none");
 			// 时间初始化
 			String time = TimeUtil.getStringSecond();
 			user.setUser_gmt_create(time);

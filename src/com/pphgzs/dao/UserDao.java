@@ -27,4 +27,6 @@ public interface UserDao {
 
 	public List<jwcpxt_user> list_user_byJurisdiction(String userJurisdictionEvaluate, String userJurisdictionReview,
 			String userJurisdictionStatistics);
+
+	public int get_userDistributionNum_byToday(String userID);
 }

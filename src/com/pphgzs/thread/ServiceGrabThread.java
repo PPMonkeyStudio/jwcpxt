@@ -2,7 +2,7 @@ package com.pphgzs.thread;
 
 import com.pphgzs.service.impl.ServiceServiceImpl;
 
-public class ServiceDistributionThread {
+public class ServiceGrabThread {
 
 	private final static String RUN = "run";
 
@@ -23,12 +23,11 @@ public class ServiceDistributionThread {
 			public void run() {
 				while (threadState.equals(RUN)) {
 					try {
-						System.out.println("正在执行分配线程");
+
 						ServiceServiceImpl serviceServiceImpl = new ServiceServiceImpl();
-						serviceServiceImpl.distribution_serviceInstance_auto();
-						// 10分钟——600秒——600000毫秒
-						// 60分钟——3600秒——3600000毫秒
-						Thread.sleep(3600000);
+
+						// 30分钟——1800000毫秒
+						Thread.sleep(1800000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -54,7 +53,7 @@ public class ServiceDistributionThread {
 	}
 
 	public static void setThreadState(String threadState) {
-		ServiceDistributionThread.threadState = threadState;
+		ServiceGrabThread.threadState = threadState;
 	}
 
 	public static String getStop() {
