@@ -55,17 +55,15 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 				/*
 				 * 用户权限
 				 */
-				ActionContext.getContext().getSession().remove("currentUser.type");
-				ActionContext.getContext().getSession().put("currentUser.type", "user");
-				ActionContext.getContext().getSession().put("currentUser.jwcpxt_user", userOrAdmin);
+				ActionContext.getContext().getSession().remove("user");
+				ActionContext.getContext().getSession().put("user", userOrAdmin);
 				http_response.getWriter().write("1");
 			} else if (userOrAdmin.getClass().toString().equals("class com.pphgzs.domain.DO.jwcpxt_admin")) {
 				/*
 				 * 管理员权限
 				 */
-				ActionContext.getContext().getSession().remove("currentUser.type");
-				ActionContext.getContext().getSession().put("currentUser.type", "admin");
-				ActionContext.getContext().getSession().put("currentUser.jwcpxt_admin", userOrAdmin);
+				ActionContext.getContext().getSession().remove("admin");
+				ActionContext.getContext().getSession().put("admin", userOrAdmin);
 				http_response.getWriter().write("2");
 			} else {
 				http_response.getWriter().write("-1");
@@ -87,15 +85,11 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 	 */
 	public String logout() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
-		if (ActionContext.getContext().getSession().get("currentUser.type") != null
-				&& ActionContext.getContext().getSession().get("currentUser.jwcpxt_user") != null) {
-			ActionContext.getContext().getSession().remove("currentUser.type");
-			ActionContext.getContext().getSession().remove("currentUser.jwcpxt_user");
+		if (ActionContext.getContext().getSession().get("user") != null) {
+			ActionContext.getContext().getSession().remove("user");
 			http_response.getWriter().write("1");
-		} else if (ActionContext.getContext().getSession().get("currentUser.type") != null
-				&& ActionContext.getContext().getSession().get("currentUser.jwcpxt_admin") != null) {
-			ActionContext.getContext().getSession().remove("currentUser.type");
-			ActionContext.getContext().getSession().remove("currentUser.jwcpxt_admin");
+		} else if (ActionContext.getContext().getSession().get("admin") != null) {
+			ActionContext.getContext().getSession().remove("admin");
 			http_response.getWriter().write("2");
 		}
 		return "logout";
