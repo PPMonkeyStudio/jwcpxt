@@ -25,14 +25,12 @@ public class ServiceGrabDistributionThread {
 			@Override
 			public void run() {
 				while (threadState.equals(RUN)) {
+					ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml",
+							"spring/ServiceSpring.xml", "spring/UnitSpring.xml", "spring/UserSpring.xml" });
+					ServiceService serviceService = (ServiceService) ctx.getBean("serviceService");
 					try {
-						ApplicationContext ctx = new ClassPathXmlApplicationContext(
-								new String[] { "applicationContext.xml", "spring/ServiceSpring.xml",
-										"spring/UnitSpring.xml", "spring/UserSpring.xml" });
-						ServiceService serviceService = (ServiceService) ctx.getBean("serviceService");
 						serviceService.grab_serviceInstance_auto();
 						serviceService.distribution_serviceInstance_auto();
-						// 10分钟——600秒——600000毫秒
 						// 60分钟——3600秒——3600000毫秒
 						Thread.sleep(3600000);
 					} catch (InterruptedException e) {
