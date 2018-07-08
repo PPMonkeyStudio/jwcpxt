@@ -78,7 +78,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 * @throws IOException
 	 */
 	public void save_serviceDefinition() throws IOException {
-		if (serviceService.save_serviceDefinition(serviceDefinition, serviceGrab)) {
+		if (serviceService.save_serviceDefinition(serviceDefinition)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");

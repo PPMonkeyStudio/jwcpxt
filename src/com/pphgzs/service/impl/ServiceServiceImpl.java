@@ -204,8 +204,7 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
-	public boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition,
-			jwcpxt_service_grab serviceGrab) {
+	public boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
 		if (serviceDao.ifExist_serviceDefinition_byServiceDefinitionDescribe(
 				serviceDefinition.getService_definition_describe())) {
 			return false;
@@ -224,6 +223,7 @@ public class ServiceServiceImpl implements ServiceService {
 			/*
 			 * 业务抓取
 			 */
+			jwcpxt_service_grab serviceGrab = new jwcpxt_service_grab();
 			serviceGrab.setJwcpxt_service_grab_id(uuidUtil.getUuid());
 			serviceGrab.setService_grab_service_definition(serviceDefinition.getJwcpxt_service_definition_id());
 			serviceGrab.setService_grab_gmt_create(time);
@@ -368,7 +368,9 @@ public class ServiceServiceImpl implements ServiceService {
 
 	@Override
 	public boolean if_grabServiceInstance_byDate(String date) {
-		// TODO Auto-generated method stub
+
+		//
+
 		return false;
 	}
 	/*

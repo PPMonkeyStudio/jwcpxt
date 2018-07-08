@@ -3,6 +3,7 @@ package com.pphgzs.domain.DO;
 public class jwcpxt_service_grab {
 	private String jwcpxt_service_grab_id;
 	private String service_grab_service_definition;
+	private String service_grab_Interface = "none";
 	private String service_grab_table = "none";
 	private String service_grab_field_nid = "none";
 	private String service_grab_field_client_name = "none";
@@ -12,16 +13,12 @@ public class jwcpxt_service_grab {
 	private String service_grab_gmt_create;
 	private String service_grab_gmt_modified;
 
-	@Override
-	public String toString() {
-		return "jwcpxt_service_grab 【\njwcpxt_service_grab_id=" + jwcpxt_service_grab_id
-				+ ", \nservice_grab_service_definition=" + service_grab_service_definition + ", \nservice_grab_table="
-				+ service_grab_table + ", \nservice_grab_field_nid=" + service_grab_field_nid
-				+ ", \nservice_grab_field_client_name=" + service_grab_field_client_name
-				+ ", \nservice_grab_field_client_sex=" + service_grab_field_client_sex
-				+ ", \nservice_grab_field_client_phone=" + service_grab_field_client_phone
-				+ ", \nservice_grab_field_date=" + service_grab_field_date + ", \nservice_grab_gmt_create="
-				+ service_grab_gmt_create + ", \nservice_grab_gmt_modified=" + service_grab_gmt_modified + "\n】";
+	public String getService_grab_Interface() {
+		return service_grab_Interface;
+	}
+
+	public void setService_grab_Interface(String service_grab_Interface) {
+		this.service_grab_Interface = service_grab_Interface;
 	}
 
 	public String getJwcpxt_service_grab_id() {

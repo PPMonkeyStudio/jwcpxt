@@ -11,6 +11,9 @@
         <property name="service_grab_service_definition" type="java.lang.String">
             <column name="SERVICE_GRAB_SERVICE_DEFINITION" />
         </property>
+        <property name="service_grab_Interface" type="java.lang.String">
+            <column name="SERVICE_GRAB_INTERFACE" />
+        </property>
         <property name="service_grab_table" type="java.lang.String">
             <column name="SERVICE_GRAB_TABLE" />
         </property>

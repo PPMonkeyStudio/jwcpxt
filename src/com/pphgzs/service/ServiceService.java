@@ -86,7 +86,7 @@ public interface ServiceService {
 	List<ServiceInstanceDTO> list_ServiceInstanceDTO_byServiceInstanceList(
 			List<jwcpxt_service_instance> serviceInstanceList);
 
-	boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition, jwcpxt_service_grab serviceGrab);
+	boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition);
 
 	boolean update_serviceDefinition(jwcpxt_service_definition serviceDefinition);
 

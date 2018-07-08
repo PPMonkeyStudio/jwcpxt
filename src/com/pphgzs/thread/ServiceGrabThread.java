@@ -30,7 +30,7 @@ public class ServiceGrabThread {
 						if (serviceServiceImpl.if_grabServiceInstance_byDate(TimeUtil.getStringDay())) {
 
 						} else {
-							serviceServiceImpl.grab_serviceInstance_auto();
+							// serviceServiceImpl.grab_serviceInstance_auto();
 						}
 
 						// 30分钟——1800000毫秒
