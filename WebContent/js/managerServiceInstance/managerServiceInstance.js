@@ -83,7 +83,7 @@ function allocationHuman(event) {
 function viewParties(event) {
 
 	$.confirm({
-		title : '分配测评员',
+		title : '查看当事人',
 		type : 'blue',
 		boxWidth : '1000px',
 		useBootstrap : false,

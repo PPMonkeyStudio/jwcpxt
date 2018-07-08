@@ -59,8 +59,9 @@ a:hover {
 												<tr>
 													<td>业务编号</td>
 													<td>业务办理时间</td>
-													<td><select class="form-control" id="humanSelect" onchange="changeQuery()" style="text-align:center;">
-															<option value="" style="text-align:center;">是否分配测评员</option>
+													<td><select class="form-control" id="humanSelect"
+														onchange="changeQuery()" style="text-align: center;">
+															<option value="" style="text-align: center;">是否分配测评员</option>
 													</select></td>
 													<td>查看当事人</td>
 												</tr>
