@@ -65,6 +65,10 @@
 					href="<%=basePath%>Skip/skipManagerIndex"> <i class="ti-panel"></i>
 						<p>管理数据</p>
 				</a></li>
+				<li id="sideAbarbeitung"><a
+					href="<%=basePath%>Skip/skipAbarbeitungIndex"> <i class="ti-hummer"></i>
+						<p>整改审核</p>
+				</a></li>
 			</ul>
 		</div>
 	</div>

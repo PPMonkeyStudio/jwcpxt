@@ -43,10 +43,10 @@ a:hover {
 									</button>
 									<div style="float: right; margin-right: 10px;">
 										<label>业务发生时间</label> <input onchange="changeQuery()"
-											id="screenServiceInstanceStartDate" placeholder="请输入搜索内容" class="mydate form-control"
+											id="screenServiceInstanceStartDate" placeholder="" class="mydate form-control"
 											style="display: inline; width: 150px;"><label>&nbsp;至&nbsp;</label><input
 											onchange="changeQuery()" id="screenServiceInstanceStopDate"
-											placeholder="请输入搜索内容" class="mydate form-control"
+											placeholder="" class="mydate form-control"
 											style="display: inline; width: 150px;">
 									</div>
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">

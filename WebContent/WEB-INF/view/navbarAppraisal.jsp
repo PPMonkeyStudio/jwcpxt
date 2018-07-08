@@ -17,24 +17,10 @@
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<ul id="changeNavbar" class="nav navbar-nav navbar-left">
-				<li><a href="<%=basePath%>Skip/skipManagerIndex">
+				<li><a href="#">
 						<p>首页</p>
 				</a></li>
-				<!-- 			<li><a href="#"> 
-						<p>问卷</p>
-				</a></li> -->
-				<li><a href="<%=basePath%>Skip/skipManagerService">
-						<p>业务</p>
-				</a></li>
-				<li><a href="<%=basePath%>Skip/skipManagerUser">
-						<p>警员</p>
-				</a></li>
-				<li><a href="<%=basePath%>Skip/skipManagerUnit">
-						<p>单位</p>
-				</a></li>
-				<li><a href="<%=basePath%>Skip/skipManagerUnit">
-						<p>整改</p>
-				</a></li>
+				<li>
 			</ul>
 		</div>
 		<div class="collapse navbar-collapse">

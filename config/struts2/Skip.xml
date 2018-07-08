@@ -14,6 +14,10 @@
 			<result name="skipManagerUser">/WEB-INF/view/managerData/managerUser.jsp</result>
 			<result name="skipManagerService">/WEB-INF/view/managerData/managerService.jsp</result>
 			<result name="skipServiceInstance">/WEB-INF/view/managerData/managerServiceInstance.jsp</result>
+			<result name="skipAbarbeitungIndex">/WEB-INF/view/abarbeitung/abarbeitungIndex.jsp</result>
+			<result name="skipAbarbeitungManager">/WEB-INF/view/abarbeitung/abarbeitungManager.jsp</result>
+			<result name="navbarAbarbeitung">/WEB-INF/view/navbarAbarbeitung.jsp</result>
+			<result name="navbarAppraisal">/WEB-INF/view/navbarAppraisal.jsp</result>
 		</action>
 	</package>
 </struts>

@@ -36,4 +36,20 @@ public class SkipAction {
 	public String skipServiceInstance() {
 		return "skipServiceInstance";
 	}
+
+	public String skipAbarbeitungIndex() {
+		return "skipAbarbeitungIndex";
+	}
+
+	public String skipAbarbeitungManager() {
+		return "skipAbarbeitungManager";
+	}
+
+	public String skipNavbarAbarbeitung() {
+		return "navbarAbarbeitung";
+	}
+
+	public String skipNavbarAppraisal() {
+		return "navbarAppraisal";
+	}
 }
