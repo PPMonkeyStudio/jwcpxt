@@ -20,9 +20,9 @@ public class RectificationFeedbackDTO {
 
 	/*
 	 * @Override public String toString() { return
-	 * "RectificationFeedbackDTO [feedbackRectification=" + feedbackRectification +
-	 * ", dissatisfiedFeedback=" + dissatisfiedFeedback + ", unitDTO=" + unitDTO +
-	 * "]"; }
+	 * "RectificationFeedbackDTO [feedbackRectification=" +
+	 * feedbackRectification + ", dissatisfiedFeedback=" + dissatisfiedFeedback
+	 * + ", unitDTO=" + unitDTO + "]"; }
 	 */
 
 	/*
@@ -30,6 +30,19 @@ public class RectificationFeedbackDTO {
 	 * 
 	 * public void setUnitDTO(UnitDTO unitDTO) { this.unitDTO = unitDTO; }
 	 */
+
+	public RectificationFeedbackDTO(jwcpxt_feedback_rectification feedbackRectification,
+			jwcpxt_dissatisfied_feedback dissatisfiedFeedback, jwcpxt_unit unit, jwcpxt_user user) {
+		super();
+		this.feedbackRectification = feedbackRectification;
+		this.dissatisfiedFeedback = dissatisfiedFeedback;
+		this.unit = unit;
+		this.user = user;
+	}
+
+	public RectificationFeedbackDTO() {
+		super();
+	}
 
 	@Override
 	public String toString() {
