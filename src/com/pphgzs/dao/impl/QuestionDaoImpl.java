@@ -103,6 +103,9 @@ public class QuestionDaoImpl implements QuestionDao {
 		} else {
 			query.setParameter("screenSearch", "%" + questionVO.getScreenSearch() + "%");
 		}
+		if (query.uniqueResult() == null) {
+			return 0;
+		}
 		count = ((Number) query.uniqueResult()).intValue();
 		//
 		session.clear();

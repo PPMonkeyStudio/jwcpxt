@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DTO.RectificationFeedbackDTO;
 import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 
@@ -39,7 +41,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " serviceDefinition.service_definition_unit = unit.jwcpxt_unit_id and unit.unit_reorganizer = u_user.jwcpxt_user_id and "
 				+ " unit.jwcpxt_unit_id like :unitId and  feedbackRectification.feedback_rectification_time >= :rectificationStartTime and "
 				+ " feedbackRectification.feedback_rectification_time <= :rectificationStopTime group by  dissatisfiedFeedback.dissatisfied_feedback";
-		
+
 		Query query = session.createQuery(hql);
 		//
 		if ("".equals(dissatisfiedFeedbackVO.getUnit())) {
@@ -93,8 +95,26 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		} else {
 			query.setParameter("rectificationStopTime", dissatisfiedFeedbackVO.getRectificationStopTime());
 		}
+		if (query.uniqueResult() == null) {
+			return 0;
+		}
 		count = ((Number) query.uniqueResult()).intValue();
 		return count;
+	}
+
+	/**
+	 * 根据id获取整改反馈
+	 */
+	@Override
+	public jwcpxt_feedback_rectification get_feedbackRectification_byRectificationId(String rectificationId) {
+		jwcpxt_feedback_rectification feedbackRectification = new jwcpxt_feedback_rectification();
+		Session session = getSession();
+		String hql = "from jwcpxt_feedback_rectification where jwcpxt_feedback_rectification = :rectificationId";
+		Query query = session.createQuery(hql);
+		query.setParameter("rectificationId", rectificationId);
+		feedbackRectification = (jwcpxt_feedback_rectification) query.uniqueResult();
+		session.clear();
+		return feedbackRectification;
 	}
 
 }

@@ -11,6 +11,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 
@@ -21,6 +22,22 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
 	private DissatisfiedFeedbackVO dissatisfiedFeedbackVO;
+	private jwcpxt_feedback_rectification feedbackRectification;
+
+	/**
+	 * 根据反馈整改id获取反馈整改表
+	 * @throws IOException 
+	 */
+	public void get_feedbackRectification_byRectificationId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		feedbackRectification = dissatisfiedFeedbackService.get_feedbackRectification_byRectificationId(feedbackRectification);
+		http_response.getWriter().write(gson.toJson(feedbackRectification));
+	}
 
 	/**
 	 * 获取整改反馈VO
@@ -49,6 +66,14 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	@Override
 	public void setServletRequest(HttpServletRequest http_request) {
 		this.http_request = http_request;
+	}
+
+	public jwcpxt_feedback_rectification getFeedbackRectification() {
+		return feedbackRectification;
+	}
+
+	public void setFeedbackRectification(jwcpxt_feedback_rectification feedbackRectification) {
+		this.feedbackRectification = feedbackRectification;
 	}
 
 	public DissatisfiedFeedbackVO getDissatisfiedFeedbackVO() {

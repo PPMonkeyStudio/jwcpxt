@@ -41,6 +41,21 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	}
 
 	/**
+	 * 根据整改反馈id获取整改反馈
+	 */
+	@Override
+	public jwcpxt_feedback_rectification get_feedbackRectification_byRectificationId(
+			jwcpxt_feedback_rectification feedbackRectification) {
+		jwcpxt_feedback_rectification feedBackRectification = new jwcpxt_feedback_rectification();
+		if (feedbackRectification != null && feedbackRectification.getJwcpxt_feedback_rectification_id() != null
+				&& feedbackRectification.getJwcpxt_feedback_rectification_id().trim().length() > 0) {
+			feedBackRectification = dissatisfiedFeedbackDao.get_feedbackRectification_byRectificationId(
+					feedbackRectification.getJwcpxt_feedback_rectification_id().trim());
+		}
+		return null;
+	}
+
+	/**
 	 * 
 	 * 
 	 */

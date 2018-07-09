@@ -25,6 +25,14 @@ public interface DissatisfiedFeedbackDao {
 	 */
 	public int get_listRectificationFeedbackDTOCount(DissatisfiedFeedbackVO dissatisfiedFeedbackVO);
 
+	/**
+	 * 根据id获取整改反馈表
+	 * 
+	 * @param trim
+	 * @return
+	 */
+	public jwcpxt_feedback_rectification get_feedbackRectification_byRectificationId(String rectificationId);
+
 	/*
 	 * public List<RectificationFeedbackDTO>
 	 * list_rectificationFeedback_byDissatisfiedFeedbackVO( DissatisfiedFeedbackVO
