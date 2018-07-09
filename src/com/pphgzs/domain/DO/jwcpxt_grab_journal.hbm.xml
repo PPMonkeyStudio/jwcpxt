@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-7-8 8:52:46 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.pphgzs.domain.DO.jwcpxt_grab_journal" table="JWCPXT_GRAB_JOURNAL">
+        <id name="jwcpxt_grab_journal_id" type="java.lang.String">
+            <column name="JWCPXT_GRAB_JOURNAL_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="grab_journal_date" type="java.lang.String">
+            <column name="GRAB_JOURNAL_DATE" />
+        </property>
+        <property name="grab_journal_if_grab" type="java.lang.String">
+            <column name="GRAB_JOURNAL_IF_GRAB" />
+        </property>
+        <property name="grab_journal_service_definition" type="java.lang.String">
+            <column name="GRAB_JOURNAL_SERVICE_DEFINITION" />
+        </property>
+        <property name="grab_journal_time" type="java.lang.String">
+            <column name="GRAB_JOURNAL_TIME" />
+        </property>
+        <property name="grab_journal_gmt_create" type="java.lang.String">
+            <column name="GRAB_JOURNAL_GMT_CREATE" />
+        </property>
+        <property name="grab_journal_gmt_modified" type="java.lang.String">
+            <column name="GRAB_JOURNAL_GMT_MODIFIED" />
+        </property>
+    </class>
+</hibernate-mapping>

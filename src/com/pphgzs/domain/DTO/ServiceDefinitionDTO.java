@@ -7,6 +7,14 @@ public class ServiceDefinitionDTO {
 	private jwcpxt_service_definition serviceDefinition;
 	private jwcpxt_unit unit;
 
+	public ServiceDefinitionDTO(jwcpxt_service_definition serviceDefinition, jwcpxt_unit unit) {
+		this.serviceDefinition = serviceDefinition;
+		this.unit = unit;
+	}
+
+	public ServiceDefinitionDTO() {
+	}
+
 	@Override
 	public String toString() {
 		return "ServiceDefinitionDTO 【\nserviceDefinition=" + serviceDefinition + ", \nunit=" + unit + "\n】";

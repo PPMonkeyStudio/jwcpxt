@@ -6,17 +6,16 @@ import com.pphgzs.domain.DO.jwcpxt_question;
 
 public class QuestionDTO {
 
+	/**
+	 * 问题
+	 */
 	private jwcpxt_question question;
 
-	private ServiceDefinitionDTO serviceDefinitionDTO;
-
-	private List<OptionDTO> optionDTOList;
-
-	@Override
-	public String toString() {
-		return "QuestionDTO 【\nquestion=" + question + ", \nserviceDefinitionDTO=" + serviceDefinitionDTO
-				+ ", \noptionDTOList=" + optionDTOList + "\n】";
-	}
+	/**
+	 * 选择题
+	 * 
+	 */
+	private List<OptionDTO> listOptionDTO;
 
 	public jwcpxt_question getQuestion() {
 		return question;
@@ -26,20 +25,17 @@ public class QuestionDTO {
 		this.question = question;
 	}
 
-	public ServiceDefinitionDTO getServiceDefinitionDTO() {
-		return serviceDefinitionDTO;
+	public List<OptionDTO> getListOptionDTO() {
+		return listOptionDTO;
 	}
 
-	public void setServiceDefinitionDTO(ServiceDefinitionDTO serviceDefinitionDTO) {
-		this.serviceDefinitionDTO = serviceDefinitionDTO;
+	public void setListOptionDTO(List<OptionDTO> listOptionDTO) {
+		this.listOptionDTO = listOptionDTO;
 	}
 
-	public List<OptionDTO> getOptionDTOList() {
-		return optionDTOList;
-	}
-
-	public void setOptionDTOList(List<OptionDTO> optionDTOList) {
-		this.optionDTOList = optionDTOList;
+	@Override
+	public String toString() {
+		return "QuestionDTO [question=" + question + ", listOptionDTO=" + listOptionDTO + "]";
 	}
 
 }

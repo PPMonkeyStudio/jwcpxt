@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import com.pphgzs.dao.UserDao;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.VO.UserVO;
+import com.pphgzs.util.TimeUtil;
 
 public class UserDaoImpl implements UserDao {
 	private SessionFactory sessionFactory;
@@ -23,11 +24,27 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public int get_userDistributionNum_byToday(String userID) {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_user user , jwcpxt_service_instance serviceInstance"
+				+ " where serviceInstance.service_instance_judge=user.jwcpxt_user_id and jwcpxt_user_id = :userID and service_instance_gmt_create >= :date";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("userID", userID);
+		query.setParameter("date", TimeUtil.getStringDay());
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
 	public int get_userTotalCount_byUserVO(UserVO userVO) {
 		Session session = getSession();
 		String hql = "select count(*) from jwcpxt_user "
 				+ " where ( user_account like :screenSearch or user_name like :screenSearch ) "
-				+ " and user_unit like :screenUnit " + " order by user_gmt_create";
+				+ " and user_unit like :screenUnit ";
 		Query query = session.createQuery(hql);
 		//
 		if (userVO.getScreenSearch().equals("")) {
@@ -60,7 +77,7 @@ public class UserDaoImpl implements UserDao {
 		} else {
 			query.setParameter("screenSearch", "%" + userVO.getScreenSearch() + "%");
 		}
-		if (userVO.getScreenUnit().endsWith("")) {
+		if (userVO.getScreenUnit().equals("")) {
 			query.setParameter("screenUnit", "%%");
 		} else {
 			query.setParameter("screenUnit", "%" + userVO.getScreenUnit() + "%");
@@ -68,11 +85,44 @@ public class UserDaoImpl implements UserDao {
 		query.setFirstResult((userVO.getCurrPage() - 1) * userVO.getPageSize());
 		query.setMaxResults(userVO.getPageSize());
 		//
-		List<jwcpxt_user> userList = null;
-		userList = query.list();
+		List<jwcpxt_user> list = null;
+		list = query.list();
 		//
 		session.clear();
-		return userList;
+		return list;
+	}
+
+	@Override
+	public List<jwcpxt_user> list_user_byJurisdiction(String userJurisdictionEvaluate, String userJurisdictionReview,
+			String userJurisdictionStatistics) {
+		Session session = getSession();
+		String hql = "from jwcpxt_user "//
+				+ " where user_Jurisdiction_evaluate like :userJurisdictionEvaluate "//
+				+ " and user_Jurisdiction_statistics like :userJurisdictionStatistics "//
+				+ " and user_Jurisdiction_review like :userJurisdictionReview "//
+				+ " and user_state = '1' ";
+		Query query = session.createQuery(hql);
+		//
+		if (userJurisdictionEvaluate.equals("")) {
+			query.setParameter("userJurisdictionEvaluate", "%%");
+		} else {
+			query.setParameter("userJurisdictionEvaluate", userJurisdictionEvaluate);
+		}
+		if (userJurisdictionReview.equals("")) {
+			query.setParameter("userJurisdictionReview", "%%");
+		} else {
+			query.setParameter("userJurisdictionReview", userJurisdictionReview);
+		}
+		if (userJurisdictionStatistics.equals("")) {
+			query.setParameter("userJurisdictionStatistics", "%%");
+		} else {
+			query.setParameter("userJurisdictionStatistics", userJurisdictionStatistics);
+		}
+		//
+		List<jwcpxt_user> list = query.list();
+		//
+		session.clear();
+		return list;
 	}
 
 	@Override

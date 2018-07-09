@@ -1,6 +1,7 @@
 package com.pphgzs.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,9 +12,12 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_grab;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
-import com.pphgzs.domain.VO.ServiceDistributionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
 
@@ -23,32 +27,170 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private ServiceService serviceService;
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
+	/*
+	 * 
+	 */
 	private jwcpxt_service_definition serviceDefinition;
+	private jwcpxt_service_instance serviceInstance;
+	private jwcpxt_service_grab serviceGrab;
 	/* 
 	 * 
 	 */
-	ServiceDefinitionVO serviceDefinitionVO;
-	ServiceInstanceVO serviceInstanceVO;
-	ServiceDistributionVO serviceDistributionVO;
+	private ServiceDefinitionVO serviceDefinitionVO;
+	private ServiceInstanceVO serviceInstanceVO;
 
 	/*
 	 * 
 	 */
 
 	/**
-	 * 查询业务定义VO类
+	 * 获取业务定义列表页面的VO类
 	 * 
 	 * @throws IOException
 	 */
 	public void get_serviceDefinitionVO() throws IOException {
 
 		serviceDefinitionVO = serviceService.get_serviceDefinitionVO(serviceDefinitionVO);
-
+		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
+		//
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson(serviceDefinitionVO));
+	}
+
+	public void get_serviceInstanceVO() throws IOException {
+
+		serviceInstanceVO = serviceService.get_serviceInstanceVO(serviceInstanceVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceInstanceVO));
+	}
+
+	/**
+	 * 添加业务定义
+	 * 
+	 * @throws IOException
+	 */
+	public void save_serviceDefinition() throws IOException {
+		if (serviceService.save_serviceDefinition(serviceDefinition)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 根据ID修改业务定义的描述
+	 * 
+	 * @throws IOException
+	 */
+	public void update_serviceDefinition() throws IOException {
+		if (serviceService.update_serviceDefinition(serviceDefinition)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 修改业务抓取的抓取字段
+	 * 
+	 * @throws IOException
+	 */
+	public void update_serviceGrab() throws IOException {
+		if (serviceService.update_serviceGrab(serviceGrab)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 根据业务定义id获取抓取字段表DO
+	 * 
+	 * @throws IOException
+	 */
+	public void get_serviceGrabDO_byServiceDefinitionID() throws IOException {
+		serviceGrab = serviceService
+				.get_serviceGrabDO_byServiceDefinitionID(serviceGrab.getService_grab_service_definition());
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceGrab));
+	}
+
+	/**
+	 * 获得一个业务定义
+	 * 
+	 * @throws IOException
+	 */
+	public void get_serviceDefinition_byServiceDefinitionID() throws IOException {
+		serviceDefinition = serviceService
+				.get_serviceDefinitionDO_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceDefinition));
+	}
+
+	/**
+	 * 通过业务实例ID获取相关当事人列表
+	 * 
+	 * @throws IOException
+	 */
+	public void list_client_byServiceInstanceID() throws IOException {
+		List<jwcpxt_service_client> serviceClientList = serviceService
+				.list_clientDO_byServiceInstanceID(serviceInstance.getJwcpxt_service_instance_id());
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceClientList));
+
+	}
+
+	/**
+	 * 通过业务定义id获得相关业务实例DTO列表
+	 * 
+	 * @throws IOException
+	 */
+	public void list_serviceInstanceDTO_byServiceDefinitionID() throws IOException {
+		List<ServiceInstanceDTO> serviceInstanceDTOList = serviceService
+				.list_serviceInstanceDTO_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceInstanceDTOList));
+	}
+
+	/**
+	 * @throws IOException
+	 * 
+	 */
+	public void distribution_judge() throws IOException {
+		if (serviceService.distribution_judge(serviceInstance.getJwcpxt_service_instance_id(),
+				serviceInstance.getService_instance_judge())) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
 	/*
@@ -101,16 +243,8 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		return serviceInstanceVO;
 	}
 
-	public ServiceDistributionVO getServiceDistributionVO() {
-		return serviceDistributionVO;
-	}
-
 	public void setServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
 		this.serviceInstanceVO = serviceInstanceVO;
-	}
-
-	public void setServiceDistributionVO(ServiceDistributionVO serviceDistributionVO) {
-		this.serviceDistributionVO = serviceDistributionVO;
 	}
 
 	public jwcpxt_service_definition getServiceDefinition() {
@@ -119,6 +253,22 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public void setServiceDefinition(jwcpxt_service_definition serviceDefinition) {
 		this.serviceDefinition = serviceDefinition;
+	}
+
+	public jwcpxt_service_instance getServiceInstance() {
+		return serviceInstance;
+	}
+
+	public void setServiceInstance(jwcpxt_service_instance serviceInstance) {
+		this.serviceInstance = serviceInstance;
+	}
+
+	public jwcpxt_service_grab getServiceGrab() {
+		return serviceGrab;
+	}
+
+	public void setServiceGrab(jwcpxt_service_grab serviceGrab) {
+		this.serviceGrab = serviceGrab;
 	}
 
 	/*

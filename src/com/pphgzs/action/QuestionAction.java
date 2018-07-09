@@ -1,14 +1,24 @@
 package com.pphgzs.action;
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DTO.AnswerDTO;
+import com.pphgzs.domain.DTO.QuestionDTO;
+import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
 
 @SuppressWarnings("serial")
@@ -17,40 +27,260 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private QuestionService questionService;
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
-
-	/* 
-	 * 
-	 */
+	//
 	private jwcpxt_question question;
 	private jwcpxt_option option;
-	private int moveOptionAction;
-	private int moveQuestionAction;
+	private jwcpxt_service_definition serviceDefinition;
+	private QuestionVO questionVO;
+	private String moveQuestionType;
+	private String moveOptionType;
+	// 一个问题的所有内容
+	private QuestionDTO questionDTO;
+	// 一个业务定义的所有问题
+	private List<QuestionDTO> listQuestionDTO;
+	// 业务当事人
+	private jwcpxt_service_client serviceClient;
+	// 回答
+	private List<AnswerDTO> listAnswerDTO;
 
-	/*
-	 * 创建选择题选项
+	/**
+	 * 回答问题
 	 * 
+	 * @throws IOException
 	 */
-	public void add_option() {
-		// TODO
+	public void save_answer() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.save_answer(listAnswerDTO, serviceClient)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
-	/*
-	 * 移动选择题选项
+	/**
+	 * 根据业务定义Id 获取所有该业务的所有问题
+	 * 
+	 * @throws IOException
 	 */
-	public void move_option() {
-		// TODO
+	public void list_questionDTO_byServiceDefinition() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		listQuestionDTO = questionService.list_questionDTO_byServiceDefinition(serviceDefinition);
+		http_response.getWriter().write(gson.toJson(listQuestionDTO));
 	}
 
-	public void list_questionDTO_byServiceDefinition() {
-		// TODO
+	/**
+	 * 根据问题Id 获取该问题的所有内容
+	 * 
+	 * @throws IOException
+	 */
+	public void get_questionDTO_byQuestionId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		questionDTO = questionService.get_questionDTO_byQuestionId(question);
+		http_response.getWriter().write(gson.toJson(questionDTO));
+	}
+
+	/**
+	 * 删除选项
+	 * 
+	 * @throws IOException
+	 */
+	public void delete_option() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.delete_option(option)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 删除追问
+	 * 
+	 * @throws IOException
+	 */
+	public void delete_questionInquiries() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.delete_questionInquiries(question)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 移动选项
+	 * 
+	 * @throws IOException
+	 */
+	public void move_option() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.move_option(option, moveOptionType)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 修改选项
+	 * 
+	 * @throws IOException
+	 */
+	public void update_option() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.update_option(option)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 添加问题选项
+	 * 
+	 * @throws IOException
+	 */
+	public void save_option() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.save_option(option)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 移动问题顺序
+	 * 
+	 * @throws IOException
+	 */
+	public void move_question_sort() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.move_question_sort(question, moveQuestionType)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 获取问题VO
+	 * 
+	 * @throws IOException
+	 */
+	public void get_questionVO() throws IOException {
+		if (questionVO == null) {
+			questionVO = new QuestionVO();
+		}
+		questionVO = questionService.get_questionVO(questionVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(questionVO));
+	}
+
+	/**
+	 * 创建一个问题
+	 * 
+	 * @throws IOException
+	 */
+	public void save_question() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.save_question(question)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 修改问题
+	 * 
+	 * @throws IOException
+	 */
+	public void update_question() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.update_question(question)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 删除问题
+	 * 
+	 * @throws IOException
+	 */
+	public void delete_question() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.delete_question(question)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
 	/*
 	 *  
 	 */
+
 	@Override
 	public void setServletRequest(HttpServletRequest http_request) {
 		this.http_request = http_request;
+	}
+
+	public List<AnswerDTO> getListAnswerDTO() {
+		return listAnswerDTO;
+	}
+
+	public void setListAnswerDTO(List<AnswerDTO> listAnswerDTO) {
+		this.listAnswerDTO = listAnswerDTO;
+	}
+
+	public jwcpxt_service_client getServiceClient() {
+		return serviceClient;
+	}
+
+	public void setServiceClient(jwcpxt_service_client serviceClient) {
+		this.serviceClient = serviceClient;
+	}
+
+	public QuestionDTO getQuestionDTO() {
+		return questionDTO;
+	}
+
+	public void setQuestionDTO(QuestionDTO questionDTO) {
+		this.questionDTO = questionDTO;
+	}
+
+	public List<QuestionDTO> getListQuestionDTO() {
+		return listQuestionDTO;
+	}
+
+	public void setListQuestionDTO(List<QuestionDTO> listQuestionDTO) {
+		this.listQuestionDTO = listQuestionDTO;
+	}
+
+	public String getMoveQuestionType() {
+		return moveQuestionType;
+	}
+
+	public void setMoveQuestionType(String moveQuestionType) {
+		this.moveQuestionType = moveQuestionType;
 	}
 
 	@Override
@@ -65,6 +295,14 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 
 	public void setHttp_response(HttpServletResponse http_response) {
 		this.http_response = http_response;
+	}
+
+	public String getMoveOptionType() {
+		return moveOptionType;
+	}
+
+	public void setMoveOptionType(String moveOptionType) {
+		this.moveOptionType = moveOptionType;
 	}
 
 	public HttpServletRequest getHttp_request() {
@@ -99,20 +337,32 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 		this.option = option;
 	}
 
-	public int getMoveOptionAction() {
-		return moveOptionAction;
+	/*
+	 * public int getMoveOptionAction() { return moveOptionAction; }
+	 * 
+	 * public void setMoveOptionAction(int moveOptionAction) { this.moveOptionAction
+	 * = moveOptionAction; }
+	 * 
+	 * public int getMoveQuestionAction() { return moveQuestionAction; }
+	 * 
+	 * public void setMoveQuestionAction(int moveQuestionAction) {
+	 * this.moveQuestionAction = moveQuestionAction; }
+	 */
+
+	public jwcpxt_service_definition getServiceDefinition() {
+		return serviceDefinition;
 	}
 
-	public void setMoveOptionAction(int moveOptionAction) {
-		this.moveOptionAction = moveOptionAction;
+	public void setServiceDefinition(jwcpxt_service_definition serviceDefinition) {
+		this.serviceDefinition = serviceDefinition;
 	}
 
-	public int getMoveQuestionAction() {
-		return moveQuestionAction;
+	public QuestionVO getQuestionVO() {
+		return questionVO;
 	}
 
-	public void setMoveQuestionAction(int moveQuestionAction) {
-		this.moveQuestionAction = moveQuestionAction;
+	public void setQuestionVO(QuestionVO questionVO) {
+		this.questionVO = questionVO;
 	}
 
 }
