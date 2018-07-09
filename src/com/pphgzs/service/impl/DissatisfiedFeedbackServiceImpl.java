@@ -29,21 +29,15 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	public DissatisfiedFeedbackVO get_dissatisfiedFeedbackVO(DissatisfiedFeedbackVO dissatisfiedFeedbackVO) {
 		// 定义
 		List<RectificationFeedbackDTO> listRectificationFeedback = new ArrayList<>();
-		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
-		RectificationFeedbackDTO rectificationFeedbackDTO = new RectificationFeedbackDTO();
-		jwcpxt_feedback_rectification feedbackRectification = new jwcpxt_feedback_rectification();
-		jwcpxt_dissatisfied_feedback dissatisfiedFeedback = new jwcpxt_dissatisfied_feedback();
-		UnitDTO unitDTO = new UnitDTO();
-		jwcpxt_unit unit = new jwcpxt_unit();
-		jwcpxt_user user = new jwcpxt_user();
-		/*
-		 * listRectificationFeedback = dissatisfiedFeedbackDao
-		 * .list_rectificationFeedback_byDissatisfiedFeedbackVO(dissatisfiedFeedbackVO);
-		 */
-		// 获取反馈整改表信息
-		listFeedbackRectification = dissatisfiedFeedbackDao.get_listFeedbackRecitification(dissatisfiedFeedbackVO);
-
-		return null;
+		// 获取DTO
+		listRectificationFeedback = dissatisfiedFeedbackDao.get_listRectificationFeedbackDTO(dissatisfiedFeedbackVO);
+		// 获取总记录数
+		int totalRecords = dissatisfiedFeedbackDao.get_listRectificationFeedbackDTOCount(dissatisfiedFeedbackVO);
+		int totalPages = ((totalRecords - 1) / dissatisfiedFeedbackVO.getPageSize()) + 1;
+		dissatisfiedFeedbackVO.setListRectificationFeedback(listRectificationFeedback);
+		dissatisfiedFeedbackVO.setTotalPage(totalPages);
+		dissatisfiedFeedbackVO.setTotalCount(totalRecords);
+		return dissatisfiedFeedbackVO;
 	}
 
 	/**

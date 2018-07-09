@@ -2,6 +2,8 @@ package com.pphgzs.domain.DTO;
 
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_user;
 
 /**
  * 
@@ -11,20 +13,44 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 public class RectificationFeedbackDTO {
 	private jwcpxt_feedback_rectification feedbackRectification;
 	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
-	private UnitDTO unitDTO;
+	private jwcpxt_unit unit;
+	private jwcpxt_user user;
+
+	// private UnitDTO unitDTO;
+
+	/*
+	 * @Override public String toString() { return
+	 * "RectificationFeedbackDTO [feedbackRectification=" + feedbackRectification +
+	 * ", dissatisfiedFeedback=" + dissatisfiedFeedback + ", unitDTO=" + unitDTO +
+	 * "]"; }
+	 */
+
+	/*
+	 * public UnitDTO getUnitDTO() { return unitDTO; }
+	 * 
+	 * public void setUnitDTO(UnitDTO unitDTO) { this.unitDTO = unitDTO; }
+	 */
 
 	@Override
 	public String toString() {
 		return "RectificationFeedbackDTO [feedbackRectification=" + feedbackRectification + ", dissatisfiedFeedback="
-				+ dissatisfiedFeedback + ", unitDTO=" + unitDTO + "]";
+				+ dissatisfiedFeedback + ", unit=" + unit + ", user=" + user + "]";
 	}
 
-	public UnitDTO getUnitDTO() {
-		return unitDTO;
+	public jwcpxt_unit getUnit() {
+		return unit;
 	}
 
-	public void setUnitDTO(UnitDTO unitDTO) {
-		this.unitDTO = unitDTO;
+	public void setUnit(jwcpxt_unit unit) {
+		this.unit = unit;
+	}
+
+	public jwcpxt_user getUser() {
+		return user;
+	}
+
+	public void setUser(jwcpxt_user user) {
+		this.user = user;
 	}
 
 	public jwcpxt_feedback_rectification getFeedbackRectification() {

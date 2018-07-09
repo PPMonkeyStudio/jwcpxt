@@ -31,10 +31,9 @@ public class QuestionTest {
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 
 	@Test
-	public void listfdfdfdf() {
+	public void get_dissatisfiedFeedbackVOTest() {
 		DissatisfiedFeedbackVO dissatisfiedFeedbackVO = new DissatisfiedFeedbackVO();
 		dissatisfiedFeedbackService.get_dissatisfiedFeedbackVO(dissatisfiedFeedbackVO);
-		
 	}
 
 	/**
