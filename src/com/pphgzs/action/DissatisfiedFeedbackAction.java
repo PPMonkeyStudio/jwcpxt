@@ -32,7 +32,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		if (dissatisfiedFeedbackVO == null) {
 			dissatisfiedFeedbackVO = new DissatisfiedFeedbackVO();
 		}
-		dissatisfiedFeedbackVO = dissatisfiedFeedbackService.get_questionVO(dissatisfiedFeedbackVO);
+		dissatisfiedFeedbackVO = dissatisfiedFeedbackService.get_dissatisfiedFeedbackVO(dissatisfiedFeedbackVO);
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据

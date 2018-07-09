@@ -10,6 +10,6 @@ public interface DissatisfiedFeedbackService {
 	 * @param dissatisfiedFeedbackVO
 	 * @return
 	 */
-	public DissatisfiedFeedbackVO get_questionVO(DissatisfiedFeedbackVO dissatisfiedFeedbackVO);
+	public DissatisfiedFeedbackVO get_dissatisfiedFeedbackVO(DissatisfiedFeedbackVO dissatisfiedFeedbackVO);
 
 }

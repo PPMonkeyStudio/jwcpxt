@@ -7,7 +7,7 @@ package com.pphgzs.domain.DO;
  */
 public class jwcpxt_feedback_rectification {
 	private String jwcpxt_feedback_rectification_id;
-	private String feedback_rectification_dissatisfied;
+	// private String feedback_rectification_dissatisfied;
 	private String feedback_rectification_content;
 	private String feedback_rectification_state;
 	private String feedback_rectification_time;
@@ -22,13 +22,15 @@ public class jwcpxt_feedback_rectification {
 		this.jwcpxt_feedback_rectification_id = jwcpxt_feedback_rectification_id;
 	}
 
-	public String getFeedback_rectification_dissatisfied() {
-		return feedback_rectification_dissatisfied;
-	}
-
-	public void setFeedback_rectification_dissatisfied(String feedback_rectification_dissatisfied) {
-		this.feedback_rectification_dissatisfied = feedback_rectification_dissatisfied;
-	}
+	/*
+	 * public String getFeedback_rectification_dissatisfied() { return
+	 * feedback_rectification_dissatisfied; }
+	 * 
+	 * public void setFeedback_rectification_dissatisfied(String
+	 * feedback_rectification_dissatisfied) {
+	 * this.feedback_rectification_dissatisfied =
+	 * feedback_rectification_dissatisfied; }
+	 */
 
 	public String getFeedback_rectification_content() {
 		return feedback_rectification_content;
@@ -73,12 +75,23 @@ public class jwcpxt_feedback_rectification {
 	@Override
 	public String toString() {
 		return "jwcpxt_feedback_rectification [jwcpxt_feedback_rectification_id=" + jwcpxt_feedback_rectification_id
-				+ ", feedback_rectification_dissatisfied=" + feedback_rectification_dissatisfied
 				+ ", feedback_rectification_content=" + feedback_rectification_content
 				+ ", feedback_rectification_state=" + feedback_rectification_state + ", feedback_rectification_time="
 				+ feedback_rectification_time + ", feedback_rectification_gmt_create="
 				+ feedback_rectification_gmt_create + ", feedback_rectification_gmt_modified="
 				+ feedback_rectification_gmt_modified + "]";
 	}
+
+	/*
+	 * @Override public String toString() { return
+	 * "jwcpxt_feedback_rectification [jwcpxt_feedback_rectification_id=" +
+	 * jwcpxt_feedback_rectification_id + ", feedback_rectification_dissatisfied=" +
+	 * feedback_rectification_dissatisfied + ", feedback_rectification_content=" +
+	 * feedback_rectification_content + ", feedback_rectification_state=" +
+	 * feedback_rectification_state + ", feedback_rectification_time=" +
+	 * feedback_rectification_time + ", feedback_rectification_gmt_create=" +
+	 * feedback_rectification_gmt_create + ", feedback_rectification_gmt_modified="
+	 * + feedback_rectification_gmt_modified + "]"; }
+	 */
 
 }
