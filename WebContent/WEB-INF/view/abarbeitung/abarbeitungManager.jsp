@@ -41,10 +41,10 @@ a:hover {
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
 										<label>整改时间</label> <input onchange="changeQuery()"
-											id="screenServiceInstanceStartDate"
+											id="searchTimeStart"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"><label>&nbsp;至&nbsp;</label><input
-											onchange="changeQuery()" id="screenServiceInstanceStopDate"
+											onchange="changeQuery()" id="searchTimeEnd"
 											class="mydate form-control"
 											style="display: inline; width: 150px;">
 									</div>
@@ -53,7 +53,7 @@ a:hover {
 									</div>
 									<div id="showContent">
 										<table id="serviceTable" class="table table-striped"
-											style="text-align: center;">
+											style="text-align: center; display: none;">
 											<thead>
 												<tr>
 													<td><select class="form-control" id="searchUnit">
@@ -71,10 +71,8 @@ a:hover {
 										</table>
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;">
-											<span>当前页数:<span id="currPage"></span>{{
-												serviceVO.currPage }}
-											</span> <span>共:<span id="totalPage">{{
-													serviceVO.totalPage }}</span>页
+											<span>当前页数:<span id="currPage"></span>1
+											</span> <span>共:<span id="totalPage">1</span>页
 											</span> <span onclick="skipToIndexPage()" id="indexPage"
 												class="pageOperation">首页</span> <span
 												onclick="skipToPrimaryPage()" id="previousPage"

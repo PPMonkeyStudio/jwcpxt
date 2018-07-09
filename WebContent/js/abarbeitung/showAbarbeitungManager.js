@@ -12,6 +12,8 @@ var queryTemp ={
 
 $(function(){
 	// 获得所有单位
+	$('#searchTimeStart').val('');
+	$('#searchTimeEnd').val('');
 	$.ajax({
 		url : '/jwcpxt/Unit/list_unit_all',
 		type : 'GET',
@@ -33,7 +35,7 @@ $(function(){
 		}
 	})
 	
-	loadData();
+//	loadData();
 })
 
 function loadData(){
