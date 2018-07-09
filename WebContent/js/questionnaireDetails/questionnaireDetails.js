@@ -18,9 +18,11 @@ $(function() {
 			question_type : "",
 		},
 		checkQuestionModalData : {
-			jwcpxt_question_id : '',
-			question_describe : "",
-			question_type : "",
+			question : {
+				jwcpxt_question_id : '',
+				question_describe : "",
+				question_type : ""
+			}
 		}
 	};
 
@@ -226,9 +228,10 @@ $(function() {
 				let modifyVm = new Vue({
 					el : "#modifyOption",
 					data : {},
-					mounted(){
-						
+					methods : {
+						getInfo () {}
 					},
+					mounted () {},
 				});
 			},
 			buttons : {
