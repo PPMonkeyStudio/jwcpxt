@@ -54,10 +54,10 @@ a:hover {
 										style="text-align: center;">
 										<thead>
 											<tr>
-												<td><select class="form-control">
+												<td><select class="form-control" id="searchUnit">
 												<option value="">整改单位</option>
 												</select></td>
-												<td>整改人</td>
+												<td>整改员</td>
 												<td>审核状态</td>
 												<td>整改时间</td>
 												<td>整改详情</td>
@@ -125,4 +125,5 @@ a:hover {
 		maxDate : '2050/01/01', // 设置最大日期
 	});
 </script>
+<script type="text/javascript" src="<%=basePath %>js/abarbeitung/showAbarbeitungManager.js"></script>
 </html>

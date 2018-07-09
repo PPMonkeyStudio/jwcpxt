@@ -2,6 +2,10 @@
  * 
  */
 
+function intoQuestion(event){
+	window.location.href="/jwcpxt/Skip/skipQuestionnaireDetails?definitionId="+event.id;
+}
+
 function intoInstance(event) {
 	window.location.href = "/jwcpxt/Skip/skipServiceInstance?serviceDefinition.jwcpxt_service_definition_id="
 			+ event.id;
