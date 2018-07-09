@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_grab_journal;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
@@ -146,6 +147,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		//
 		List<jwcpxt_service_definition> list = query.list();
 		session.clear();
+		System.out.println(list);
 		return list;
 	}
 
@@ -310,6 +312,23 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public jwcpxt_grab_journal get_grabJournal_byServiceDefinitionIDAndDate(String serviceDefinitionID, String date) {
+		Session session = getSession();
+
+		String hql = "from jwcpxt_grab_journal"//
+				+ " where grab_journal_service_definition=:serviceDefinitionID "//
+				+ " and grab_journal_gmt_create >= :date";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("date", date);
+		//
+		jwcpxt_grab_journal grabJournal = (jwcpxt_grab_journal) query.uniqueResult();
+		session.clear();
+		return grabJournal;
+	}
+
+	@Override
 	public jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String serviceDefinitionID) {
 		Session session = getSession();
 		String hql = "from jwcpxt_service_definition where jwcpxt_service_definition_id=:serviceDefinitionID ";
@@ -385,6 +404,14 @@ public class ServiceDaoImpl implements ServiceDao {
 	public boolean update_serviceGrab(jwcpxt_service_grab serviceGrabOld) {
 		Session session = getSession();
 		session.update(serviceGrabOld);
+		session.flush();
+		return true;
+	}
+
+	@Override
+	public boolean save_grabJournal(jwcpxt_grab_journal grabJournal) {
+		Session session = getSession();
+		session.save(grabJournal);
 		session.flush();
 		return true;
 	}

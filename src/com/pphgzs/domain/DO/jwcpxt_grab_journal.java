@@ -2,10 +2,10 @@ package com.pphgzs.domain.DO;
 
 public class jwcpxt_grab_journal {
 	private String jwcpxt_grab_journal_id;
-	private String grab_journal_date;
+	private String grab_journal_date = "";
 	private String grab_journal_if_grab = "2";
-	private String grab_journal_service_definition;
-	private String grab_journal_time;
+	private String grab_journal_service_definition = "";
+	private String grab_journal_time = "";
 	private String grab_journal_gmt_create;
 	private String grab_journal_gmt_modified;
 

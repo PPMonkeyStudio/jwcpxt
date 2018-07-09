@@ -1,8 +1,11 @@
 package com.pphgzs.thread;
 
-import com.pphgzs.service.impl.ServiceServiceImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class ServiceDistributionThread {
+import com.pphgzs.service.ServiceService;
+
+public class ServiceGrabDistributionThread {
 
 	private final static String RUN = "run";
 
@@ -22,11 +25,12 @@ public class ServiceDistributionThread {
 			@Override
 			public void run() {
 				while (threadState.equals(RUN)) {
+					ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml",
+							"spring/ServiceSpring.xml", "spring/UnitSpring.xml", "spring/UserSpring.xml" });
+					ServiceService serviceService = (ServiceService) ctx.getBean("serviceService");
 					try {
-						System.out.println("正在执行分配线程");
-						ServiceServiceImpl serviceServiceImpl = new ServiceServiceImpl();
-						serviceServiceImpl.distribution_serviceInstance_auto();
-						// 10分钟——600秒——600000毫秒
+						serviceService.grab_serviceInstance_auto();
+						serviceService.distribution_serviceInstance_auto();
 						// 60分钟——3600秒——3600000毫秒
 						Thread.sleep(3600000);
 					} catch (InterruptedException e) {
@@ -54,7 +58,7 @@ public class ServiceDistributionThread {
 	}
 
 	public static void setThreadState(String threadState) {
-		ServiceDistributionThread.threadState = threadState;
+		ServiceGrabDistributionThread.threadState = threadState;
 	}
 
 	public static String getStop() {
