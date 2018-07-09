@@ -6,11 +6,20 @@ public class jwcpxt_option {
 	private String option_question;
 	private int option_sort;
 	private double option_grade;
+	private String option_push;
 	private String option_gmt_create;
 	private String option_gmt_modified;
 
 	public String getJwcpxt_option_id() {
 		return jwcpxt_option_id;
+	}
+
+	public String getOption_push() {
+		return option_push;
+	}
+
+	public void setOption_push(String option_push) {
+		this.option_push = option_push;
 	}
 
 	public void setJwcpxt_option_id(String jwcpxt_option_id) {
@@ -67,10 +76,10 @@ public class jwcpxt_option {
 
 	@Override
 	public String toString() {
-		return "jwcpxt_option 【\njwcpxt_option_id=" + jwcpxt_option_id + ", \noption_describe=" + option_describe
-				+ ", \noption_question=" + option_question + ", \noption_sort=" + option_sort + ", \noption_grade="
-				+ option_grade + ", \noption_gmt_create=" + option_gmt_create + ", \noption_gmt_modified="
-				+ option_gmt_modified + "\n】";
+		return "jwcpxt_option [jwcpxt_option_id=" + jwcpxt_option_id + ", option_describe=" + option_describe
+				+ ", option_question=" + option_question + ", option_sort=" + option_sort + ", option_grade="
+				+ option_grade + ", option_push=" + option_push + ", option_gmt_create=" + option_gmt_create
+				+ ", option_gmt_modified=" + option_gmt_modified + "]";
 	}
 
 }
