@@ -27,7 +27,8 @@ a:hover {
 		<s:action name="skipSidebar" namespace="/Skip" executeResult="true" />
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbarAbarbeitung" namespace="/Skip" executeResult="true" />
+			<s:action name="skipNavbarAbarbeitung" namespace="/Skip"
+				executeResult="true" />
 			<div class="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -50,44 +51,46 @@ a:hover {
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
-									<table id="serviceTable" class="table table-striped"
-										style="text-align: center;">
-										<thead>
-											<tr>
-												<td><select class="form-control" id="searchUnit">
-												<option value="">整改单位</option>
-												</select></td>
-												<td>整改员</td>
-												<td>审核状态</td>
-												<td>整改时间</td>
-												<td>整改详情</td>
-											</tr>
-										</thead>
-										<tbody>
+									<div id="showContent">
+										<table id="serviceTable" class="table table-striped"
+											style="text-align: center;">
+											<thead>
+												<tr>
+													<td><select class="form-control" id="searchUnit">
+															<option value="">整改单位</option>
+													</select></td>
+													<td>整改员</td>
+													<td>审核状态</td>
+													<td>整改时间</td>
+													<td>整改详情</td>
+												</tr>
+											</thead>
+											<tbody>
 
-										</tbody>
-									</table>
-									<!-- 分页 -->
-									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage"></span>{{
-											serviceVO.currPage }}
-										</span> <span>共:<span id="totalPage">{{
-												serviceVO.totalPage }}</span>页
-										</span> <span onclick="skipToIndexPage()" id="indexPage"
-											class="pageOperation">首页</span> <span
-											onclick="skipToPrimaryPage()" id="previousPage"
-											class="pageOperation">上一页</span> <span
-											onclick="skipToNextPage()" id="nextPage"
-											class="pageOperation">下一页</span> <span
-											onclick="skipToLastPage()" id="lastPage"
-											class="pageOperation">末页</span> <span> <input
-											id="skipPage" type="text"
-											style="text-align: center; width: 60px; height: 30px;"
-											class="queryInput">
-											<button onclick="skipToArbitrarilyPage()"
-												class="btn btn-default"
-												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
-										</span>
+											</tbody>
+										</table>
+										<!-- 分页 -->
+										<div id="bottomPage" style="padding: 20px;">
+											<span>当前页数:<span id="currPage"></span>{{
+												serviceVO.currPage }}
+											</span> <span>共:<span id="totalPage">{{
+													serviceVO.totalPage }}</span>页
+											</span> <span onclick="skipToIndexPage()" id="indexPage"
+												class="pageOperation">首页</span> <span
+												onclick="skipToPrimaryPage()" id="previousPage"
+												class="pageOperation">上一页</span> <span
+												onclick="skipToNextPage()" id="nextPage"
+												class="pageOperation">下一页</span> <span
+												onclick="skipToLastPage()" id="lastPage"
+												class="pageOperation">末页</span> <span> <input
+												id="skipPage" type="text"
+												style="text-align: center; width: 60px; height: 30px;"
+												class="queryInput">
+												<button onclick="skipToArbitrarilyPage()"
+													class="btn btn-default"
+													style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
+											</span>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -125,5 +128,6 @@ a:hover {
 		maxDate : '2050/01/01', // 设置最大日期
 	});
 </script>
-<script type="text/javascript" src="<%=basePath %>js/abarbeitung/showAbarbeitungManager.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>js/abarbeitung/showAbarbeitungManager.js"></script>
 </html>
