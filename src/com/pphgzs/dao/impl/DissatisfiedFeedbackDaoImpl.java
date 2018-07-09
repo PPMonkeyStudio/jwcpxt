@@ -30,15 +30,16 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			DissatisfiedFeedbackVO dissatisfiedFeedbackVO) {
 		List<RectificationFeedbackDTO> listRectificationFeedbackDTO = new ArrayList<>();
 		Session session = getSession();
-		String hql = "select new com.pphgzs.domain.DTO.RectificationFeedbackDTO(feedbackRectification,dissatisfiedFeedback,unit,user) from jwcpxt_feedback_rectification feedbackRectification,"
+		String hql = "select new com.pphgzs.domain.DTO.RectificationFeedbackDTO(feedbackRectification,dissatisfiedFeedback,unit,u_user) from jwcpxt_feedback_rectification feedbackRectification,"
 				+ "jwcpxt_dissatisfied_feedback dissatisfiedFeedback,jwcpxt_answer_choice answerChoice,jwcpxt_question question,"
 				+ "jwcpxt_service_definition serviceDefinition,jwcpxt_unit unit,jwcpxt_user u_user" + " where "
 				+ "feedbackRectification.jwcpxt_feedback_rectification_id = dissatisfiedFeedback.dissatisfied_feedback and "
 				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id and "
 				+ " answerChoice.answer_choice_question = question.jwcpxt_question_id and question.question_service_definition = serviceDefinition.jwcpxt_service_definition_id and "
 				+ " serviceDefinition.service_definition_unit = unit.jwcpxt_unit_id and unit.unit_reorganizer = u_user.jwcpxt_user_id and "
-				+ " unit.jwcpxt_unit_id like :unitId and  feedbackRectification.feedback_rectification_time >: :rectificationStartTime and "
+				+ " unit.jwcpxt_unit_id like :unitId and  feedbackRectification.feedback_rectification_time >= :rectificationStartTime and "
 				+ " feedbackRectification.feedback_rectification_time <= :rectificationStopTime group by  dissatisfiedFeedback.dissatisfied_feedback";
+		
 		Query query = session.createQuery(hql);
 		//
 		if ("".equals(dissatisfiedFeedbackVO.getUnit())) {
@@ -59,7 +60,6 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		query.setFirstResult((dissatisfiedFeedbackVO.getCurrPage() - 1) * dissatisfiedFeedbackVO.getPageSize());
 		query.setMaxResults(dissatisfiedFeedbackVO.getPageSize());
 		listRectificationFeedbackDTO = query.list();
-		session.clear();
 		return listRectificationFeedbackDTO;
 	}
 
@@ -74,7 +74,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id and "
 				+ " answerChoice.answer_choice_question = question.jwcpxt_question_id and question.question_service_definition = serviceDefinition.jwcpxt_service_definition_id and "
 				+ " serviceDefinition.service_definition_unit = unit.jwcpxt_unit_id and unit.unit_reorganizer = u_user.jwcpxt_user_id and "
-				+ " unit.jwcpxt_unit_id like :unitId and  feedbackRectification.feedback_rectification_time >: :rectificationStartTime and "
+				+ " unit.jwcpxt_unit_id like :unitId and  feedbackRectification.feedback_rectification_time >= :rectificationStartTime and "
 				+ " feedbackRectification.feedback_rectification_time <= :rectificationStopTime group by  dissatisfiedFeedback.dissatisfied_feedback";
 		Query query = session.createQuery(hql);
 		//
@@ -94,7 +94,6 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			query.setParameter("rectificationStopTime", dissatisfiedFeedbackVO.getRectificationStopTime());
 		}
 		count = ((Number) query.uniqueResult()).intValue();
-		session.clear();
 		return count;
 	}
 
