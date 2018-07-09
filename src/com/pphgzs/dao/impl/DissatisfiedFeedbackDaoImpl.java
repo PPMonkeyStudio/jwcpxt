@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DTO.RectificationFeedbackDTO;
 import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
@@ -21,6 +22,18 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 保存
+	 * 
+	 * @param obj
+	 */
+	@Override
+	public void saveOrUpdateObject(Object obj) {
+		Session session = getSession();
+		session.saveOrUpdate(obj);
+		session.flush();
 	}
 
 	/**
@@ -114,6 +127,21 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		feedbackRectification = (jwcpxt_feedback_rectification) query.uniqueResult();
 		session.clear();
 		return feedbackRectification;
+	}
+
+	/**
+	 * 根据id获取不满意反馈表
+	 */
+	@Override
+	public List<jwcpxt_dissatisfied_feedback> get_dissatisfiedFeekback_byFeekbackId(
+			String jwcpxt_feedback_rectification_id) {
+		List<jwcpxt_dissatisfied_feedback> listDissatisfiedFeedback = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_dissatisfied_feedback where dissatisfied_feedback = :feedbackRectificationId";
+		Query query = session.createQuery(hql);
+		query.setParameter("feedbackRectificationId", jwcpxt_feedback_rectification_id);
+		listDissatisfiedFeedback = query.list();
+		return listDissatisfiedFeedback;
 	}
 
 }

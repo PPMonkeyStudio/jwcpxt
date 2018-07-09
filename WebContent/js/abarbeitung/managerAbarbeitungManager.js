@@ -9,7 +9,7 @@ function viewRectification(event) {
 				type : 'blue',
 				boxWidth : '800px',
 				useBootstrap : false,
-				content : '<textarea id="rectification_content"></textarea>',
+				content : '<textarea id="rectification_content" class="form-control"></textarea>',
 				buttons : {
 					pass : {
 						text : '审核通过',
