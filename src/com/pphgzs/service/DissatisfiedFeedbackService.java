@@ -22,4 +22,13 @@ public interface DissatisfiedFeedbackService {
 	public jwcpxt_feedback_rectification get_feedbackRectification_byRectificationId(
 			jwcpxt_feedback_rectification feedbackRectification);
 
+	/**
+	 * 根据反馈对象更改反馈状态
+	 * 
+	 * @param feedbackRectification
+	 * @return
+	 */
+	public boolean update_feedbackRectificationState_byRectificationId(
+			jwcpxt_feedback_rectification feedbackRectification);
+
 }
