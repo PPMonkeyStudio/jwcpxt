@@ -85,13 +85,15 @@ public class jwcpxt_feedback_rectification {
 	/*
 	 * @Override public String toString() { return
 	 * "jwcpxt_feedback_rectification [jwcpxt_feedback_rectification_id=" +
-	 * jwcpxt_feedback_rectification_id + ", feedback_rectification_dissatisfied=" +
-	 * feedback_rectification_dissatisfied + ", feedback_rectification_content=" +
-	 * feedback_rectification_content + ", feedback_rectification_state=" +
+	 * jwcpxt_feedback_rectification_id +
+	 * ", feedback_rectification_dissatisfied=" +
+	 * feedback_rectification_dissatisfied + ", feedback_rectification_content="
+	 * + feedback_rectification_content + ", feedback_rectification_state=" +
 	 * feedback_rectification_state + ", feedback_rectification_time=" +
 	 * feedback_rectification_time + ", feedback_rectification_gmt_create=" +
-	 * feedback_rectification_gmt_create + ", feedback_rectification_gmt_modified="
-	 * + feedback_rectification_gmt_modified + "]"; }
+	 * feedback_rectification_gmt_create +
+	 * ", feedback_rectification_gmt_modified=" +
+	 * feedback_rectification_gmt_modified + "]"; }
 	 */
 
 }

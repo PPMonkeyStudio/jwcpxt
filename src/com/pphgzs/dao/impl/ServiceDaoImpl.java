@@ -7,12 +7,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_grab_journal;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
+import com.pphgzs.util.TimeUtil;
 
 public class ServiceDaoImpl implements ServiceDao {
 	private SessionFactory sessionFactory;
@@ -30,6 +33,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		Session session = getSession();
 		String hql = "select count(*) from jwcpxt_service_instance "
 				+ " where service_instance_judge like :screenServiceInstanceJudge "
+				+ " and service_instance_service_definition like :screenServiceDefinition"
 				+ " and service_instance_date >= :screenServiceInstanceStartDate "
 				+ " and service_instance_date <= :screenServiceInstanceStopDate ";
 		Query query = session.createQuery(hql);
@@ -39,6 +43,11 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("screenServiceInstanceJudge",
 					"%" + serviceInstanceVO.getScreenServiceInstanceJudge() + "%");
+		}
+		if (serviceInstanceVO.getScreenServiceDefinition().equals("")) {
+			query.setParameter("screenServiceDefinition", "%%");
+		} else {
+			query.setParameter("screenServiceDefinition", "%" + serviceInstanceVO.getScreenServiceDefinition() + "%");
 		}
 		if (serviceInstanceVO.getScreenServiceInstanceStartDate().equals("")) {
 			query.setParameter("screenServiceInstanceStartDate", "0000-00-00");
@@ -50,6 +59,55 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("screenServiceInstanceStopDate", serviceInstanceVO.getScreenServiceInstanceStopDate());
 		}
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public int get_serviceInstanceDistributionCount_byDateAndServiceDefinitionID(String date,
+			String serviceDefinitionID) {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_service_instance "
+				+ " where service_instance_service_definition = :serviceDefinitionID "
+				+ " and service_instance_gmt_create >= :date " + " and service_instance_judge != 'none' ";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("date", date);
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public int get_serviceInstanceTotalCount_byDateAndServiceDefinitionID(String date, String serviceDefinitionID) {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_service_instance "
+				+ " where service_instance_service_definition = :serviceDefinitionID "
+				+ " and service_instance_gmt_create >= :date ";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("date", date);
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public int get_serviceInstanceTotalCount_byToday() {
+		Session session = getSession();
+		String hql = "select count(*) from jwcpxt_service_instance  " + " where  service_instance_gmt_create >= :date";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("date", TimeUtil.getStringDay());
 		//
 		int count = ((Number) query.uniqueResult()).intValue();
 		//
@@ -82,6 +140,18 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinitionDO_all() {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_definition ";
+		Query query = session.createQuery(hql);
+		//
+		List<jwcpxt_service_definition> list = query.list();
+		session.clear();
+		System.out.println(list);
+		return list;
+	}
+
+	@Override
 	public List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID) {
 
 		Session session = getSession();
@@ -96,9 +166,29 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public List<jwcpxt_service_instance> list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(
+			int num, String serviceDefinitionID, String date) {
+		Session session = getSession();
+		String hql = " from jwcpxt_service_instance "//
+				+ " where service_instance_judge = 'none' "//
+				+ " and service_instance_service_definition = :serviceInstanceID "//
+				+ " and service_instance_gmt_create >= :date "//
+				+ " order by rand() ";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceInstanceID", serviceDefinitionID);
+		query.setParameter("date", date);
+		query.setMaxResults(num);
+		//
+		List<jwcpxt_service_instance> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
 	public List<jwcpxt_service_client> list_serviceClient_byServiceInstanceID(String serviceInstanceID) {
 		Session session = getSession();
-		String hql = "from jwcpxt_service_client serviceClient where serviceClient.service_client_service_instance=:serviceInstanceID";
+		String hql = "from jwcpxt_service_client serviceClient where serviceClient.service_client_service_instance = :serviceInstanceID";
 		Query query = session.createQuery(hql);
 		//
 		query.setParameter("serviceInstanceID", serviceInstanceID);
@@ -140,6 +230,7 @@ public class ServiceDaoImpl implements ServiceDao {
 	public List<jwcpxt_service_instance> list_serviceInstance_byServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
 		Session session = getSession();
 		String hql = "from jwcpxt_service_instance " + " where service_instance_judge like :screenServiceInstanceJudge "
+				+ " and service_instance_service_definition like :screenServiceDefinition"
 				+ " and service_instance_date >= :screenServiceInstanceStartDate "
 				+ " and service_instance_date <= :screenServiceInstanceStopDate "
 				+ " order by service_instance_gmt_create";
@@ -150,6 +241,11 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("screenServiceInstanceJudge",
 					"%" + serviceInstanceVO.getScreenServiceInstanceJudge() + "%");
+		}
+		if (serviceInstanceVO.getScreenServiceDefinition().equals("")) {
+			query.setParameter("screenServiceDefinition", "%%");
+		} else {
+			query.setParameter("screenServiceDefinition", "%" + serviceInstanceVO.getScreenServiceDefinition() + "%");
 		}
 		if (serviceInstanceVO.getScreenServiceInstanceStartDate().equals("")) {
 			query.setParameter("screenServiceInstanceStartDate", "0000-00-00");
@@ -164,8 +260,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		query.setFirstResult((serviceInstanceVO.getCurrPage() - 1) * serviceInstanceVO.getPageSize());
 		query.setMaxResults(serviceInstanceVO.getPageSize());
 		//
-		List<jwcpxt_service_instance> list = null;
-		list = query.list();
+		List<jwcpxt_service_instance> list = query.list();
 		session.clear();
 		return list;
 	}
@@ -217,6 +312,23 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public jwcpxt_grab_journal get_grabJournal_byServiceDefinitionIDAndDate(String serviceDefinitionID, String date) {
+		Session session = getSession();
+
+		String hql = "from jwcpxt_grab_journal"//
+				+ " where grab_journal_service_definition=:serviceDefinitionID "//
+				+ " and grab_journal_gmt_create >= :date";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("date", date);
+		//
+		jwcpxt_grab_journal grabJournal = (jwcpxt_grab_journal) query.uniqueResult();
+		session.clear();
+		return grabJournal;
+	}
+
+	@Override
 	public jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String serviceDefinitionID) {
 		Session session = getSession();
 		String hql = "from jwcpxt_service_definition where jwcpxt_service_definition_id=:serviceDefinitionID ";
@@ -231,9 +343,37 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public jwcpxt_service_grab get_serviceGrabDO_byServiceDefinitionID(String serviceDefinitionID) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_grab where service_grab_service_definition=:serviceDefinitionID ";
+		//
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		//
+		jwcpxt_service_grab service_grab = (jwcpxt_service_grab) query.uniqueResult();
+		session.clear();
+		return service_grab;
+	}
+
+	@Override
+	public jwcpxt_service_grab get_serviceGrab_byServiceGrabID(String serviceGrabId) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_grab where jwcpxt_service_grab_id=:serviceGrabId ";
+		//
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceGrabId", serviceGrabId);
+		//
+		jwcpxt_service_grab serviceInstance = (jwcpxt_service_grab) query.uniqueResult();
+		session.clear();
+		return serviceInstance;
+	}
+
+	@Override
 	public jwcpxt_service_instance get_serviceInstance_byServiceInstanceID(String serviceInstanceID) {
 		Session session = getSession();
-		String hql = "from jwcpxt_service_instance where service_instance_service_definition=:serviceInstanceID ";
+		String hql = "from jwcpxt_service_instance where jwcpxt_service_instance_id=:serviceInstanceID ";
 		//
 		Query query = session.createQuery(hql);
 		//
@@ -258,6 +398,31 @@ public class ServiceDaoImpl implements ServiceDao {
 		session.update(serviceDefinitionOld);
 		session.flush();
 		return true;
+	}
+
+	@Override
+	public boolean update_serviceGrab(jwcpxt_service_grab serviceGrabOld) {
+		Session session = getSession();
+		session.update(serviceGrabOld);
+		session.flush();
+		return true;
+	}
+
+	@Override
+	public boolean save_grabJournal(jwcpxt_grab_journal grabJournal) {
+		Session session = getSession();
+		session.save(grabJournal);
+		session.flush();
+		return true;
+	}
+
+	@Override
+	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab) {
+		Session session = getSession();
+		session.save(serviceGrab);
+		session.flush();
+		return true;
+
 	}
 
 	@Override

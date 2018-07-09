@@ -26,4 +26,14 @@ public interface UserService {
 
 	public UserVO get_userVO(UserVO userVO);
 
+	public List<jwcpxt_user> list_user_byJurisdiction(jwcpxt_user user);
+
+	/**
+	 * 获取一个用户某天被分配了多少个
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public int get_userDistributionNum_byToday(String userID);
+
 }

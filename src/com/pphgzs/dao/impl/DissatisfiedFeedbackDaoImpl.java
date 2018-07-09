@@ -10,8 +10,6 @@ import org.hibernate.SessionFactory;
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
-import com.pphgzs.domain.DO.jwcpxt_option;
-import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DTO.RectificationFeedbackDTO;
 import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 

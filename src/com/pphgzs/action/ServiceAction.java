@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -31,7 +32,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 	private jwcpxt_service_definition serviceDefinition;
 	private jwcpxt_service_instance serviceInstance;
-
+	private jwcpxt_service_grab serviceGrab;
 	/* 
 	 * 
 	 */
@@ -98,13 +99,43 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	}
 
 	/**
+	 * 修改业务抓取的抓取字段
+	 * 
+	 * @throws IOException
+	 */
+	public void update_serviceGrab() throws IOException {
+		if (serviceService.update_serviceGrab(serviceGrab)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 根据业务定义id获取抓取字段表DO
+	 * 
+	 * @throws IOException
+	 */
+	public void get_serviceGrabDO_byServiceDefinitionID() throws IOException {
+		serviceGrab = serviceService
+				.get_serviceGrabDO_byServiceDefinitionID(serviceGrab.getService_grab_service_definition());
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceGrab));
+	}
+
+	/**
 	 * 获得一个业务定义
 	 * 
 	 * @throws IOException
 	 */
 	public void get_serviceDefinition_byServiceDefinitionID() throws IOException {
 		serviceDefinition = serviceService
-				.get_serviceDefinition_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
+				.get_serviceDefinitionDO_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
@@ -121,7 +152,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 	public void list_client_byServiceInstanceID() throws IOException {
 		List<jwcpxt_service_client> serviceClientList = serviceService
-				.list_client_byServiceInstanceID(serviceInstance.getJwcpxt_service_instance_id());
+				.list_clientDO_byServiceInstanceID(serviceInstance.getJwcpxt_service_instance_id());
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
@@ -230,6 +261,14 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public void setServiceInstance(jwcpxt_service_instance serviceInstance) {
 		this.serviceInstance = serviceInstance;
+	}
+
+	public jwcpxt_service_grab getServiceGrab() {
+		return serviceGrab;
+	}
+
+	public void setServiceGrab(jwcpxt_service_grab serviceGrab) {
+		this.serviceGrab = serviceGrab;
 	}
 
 	/*

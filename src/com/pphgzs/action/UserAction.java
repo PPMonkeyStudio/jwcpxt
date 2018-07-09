@@ -71,6 +71,17 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 		http_response.getWriter().write(gson.toJson(userDTOList));
 	}
 
+	public void list_user_byJurisdiction() throws IOException {
+		List<jwcpxt_user> userList = userService.list_user_byJurisdiction(user);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(userList));
+	}
+
 	/**
 	 * 
 	 * @throws IOException

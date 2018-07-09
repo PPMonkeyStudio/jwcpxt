@@ -36,8 +36,8 @@ public interface DissatisfiedFeedbackDao {
 
 	/*
 	 * public List<RectificationFeedbackDTO>
-	 * list_rectificationFeedback_byDissatisfiedFeedbackVO( DissatisfiedFeedbackVO
-	 * dissatisfiedFeedbackVO);
+	 * list_rectificationFeedback_byDissatisfiedFeedbackVO(
+	 * DissatisfiedFeedbackVO dissatisfiedFeedbackVO);
 	 */
 	public void saveOrUpdateObject(Object obj);
 

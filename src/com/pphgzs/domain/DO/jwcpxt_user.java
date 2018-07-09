@@ -9,7 +9,7 @@ public class jwcpxt_user {
 	private String user_Jurisdiction_evaluate = "none";
 	private String user_Jurisdiction_statistics = "none";
 	private String user_Jurisdiction_review = "none";
-	private String user_state;
+	private String user_state = "1";
 	private String user_gmt_create;
 	private String user_gmt_modified;
 

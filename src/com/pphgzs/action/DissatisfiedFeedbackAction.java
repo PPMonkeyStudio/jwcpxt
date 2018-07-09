@@ -24,8 +24,6 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private DissatisfiedFeedbackVO dissatisfiedFeedbackVO;
 	private jwcpxt_feedback_rectification feedbackRectification;
 
-	
-	
 	/**
 	 * 更改反馈状态
 	 * 
