@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DTO.RectificationFeedbackDTO;
 import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
@@ -33,6 +34,21 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		dissatisfiedFeedbackVO.setTotalPage(totalPages);
 		dissatisfiedFeedbackVO.setTotalCount(totalRecords);
 		return dissatisfiedFeedbackVO;
+	}
+
+	/**
+	 * 根据整改反馈id获取整改反馈
+	 */
+	@Override
+	public jwcpxt_feedback_rectification get_feedbackRectification_byRectificationId(
+			jwcpxt_feedback_rectification feedbackRectification) {
+		jwcpxt_feedback_rectification feedBackRectification = new jwcpxt_feedback_rectification();
+		if (feedbackRectification != null && feedbackRectification.getJwcpxt_feedback_rectification_id() != null
+				&& feedbackRectification.getJwcpxt_feedback_rectification_id().trim().length() > 0) {
+			feedBackRectification = dissatisfiedFeedbackDao.get_feedbackRectification_byRectificationId(
+					feedbackRectification.getJwcpxt_feedback_rectification_id().trim());
+		}
+		return null;
 	}
 
 	/**

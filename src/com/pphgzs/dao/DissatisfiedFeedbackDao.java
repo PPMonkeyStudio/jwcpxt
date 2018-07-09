@@ -2,6 +2,7 @@ package com.pphgzs.dao;
 
 import java.util.List;
 
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DTO.RectificationFeedbackDTO;
 import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 
@@ -23,6 +24,14 @@ public interface DissatisfiedFeedbackDao {
 	 * @return
 	 */
 	public int get_listRectificationFeedbackDTOCount(DissatisfiedFeedbackVO dissatisfiedFeedbackVO);
+
+	/**
+	 * 根据id获取整改反馈表
+	 * 
+	 * @param trim
+	 * @return
+	 */
+	public jwcpxt_feedback_rectification get_feedbackRectification_byRectificationId(String rectificationId);
 
 	/*
 	 * public List<RectificationFeedbackDTO>
