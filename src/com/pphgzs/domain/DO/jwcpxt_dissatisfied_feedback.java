@@ -8,10 +8,19 @@ package com.pphgzs.domain.DO;
 public class jwcpxt_dissatisfied_feedback {
 	private String jwcpxt_dissatisfied_feedback_id;
 	private String dissatisfied_feedback_answer_choice;
+	private String dissatisfied_feedback;
 	private String dissatisfied_feedback_time;
 	private String dissatisfied_feedback_state;
 	private String dissatisfied_feedback_gmt_create;
 	private String dissatisfied_feedback_gmt_modified;
+
+	public String getDissatisfied_feedback() {
+		return dissatisfied_feedback;
+	}
+
+	public void setDissatisfied_feedback(String dissatisfied_feedback) {
+		this.dissatisfied_feedback = dissatisfied_feedback;
+	}
 
 	public String getJwcpxt_dissatisfied_feedback_id() {
 		return jwcpxt_dissatisfied_feedback_id;
@@ -65,8 +74,9 @@ public class jwcpxt_dissatisfied_feedback {
 	public String toString() {
 		return "jwcpxt_dissatisfied_feedback [jwcpxt_dissatisfied_feedback_id=" + jwcpxt_dissatisfied_feedback_id
 				+ ", dissatisfied_feedback_answer_choice=" + dissatisfied_feedback_answer_choice
-				+ ", dissatisfied_feedback_time=" + dissatisfied_feedback_time + ", dissatisfied_feedback_state="
-				+ dissatisfied_feedback_state + ", dissatisfied_feedback_gmt_create=" + dissatisfied_feedback_gmt_create
+				+ ", dissatisfied_feedback=" + dissatisfied_feedback + ", dissatisfied_feedback_time="
+				+ dissatisfied_feedback_time + ", dissatisfied_feedback_state=" + dissatisfied_feedback_state
+				+ ", dissatisfied_feedback_gmt_create=" + dissatisfied_feedback_gmt_create
 				+ ", dissatisfied_feedback_gmt_modified=" + dissatisfied_feedback_gmt_modified + "]";
 	}
 

@@ -1,6 +1,11 @@
 package com.pphgzs.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.DTO.RectificationFeedbackDTO;
+import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
@@ -11,6 +16,24 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private ServiceService serviceService;
 	private QuestionService questionService;
 	private UnitService unitService;
+
+	/**
+	 * 获取反馈整改VO
+	 */
+	@Override
+	public DissatisfiedFeedbackVO get_dissatisfiedFeedbackVO(DissatisfiedFeedbackVO dissatisfiedFeedbackVO) {
+		// 定义
+		List<RectificationFeedbackDTO> listRectificationFeedback = new ArrayList<>();
+		// 获取DTO
+		listRectificationFeedback = dissatisfiedFeedbackDao.get_listRectificationFeedbackDTO(dissatisfiedFeedbackVO);
+		// 获取总记录数
+		int totalRecords = dissatisfiedFeedbackDao.get_listRectificationFeedbackDTOCount(dissatisfiedFeedbackVO);
+		int totalPages = ((totalRecords - 1) / dissatisfiedFeedbackVO.getPageSize()) + 1;
+		dissatisfiedFeedbackVO.setListRectificationFeedback(listRectificationFeedback);
+		dissatisfiedFeedbackVO.setTotalPage(totalPages);
+		dissatisfiedFeedbackVO.setTotalCount(totalRecords);
+		return dissatisfiedFeedbackVO;
+	}
 
 	/**
 	 * 
@@ -47,7 +70,5 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	public void setDissatisfiedFeedbackDao(DissatisfiedFeedbackDao dissatisfiedFeedbackDao) {
 		this.dissatisfiedFeedbackDao = dissatisfiedFeedbackDao;
 	}
-	/**
-	 * 
-	 */
+
 }

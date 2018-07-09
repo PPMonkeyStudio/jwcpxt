@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-7-8 9:01:17 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-7-9 14:37:48 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback" table="JWCPXT_DISSATISFIED_FEEDBACK">
         <id name="jwcpxt_dissatisfied_feedback_id" type="java.lang.String">
@@ -10,6 +10,9 @@
         </id>
         <property name="dissatisfied_feedback_answer_choice" type="java.lang.String">
             <column name="DISSATISFIED_FEEDBACK_ANSWER_CHOICE" />
+        </property>
+        <property name="dissatisfied_feedback" type="java.lang.String">
+            <column name="DISSATISFIED_FEEDBACK" />
         </property>
         <property name="dissatisfied_feedback_time" type="java.lang.String">
             <column name="DISSATISFIED_FEEDBACK_TIME" />

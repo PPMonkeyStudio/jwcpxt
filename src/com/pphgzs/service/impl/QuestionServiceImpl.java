@@ -69,7 +69,6 @@ public class QuestionServiceImpl implements QuestionService {
 		questionList = questionDao.list_question_byQuestionVO(questionVO);
 		// 获取总记录数
 		int totalRecords = questionDao.get_questionTotalCount_byQuestionVO(questionVO);
-		System.out.println("totalRecords:" + totalRecords);
 		// 总页数
 		// staffManagerVO.setTotalPages(((userInfoCount - 1) /
 		// staffManagerVO.getPageSize()) + 1);

@@ -11,7 +11,9 @@ import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
+import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 import com.pphgzs.domain.VO.QuestionVO;
+import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UserService;
@@ -25,6 +27,14 @@ public class QuestionTest {
 	private ServiceService serviceService;
 	@Resource
 	private QuestionService questionService;
+	@Resource
+	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	@Test
+	public void get_dissatisfiedFeedbackVOTest() {
+		DissatisfiedFeedbackVO dissatisfiedFeedbackVO = new DissatisfiedFeedbackVO();
+		dissatisfiedFeedbackService.get_dissatisfiedFeedbackVO(dissatisfiedFeedbackVO);
+	}
 
 	/**
 	 * 
@@ -186,6 +196,14 @@ public class QuestionTest {
 
 	public UserService getUserService() {
 		return userService;
+	}
+
+	public DissatisfiedFeedbackService getDissatisfiedFeedbackService() {
+		return dissatisfiedFeedbackService;
+	}
+
+	public void setDissatisfiedFeedbackService(DissatisfiedFeedbackService dissatisfiedFeedbackService) {
+		this.dissatisfiedFeedbackService = dissatisfiedFeedbackService;
 	}
 
 	public void setUserService(UserService userService) {
