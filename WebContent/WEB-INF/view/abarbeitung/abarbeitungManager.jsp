@@ -18,8 +18,11 @@ a:hover {
 .pageOperation:hover {
 	cursor: pointer;
 }
+.hideButton{
+	display: none;
+}
 </style>
-<title>业务管理</title>
+<title>整改管理</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -55,7 +58,8 @@ a:hover {
 											style="text-align: center; display: none;">
 											<thead>
 												<tr>
-													<td><select onchange="changeQuery()" class="form-control" id="searchUnit">
+													<td><select onchange="changeQuery()"
+														class="form-control" id="searchUnit">
 															<option value="">整改单位</option>
 													</select></td>
 													<td>整改员</td>
@@ -86,8 +90,8 @@ a:hover {
 														rectificationFeedback.feedbackRectification.feedback_rectification_gmt_create
 														}}</td>
 													<td><a
-														:id="rectificationFeedback.feedbackRectification.jwcpxt_feedback_rectification_id" onclick=""><i
-															class="ti-eye"></i></a></td>
+														:id="rectificationFeedback.feedbackRectification.jwcpxt_feedback_rectification_id"
+														onclick="viewRectification(this)"><i class="ti-eye"></i></a></td>
 												</tr>
 												</template>
 											</tbody>
@@ -151,4 +155,6 @@ a:hover {
 </script>
 <script type="text/javascript"
 	src="<%=basePath%>js/abarbeitung/showAbarbeitungManager.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>js/abarbeitung/managerAbarbeitungManager.js"></script>
 </html>
