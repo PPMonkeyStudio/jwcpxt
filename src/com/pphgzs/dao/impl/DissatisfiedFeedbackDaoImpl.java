@@ -123,7 +123,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	public jwcpxt_feedback_rectification get_feedbackRectification_byRectificationId(String rectificationId) {
 		jwcpxt_feedback_rectification feedbackRectification = new jwcpxt_feedback_rectification();
 		Session session = getSession();
-		String hql = "from jwcpxt_feedback_rectification where jwcpxt_feedback_rectification = :rectificationId";
+		String hql = "from jwcpxt_feedback_rectification where jwcpxt_feedback_rectification_id = :rectificationId";
 		Query query = session.createQuery(hql);
 		query.setParameter("rectificationId", rectificationId);
 		feedbackRectification = (jwcpxt_feedback_rectification) query.uniqueResult();

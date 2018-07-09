@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
@@ -29,6 +30,13 @@ public class QuestionTest {
 	private QuestionService questionService;
 	@Resource
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	@Test
+	public void get_feedbackRectification_byRectificationId() {
+		jwcpxt_feedback_rectification feedBackRectification = new jwcpxt_feedback_rectification();
+		feedBackRectification.setJwcpxt_feedback_rectification_id("1");
+		dissatisfiedFeedbackService.get_feedbackRectification_byRectificationId(feedBackRectification);
+	}
 
 	@Test
 	public void get_dissatisfiedFeedbackVOTest() {
