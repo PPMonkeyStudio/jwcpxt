@@ -2,12 +2,17 @@
  * 
  */
 
+function intoQuestion(event){
+	window.location.href="/jwcpxt/Skip/skipQuestionnaireDetails?definitionId="+event.id;
+}
+
 function intoInstance(event) {
 	window.location.href = "/jwcpxt/Skip/skipServiceInstance?serviceDefinition.jwcpxt_service_definition_id="
 			+ event.id;
 }
 
 function updateInterface(event) {
+	var interfaceId;
 	$
 			.confirm({
 				title : '修改数据抓取接口',
@@ -15,13 +20,13 @@ function updateInterface(event) {
 				boxWidth : '500px',
 				useBootstrap : false,
 				content : '<div><form id="update_interface">'
-						+ '<label>接口名：</label><input class="form-control" name="serviceGrab.service_grab_service_definition">'
-						+ '<label>数据表名：</label><input class="form-control" name="serviceGrab.service_grab_table">'
-						+ '<label>唯一编号：</label><input class="form-control" name="serviceGrab.service_grab_field_nid">'
-						+ '<label>当事人姓名：</label><input class="form-control" name="serviceGrab.service_grab_field_client_name">'
-						+ '<label>当事人性别：</label><input class="form-control" name="serviceGrab.service_grab_field_client_sex">'
-						+ '<label>当事人电话：</label><input class="form-control" name="serviceGrab.service_grab_field_client_phone">'
-						+ '<label>业务办理时间：</label><input class="form-control" name="serviceGrab.service_grab_field_date">'
+						+ '<label>接口名：</label><input class="form-control" name="serviceGrab.service_grab_service_definition" id="interfaceName">'
+						+ '<label>数据表名：</label><input class="form-control" name="serviceGrab.service_grab_table" id="tableName">'
+						+ '<label>唯一编号：</label><input class="form-control" name="serviceGrab.service_grab_field_nid" id="nid">'
+						+ '<label>当事人姓名：</label><input class="form-control" name="serviceGrab.service_grab_field_client_name" id="manName">'
+						+ '<label>当事人性别：</label><input class="form-control" name="serviceGrab.service_grab_field_client_sex" id="manSex">'
+						+ '<label>当事人电话：</label><input class="form-control" name="serviceGrab.service_grab_field_client_phone" id="manPhone">'
+						+ '<label>业务办理时间：</label><input class="form-control" name="serviceGrab.service_grab_field_date" id="manTime">'
 						+ '</div></form>',
 				buttons : {
 					cancel : {
@@ -39,8 +44,8 @@ function updateInterface(event) {
 									.getElementById("update_interface"));
 							formData
 									.append(
-											'serviceGrab.service_grab_service_definition',
-											event.id);
+											'serviceGrab.jwcpxt_service_grab_id',
+											interfaceId);
 							$.ajax({
 								url : '/jwcpxt/Service/update_serviceGrab',
 								type : 'POST',
@@ -64,10 +69,18 @@ function updateInterface(event) {
 						url:'/jwcpxt/Service/get_serviceGrabDO_byServiceDefinitionID',
 						type:'POST',
 						data:{
-							
+							'serviceGrab.service_grab_service_definition':event.id
 						},
 						success:function(data){
-							
+							var interfaceDo = JSON.parse(data);
+							interfaceId = interfaceDo.jwcpxt_service_grab_id;
+							$('#interfaceName').val(interfaceDo.service_grab_Interface);
+							$('#tableName').val(interfaceDo.service_grab_table);
+							$('#nid').val(interfaceDo.service_grab_field_nid);
+							$('#manName').val(interfaceDo.service_grab_field_client_name);
+							$('#manSex').val(interfaceDo.service_grab_field_client_sex);
+							$('#manPhone').val(interfaceDo.service_grab_field_client_phone);
+							$('#manTime').val(interfaceDo.service_grab_field_date);
 						}
 					})
 				}

@@ -58,6 +58,11 @@
 				<li id="sidePolice"><a href="#"> <i class="ti-user"></i>
 						<p>测评警务</p>
 				</a></li>
+				<li id="sideAbarbeitung"><a
+					href="<%=basePath%>Skip/skipAbarbeitungIndex"> <i
+						class="ti-hummer"></i>
+						<p>整改审核</p>
+				</a></li>
 				<li id="sideStatis"><a href="#"> <i class="ti-stats-up"></i>
 						<p>统计数据</p>
 				</a></li>

@@ -18,8 +18,11 @@ a:hover {
 .pageOperation:hover {
 	cursor: pointer;
 }
+.hideALl{
+	display: none;
+}
 </style>
-<title>业务实例管理</title>
+<title>整改管理</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -27,7 +30,8 @@ a:hover {
 		<s:action name="skipSidebar" namespace="/Skip" executeResult="true" />
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbar" namespace="/Skip" executeResult="true" />
+			<s:action name="skipNavbarAbarbeitung" namespace="/Skip"
+				executeResult="true" />
 			<div class="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -35,18 +39,15 @@ a:hover {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">业务实例管理</h4>
+									<h4 class="title">审核整改</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
-									<button onclick="returnService()" class="btn btn-default">
-										<i class="ti-back-left"></i>返回业务管理
-									</button>
 									<div style="float: right; margin-right: 10px;">
-										<label>业务发生时间</label> <input onchange="changeQuery()"
-											id="screenServiceInstanceStartDate" placeholder="" class="mydate form-control"
+										<label>整改时间</label> <input onchange="changeQuery()"
+											id="searchTimeStart" class="mydate form-control"
 											style="display: inline; width: 150px;"><label>&nbsp;至&nbsp;</label><input
-											onchange="changeQuery()" id="screenServiceInstanceStopDate"
-											placeholder="" class="mydate form-control"
+											onchange="changeQuery()" id="searchTimeEnd"
+											class="mydate form-control"
 											style="display: inline; width: 150px;">
 									</div>
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
@@ -54,49 +55,51 @@ a:hover {
 									</div>
 									<div id="showContent">
 										<table id="serviceTable" class="table table-striped"
-											style="text-align: center;">
+											style="text-align: center; display: none;">
 											<thead>
 												<tr>
-													<td>业务编号</td>
-													<td>业务办理时间</td>
-													<td><select class="form-control" id="humanSelect"
-														onchange="changeQuery()" style="text-align: center;">
-															<option value="" style="text-align: center;">是否分配测评员</option>
+													<td><select onchange="changeQuery()"
+														class="form-control" id="searchUnit">
+															<option value="">整改单位</option>
 													</select></td>
-													<td>查看当事人</td>
+													<td>整改员</td>
+													<td>审核状态</td>
+													<td>整改时间</td>
+													<td>整改详情</td>
 												</tr>
 											</thead>
 											<tbody>
 												<template
-													v-for="serviceInstanceDTO in instanceVO.serviceInstanceDTOList">
+													v-for="rectificationFeedback in abarbeitungVO.listRectificationFeedback">
 												<tr>
+													<td>{{ rectificationFeedback.unit.unit_name }}</td>
+													<td>{{ rectificationFeedback.user.user_name }}</td>
+													<template
+														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 0">
+													<td><span class="label label-primary">未审核</span></td>
+													</template>
+													<template
+														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 1">
+													<td><span class="label label-success">审核已通过</span></td>
+													</template>
+													<template
+														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 2">
+													<td><span class="label label-danger">审核未通过</span></td>
+													</template>
 													<td>{{
-														serviceInstanceDTO.serviceInstance.service_instance_nid }}</td>
-													<td>{{
-														serviceInstanceDTO.serviceInstance.service_instance_date
+														rectificationFeedback.feedbackRectification.feedback_rectification_gmt_create
 														}}</td>
-
-													<template v-if="serviceInstanceDTO.judge == undefined">
 													<td><a
-														:id="serviceInstanceDTO.serviceInstance.jwcpxt_service_instance_id"
-														onclick="allocationHuman(this)">分配测评员</a></td>
-													</template>
-													<template v-else>
-													<td>{{ serviceInstanceDTO.judge.user_name }}</td>
-													</template>
-													<td><a
-														:id="serviceInstanceDTO.serviceInstance.jwcpxt_service_instance_id"
-														onclick="viewParties(this)">查看</a></td>
+														:id="rectificationFeedback.feedbackRectification.jwcpxt_feedback_rectification_id"
+														onclick="viewRectification(this)"><i class="ti-eye"></i></a></td>
 												</tr>
 												</template>
 											</tbody>
 										</table>
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;">
-											<span>当前页数:<span id="currPage">{{
-													instanceVO.currPage }}</span>
-											</span> <span>共:<span id="totalPage">{{
-													instanceVO.totalPage }}</span>页
+											<span>当前页数:<span id="currPage"></span>1
+											</span> <span>共:<span id="totalPage">1</span>页
 											</span> <span onclick="skipToIndexPage()" id="indexPage"
 												class="pageOperation">首页</span> <span
 												onclick="skipToPrimaryPage()" id="previousPage"
@@ -127,7 +130,7 @@ a:hover {
 </body>
 <script type="text/javascript">
 	/* 处理侧边栏选项 */
-	$('#sideManager').attr("class", "active");
+	$('#sideAbarbeitung').attr("class", "active");
 </script>
 <script type="text/javascript">
 	$.datetimepicker.setLocale('ch');
@@ -151,7 +154,7 @@ a:hover {
 	});
 </script>
 <script type="text/javascript"
-	src="<%=basePath%>js/managerServiceInstance/managerServiceInstance.js"></script>
+	src="<%=basePath%>js/abarbeitung/showAbarbeitungManager.js"></script>
 <script type="text/javascript"
-	src="<%=basePath%>js/managerServiceInstance/showServiceInstance.js"></script>
+	src="<%=basePath%>js/abarbeitung/managerAbarbeitungManager.js"></script>
 </html>
