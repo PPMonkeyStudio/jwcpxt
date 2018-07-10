@@ -5,7 +5,7 @@ import java.util.List;
 import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
-import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
+//import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.VO.QuestionVO;
@@ -32,7 +32,8 @@ public interface QuestionDao {
 
 	public List<jwcpxt_option> get_option_byQuestionId(String trim);
 
-	public List<jwcpxt_option_inquiries> get_optionInquireies_byOptionId(String trim);
+	// public List<jwcpxt_option_inquiries> get_optionInquireies_byOptionId(String
+	// trim);
 
 	public int get_option_max_sort(String option_question);
 

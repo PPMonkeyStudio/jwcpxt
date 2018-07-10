@@ -2,7 +2,6 @@ package com.pphgzs.domain.DO;
 
 public class jwcpxt_answer_open {
 	private String jwcpxt_answer_open_id;
-	private String answer_open_mypcxt_service_instance;
 	private String answer_open_content;
 	private String answer_open_client;
 	private String answer_open_question;
@@ -23,14 +22,6 @@ public class jwcpxt_answer_open {
 
 	public void setJwcpxt_answer_open_id(String jwcpxt_answer_open_id) {
 		this.jwcpxt_answer_open_id = jwcpxt_answer_open_id;
-	}
-
-	public String getAnswer_open_mypcxt_service_instance() {
-		return answer_open_mypcxt_service_instance;
-	}
-
-	public void setAnswer_open_mypcxt_service_instance(String answer_open_mypcxt_service_instance) {
-		this.answer_open_mypcxt_service_instance = answer_open_mypcxt_service_instance;
 	}
 
 	public String getAnswer_open_content() {
@@ -67,11 +58,10 @@ public class jwcpxt_answer_open {
 
 	@Override
 	public String toString() {
-		return "jwcpxt_answer_open [jwcpxt_answer_open_id=" + jwcpxt_answer_open_id
-				+ ", answer_open_mypcxt_service_instance=" + answer_open_mypcxt_service_instance
-				+ ", answer_open_content=" + answer_open_content + ", answer_open_client=" + answer_open_client
-				+ ", answer_open_question=" + answer_open_question + ", answer_open_gmt_create="
-				+ answer_open_gmt_create + ", answer_open_gmt_modified=" + answer_open_gmt_modified + "]";
+		return "jwcpxt_answer_open [jwcpxt_answer_open_id=" + jwcpxt_answer_open_id + ", answer_open_content="
+				+ answer_open_content + ", answer_open_client=" + answer_open_client + ", answer_open_question="
+				+ answer_open_question + ", answer_open_gmt_create=" + answer_open_gmt_create
+				+ ", answer_open_gmt_modified=" + answer_open_gmt_modified + "]";
 	}
 
 }
