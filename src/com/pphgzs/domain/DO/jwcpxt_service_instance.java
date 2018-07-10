@@ -3,11 +3,20 @@ package com.pphgzs.domain.DO;
 public class jwcpxt_service_instance {
 	private String jwcpxt_service_instance_id;
 	private String service_instance_service_definition;
+	private String service_instance_belong_unit;
 	private String service_instance_nid;
 	private String service_instance_date;
 	private String service_instance_judge = "none";
 	private String service_instance_gmt_create;
 	private String service_instance_gmt_modified;
+
+	public String getService_instance_belong_unit() {
+		return service_instance_belong_unit;
+	}
+
+	public void setService_instance_belong_unit(String service_instance_belong_unit) {
+		this.service_instance_belong_unit = service_instance_belong_unit;
+	}
 
 	public String getJwcpxt_service_instance_id() {
 		return jwcpxt_service_instance_id;
@@ -67,12 +76,13 @@ public class jwcpxt_service_instance {
 
 	@Override
 	public String toString() {
-		return "jwcpxt_service_instance 【\njwcpxt_service_instance_id=" + jwcpxt_service_instance_id
-				+ ", \nservice_instance_service_definition=" + service_instance_service_definition
-				+ ", \nservice_instance_nid=" + service_instance_nid + ", \nservice_instance_date="
-				+ service_instance_date + ", \nservice_instance_judge=" + service_instance_judge
-				+ ", \nservice_instance_gmt_create=" + service_instance_gmt_create
-				+ ", \nservice_instance_gmt_modified=" + service_instance_gmt_modified + "\n】";
+		return "jwcpxt_service_instance [jwcpxt_service_instance_id=" + jwcpxt_service_instance_id
+				+ ", service_instance_service_definition=" + service_instance_service_definition
+				+ ", service_instance_belong_unit=" + service_instance_belong_unit + ", service_instance_nid="
+				+ service_instance_nid + ", service_instance_date=" + service_instance_date
+				+ ", service_instance_judge=" + service_instance_judge + ", service_instance_gmt_create="
+				+ service_instance_gmt_create + ", service_instance_gmt_modified=" + service_instance_gmt_modified
+				+ "]";
 	}
 
 }

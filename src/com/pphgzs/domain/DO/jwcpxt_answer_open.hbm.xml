@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-7-7 23:34:33 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-7-10 23:34:55 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_answer_open" table="JWCPXT_ANSWER_OPEN">
         <id name="jwcpxt_answer_open_id" type="java.lang.String">
             <column name="JWCPXT_ANSWER_OPEN_ID" />
             <generator class="assigned" />
         </id>
-        <property name="answer_open_mypcxt_service_instance" type="java.lang.String">
-            <column name="ANSWER_OPEN_MYPCXT_SERVICE_INSTANCE" />
-        </property>
         <property name="answer_open_content" type="java.lang.String">
             <column name="ANSWER_OPEN_CONTENT" />
         </property>
