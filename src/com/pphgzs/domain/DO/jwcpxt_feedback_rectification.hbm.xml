@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-7-9 14:37:48 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-7-10 23:34:55 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_feedback_rectification" table="JWCPXT_FEEDBACK_RECTIFICATION">
         <id name="jwcpxt_feedback_rectification_id" type="java.lang.String">
@@ -11,11 +11,23 @@
         <property name="feedback_rectification_content" type="java.lang.String">
             <column name="FEEDBACK_RECTIFICATION_CONTENT" />
         </property>
-        <property name="feedback_rectification_state" type="java.lang.String">
-            <column name="FEEDBACK_RECTIFICATION_STATE" />
+        <property name="feedback_rectification_first_review_state" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_FIRST_REVIEW_STATE" />
         </property>
-        <property name="feedback_rectification_time" type="java.lang.String">
-            <column name="FEEDBACK_RECTIFICATION_TIME" />
+        <property name="feedback_rectification_first_review_time" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_FIRST_REVIEW_TIME" />
+        </property>
+        <property name="feedback_rectification_first_review_content" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_FIRST_REVIEW_CONTENT" />
+        </property>
+        <property name="feedback_rectification_second_review_state" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_SECOND_REVIEW_STATE" />
+        </property>
+        <property name="feedback_rectification_second_review_time" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_SECOND_REVIEW_TIME" />
+        </property>
+        <property name="feedback_rectification_second_review_content" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_SECOND_REVIEW_CONTENT" />
         </property>
         <property name="feedback_rectification_gmt_create" type="java.lang.String">
             <column name="FEEDBACK_RECTIFICATION_GMT_CREATE" />
