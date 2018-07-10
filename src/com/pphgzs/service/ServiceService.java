@@ -25,13 +25,15 @@ public interface ServiceService {
 	/**
 	 * 自动分配任务实例的线程执行方法
 	 */
-	void distribution_serviceInstance_auto();
+	// void distribution_serviceInstance_auto();
 
 	/**
 	 * 随机分配给定数量的任务实例给测评人员
 	 */
-	void distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(int num,
-			String serviceDefinitionID, String date);
+	// void
+	// distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(int
+	// num,
+	// String serviceDefinitionID, String date);
 
 	jwcpxt_service_definition get_serviceDefinitionDO_byServiceDefinitionID(String serviceDefinitionID);
 
@@ -45,7 +47,9 @@ public interface ServiceService {
 	 * @param serviceDefinitionID
 	 * @return
 	 */
-	int get_serviceInstanceDistributionCount_byTodayAndServiceDefinitionID(String serviceDefinitionID);
+	// int
+	// get_serviceInstanceDistributionCount_byTodayAndServiceDefinitionID(String
+	// serviceDefinitionID);
 
 	/**
 	 * 通过业务实例的ID获取业务实例的DTO
@@ -72,8 +76,10 @@ public interface ServiceService {
 	/**
 	 * 在给定任务定义中，随机抽取给定数量的任务实例
 	 */
-	List<jwcpxt_service_instance> list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(int num,
-			String serviceDefinitionID, String date);
+	// List<jwcpxt_service_instance>
+	// list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(int
+	// num,
+	// String serviceDefinitionID, String date);
 
 	List<ServiceInstanceDTO> list_serviceInstanceDTO_byServiceDefinitionID(String serviceDefinitionID);
 

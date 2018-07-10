@@ -5,7 +5,7 @@
 function viewRectification(event) {
 	var jc = $
 			.confirm({
-				title : '分配测评员',
+				title : '查看整改内容',
 				type : 'blue',
 				boxWidth : '800px',
 				useBootstrap : false,
@@ -13,7 +13,7 @@ function viewRectification(event) {
 				buttons : {
 					pass : {
 						text : '审核通过',
-						btnClass : 'btn-green hideButton',
+						btnClass : 'btn-green hideALl',
 						action : function() {
 							$
 									.ajax({
@@ -36,7 +36,7 @@ function viewRectification(event) {
 					},
 					nopass : {
 						text : '禁止通过',
-						btnClass : 'btn-warning hideButton',
+						btnClass : 'btn-warning hideALl',
 						action : function() {
 							$
 									.ajax({
@@ -65,9 +65,7 @@ function viewRectification(event) {
 						}
 					}
 				},
-				onContentReady : function() {
-					jc.buttons.pass.hide();
-					jc.buttons.nopass.hide();
+				onOpenBefore : function() {
 					$
 							.ajax({
 								url : '/jwcpxt/DissatisfiedFeedback/get_feedbackRectification_byRectificationId?feedbackRectification.jwcpxt_feedback_rectification_id='
@@ -77,10 +75,9 @@ function viewRectification(event) {
 									var feedback_rectification = JSON
 											.parse(data);
 									if (feedback_rectification.feedback_rectification_state == '0') {
-										jc.buttons.pass.show();
-										jc.buttons.nopass.show();
+										
 									} else {
-
+										$('.hideALl').remove();
 									}
 									$('#rectification_content')
 											.val(
@@ -88,6 +85,9 @@ function viewRectification(event) {
 
 								}
 							})
+				},
+				onContentReady : function() {
+
 				}
 			})
 }

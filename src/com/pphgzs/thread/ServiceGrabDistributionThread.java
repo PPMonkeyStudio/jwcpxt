@@ -29,8 +29,8 @@ public class ServiceGrabDistributionThread {
 							"spring/ServiceSpring.xml", "spring/UnitSpring.xml", "spring/UserSpring.xml" });
 					ServiceService serviceService = (ServiceService) ctx.getBean("serviceService");
 					try {
-						serviceService.grab_serviceInstance_auto();
-						serviceService.distribution_serviceInstance_auto();
+						// serviceService.grab_serviceInstance_auto();
+						// serviceService.distribution_serviceInstance_auto();
 						// 60分钟——3600秒——3600000毫秒
 						Thread.sleep(3600000);
 					} catch (InterruptedException e) {

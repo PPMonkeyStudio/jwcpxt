@@ -52,114 +52,138 @@ public class ServiceServiceImpl implements ServiceService {
 		this.userService = userService;
 	}
 
-	@Override
-	public void distribution_serviceInstance_auto() {
+	// @Override
+	// public void distribution_serviceInstance_auto() {
+	//
+	// // 获取所有的业务定义
+	// List<jwcpxt_service_definition> serviceDefinitionList =
+	// list_serviceDefinitionDO_all();
+	// // 分别查出所有业务定义的分配情况
+	// for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList)
+	// {
+	// // 总数
+	// int totalCount =
+	// get_serviceInstanceTotalCount_byTodayAndServiceDefinitionID(
+	// serviceDefinition.getJwcpxt_service_definition_id());
+	// System.out.println("\n该业务当日总数：" + totalCount);
+	// if (totalCount == 0) {
+	// continue;
+	// }
+	// // 已分配的数量
+	// int distributionCount =
+	// get_serviceInstanceDistributionCount_byTodayAndServiceDefinitionID(
+	// serviceDefinition.getJwcpxt_service_definition_id());
+	// System.out.println("该业务当日已分配的数量：" + distributionCount);
+	// // 实际分配比例
+	// Double samplingProportionNow = (distributionCount / (double) totalCount);
+	// System.out
+	// .println("该业务要求分配百分比：" +
+	// serviceDefinition.getService_definition_sampling_proportion() * 10 +
+	// "%");
+	// System.out.println("该业务实际分配百分比：" + samplingProportionNow * 100 + "%");
+	// // 判断是否超过了比例
+	// if ((samplingProportionNow * 10) >=
+	// serviceDefinition.getService_definition_sampling_proportion()) {
+	// // 停止分配
+	// continue;
+	// } else {
+	// // 算出差多少个，然后继续分配
+	// double dev =
+	// ((serviceDefinition.getService_definition_sampling_proportion() *
+	// totalCount) / 10.0)
+	// - distributionCount;
+	// System.out.println("该业务当日实际相差的数量：" + dev);
+	// int devFinally = (int) Math.ceil(dev);
+	// System.out.println("该业务当日实际还需要分配实例数：" + devFinally);
+	// //
+	// distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(devFinally,
+	// serviceDefinition.getJwcpxt_service_definition_id(),
+	// TimeUtil.getStringDay());
+	// }
+	//
+	// }
+	//
+	// }
 
-		// 获取所有的业务定义
-		List<jwcpxt_service_definition> serviceDefinitionList = list_serviceDefinitionDO_all();
-		// 分别查出所有业务定义的分配情况
-		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
-			// 总数
-			int totalCount = get_serviceInstanceTotalCount_byTodayAndServiceDefinitionID(
-					serviceDefinition.getJwcpxt_service_definition_id());
-			System.out.println("\n该业务当日总数：" + totalCount);
-			if (totalCount == 0) {
-				continue;
-			}
-			// 已分配的数量
-			int distributionCount = get_serviceInstanceDistributionCount_byTodayAndServiceDefinitionID(
-					serviceDefinition.getJwcpxt_service_definition_id());
-			System.out.println("该业务当日已分配的数量：" + distributionCount);
-			// 实际分配比例
-			Double samplingProportionNow = (distributionCount / (double) totalCount);
-			System.out
-					.println("该业务要求分配百分比：" + serviceDefinition.getService_definition_sampling_proportion() * 10 + "%");
-			System.out.println("该业务实际分配百分比：" + samplingProportionNow * 100 + "%");
-			// 判断是否超过了比例
-			if ((samplingProportionNow * 10) >= serviceDefinition.getService_definition_sampling_proportion()) {
-				// 停止分配
-				continue;
-			} else {
-				// 算出差多少个，然后继续分配
-				double dev = ((serviceDefinition.getService_definition_sampling_proportion() * totalCount) / 10.0)
-						- distributionCount;
-				System.out.println("该业务当日实际相差的数量：" + dev);
-				int devFinally = (int) Math.ceil(dev);
-				System.out.println("该业务当日实际还需要分配实例数：" + devFinally);
-				//
-				distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(devFinally,
-						serviceDefinition.getJwcpxt_service_definition_id(), TimeUtil.getStringDay());
-			}
+	// @Override
+	// public void
+	// distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(int
+	// num,
+	// String serviceDefinitionID, String date) {
+	// jwcpxt_service_definition serviceDefinition =
+	// get_serviceDefinitionDO_byServiceDefinitionID(
+	// serviceDefinitionID);
+	// // 获取随机到的业务实例
+	// List<jwcpxt_service_instance> serviceInstanceSampleList =
+	// list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(
+	// num, serviceDefinitionID, date);
+	// // 如果没有可以分配的了，就溜
+	// if (serviceInstanceSampleList.size() == 0) {
+	// return;
+	// }
+	// // 获取测评人员
+	// jwcpxt_user sreenUser = new jwcpxt_user();
+	// sreenUser.setUser_Jurisdiction_evaluate("have");
+	// sreenUser.setUser_Jurisdiction_review("");
+	// sreenUser.setUser_Jurisdiction_statistics("");
+	// List<jwcpxt_user> userList =
+	// userService.list_user_byJurisdiction(sreenUser);
+	// System.out.println("测评人员数：" + userList.size());
+	// if (userList.size() == 0) {
+	// return;
+	// }
+	// // 获取当天总共有多少个实例数
+	// int serviceInstanceNumToday =
+	// get_serviceInstanceTotalCount_byTodayAndServiceDefinitionID(serviceDefinitionID);
+	//
+	// double serviceInstanceActualNumToday =
+	// serviceDefinition.getService_definition_sampling_proportion() / 10.0
+	// * serviceInstanceNumToday;
+	// // 平均每个人最多要有多少个实例
+	// int userDistributionBigNum = (int)
+	// Math.ceil(serviceInstanceActualNumToday / userList.size());
+	// System.out.println("平均每个人最多要有多少个实例：" + userDistributionBigNum);
+	// // 按照最高的分配
+	// for (jwcpxt_user user : userList) {
+	// int userDistributionNum =
+	// userService.get_userDistributionNum_byToday(user.getJwcpxt_user_id());
+	// // 如果分配完了就溜
+	// if (userDistributionNum >= userDistributionBigNum) {
+	// continue;
+	// }
+	// // 如果没满
+	// // 差几个就分配几个
+	// int dev = userDistributionBigNum - userDistributionNum;
+	// System.out.println("已分配：" + userDistributionNum);
+	// System.out.println("继续分配：" + dev);
+	// for (; (serviceInstanceSampleList.size() > 0 && dev != 0);) {
+	// distribution_judge(serviceInstanceSampleList.get(0).getJwcpxt_service_instance_id(),
+	// user.getJwcpxt_user_id());
+	// serviceInstanceSampleList.remove(0);
+	// dev--;
+	// }
+	//
+	// }
+	//
+	// }
 
-		}
+	// @Override
+	// public List<jwcpxt_service_instance>
+	// list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(
+	// int num, String serviceDefinitionID, String date) {
+	// return
+	// serviceDao.list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(num,
+	// serviceDefinitionID, date);
+	// }
 
-	}
-
-	@Override
-	public void distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(int num,
-			String serviceDefinitionID, String date) {
-		jwcpxt_service_definition serviceDefinition = get_serviceDefinitionDO_byServiceDefinitionID(
-				serviceDefinitionID);
-		// 获取随机到的业务实例
-		List<jwcpxt_service_instance> serviceInstanceSampleList = list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(
-				num, serviceDefinitionID, date);
-		// 如果没有可以分配的了，就溜
-		if (serviceInstanceSampleList.size() == 0) {
-			return;
-		}
-		// 获取测评人员
-		jwcpxt_user sreenUser = new jwcpxt_user();
-		sreenUser.setUser_Jurisdiction_evaluate("have");
-		sreenUser.setUser_Jurisdiction_review("");
-		sreenUser.setUser_Jurisdiction_statistics("");
-		List<jwcpxt_user> userList = userService.list_user_byJurisdiction(sreenUser);
-		System.out.println("测评人员数：" + userList.size());
-		if (userList.size() == 0) {
-			return;
-		}
-		// 获取当天总共有多少个实例数
-		int serviceInstanceNumToday = get_serviceInstanceTotalCount_byTodayAndServiceDefinitionID(serviceDefinitionID);
-
-		double serviceInstanceActualNumToday = serviceDefinition.getService_definition_sampling_proportion() / 10.0
-				* serviceInstanceNumToday;
-		// 平均每个人最多要有多少个实例
-		int userDistributionBigNum = (int) Math.ceil(serviceInstanceActualNumToday / userList.size());
-		System.out.println("平均每个人最多要有多少个实例：" + userDistributionBigNum);
-		// 按照最高的分配
-		for (jwcpxt_user user : userList) {
-			int userDistributionNum = userService.get_userDistributionNum_byToday(user.getJwcpxt_user_id());
-			// 如果分配完了就溜
-			if (userDistributionNum >= userDistributionBigNum) {
-				continue;
-			}
-			// 如果没满
-			// 差几个就分配几个
-			int dev = userDistributionBigNum - userDistributionNum;
-			System.out.println("已分配：" + userDistributionNum);
-			System.out.println("继续分配：" + dev);
-			for (; (serviceInstanceSampleList.size() > 0 && dev != 0);) {
-				distribution_judge(serviceInstanceSampleList.get(0).getJwcpxt_service_instance_id(),
-						user.getJwcpxt_user_id());
-				serviceInstanceSampleList.remove(0);
-				dev--;
-			}
-
-		}
-
-	}
-
-	@Override
-	public List<jwcpxt_service_instance> list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(
-			int num, String serviceDefinitionID, String date) {
-		return serviceDao.list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(num,
-				serviceDefinitionID, date);
-	}
-
-	@Override
-	public int get_serviceInstanceDistributionCount_byTodayAndServiceDefinitionID(String serviceDefinitionID) {
-		return serviceDao.get_serviceInstanceDistributionCount_byDateAndServiceDefinitionID(TimeUtil.getStringDay(),
-				serviceDefinitionID);
-	}
+	// @Override
+	// public int
+	// get_serviceInstanceDistributionCount_byTodayAndServiceDefinitionID(String
+	// serviceDefinitionID) {
+	// return
+	// serviceDao.get_serviceInstanceDistributionCount_byDateAndServiceDefinitionID(TimeUtil.getStringDay(),
+	// serviceDefinitionID);
+	// }
 
 	@Override
 	public int get_serviceInstanceTotalCount_byTodayAndServiceDefinitionID(String serviceDefinitionID) {
@@ -265,9 +289,8 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 		// 修改描述
 		serviceDefinitionOld.setService_definition_describe(serviceDefinitionNew.getService_definition_describe());
+
 		// 修改比例
-		serviceDefinitionOld.setService_definition_sampling_proportion(
-				serviceDefinitionNew.getService_definition_sampling_proportion());
 		//
 		serviceDefinitionOld.setService_definition_gmt_modified(TimeUtil.getStringSecond());
 		if (serviceDao.update_serviceDefinition(serviceDefinitionOld)) {
@@ -283,13 +306,18 @@ public class ServiceServiceImpl implements ServiceService {
 		if (serviceGrabOld == null) {
 			return false;
 		}
-		serviceGrabOld.setService_grab_Interface(serviceGrabNew.getService_grab_Interface());
-		serviceGrabOld.setService_grab_table(serviceGrabNew.getService_grab_table());
-		serviceGrabOld.setService_grab_field_nid(serviceGrabNew.getService_grab_field_nid());
-		serviceGrabOld.setService_grab_field_client_name(serviceGrabNew.getService_grab_field_client_name());
-		serviceGrabOld.setService_grab_field_client_sex(serviceGrabNew.getService_grab_field_client_sex());
-		serviceGrabOld.setService_grab_field_client_phone(serviceGrabNew.getService_grab_field_client_phone());
-		serviceGrabOld.setService_grab_field_date(serviceGrabNew.getService_grab_field_date());
+		serviceGrabOld.setService_grab_single_table(serviceGrabNew.getService_grab_single_table());
+		serviceGrabOld.setService_grab_project_name(serviceGrabNew.getService_grab_project_name());
+		serviceGrabOld.setService_grab_interface_one(serviceGrabNew.getService_grab_interface_one());
+		serviceGrabOld.setService_grab_interface_two(serviceGrabNew.getService_grab_interface_two());
+		serviceGrabOld.setService_grab_field_name(serviceGrabNew.getService_grab_field_name());
+		serviceGrabOld.setService_grab_name_field(serviceGrabNew.getService_grab_name_field());
+		serviceGrabOld.setService_grab_sex_field(serviceGrabNew.getService_grab_sex_field());
+		serviceGrabOld.setService_grab_phone_field(serviceGrabNew.getService_grab_phone_field());
+		serviceGrabOld.setService_grab_handle_time_field(serviceGrabNew.getService_grab_handle_time_field());
+		serviceGrabOld.setService_grab_connect_one_field(serviceGrabNew.getService_grab_connect_two_field());
+		serviceGrabOld.setService_grab_connect_two_field(serviceGrabNew.getService_grab_connect_two_field());
+
 		//
 		serviceGrabOld.setService_grab_gmt_modified(TimeUtil.getStringSecond());
 		if (serviceDao.update_serviceGrab(serviceGrabOld)) {
@@ -415,6 +443,9 @@ public class ServiceServiceImpl implements ServiceService {
 
 	@Override
 	public List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID) {
+		/*
+		 * 抓取业务
+		 */
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -423,6 +454,7 @@ public class ServiceServiceImpl implements ServiceService {
 	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
 		return serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(serviceDefinitionID);
 	}
+
 	/*
 	 * 
 	 */

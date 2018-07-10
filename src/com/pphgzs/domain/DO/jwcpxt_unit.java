@@ -3,9 +3,9 @@ package com.pphgzs.domain.DO;
 public class jwcpxt_unit {
 	private String jwcpxt_unit_id;
 	private String unit_name;
-	private String unit_father;
-	private String unit_num;
-	private int unit_grade;
+	private String unit_father = "none";
+	private String unit_num = "none";// 机构代码，只有三级机构需要
+	private int unit_grade;// 等级，方便查询
 	private String unit_account;
 	private String unit_password;
 	private String unit_phone;

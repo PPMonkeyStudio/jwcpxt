@@ -18,6 +18,10 @@ public class jwcpxt_service_definition {
 		return service_definition_describe;
 	}
 
+	public void setService_definition_describe(String service_definition_describe) {
+		this.service_definition_describe = service_definition_describe;
+	}
+
 	public String getService_definition_gmt_create() {
 		return service_definition_gmt_create;
 	}
