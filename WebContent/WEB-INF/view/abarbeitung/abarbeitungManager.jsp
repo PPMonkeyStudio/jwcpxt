@@ -18,7 +18,8 @@ a:hover {
 .pageOperation:hover {
 	cursor: pointer;
 }
-.hideALl{
+
+.hideALl {
 	display: none;
 }
 </style>
