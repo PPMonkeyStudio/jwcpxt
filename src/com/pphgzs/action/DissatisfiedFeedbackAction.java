@@ -30,14 +30,14 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	 * @throws IOException
 	 * 
 	 */
-	public void update_feedbackRectificationState_byRectificationId() throws IOException {
+	/*public void update_feedbackRectificationState_byRectificationId() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
 		if (dissatisfiedFeedbackService.update_feedbackRectificationState_byRectificationId(feedbackRectification)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");
 		}
-	}
+	}*/
 
 	/**
 	 * 根据反馈整改id获取反馈整改表

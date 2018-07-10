@@ -28,7 +28,7 @@ public interface DissatisfiedFeedbackService {
 	 * @param feedbackRectification
 	 * @return
 	 */
-	public boolean update_feedbackRectificationState_byRectificationId(
-			jwcpxt_feedback_rectification feedbackRectification);
+	/*public boolean update_feedbackRectificationState_byRectificationId(
+			jwcpxt_feedback_rectification feedbackRectification);*/
 
 }

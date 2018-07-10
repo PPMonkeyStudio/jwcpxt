@@ -57,7 +57,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	/**
 	 * 根据反馈对象更改反馈状态
 	 */
-	@Override
+	/*@Override
 	public boolean update_feedbackRectificationState_byRectificationId(
 			jwcpxt_feedback_rectification feedbackRectification) {
 		List<jwcpxt_dissatisfied_feedback> listDissatisfiedFeekback = new ArrayList<>();
@@ -98,7 +98,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		}
 		//
 		return false;
-	}
+	}*/
 
 	/**
 	 * 
