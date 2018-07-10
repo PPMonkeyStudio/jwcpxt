@@ -71,6 +71,12 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 
 	}
 
+	public void update_unitPassword() throws IOException {
+		unitService.update_unitPassword(unit);
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write("1");
+	}
+
 	/**
 	 * 获取所有的单位列表
 	 * 

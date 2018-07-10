@@ -19,4 +19,6 @@ public interface UnitService {
 
 	public boolean save_unit(jwcpxt_unit unit);
 
+	public boolean update_unitPassword(jwcpxt_unit unit);
+
 }

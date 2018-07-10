@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.UserDao;
-import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.UserDTO;
 import com.pphgzs.domain.VO.UserVO;
@@ -121,10 +120,6 @@ public class UserServiceImpl implements UserService {
 		jwcpxt_user user = get_user_byUserID(userID);
 		userDTO.setUser(user);
 		//
-		if (user.getUser_unit() != null) {
-			jwcpxt_unit unit = unitService.get_unit_byUnitID(user.getUser_unit());
-			userDTO.setUnit(unit);
-		}
 		//
 		return userDTO;
 	}

@@ -18,4 +18,6 @@ public interface UnitDao {
 
 	public boolean update_unit(jwcpxt_unit unit);
 
+	jwcpxt_unit get_unit_byNameOrAccount(String unit_name, String account);
+
 }

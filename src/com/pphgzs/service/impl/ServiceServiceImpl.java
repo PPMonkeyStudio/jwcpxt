@@ -289,9 +289,8 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 		// 修改描述
 		serviceDefinitionOld.setService_definition_describe(serviceDefinitionNew.getService_definition_describe());
+
 		// 修改比例
-		serviceDefinitionOld.setService_definition_sampling_proportion(
-				serviceDefinitionNew.getService_definition_sampling_proportion());
 		//
 		serviceDefinitionOld.setService_definition_gmt_modified(TimeUtil.getStringSecond());
 		if (serviceDao.update_serviceDefinition(serviceDefinitionOld)) {
@@ -307,13 +306,18 @@ public class ServiceServiceImpl implements ServiceService {
 		if (serviceGrabOld == null) {
 			return false;
 		}
-		serviceGrabOld.setService_grab_Interface(serviceGrabNew.getService_grab_Interface());
-		serviceGrabOld.setService_grab_table(serviceGrabNew.getService_grab_table());
-		serviceGrabOld.setService_grab_field_nid(serviceGrabNew.getService_grab_field_nid());
-		serviceGrabOld.setService_grab_field_client_name(serviceGrabNew.getService_grab_field_client_name());
-		serviceGrabOld.setService_grab_field_client_sex(serviceGrabNew.getService_grab_field_client_sex());
-		serviceGrabOld.setService_grab_field_client_phone(serviceGrabNew.getService_grab_field_client_phone());
-		serviceGrabOld.setService_grab_field_date(serviceGrabNew.getService_grab_field_date());
+		serviceGrabOld.setService_grab_single_table(serviceGrabNew.getService_grab_single_table());
+		serviceGrabOld.setService_grab_project_name(serviceGrabNew.getService_grab_project_name());
+		serviceGrabOld.setService_grab_interface_one(serviceGrabNew.getService_grab_interface_one());
+		serviceGrabOld.setService_grab_interface_two(serviceGrabNew.getService_grab_interface_two());
+		serviceGrabOld.setService_grab_field_name(serviceGrabNew.getService_grab_field_name());
+		serviceGrabOld.setService_grab_name_field(serviceGrabNew.getService_grab_name_field());
+		serviceGrabOld.setService_grab_sex_field(serviceGrabNew.getService_grab_sex_field());
+		serviceGrabOld.setService_grab_phone_field(serviceGrabNew.getService_grab_phone_field());
+		serviceGrabOld.setService_grab_handle_time_field(serviceGrabNew.getService_grab_handle_time_field());
+		serviceGrabOld.setService_grab_connect_one_field(serviceGrabNew.getService_grab_connect_two_field());
+		serviceGrabOld.setService_grab_connect_two_field(serviceGrabNew.getService_grab_connect_two_field());
+
 		//
 		serviceGrabOld.setService_grab_gmt_modified(TimeUtil.getStringSecond());
 		if (serviceDao.update_serviceGrab(serviceGrabOld)) {
