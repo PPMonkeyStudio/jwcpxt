@@ -56,6 +56,19 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	/**
+	 * 获取关联表
+	 */
+	@Override
+	public jwcpxt_unit_service get_untServic_byUnitServicId(jwcpxt_unit_service unitServic) {
+		jwcpxt_unit_service unitServi = new jwcpxt_unit_service();
+		if (unitServic != null && unitServic.getJwcpxt_unit_service_id() != null
+				&& unitServic.getJwcpxt_unit_service_id().trim().length() > 0) {
+			unitServi = serviceDao.get_unitService_byUnitServiceId(unitServic.getJwcpxt_unit_service_id().trim());
+		}
+		return unitServi;
+	}
+
+	/**
 	 * 更改评测数量
 	 */
 	@Override
