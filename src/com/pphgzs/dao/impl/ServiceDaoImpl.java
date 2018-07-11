@@ -63,7 +63,7 @@ public class ServiceDaoImpl implements ServiceDao {
 	public List<ServiceConnectDTO> list_serviceDefinitionDTO_connectService(String unitId) {
 		Session session = getSession();
 		String hql = "select new com.pphgzs.domain.DTO.ServiceConnectDTO(serviceDefinition,unitService) from jwcpxt_service_definition serviceDefinition,jwcpxt_unit_service unitService where "
-				+ "serviceDefinition.jwcpxt_service_definition_id = unitService.service_definition_id and unitService.unit_id == :unitID order by serviceDefinition.serviceDefinition ";
+				+ "serviceDefinition.jwcpxt_service_definition_id = unitService.service_definition_id and unitService.unit_id = :unitID order by serviceDefinition.service_definition_gmt_create ";
 		Query query = session.createQuery(hql);
 		query.setParameter("unitId", unitId);
 		//
@@ -79,7 +79,7 @@ public class ServiceDaoImpl implements ServiceDao {
 	public List<jwcpxt_service_definition> list_serviceDefinition_notConnectService(String unitId) {
 		Session session = getSession();
 		String hql = "select serviceDefinition from jwcpxt_service_definition serviceDefinition,jwcpxt_unit_service unitService where "
-				+ "serviceDefinition.jwcpxt_service_definition_id = unitService.service_definition_id and unitService.unit_id != :unitID order by serviceDefinition.serviceDefinition ";
+				+ "serviceDefinition.jwcpxt_service_definition_id = unitService.service_definition_id and unitService.unit_id != :unitID order by serviceDefinition.service_definition_gmt_create ";
 		Query query = session.createQuery(hql);
 		query.setParameter("unitId", unitId);
 		//
