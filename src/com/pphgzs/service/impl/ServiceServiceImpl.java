@@ -129,6 +129,9 @@ public class ServiceServiceImpl implements ServiceService {
 		if (unit != null && unit.getJwcpxt_unit_id() != null && unit.getJwcpxt_unit_id().trim().length() > 0) {
 			unit = unitService.get_unitDO_byID(unit.getJwcpxt_unit_id().trim());
 		}
+		if (unit == null) {
+			return null;
+		}
 		List<jwcpxt_service_definition> listServiceDefinition = new ArrayList<>();
 		listServiceDefinition = serviceDao.list_serviceDefinition_notConnectService(unit.getJwcpxt_unit_id().trim());
 		return listServiceDefinition;
