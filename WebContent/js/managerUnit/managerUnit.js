@@ -272,9 +272,9 @@ function addService(event){
 		boxWidth : '500px',
 		useBootstrap : false,
 		content : '<div><form id="serviceForm">'
-			+ '<label>选择业务：</label><select id="service_" name="unitService.service_definition_id" class="form-control">'
+			+ '<label>选择业务：</label><select id="service_" name="unitServic.service_definition_id" class="form-control">'
 			+'</select>'
-			+ '<label>测评数量：</label><input name="unitService.evaluation_count" class="form-control">'
+			+ '<label>测评数量：</label><input name="unitServic.evaluation_count" class="form-control">'
 			+ '</form></div>',
 		buttons:{
 			
