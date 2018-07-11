@@ -49,14 +49,13 @@ th {
 									<input @keyup="queryQuestion" placeholder="请输入搜索内容"
 										name="questionVO.screenSearch" class="form-control"
 										style="float: right; width: 250px;">
-									<div v-if="!ready" id="loadingLayer"
+									<!-- <div v-if="!ready" id="loadingLayer"
 										style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-									</div>
-									<table v-if="ready" class="table table-striped"
-										style="text-align: center;">
+									</div> -->
+									<table class="table" style="text-align: center; width: 100%;">
 										<thead>
-											<tr>
+											<tr style="border-bottom: 2px solid #ddd">
 												<th style="width: 60px;">序号</th>
 												<th>问题描述</th>
 												<th style="width: 120px;"><select class="form-control"
@@ -69,8 +68,9 @@ th {
 											</tr>
 										</thead>
 										<tbody v-cloak>
-											<tr v-for="(question,index) in questionVO.questionList">
-												<td>{{question.question_sort}}</td>
+											<template v-for="(question,index) in questionVO.questionList">
+											<tr style="border-top: 1px solid #ddd;">
+												<th>{{question.question_sort}}</th>
 												<td>{{question.question_describe}}</td>
 												<td><span v-if="question.question_type==1"
 													class="label label-primary">选择题</span> <span
@@ -83,68 +83,25 @@ th {
 													<i class="fa fa-arrow-down" @click="moveQuestion(index,2)"></i>&nbsp;
 													<i class="ti-trash" @click="deleteQuestion(index)"></i></td>
 											</tr>
+											</template>
 										</tbody>
 									</table>
 									<!-- 分页 -->
-									<div id="bottomPage" style="padding: 20px;">
+									<div id="bottomPage" style="padding: 20px;" v-cloak>
 										<span>当前页数:<span id="currPage">{{page.currPage}}</span></span>
 										<span>共:<span id="totalPage">{{page.totalPage}}</span>页
 										</span> <span class="pageOperation" @click="firstPage">首页</span> <span
 											class="pageOperation" @click="prePage">上一页</span> <span
 											class="pageOperation" @click="nextPage">下一页</span> <span
 											class="pageOperation" @click="lastPage">末页</span> <span><input
-											type="text"
+											type="text" id="toPageInput"
 											style="text-align: center; width: 60px; height: 30px;"
 											onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
-											id="toPageInput" onblur="this.v();">
+											onblur="this.v();">
 											<button class="btn btn-default" @click="toPage"
 												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
 										</span>
 									</div>
-
-									<table style="width:100%">
-										<thead>
-											<tr>
-												<th>1</th>
-												<th>2</th>
-												<th>3</th>
-												<th>4</th>
-												<th>5</th>
-											</tr>
-										</thead>
-										<tbody>
-										
-											<tr>
-												<td><a data-toggle="collapse" href="#collapseOne2">11</a></td>
-												<td>序号</td>
-												<td>选项描述</td>
-												<td>分数</td>
-												<td>选项操作</td>
-											</tr>
-											<tr>
-												<td colspan="5">
-													<div id="collapseOne2" class="panel-collapse collapse">
-														<div class="panel-body">点击我进行展开，再次点击我进行折叠。第 1 部分</div>
-													</div>
-												</td>
-											</tr>
-											
-											<tr>
-												<td><a data-toggle="collapse" href="#collapseOne3">22</a></td>
-												<td>序号</td>
-												<td>选项描述</td>
-												<td>分数</td>
-												<td>选项操作</td>
-											</tr>
-											<tr>
-												<td colspan="5">
-													<div id="collapseOne3" class="panel-collapse collapse">
-														<div class="panel-body">点击我进行展开，再次点击我进行折叠。第 2 部分</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
 								</div>
 							</div>
 						</div>
@@ -192,8 +149,8 @@ th {
 					<!-- /.modal -->
 
 					<!-- checkQuestionModal查看问题的模态框 -->
-					<div class="modal fade" id="checkQuestionModal" tabindex="-1"
-						role="dialog" data-backdrop="false">
+					<div class="modal fade" id="checkQuestionModal"
+						style="overflow-y: hidden;" role="dialog" data-backdrop="false">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -210,7 +167,7 @@ th {
 											placeholder="Problem description。。"
 											v-model="checkQuestionModalData.question.question_describe"></textarea>
 									</div>
-									<div class="form-group">
+									<%-- <div class="form-group">
 										<label>问题类型</label> <select class="form-control"
 											disabled="disabled"
 											v-model="checkQuestionModalData.question.question_type">
@@ -218,25 +175,16 @@ th {
 											<option value="1">选择题</option>
 											<option value="2">主观题</option>
 										</select>
-									</div>
-									<template v-if="false">
-									<div class="form-group" v-for="index in 0">
-										<td><label for="questionType">答案</label></td>
-										<td><i class="ti-pencil-alt"></i> <i
-											class="fa fa-arrow-up" aria-hidden="true"></i> <i
-											class="fa fa-arrow-down" aria-hidden="true"></i> <i
-											class="ti-trash"></i></td>
-									</div>
-									</template>
+									</div> --%>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">取消</button>
 									<button type="button" class="btn btn-info"
 										v-if="checkQuestionModalData.question.question_type==1"
 										@click="modifyOpintion">修改选项</button>
 									<button type="button" class="btn btn-primary"
 										@click="modifyDescribe">修改描述</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">取消</button>
 								</div>
 							</div>
 							<!-- /.modal-content -->
