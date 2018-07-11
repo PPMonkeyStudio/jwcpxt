@@ -78,21 +78,17 @@ public class UnitServiceImpl implements UnitService {
 
 	@Override
 	public boolean update_unitPassword(jwcpxt_unit newUnit) {
-
 		if (unitDao.get_unit_byUnitID(newUnit.getJwcpxt_unit_id()) == null) {
-
 			return false;
-
 		}
 		jwcpxt_unit oldUnit = unitDao.get_unit_byUnitID(newUnit.getJwcpxt_unit_id());
-
 		if (newUnit.getUnit_password() == null) {
 			return false;
 		}
 		oldUnit.setUnit_password(newUnit.getUnit_password());
 
+		unitDao.update_unit(oldUnit);
 		return true;
-
 	}
 
 	@Override
