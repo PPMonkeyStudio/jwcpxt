@@ -2,6 +2,47 @@
  * 
  */
 
+function managerSonUnit(event){
+	
+}
+
+function resetPassword(event){
+	
+		$.confirm({
+		title : '重置密码',
+		type : 'red',
+		icon : 'fa fa-warning',
+		content : '确定要重置密码吗？',
+		autoClose : 'cancelAction|8000',
+		buttons : {
+			deleteUser : {
+				text : '确定',
+				btnClass : 'btn-blue',
+				action : function() {
+					$.ajax({
+						url:'/jwcpxt/Unit/reset_unitPassword?unit.jwcpxt_unit_id='+event.id,
+						type:'GET',
+						success:function(data){
+							if(data=="1"){
+								toastr.success("重置密码成功！");
+							}else{
+								toastr.error("重置密码失败！");
+							}
+						}
+					})
+				}
+			},
+			cancelAction : {
+				text : '关闭',
+				btnClass : 'btn-red',
+				action : function() {
+
+				}
+			}
+		}
+	})
+}
+
 function updateUnit(event) {
 	$
 			.confirm({
@@ -9,8 +50,12 @@ function updateUnit(event) {
 				type : 'blue',
 				boxWidth : '500px',
 				useBootstrap : false,
-				content : '<div><label>单位整改员：</label><select name="" id="add_user_name" title="请选择一个整改员" class="selectpicker form-control" data-live-search="true" ></select>'
-						+ '<br><br><br><label>单位名称：</label><input id="add_unit_name" name="" class="form-control"></div>',
+				content : '<div><form id="updateUnitForm">'
+					+ '<label>单位名称：</label><input id="update_unit_name" name="unit.unit_name" class="form-control">'
+					+ '<label>机构代码：</label><input id="update_unit_num" name="unit.unit_num" class="form-control">'
+					+ '<label>单位账号：</label><input id="update_unit_account" name="unit.unit_account" class="form-control">'
+					+ '<label>联系电话：</label><input id="update_unit_phone" name="unit.unit_phone" class="form-control">'
+					+ '</form></div>',
 				buttons : {
 					cancel : {
 						text : '关闭',
@@ -23,20 +68,15 @@ function updateUnit(event) {
 						text : '修改',
 						btnClass : 'btn-blue',
 						action : function() {
-							var unit_reorganizer = $('#add_user_name')
-									.selectpicker('val');
-							var unit_name = $('#add_unit_name').val();
-							console.log(unit_name)
-							if (add_unit_name != '') {
+							var formData= new FormData(document.getElementById("updateUnitForm"));
+							formData.append('unit.jwcpxt_unit_id',event.id)
 								$
 										.ajax({
 											url : '/jwcpxt/Unit/update_unit',
 											type : 'POST',
-											data : {
-												'unit.jwcpxt_unit_id' : event.id,
-												'unit.unit_reorganizer' : unit_reorganizer,
-												'unit.unit_name' : unit_name
-											},
+											data : formData,
+											processData : false,
+											contentType : false,
 											success : function(data) {
 												if (data == 1) {
 													toastr.success("修改成功！");
@@ -46,15 +86,21 @@ function updateUnit(event) {
 												}
 											}
 										})
-							} else {
-								toastr.error("有空项无法提交");
-								return false;
-							}
 						}
 					}
 				},
 				onContentReady : function() {
-
+					$.ajax({
+						url:'/jwcpxt/Unit/get_unitDO_byID?unit.jwcpxt_unit_id='+event.id,
+						type:'get',
+						success:function(data){
+							var unitServer = JSON.parse(data);
+							$('#update_unit_name').val(unitServer.unit_name);
+							$('#update_unit_num').val(unitServer.unit_num);
+							$('#update_unit_account').val(unitServer.unit_account);
+							$('#update_unit_phone').val(unitServer.unit_phone);
+						}
+					})
 				}
 			})
 }
@@ -85,8 +131,6 @@ function addUnit() {
 						btnClass : 'btn-blue',
 						action : function() {
 							var formData = new FormData(document.getElementById("unitForm"));
-							formData.append("unit.unit_password",);
-							formData.append("unit.unit_password",);
 							$.ajax({
 								url : '/jwcpxt/Unit/save_unit',
 								type : 'POST',

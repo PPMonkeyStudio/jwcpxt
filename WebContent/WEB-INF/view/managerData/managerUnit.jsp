@@ -51,9 +51,18 @@ a:hover {
 											</tr>
 										</thead>
 										<tbody>
+											<template v-for="unit in unitVO.unitList">
 											<tr>
-												
+												<td>{{ unit.unit_name }}</td>
+												<td>{{ unit.unit_num }}</td>
+												<td>{{ unit.unit_account }}</td>
+												<td>{{ unit.unit_phone }}</td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="updateUnit(this)">修改</a>|<a
+													:id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="managerSonUnit(this)">管理子单位</a></td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="">管理业务</a></td>
 											</tr>
+											</template>
 										</tbody>
 									</table>
 								</div>
