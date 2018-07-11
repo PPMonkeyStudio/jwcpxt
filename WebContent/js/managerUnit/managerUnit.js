@@ -236,7 +236,7 @@ function managerService(event) {
 				useBootstrap : false,
 				content : '<button id="'
 						+ event.id
-						+ '" onclick="" class="btn btn-default"><i class="ti-plus"></i>增加业务</button><table id="showService" class="table table-striped" style="text-align: center;"><thead><tr>'
+						+ '" onclick="addService(this)" class="btn btn-default"><i class="ti-plus"></i>增加业务</button><table id="showService" class="table table-striped" style="text-align: center;"><thead><tr>'
 						+ '<td>业务名称</td>' + '<td>测评数量</td>' + '<td>关联时间</td>'
 						+ '<td>操作</td>' + '</tr></thead>'
 						+ '<tbody><template><tr>' + '<td></td>' + '<td></td>'
@@ -263,4 +263,30 @@ function managerService(event) {
 					
 				}
 			})
+}
+
+function addService(event){
+	$.confirm({
+		title : '关联业务',
+		type : 'orange',
+		boxWidth : '500px',
+		useBootstrap : false,
+		content : '<div><form id="serviceForm">'
+			+ '<label>选择业务：</label><select id="service_" name="unitService.service_definition_id" class="form-control">'
+			+'</select>'
+			+ '<label>测评数量：</label><input name="unitService.evaluation_count" class="form-control">'
+			+ '</form></div>',
+		buttons:{
+			
+		},
+		onContentReady:function(){
+			$.ajax({
+				url:'/jwcpxt/Service/list_serviceDefinition_notConnectService?unit.list_serviceDefinition_notConnectService='+event.id,
+				type:'GET',
+				success:function(data){
+					
+				}
+			})
+		}
+	})
 }
