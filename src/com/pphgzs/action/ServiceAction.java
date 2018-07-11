@@ -329,7 +329,12 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		return unitServic;
 	}
 
-	public void setunitServic(jwcpxt_unit_service unitServic) {
+
+	public jwcpxt_unit_service getUnitServic() {
+		return unitServic;
+	}
+
+	public void setUnitServic(jwcpxt_unit_service unitServic) {
 		this.unitServic = unitServic;
 	}
 
