@@ -78,7 +78,7 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public List<jwcpxt_service_definition> list_serviceDefinition_notConnectService(String unitId) {
 		Session session = getSession();
-		String hql = "select serviceDefinition from jwcpxt_service_definition serviceDefinition,jwcpxt_unit_service unitService where "
+		String hql = "select serviceDefinition from jwcpxt_service_definition serviceDefinition where "
 				+ " serviceDefinition.jwcpxt_service_definition_id not in (select serVice.service_definition_id from jwcpxt_unit_service serVice where serVice.unit_id=:unitId) order by serviceDefinition.service_definition_gmt_create ";
 		Query query = session.createQuery(hql);
 		query.setParameter("unitID", unitId);
