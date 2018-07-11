@@ -614,7 +614,11 @@ $(function() {
 
 
 	//修改追问的描述
-	function modifyInquiriesDescribe(questionData, index, index1, modifyVm) {
+	function modifyInquiriesDescribe(modifyVm_OptionData, index, index1, modifyVm) {
+		//InquiriesObj包含
+		//追问对象 inquiriesQuestion
+		//追问的选项数组(如果是追问选择题) listInquiriesOption
+		let InquiriesObj = modifyVm_OptionData[index].listInquiriesOptionDTO[index1];
 		let modifyInquiriesDescribe = $.confirm({
 			smoothContent : false, //关闭动画
 			closeIcon : true, //关闭图标
@@ -629,7 +633,7 @@ $(function() {
 			<div id="modifyInquiriesDescribe">
 				<div class="form-group">
 					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe">${questionData[index].listInquiriesOptionDTO[index1].inquiriesQuestion.question_describe}</textarea>
+					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe">${InquiriesObj.inquiriesQuestion.question_describe}</textarea>
 				</div>
 			</div>
 			`,
@@ -637,9 +641,9 @@ $(function() {
 				addOption : {
 					text : '修改选项',
 					btnClass : 'btn-success',
-					isHidden : questionData.inquiriesQuestion.question_type == 3,
+					isHidden : InquiriesObj.inquiriesQuestion.question_type == 3,
 					action : function() {
-						modifyInquiriesOption(questionData, modifyVm);
+						modifyInquiriesOption(modifyVm_OptionData, index, index1, modifyVm);
 						return false;
 					}
 				},
@@ -653,7 +657,7 @@ $(function() {
 							return false;
 						}
 						$.post('/jwcpxt/Question/update_question', {
-							"question.jwcpxt_question_id" : questionData.inquiriesQuestion.jwcpxt_question_id,
+							"question.jwcpxt_question_id" : InquiriesObj.inquiriesQuestion.jwcpxt_question_id,
 							"question.question_describe" : describe
 						}, response => {
 							if (response == "1") {
@@ -678,8 +682,13 @@ $(function() {
 		});
 	}
 
-	//修改一个追问
-	function modifyInquiriesOption(questionData, modifyVm) {
+	//修改一个追问的选项
+	function modifyInquiriesOption(modifyVm_OptionData, _index, _index1, modifyVm) {
+		//InquiriesObj包含
+		//追问对象 inquiriesQuestion
+		//追问的选项数组(如果是追问选择题) listInquiriesOption
+		let InquiriesObj = modifyVm_OptionData[index].listInquiriesOptionDTO[index1];
+		let inquiriesObjOption = InquiriesObj.listInquiriesOption;
 		let modifyInquiriesVue;
 		let modifyInquiriesOption = $.confirm({
 			smoothContent : false, //关闭动画
@@ -722,7 +731,7 @@ $(function() {
 				modifyInquiriesVue = new Vue({
 					el : '#inquiriesOption',
 					data : {
-						optionData : questionData.listInquiriesOption
+						optionData : inquiriesObjOption
 					},
 					methods : {
 						//-----------------------------------------------------------------------------------------------------
@@ -745,7 +754,7 @@ $(function() {
 									//更新信息///////----将方法作为参数传递过去
 									vm.updateOptionInfo(() => {
 										modifyVm.optionData = myData.checkQuestionModalData.listOptionDTO;
-									//modifyInquiriesVue.optionData = modifyVm;
+										this.optionData = myData.optionData[index].listInquiriesOptionDTO[index1].listInquiriesOption;
 									});
 								} else if (response == "-1") {
 									if (type == 1) {
@@ -761,10 +770,11 @@ $(function() {
 							// url后台接口
 							// params删除的信息的id
 							// function数据更新，重新渲染页面
-							deleteInterface('/jwcpxt/Question/delete_question', {
-								"question.jwcpxt_question_id" : questionData.listInquiriesOption[index].jwcpxt_option_id
+							deleteInterface('/jwcpxt/Question/delete_option', {
+								"option.jwcpxt_option_id" : inquiriesObjOption[index].jwcpxt_option_id
 							}, () => {
-								//this.optionData = myData.checkQuestionModalData.listOptionDTO;
+								modifyVm.optionData = myData.checkQuestionModalData.listOptionDTO;
+								this.optionData = myData.optionData[index].listInquiriesOptionDTO[index1].listInquiriesOption;
 							});
 						}, //选项的事件end
 					//---------------------------------------------------------------------------------------------------------
