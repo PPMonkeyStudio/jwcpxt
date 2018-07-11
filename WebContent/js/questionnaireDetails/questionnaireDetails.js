@@ -237,11 +237,11 @@ $(function() {
 								<td>{{optionDTO.option.option_describe}}</td>
 								<td>{{optionDTO.option.option_grade}}</td>
 								<td>
-									<i class="ti-pencil-alt" @click="modifyOption(index)"></i>&nbsp; 
-									<i class="fa fa-arrow-up" @click="moveOption(index,1)"></i>&nbsp;
-									<i class="fa fa-arrow-down" @click="moveOption(index,2)"></i>&nbsp;
-									<i class="ti-trash" @click="deleteOption(index)"></i>&nbsp;
-									<i class="fa fa-plus-square-o" @click="addInquiries(index)"></i>&nbsp;
+									<i title="修改选项" class="ti-pencil-alt" @click="modifyOption(index)"></i>&nbsp; 
+									<i title="上移" class="fa fa-arrow-up" @click="moveOption(index,1)"></i>&nbsp;
+									<i title="下移" class="fa fa-arrow-down" @click="moveOption(index,2)"></i>&nbsp;
+									<i title="删除选项" class="ti-trash" @click="deleteOption(index)"></i>&nbsp;
+									<i title="添加追问" class="fa fa-plus-square-o" @click="addInquiries(index)"></i>&nbsp;
 								</td>
 							</tr>
 							<tr>
@@ -255,7 +255,7 @@ $(function() {
 														<th style="width:40px;">序号</th>
 														<th>问题描述</th>
 														<th style="width:120px;">问题类别</th>
-														<th style="width:160px;">选项操作</th>
+														<th style="width:160px;">追问操作</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -298,6 +298,9 @@ $(function() {
 							$event.target.className = i_class == "fa fa-caret-right" ? "fa fa-caret-down" : "fa fa-caret-right";
 						},
 						//-----------------------------------------------------------------------------------------------------
+						addInquiries (index) {
+							addInquiries(index, modifyVm);
+						},
 						//选项的事件start
 						modifyOption (index) {
 							modifyOptionDescribeOrGrade(this.optionData[index], modifyVm);
@@ -316,7 +319,7 @@ $(function() {
 									}
 									//更新信息///////----将方法作为参数传递过去
 									vm.updateOptionInfo(() => {
-										this.optionData = myData.checkQuestionModalData.listOptionDTO;
+										modifyVm.optionData = myData.checkQuestionModalData.listOptionDTO;
 									});
 								} else if (response == "-1") {
 									if (type == 1) {
@@ -338,17 +341,20 @@ $(function() {
 								this.optionData = myData.checkQuestionModalData.listOptionDTO;
 							});
 						}, //选项的事件end
+
+
+
 						//---------------------------------------------------------------------------------------------------------
 						//追问的事件start
+						//修改追问
 						modifyInquiries (index, index1) {
-							modifyOptionDescribeOrGrade(this.optionData[index], modifyVm);
-							return false;
+							modifyInquiriesDescribe(this.optionData,index,index1, modifyVm);
 						},
 						moveInquiries (index, index1, type) {
-							/*let optionId = this.optionData[index].option.jwcpxt_option_id;
-							$.post('/jwcpxt/Question/move_option', {
-								"option.jwcpxt_option_id" : optionId,
-								"moveOptionType" : type
+							let optionId = this.optionData[index].listInquiriesOptionDTO[index1].inquiriesQuestion.jwcpxt_question_id;
+							$.post('/jwcpxt/Question/move_question_sort', {
+								"question.jwcpxt_question_id" : optionId,
+								"moveQuestionType" : type
 							}, response => {
 								if (response == "1") {
 									if (type == 1) {
@@ -367,7 +373,7 @@ $(function() {
 										toastr.error("下移失败");
 									}
 								}
-							}, 'text');*/
+							}, 'text');
 						},
 						deleteInquiries (index, index1) {
 							deleteInterface('/jwcpxt/Question/delete_questionInquiries', {
@@ -534,6 +540,255 @@ $(function() {
 			},
 		});
 		return false;
+	}
+
+	//添加一个追问
+	function addInquiries(index, modifyVm) {
+		let addInquiriesConfirm = $.confirm({
+			smoothContent : false, //关闭动画
+			closeIcon : true, //关闭图标
+			closeIconClass : 'fa fa-close', //图标样式
+			type : 'dark', //弹出框类型
+			boxWidth : '30%', //设置宽度
+			useBootstrap : false, //设置是否使用bootstropt样式
+			title : '添加一个追问',
+			content : `
+				<form novalidate>
+					<div class="form-group">
+						<label>问题描述</label>
+						<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe"></textarea>
+					</div>
+					<div class="form-group">
+					<label>问题类型</label>
+					<select class="form-control" id="addInquiriesConfirm_type">
+						<option value="">请选择问题类型</option>
+						<option value="1">选择题</option>
+						<option value="2">主观题</option>
+					</select>
+					</div>
+				</form>
+				`,
+			buttons : {
+				confirm : {
+					text : '确认',
+					btnClass : 'btn-info',
+					keys : [ 'enter' ],
+					action : function() {
+						let describe = addOptionConfirm.$content.find('#addInquiriesConfirm_describe').val();
+						if (!describe) {
+							toastr.error("描述不能为空");
+							return false;
+						}
+						let type = addOptionConfirm.$content.find('#addInquiriesConfirm_type').val();
+						if (!describe) {
+							toastr.error("描述不能为空");
+							return false;
+						}
+						let params = {
+							"question.question_service_definition" : modifyVm.optionData[index].option.jwcpxt_option_id,
+							"question.question_describe" : describe,
+							"question.question_type" : type
+						};
+						$.post('/jwcpxt/Question/save_question', params, response => {
+							if (response == "1") {
+								toastr.success("添加成功");
+								//更新信息
+								vm.updateOptionInfo(() => {
+									modifyVm.optionData = myData.checkQuestionModalData.listOptionDTO;
+								});
+							} else if (response == "-1") {
+								toastr.error("添加失败");
+							}
+						}, 'text');
+					}
+				},
+				cancel : {
+					text : '取消',
+					btnClass : 'btn-blue',
+					keys : [ 'esc' ],
+					action : function() {}
+				}
+			},
+		});
+	}
+
+
+	//修改追问的描述
+	function modifyInquiriesDescribe(questionData, modifyVm) {
+		let modifyInquiriesDescribe = $.confirm({
+			smoothContent : false, //关闭动画
+			closeIcon : true, //关闭图标
+			closeIconClass : 'fa fa-close', //图标样式
+			type : 'dark', //弹出框类型
+			typeAnimated : true, //未知。。。。
+			boxWidth : '30%', //设置宽度
+			useBootstrap : false, //设置是否使用bootstropt样式
+			offsetTop : 10, //设置距离浏览器高度
+			title : '修改选项',
+			content : `
+			<div id="modifyInquiriesDescribe">
+				<div class="form-group">
+					<label>问题描述</label>
+					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe">${questionData.inquiriesQuestion.question_describe}</textarea>
+				</div>
+			</div>
+			`,
+			buttons : {
+				addOption : {
+					text : '修改选项',
+					btnClass : 'btn-success',
+					isHidden : questionData.inquiriesQuestion.question_type == 3,
+					action : function() {
+						modifyInquiriesOption(questionData, modifyVm);
+						return false;
+					}
+				},
+				modifyDescribe : {
+					text : '修改描述',
+					btnClass : 'btn-blue',
+					action : function() {
+						let describe = modifyInquiriesDescribe.$content.find('#addInquiriesConfirm_describe').val();
+						if (!describe) {
+							torstr.error('描述不能为空');
+							return false;
+						}
+						$.post('/jwcpxt/Question/update_question', {
+							"question.jwcpxt_question_id" : questionData.inquiriesQuestion.jwcpxt_question_id,
+							"question.question_describe" : describe
+						}, response => {
+							if (response == "1") {
+								toastr.success("修改成功");
+								//更新信息
+								vm.updateOptionInfo(() => {
+									modifyVm.optionData = myData.checkQuestionModalData.listOptionDTO;
+								});
+							} else if (response == "-1") {
+								toastr.error("修改失败");
+							}
+						}, 'text');
+					}
+				},
+				cancel : {
+					text : '取消',
+					btnClass : 'btn-default',
+					keys : [ 'esc' ],
+					action : function() {}
+				}
+			},
+		});
+	}
+
+	//修改一个追问
+	function modifyInquiriesOption(questionData, modifyVm) {
+		let modifyInquiriesVue;
+		let modifyInquiriesOption = $.confirm({
+			smoothContent : false, //关闭动画
+			closeIcon : true, //关闭图标
+			closeIconClass : 'fa fa-close', //图标样式
+			type : 'dark', //弹出框类型
+			typeAnimated : true, //未知。。。。
+			boxWidth : '50%', //设置宽度
+			useBootstrap : false, //设置是否使用bootstropt样式
+			offsetTop : 10, //设置距离浏览器高度
+			title : '修改选项',
+			content : `
+			<div id="inquiriesOption">
+				<table style="width:100%; text-align: center;">
+					<thead>
+						<tr style="border-bottom: 2px solid #ddd">
+							<th style="width:40px;">序号</th>
+							<th>选项描述</th>
+							<th style="width:160px;">选项操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<template v-for="(option,index) in optionData">
+							<tr style="border-top: 1px solid #ddd;">
+								<th>{{option.option_sort}}</th>
+								<td>{{option.option_describe}}</td>
+								<td>
+									<i title="修改选项" class="ti-pencil-alt" @click="modifyOption(index)"></i>&nbsp;
+									<i title="上移" class="fa fa-arrow-up" @click="moveOption(index,1)"></i>&nbsp;
+									<i title="下移" class="fa fa-arrow-down" @click="moveOption(index,2)"></i>&nbsp;
+									<i title="删除选项" class="ti-trash" @click="deleteOption(index)"></i>&nbsp;
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+			`,
+			onContentReady : function() {
+				modifyInquiriesVue = new Vue({
+					el : '#inquiriesOption',
+					data : {
+						optionData : questionData.listInquiriesOption
+					},
+					methods : {
+						//-----------------------------------------------------------------------------------------------------
+						//选项的事件start
+						modifyOption (index) {
+							//modifyOptionDescribeOrGrade(this.optionData[index], modifyVm);
+						},
+						moveOption (index, type) {
+							let optionId = this.optionData[index].jwcpxt_option_id;
+							$.post('/jwcpxt/Question/move_option', {
+								"option.jwcpxt_option_id" : optionId,
+								"moveOptionType" : type
+							}, response => {
+								if (response == "1") {
+									if (type == 1) {
+										toastr.success("上移成功");
+									} else if (type == 2) {
+										toastr.success("下移成功");
+									}
+									//更新信息///////----将方法作为参数传递过去
+									vm.updateOptionInfo(() => {
+										modifyVm.optionData = myData.checkQuestionModalData.listOptionDTO;
+									//modifyInquiriesVue.optionData = modifyVm;
+									});
+								} else if (response == "-1") {
+									if (type == 1) {
+										toastr.error("上移失败");
+									} else if (type == 2) {
+										toastr.error("下移失败");
+									}
+								}
+							}, 'text');
+						},
+						deleteOption (index) {
+							//使用删除的接口工具
+							// url后台接口
+							// params删除的信息的id
+							// function数据更新，重新渲染页面
+							deleteInterface('/jwcpxt/Question/delete_question', {
+								"question.jwcpxt_question_id" : questionData.listInquiriesOption[index].jwcpxt_option_id
+							}, () => {
+								//this.optionData = myData.checkQuestionModalData.listOptionDTO;
+							});
+						}, //选项的事件end
+					//---------------------------------------------------------------------------------------------------------
+					},
+				});
+			},
+			onDestroy : function() {},
+			buttons : {
+				addOption : {
+					text : '添加选项',
+					btnClass : 'btn-success',
+					action : function() {
+						addOption(modifyVm);
+						return false;
+					}
+				},
+				cancel : {
+					text : '确认',
+					btnClass : 'btn-blue',
+					keys : [ 'esc', 'enter' ],
+					action : function() {}
+				}
+			},
+		});
 	}
 
 	//删除接口工具
