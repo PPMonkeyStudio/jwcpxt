@@ -45,7 +45,7 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 		http_response.getWriter().write(gson.toJson(unitService.get_unitVO()));
 	}
 
-	public void add_unit() throws IOException {
+	public void save_unit() throws IOException {
 
 		if (unitService.save_unit(unit)) {
 			http_response.setContentType("text/html;charset=utf-8");
@@ -94,23 +94,6 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 		unitService.reset_unitPassword(unit);
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write("1");
-	}
-
-	/**
-	 * 获取所有的单位列表
-	 * 
-	 * @throws IOException
-	 */
-	public void list_unitDO_all() throws IOException {
-		List<jwcpxt_unit> unitList = unitService.list_unitDO_all();
-		//
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		//
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(unitList));
-
 	}
 
 	/**

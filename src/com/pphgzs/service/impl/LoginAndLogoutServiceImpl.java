@@ -1,6 +1,7 @@
 package com.pphgzs.service.impl;
 
 import com.pphgzs.dao.LoginAndLogoutDao;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.service.LoginAndLogoutService;
 
@@ -26,7 +27,12 @@ public class LoginAndLogoutServiceImpl implements LoginAndLogoutService {
 			/*
 			 * 查询管理员
 			 */
+			jwcpxt_unit unit = loginAndLogoutDao.getunitByAccount(account);
+			if (unit == null) {
 
+			} else {
+
+			}
 			return null;
 
 		}
