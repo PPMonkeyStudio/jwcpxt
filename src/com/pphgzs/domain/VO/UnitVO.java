@@ -2,33 +2,23 @@ package com.pphgzs.domain.VO;
 
 import java.util.List;
 
-import com.pphgzs.domain.DTO.UnitDTO;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 
 public class UnitVO {
 
-	private List<UnitDTO> unitDTOList;
-
-	private int totalRecords = 0;
+	private List<jwcpxt_unit> unitList;
 
 	@Override
 	public String toString() {
-		return "UnitVO 【\nunitDTOList=" + unitDTOList + ", \ntotalRecords=" + totalRecords + "\n】";
+		return "UnitVO 【\nunitList=" + unitList + "\n】";
 	}
 
-	public List<UnitDTO> getUnitDTOList() {
-		return unitDTOList;
+	public List<jwcpxt_unit> getUnitList() {
+		return unitList;
 	}
 
-	public void setUnitDTOList(List<UnitDTO> unitDTOList) {
-		this.unitDTOList = unitDTOList;
-	}
-
-	public int getTotalRecords() {
-		return totalRecords;
-	}
-
-	public void setTotalRecords(int totalRecords) {
-		this.totalRecords = totalRecords;
+	public void setUnitList(List<jwcpxt_unit> unitList) {
+		this.unitList = unitList;
 	}
 
 }
