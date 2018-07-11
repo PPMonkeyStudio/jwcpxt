@@ -126,7 +126,7 @@ function managerSonUnit(event) {
 						+ '<td>账号</td>'
 						+ '<td>联系号码</td>'
 						+ '<td>操作</td>'
-//						+ '<td>子单位</td>'
+						// + '<td>子单位</td>'
 						+ '<td>业务</td>'
 						+ '</tr></thead>'
 						+ '<tbody><template v-for="unit in unitList">'
@@ -136,7 +136,8 @@ function managerSonUnit(event) {
 						+ '<td>{{ unit.unit_phone }}</td>'
 						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="updateUnit(this)">修改</a>|'
 						+ '<a :id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>'
-//						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="managerSonUnit(this)">管理子单位</a></td>'
+						// + '<td><a :id="unit.jwcpxt_unit_id"
+						// onclick="managerSonUnit(this)">管理子单位</a></td>'
 						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="managerService(this)">管理业务</a></td></tr>'
 						+ '</template></tbody>' + '</table>',
 				buttons : {
@@ -164,7 +165,7 @@ function managerSonUnit(event) {
 function loadDataSon(id) {
 	$.ajax({
 		url : '/jwcpxt/Unit/list_unitDO_byFatherUnitID?unit.jwcpxt_unit_id='
-				+id,
+				+ id,
 		type : 'GET',
 		success : function(data) {
 			sonUnitVue.unitList = JSON.parse(data);
@@ -226,6 +227,29 @@ function addUnit(event) {
 			})
 }
 
-function managerService(event){
-	
+function managerService(event) {
+	$
+			.confirm({
+				title : '管理业务',
+				type : 'blue',
+				boxWidth : '1000px',
+				useBootstrap : false,
+				content : '<button id="'
+						+ event.id
+						+ '" onclick="" class="btn btn-default"><i class="ti-plus"></i>增加业务</button><table id="showService" class="table table-striped" style="text-align: center;"><thead><tr>'
+						+ '<td>业务名称</td>' + '<td>测评数量</td>' + '<td>关联时间</td>'
+						+ '<td>操作</td>' + '</tr></thead>'
+						+ '<tbody><template><tr>' + '<td></td>' + '<td></td>'
+						+ '<td></td>' + '<td></td>'
+						+ '</tr></template></tbody></table>',
+				buttons : {
+					cancel : {
+						text : '关闭',
+						btnClass : 'btn-blue',
+						action : function() {
+							loadData();
+						}
+					}
+				}
+			})
 }
