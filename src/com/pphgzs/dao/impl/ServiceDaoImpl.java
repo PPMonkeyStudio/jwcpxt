@@ -40,6 +40,21 @@ public class ServiceDaoImpl implements ServiceDao {
 		session.flush();
 	}
 
+	/**
+	 * 业务定义列表
+	 */
+	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinitionDO_all() {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_definition ";
+		Query query = session.createQuery(hql);
+		//
+		List<jwcpxt_service_definition> list = query.list();
+		session.clear();
+		System.out.println(list);
+		return list;
+	}
+
 	@Override
 	public int get_serviceInstanceTotalCount_byServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
 		Session session = getSession();
@@ -149,18 +164,6 @@ public class ServiceDaoImpl implements ServiceDao {
 		//
 		session.clear();
 		return count;
-	}
-
-	@Override
-	public List<jwcpxt_service_definition> list_serviceDefinitionDO_all() {
-		Session session = getSession();
-		String hql = "from jwcpxt_service_definition ";
-		Query query = session.createQuery(hql);
-		//
-		List<jwcpxt_service_definition> list = query.list();
-		session.clear();
-		System.out.println(list);
-		return list;
 	}
 
 	@Override
@@ -446,4 +449,5 @@ public class ServiceDaoImpl implements ServiceDao {
 	/*
 	 * 
 	 */
+
 }

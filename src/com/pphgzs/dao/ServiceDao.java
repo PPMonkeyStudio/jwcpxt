@@ -20,6 +20,13 @@ public interface ServiceDao {
 	public void saveOrUpdateObject(Object obj);
 
 	/**
+	 * 获取业务定义列表
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinitionDO_all();
+
+	/**
 	 * 
 	 * 
 	 */
@@ -45,8 +52,6 @@ public interface ServiceDao {
 	List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID);
 
 	List<jwcpxt_service_client> list_serviceClient_byServiceInstanceID(String serviceInstanceID);
-
-	List<jwcpxt_service_definition> list_serviceDefinitionDO_all();
 
 	List<ServiceDefinitionDTO> list_serviceDefinitionDTO_byServiceDefinitionVO(ServiceDefinitionVO serviceDefinitionVO);
 
@@ -74,4 +79,5 @@ public interface ServiceDao {
 	jwcpxt_grab_journal get_grabJournal_byServiceDefinitionIDAndDate(String serviceDefinitionID, String date);
 
 	boolean save_grabJournal(jwcpxt_grab_journal grabJournal);
+
 }

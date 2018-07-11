@@ -55,6 +55,15 @@ public class ServiceServiceImpl implements ServiceService {
 	/**
 	 * 
 	 */
+	/**
+	 * 业务定义列表
+	 */
+	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinition() {
+		List<jwcpxt_service_definition> listServiceDefinition = new ArrayList<>();
+		listServiceDefinition = serviceDao.list_serviceDefinitionDO_all();
+		return listServiceDefinition;
+	}
 
 	/**
 	 * 根据业务定义id获取业务定义DTO

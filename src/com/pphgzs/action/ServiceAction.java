@@ -38,18 +38,25 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 	private ServiceDefinitionVO serviceDefinitionVO;
 	private ServiceInstanceVO serviceInstanceVO;
-
+	private List<jwcpxt_service_definition> listServiceDefinition;
 	/*
 	 * 
 	 */
 
 	/**
-	 * 
+	 * 业务列表DTO
 	 */
-	public void list_serviceDTO() {
-		
+	public void list_serviceDefinition() {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		//
+		listServiceDefinition = serviceService.list_serviceDefinition();
 	}
-	
+
 	/**
 	 * 添加业务定义
 	 * 
@@ -223,9 +230,18 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	/*
 	 * 
 	 */
+
 	@Override
 	public void setServletRequest(HttpServletRequest http_request) {
 		this.http_request = http_request;
+	}
+
+	public List<jwcpxt_service_definition> getListServiceDefinition() {
+		return listServiceDefinition;
+	}
+
+	public void setListServiceDefinition(List<jwcpxt_service_definition> listServiceDefinition) {
+		this.listServiceDefinition = listServiceDefinition;
 	}
 
 	@Override

@@ -114,4 +114,11 @@ public interface ServiceService {
 
 	List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID);
 
+	/**
+	 * 获取业务定义list
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinition();
+
 }
