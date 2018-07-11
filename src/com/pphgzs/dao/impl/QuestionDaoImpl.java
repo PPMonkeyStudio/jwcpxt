@@ -11,7 +11,7 @@ import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
-import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
+//import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.VO.QuestionVO;
@@ -102,6 +102,9 @@ public class QuestionDaoImpl implements QuestionDao {
 			query.setParameter("screenSearch", "%%");
 		} else {
 			query.setParameter("screenSearch", "%" + questionVO.getScreenSearch() + "%");
+		}
+		if (query.uniqueResult() == null) {
+			return 0;
 		}
 		count = ((Number) query.uniqueResult()).intValue();
 		//
@@ -212,16 +215,15 @@ public class QuestionDaoImpl implements QuestionDao {
 		return listOption;
 	}
 
-	@Override
-	public List<jwcpxt_option_inquiries> get_optionInquireies_byOptionId(String optionId) {
-		List<jwcpxt_option_inquiries> listOptionInquiries = new ArrayList<>();
-		Session session = getSession();
-		String hql = "from jwcpxt_option_inquiries where option_inquiries_option = :optionId order by option_inquiries_gmt_create";
-		Query query = session.createQuery(hql);
-		query.setParameter("optionId", optionId);
-		listOptionInquiries = query.list();
-		return listOptionInquiries;
-	}
+	/*
+	 * @Override public List<jwcpxt_option_inquiries>
+	 * get_optionInquireies_byOptionId(String optionId) {
+	 * List<jwcpxt_option_inquiries> listOptionInquiries = new ArrayList<>();
+	 * Session session = getSession(); String hql =
+	 * "from jwcpxt_option_inquiries where option_inquiries_option = :optionId order by option_inquiries_gmt_create"
+	 * ; Query query = session.createQuery(hql); query.setParameter("optionId",
+	 * optionId); listOptionInquiries = query.list(); return listOptionInquiries; }
+	 */
 
 	@Override
 	public int get_option_max_sort(String option_question) {

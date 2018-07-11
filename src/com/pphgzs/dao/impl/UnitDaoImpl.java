@@ -64,10 +64,24 @@ public class UnitDaoImpl implements UnitDao {
 	}
 
 	@Override
-	public jwcpxt_unit get_unit_byUnitID(String unitID) {
+	public jwcpxt_unit get_unitDO_byID(String unitID) {
 		Session session = getSession();
 		String hql = "from jwcpxt_unit where jwcpxt_unit_id='" + unitID + "'";
 		Query query = session.createQuery(hql);
+		jwcpxt_unit newUnit = (jwcpxt_unit) query.uniqueResult();
+		session.clear();
+		return newUnit;
+	}
+
+	@Override
+	public jwcpxt_unit get_unit_byNameOrAccount(String unit_name, String unit_account) {
+		Session session = getSession();
+		String hql = "from jwcpxt_unit where unit_name=:unit_name or unit_account=:unit_account";
+		//
+		Query query = session.createQuery(hql);
+		query.setParameter("unit_name", unit_name);
+		query.setParameter("unit_account", unit_account);
+		//
 		jwcpxt_unit newUnit = (jwcpxt_unit) query.uniqueResult();
 		session.clear();
 		return newUnit;

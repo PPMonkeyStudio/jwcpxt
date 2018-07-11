@@ -14,8 +14,10 @@ public interface UnitDao {
 
 	public boolean delete_unit(jwcpxt_unit unit);
 
-	public jwcpxt_unit get_unit_byUnitID(String unitID);
+	public jwcpxt_unit get_unitDO_byID(String unitID);
 
 	public boolean update_unit(jwcpxt_unit unit);
+
+	jwcpxt_unit get_unit_byNameOrAccount(String unit_name, String account);
 
 }

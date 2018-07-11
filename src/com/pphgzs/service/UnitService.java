@@ -9,7 +9,7 @@ public interface UnitService {
 
 	public UnitVO get_unitVO();
 
-	public jwcpxt_unit get_unit_byUnitID(String unitID);
+	public jwcpxt_unit get_unitDO_byID(String unitID);
 
 	public List<jwcpxt_unit> list_unit_all();
 
@@ -18,5 +18,9 @@ public interface UnitService {
 	public boolean update_unit(jwcpxt_unit newUnit);
 
 	public boolean save_unit(jwcpxt_unit unit);
+
+	public boolean update_unitPassword(jwcpxt_unit newUnit);
+
+	public boolean reset_unitPassword(jwcpxt_unit newUnit);
 
 }

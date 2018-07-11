@@ -35,14 +35,34 @@ public class SkipAction {
 		return "skipManagerService";
 	}
 
+	public String skipServiceInstance() {
+		return "skipServiceInstance";
+	}
+
+	public String skipAbarbeitungIndex() {
+		return "skipAbarbeitungIndex";
+	}
+
+	public String skipAbarbeitungManager() {
+		return "skipAbarbeitungManager";
+	}
+
+	public String skipNavbarAbarbeitung() {
+		return "navbarAbarbeitung";
+	}
+
+	public String skipNavbarAppraisal() {
+		return "navbarAppraisal";
+	}
+
 	/* hy */
 	public String skipQuestionnaireDetails() {
 		return "skipQuestionnaireDetails";
 	}
+
 	public String skipQuestionnaireDetailsJsp() {
 		return "skipQuestionnaireDetailsJsp";
 	}
-	
 
 	public String getDefinitionId() {
 		return definitionId;

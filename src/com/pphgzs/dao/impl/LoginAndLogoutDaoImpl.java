@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.LoginAndLogoutDao;
-import com.pphgzs.domain.DO.jwcpxt_admin;
 import com.pphgzs.domain.DO.jwcpxt_user;
 
 public class LoginAndLogoutDaoImpl implements LoginAndLogoutDao {
@@ -29,17 +28,6 @@ public class LoginAndLogoutDaoImpl implements LoginAndLogoutDao {
 		session.clear();
 		return user;
 
-	}
-
-	@Override
-	public jwcpxt_admin getAdminByAccount(String account) {
-		jwcpxt_admin admin = null;
-		Session session = getSession();
-		String hql = "from jwcpxt_admin where admin_account='" + account + "'";
-		Query query = session.createQuery(hql);
-		admin = (jwcpxt_admin) query.uniqueResult();
-		session.clear();
-		return admin;
 	}
 
 }

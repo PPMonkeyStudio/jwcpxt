@@ -7,11 +7,14 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
+import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 import com.pphgzs.domain.VO.QuestionVO;
+import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UserService;
@@ -25,6 +28,21 @@ public class QuestionTest {
 	private ServiceService serviceService;
 	@Resource
 	private QuestionService questionService;
+	@Resource
+	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	@Test
+	public void get_feedbackRectification_byRectificationId() {
+		jwcpxt_feedback_rectification feedBackRectification = new jwcpxt_feedback_rectification();
+		feedBackRectification.setJwcpxt_feedback_rectification_id("1");
+		dissatisfiedFeedbackService.get_feedbackRectification_byRectificationId(feedBackRectification);
+	}
+
+	@Test
+	public void get_dissatisfiedFeedbackVOTest() {
+		DissatisfiedFeedbackVO dissatisfiedFeedbackVO = new DissatisfiedFeedbackVO();
+		dissatisfiedFeedbackService.get_dissatisfiedFeedbackVO(dissatisfiedFeedbackVO);
+	}
 
 	/**
 	 * 
@@ -186,6 +204,14 @@ public class QuestionTest {
 
 	public UserService getUserService() {
 		return userService;
+	}
+
+	public DissatisfiedFeedbackService getDissatisfiedFeedbackService() {
+		return dissatisfiedFeedbackService;
+	}
+
+	public void setDissatisfiedFeedbackService(DissatisfiedFeedbackService dissatisfiedFeedbackService) {
+		this.dissatisfiedFeedbackService = dissatisfiedFeedbackService;
 	}
 
 	public void setUserService(UserService userService) {

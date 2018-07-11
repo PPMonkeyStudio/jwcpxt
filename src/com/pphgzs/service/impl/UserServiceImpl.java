@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.UserDao;
-import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.UserDTO;
 import com.pphgzs.domain.VO.UserVO;
@@ -14,7 +13,6 @@ import com.pphgzs.util.TimeUtil;
 import com.pphgzs.util.uuidUtil;
 
 public class UserServiceImpl implements UserService {
-
 	private UserDao userDao;
 	private UnitService unitService;
 
@@ -33,10 +31,15 @@ public class UserServiceImpl implements UserService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+
 	/*
 	 * 
 	 * 
 	 */
+	@Override
+	public int get_userDistributionNum_byToday(String userID) {
+		return userDao.get_userDistributionNum_byToday(userID);
+	}
 
 	@Override
 	public boolean save_user(jwcpxt_user user) {
@@ -46,10 +49,6 @@ public class UserServiceImpl implements UserService {
 			user.setJwcpxt_user_id(uuidUtil.getUuid());
 			// 账号作为密码
 			user.setUser_password(user.getUser_account());
-			//
-			user.setUser_Jurisdiction_evaluate("none");
-			user.setUser_Jurisdiction_statistics("none");
-			user.setUser_Jurisdiction_review("none");
 			// 时间初始化
 			String time = TimeUtil.getStringSecond();
 			user.setUser_gmt_create(time);
@@ -92,6 +91,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<jwcpxt_user> list_user_byJurisdiction(jwcpxt_user user) {
+		return userDao.list_user_byJurisdiction(user.getUser_Jurisdiction_evaluate(),
+				user.getUser_Jurisdiction_review(), user.getUser_Jurisdiction_statistics());
+	}
+
+	@Override
 	public List<UserDTO> list_userDTO_all() {
 		List<jwcpxt_user> userList = list_user_all();
 		List<UserDTO> userDTOList = list_userDTOList_byUserList(userList);
@@ -115,10 +120,6 @@ public class UserServiceImpl implements UserService {
 		jwcpxt_user user = get_user_byUserID(userID);
 		userDTO.setUser(user);
 		//
-		if (user.getUser_unit() != null) {
-			jwcpxt_unit unit = unitService.get_unit_byUnitID(user.getUser_unit());
-			userDTO.setUnit(unit);
-		}
 		//
 		return userDTO;
 	}

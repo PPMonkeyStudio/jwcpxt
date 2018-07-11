@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UserService;
 
@@ -37,10 +36,15 @@ public class MyTest {
 
 	@Test
 	public void ttt() {
-		ServiceDefinitionVO serviceDefinitionVO = new ServiceDefinitionVO();
-		serviceDefinitionVO.setScreenUnit("asdfgasdg");
-		serviceDefinitionVO = serviceService.get_serviceDefinitionVO(serviceDefinitionVO);
-		System.out.println(serviceDefinitionVO);
+
+	}
+
+	@Test
+	public void tttt() {
+	}
+
+	@Test
+	public void tttdf() {
 	}
 
 }
