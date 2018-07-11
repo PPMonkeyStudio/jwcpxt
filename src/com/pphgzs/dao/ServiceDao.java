@@ -7,11 +7,52 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public interface ServiceDao {
+
+	/**
+	 * 根据id获取单位业务表
+	 */
+	public jwcpxt_unit_service get_unitService_byUnitServiceId(String trim);
+
+	/**
+	 * 获取所有关联某单位的业务
+	 * 
+	 * @param trim
+	 * @return
+	 */
+	public List<ServiceConnectDTO> list_serviceDefinitionDTO_connectService(String trim);
+
+	/**
+	 * 获取未关联某单位的所有业务
+	 * 
+	 * @param trim
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinition_notConnectService(String trim);
+
+	/**
+	 * 
+	 * 保存对象
+	 */
+	public void saveOrUpdateObject(Object obj);
+
+	/**
+	 * 获取业务定义列表
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinitionDO_all();
+
+	/**
+	 * 
+	 * 
+	 */
 
 	jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String jwcpxt_service_definition_id);
 
@@ -34,8 +75,6 @@ public interface ServiceDao {
 	List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID);
 
 	List<jwcpxt_service_client> list_serviceClient_byServiceInstanceID(String serviceInstanceID);
-
-	List<jwcpxt_service_definition> list_serviceDefinitionDO_all();
 
 	List<ServiceDefinitionDTO> list_serviceDefinitionDTO_byServiceDefinitionVO(ServiceDefinitionVO serviceDefinitionVO);
 
@@ -63,4 +102,5 @@ public interface ServiceDao {
 	jwcpxt_grab_journal get_grabJournal_byServiceDefinitionIDAndDate(String serviceDefinitionID, String date);
 
 	boolean save_grabJournal(jwcpxt_grab_journal grabJournal);
+
 }

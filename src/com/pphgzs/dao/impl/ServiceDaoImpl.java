@@ -12,6 +12,8 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
@@ -26,6 +28,78 @@ public class ServiceDaoImpl implements ServiceDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 保存
+	 * 
+	 * @param obj
+	 */
+	@Override
+	public void saveOrUpdateObject(Object obj) {
+		Session session = getSession();
+		session.saveOrUpdate(obj);
+		session.flush();
+	}
+
+	/**
+	 * 根据id获取业务单位关联表
+	 */
+	@Override
+	public jwcpxt_unit_service get_unitService_byUnitServiceId(String unitServiceId) {
+		Session session = getSession();
+		String hql = "from jwcpxt_unit_service where jwcpxt_unit_service_id=:unitServiceId ";
+		//
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("unitServiceId", unitServiceId);
+		//
+		jwcpxt_unit_service jwcpxt_unit_service = (jwcpxt_unit_service) query.uniqueResult();
+		session.clear();
+		return jwcpxt_unit_service;
+	}
+
+	@Override
+	public List<ServiceConnectDTO> list_serviceDefinitionDTO_connectService(String unitId) {
+		Session session = getSession();
+		String hql = "select new com.pphgzs.domain.DTO.ServiceConnectDTO(serviceDefinition,unitService) from jwcpxt_service_definition serviceDefinition,jwcpxt_unit_service unitService where "
+				+ "serviceDefinition.jwcpxt_service_definition_id = unitService.service_definition_id and unitService.unit_id == :unitID order by serviceDefinition.serviceDefinition ";
+		Query query = session.createQuery(hql);
+		query.setParameter("unitId", unitId);
+		//
+		List<ServiceConnectDTO> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	/**
+	 * 获取未关联某单位的所有业务
+	 */
+	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinition_notConnectService(String unitId) {
+		Session session = getSession();
+		String hql = "select serviceDefinition from jwcpxt_service_definition serviceDefinition,jwcpxt_unit_service unitService where "
+				+ "serviceDefinition.jwcpxt_service_definition_id = unitService.service_definition_id and unitService.unit_id != :unitID order by serviceDefinition.serviceDefinition ";
+		Query query = session.createQuery(hql);
+		query.setParameter("unitId", unitId);
+		//
+		List<jwcpxt_service_definition> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	/**
+	 * 业务定义列表
+	 */
+	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinitionDO_all() {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_definition ";
+		Query query = session.createQuery(hql);
+		//
+		List<jwcpxt_service_definition> list = query.list();
+		session.clear();
+		return list;
 	}
 
 	@Override
@@ -140,18 +214,6 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
-	public List<jwcpxt_service_definition> list_serviceDefinitionDO_all() {
-		Session session = getSession();
-		String hql = "from jwcpxt_service_definition ";
-		Query query = session.createQuery(hql);
-		//
-		List<jwcpxt_service_definition> list = query.list();
-		session.clear();
-		System.out.println(list);
-		return list;
-	}
-
-	@Override
 	public List<jwcpxt_service_client> list_client_byServiceInstanceID(String serviceInstanceID) {
 
 		Session session = getSession();
@@ -214,9 +276,8 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
 		Session session = getSession();
-		String hql = "select new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition,unit) from jwcpxt_service_definition serviceDefinition , jwcpxt_unit unit"
-				+ " where serviceDefinition.service_definition_unit=unit.jwcpxt_unit_id and serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionID ";
-		//
+		String hql = "select new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition) from jwcpxt_service_definition serviceDefinition"
+				+ " where serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionID  ";
 		Query query = session.createQuery(hql);
 		//
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
@@ -435,4 +496,5 @@ public class ServiceDaoImpl implements ServiceDao {
 	/*
 	 * 
 	 */
+
 }

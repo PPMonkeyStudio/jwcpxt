@@ -61,7 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// 新建
 		List<jwcpxt_question> questionList = new ArrayList<>();
 		// 根据业务Id获取业务对象
-		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO(null, null);
+		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO();
 		// 首先根据业务定义Id获取业务定义对象
 		serviceDefinitionDTO = serviceService.get_serviceDefinitionDTO_byServiceDefinitionID(
 				questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id());

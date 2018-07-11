@@ -6,12 +6,60 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public interface ServiceService {
+
+	/*
+	 * 
+	 */
+
+	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 获取业务定义list
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinition();
+
+	/**
+	 * 未链接某单位的业务
+	 * 
+	 * @param unit
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinition_notConnectService(jwcpxt_unit unit);
+
+	/**
+	 * 更改评测数量
+	 * 
+	 * @param unitService
+	 * @return
+	 */
+	public boolean update_unitServiceCount_byUnitServiceId(jwcpxt_unit_service unitService);
+
+	/**
+	 * 创建单位业务表
+	 * 
+	 * @param unitService
+	 * @return
+	 */
+	public boolean save_unitService(jwcpxt_unit_service unitService);
+
+	/**
+	 * 获取所有关联某单位的业务
+	 * 
+	 * @param unit
+	 * @return
+	 */
+	public List<ServiceConnectDTO> list_serviceDefinitionDTO_connectService(jwcpxt_unit unit);
 
 	/**
 	 * 手动分配实例给测评人员
@@ -103,7 +151,5 @@ public interface ServiceService {
 	void grab_serviceInstance_auto();
 
 	List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID);
-	/*
-	 * 
-	 */
+
 }
