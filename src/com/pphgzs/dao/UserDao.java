@@ -14,4 +14,6 @@ public interface UserDao {
 
 	public jwcpxt_user get_userDO_byUserID(String userID);
 
+	public jwcpxt_user get_user_byAccount(String user_account);
+
 }
