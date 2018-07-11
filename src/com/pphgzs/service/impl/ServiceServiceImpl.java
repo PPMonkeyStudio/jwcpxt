@@ -59,18 +59,17 @@ public class ServiceServiceImpl implements ServiceService {
 	 * 更改评测数量
 	 */
 	@Override
-	public boolean update_unitServiceCount_byUnitServiceId(jwcpxt_unit_service unitService) {
+	public boolean update_unitServiceCount_byUnitServiceId(jwcpxt_unit_service unitSer) {
 		jwcpxt_unit_service connectUnitService = new jwcpxt_unit_service();
 		// 获取关系表
-		if (unitService != null && unitService.getJwcpxt_unit_service_id() != null
-				&& unitService.getJwcpxt_unit_service_id().trim().length() > 0) {
-			connectUnitService = serviceDao
-					.get_unitService_byUnitServiceId(unitService.getJwcpxt_unit_service_id().trim());
+		if (unitSer != null && unitSer.getJwcpxt_unit_service_id() != null
+				&& unitSer.getJwcpxt_unit_service_id().trim().length() > 0) {
+			connectUnitService = serviceDao.get_unitService_byUnitServiceId(unitSer.getJwcpxt_unit_service_id().trim());
 		}
 		if (connectUnitService == null) {
 			return false;
 		}
-		connectUnitService.setEvaluation_count(unitService.getEvaluation_count());
+		connectUnitService.setEvaluation_count(unitSer.getEvaluation_count());
 		connectUnitService.setUnit_service_gmt_modified(TimeUtil.getStringSecond());
 		serviceDao.saveOrUpdateObject(connectUnitService);
 		return true;
