@@ -348,7 +348,7 @@ $(function() {
 						//追问的事件start
 						//修改追问
 						modifyInquiries (index, index1) {
-							modifyInquiriesDescribe(this.optionData,index,index1, modifyVm);
+							modifyInquiriesDescribe(this.optionData, index, index1, modifyVm);
 						},
 						moveInquiries (index, index1, type) {
 							let optionId = this.optionData[index].listInquiriesOptionDTO[index1].inquiriesQuestion.jwcpxt_question_id;
@@ -614,7 +614,7 @@ $(function() {
 
 
 	//修改追问的描述
-	function modifyInquiriesDescribe(questionData, modifyVm) {
+	function modifyInquiriesDescribe(questionData, index, index1, modifyVm) {
 		let modifyInquiriesDescribe = $.confirm({
 			smoothContent : false, //关闭动画
 			closeIcon : true, //关闭图标
@@ -629,7 +629,7 @@ $(function() {
 			<div id="modifyInquiriesDescribe">
 				<div class="form-group">
 					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe">${questionData.inquiriesQuestion.question_describe}</textarea>
+					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe">${questionData[index].listInquiriesOptionDTO[index1].inquiriesQuestion.question_describe}</textarea>
 				</div>
 			</div>
 			`,
