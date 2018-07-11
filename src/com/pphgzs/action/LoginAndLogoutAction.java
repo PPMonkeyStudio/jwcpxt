@@ -31,13 +31,6 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 	/*
 	 * 
 	 */
-	public String index() {
-		return "index";
-	}
-
-	public String navbar() {
-		return "navbar";
-	}
 
 	/**
 	 * 登录并存入session
@@ -49,21 +42,21 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 		/*
 		 * 
 		 */
-		Object userOrAdmin = loginAndLogoutService.login(account, password);
-		if (userOrAdmin != null) {
-			if (userOrAdmin.getClass().toString().equals("class com.pphgzs.domain.DO.jwcpxt_user")) {
+		Object userOrUnit = loginAndLogoutService.login(account, password);
+		if (userOrUnit != null) {
+			if (userOrUnit.getClass().toString().equals("class com.pphgzs.domain.DO.jwcpxt_user")) {
 				/*
 				 * 用户权限
 				 */
 				ActionContext.getContext().getSession().remove("user");
-				ActionContext.getContext().getSession().put("user", userOrAdmin);
+				ActionContext.getContext().getSession().put("user", userOrUnit);
 				http_response.getWriter().write("1");
-			} else if (userOrAdmin.getClass().toString().equals("class com.pphgzs.domain.DO.jwcpxt_admin")) {
+			} else if (userOrUnit.getClass().toString().equals("com.pphgzs.domain.DO.jwcpxt_unit")) {
 				/*
-				 * 管理员权限
+				 * 单位权限
 				 */
-				ActionContext.getContext().getSession().remove("admin");
-				ActionContext.getContext().getSession().put("admin", userOrAdmin);
+				ActionContext.getContext().getSession().remove("unit");
+				ActionContext.getContext().getSession().put("unit", userOrUnit);
 				http_response.getWriter().write("2");
 			} else {
 				http_response.getWriter().write("-1");
