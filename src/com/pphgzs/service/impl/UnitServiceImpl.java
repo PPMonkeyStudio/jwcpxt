@@ -125,6 +125,11 @@ public class UnitServiceImpl implements UnitService {
 	}
 
 	@Override
+	public List<jwcpxt_unit> list_unitDO_byFatherUnitID(String jwcpxt_unit_id) {
+		return unitDao.list_unitDO_byFatherUnitID(jwcpxt_unit_id);
+	}
+
+	@Override
 	public List<jwcpxt_unit> list_unitDO_all() {
 		List<jwcpxt_unit> unitList = unitDao.list_unitDO_all();
 		return unitList;

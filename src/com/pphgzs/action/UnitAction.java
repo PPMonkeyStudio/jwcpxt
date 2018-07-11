@@ -114,6 +114,22 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 	}
 
 	/**
+	 * 通过单位id查找所有子单位
+	 * 
+	 * @throws IOException
+	 */
+	public void list_unitDO_byFatherUnitID() throws IOException {
+		List<jwcpxt_unit> unitList = unitService.list_unitDO_byFatherUnitID(unit.getJwcpxt_unit_id());
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(unitList));
+	}
+
+	/**
 	 * 通过单位id获得一个单位
 	 * 
 	 * @throws IOException

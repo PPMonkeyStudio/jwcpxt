@@ -22,4 +22,6 @@ public interface UnitDao {
 
 	public List<jwcpxt_unit> list_unitDO_byOneAndTwo();
 
+	public List<jwcpxt_unit> list_unitDO_byFatherUnitID(String jwcpxt_unit_id);
+
 }
