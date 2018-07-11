@@ -35,6 +35,16 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public jwcpxt_user get_userDO_byUserID(String userID) {
+		Session session = getSession();
+		String hql = "from jwcpxt_user where jwcpxt_user_id='" + userID + "'";
+		Query query = session.createQuery(hql);
+		jwcpxt_user user = (jwcpxt_user) query.uniqueResult();
+		session.clear();
+		return user;
+	}
+
+	@Override
 	public boolean save_user(jwcpxt_user user) {
 		Session session = getSession();
 		session.save(user);
