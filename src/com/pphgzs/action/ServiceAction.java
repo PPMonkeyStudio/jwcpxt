@@ -16,6 +16,9 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
@@ -39,22 +42,88 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private ServiceDefinitionVO serviceDefinitionVO;
 	private ServiceInstanceVO serviceInstanceVO;
 	private List<jwcpxt_service_definition> listServiceDefinition;
+	private List<ServiceConnectDTO> listServiceConnectDTO;
+	private jwcpxt_unit unit;
+	private jwcpxt_unit_service unitService;
+
 	/*
 	 * 
 	 */
+	/**
+	 * 修改评测数量
+	 * 
+	 * @throws IOException
+	 */
+	public void update_unitServiceCount_byUnitServiceId() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.update_unitServiceCount_byUnitServiceId(unitService)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
 
 	/**
-	 * 业务列表DTO
+	 * 获取所有关联某个单位的业务
 	 */
-	public void list_serviceDefinition() {
+	public void list_serviceDefinitionDTO_connectService() throws IOException {
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		listServiceConnectDTO = serviceService.list_serviceDefinitionDTO_connectService(unit);
+		http_response.getWriter().write(gson.toJson(listServiceConnectDTO));
+	}
+
+	/**
+	 * 创建单位业务表
+	 * 
+	 * @throws IOException
+	 *
+	 */
+	public void save_unitService() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.save_unitService(unitService)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 获得此单位未关联的业务
+	 * 
+	 * @throws IOException
+	 * 
+	 */
+	public void list_serviceDefinition_notConnectService() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		listServiceDefinition = serviceService.list_serviceDefinition_notConnectService(unit);
+		http_response.getWriter().write(gson.toJson(listServiceDefinition));
+	}
+
+	/**
+	 * 业务列表DTO
+	 * 
+	 * @throws IOException
+	 */
+	public void list_serviceDefinition() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		//
 		listServiceDefinition = serviceService.list_serviceDefinition();
+		http_response.getWriter().write(gson.toJson(listServiceDefinition));
 	}
 
 	/**
@@ -238,6 +307,30 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public List<jwcpxt_service_definition> getListServiceDefinition() {
 		return listServiceDefinition;
+	}
+
+	public List<ServiceConnectDTO> getListServiceConnectDTO() {
+		return listServiceConnectDTO;
+	}
+
+	public void setListServiceConnectDTO(List<ServiceConnectDTO> listServiceConnectDTO) {
+		this.listServiceConnectDTO = listServiceConnectDTO;
+	}
+
+	public jwcpxt_unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(jwcpxt_unit unit) {
+		this.unit = unit;
+	}
+
+	public jwcpxt_unit_service getUnitService() {
+		return unitService;
+	}
+
+	public void setUnitService(jwcpxt_unit_service unitService) {
+		this.unitService = unitService;
 	}
 
 	public void setListServiceDefinition(List<jwcpxt_service_definition> listServiceDefinition) {

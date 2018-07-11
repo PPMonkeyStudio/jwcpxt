@@ -9,7 +9,10 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -50,6 +53,86 @@ public class ServiceServiceImpl implements ServiceService {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	/**
+	 * 更改评测数量
+	 */
+	@Override
+	public boolean update_unitServiceCount_byUnitServiceId(jwcpxt_unit_service unitService) {
+		jwcpxt_unit_service connectUnitService = new jwcpxt_unit_service();
+		// 获取关系表
+		if (unitService != null && unitService.getJwcpxt_unit_service_id() != null
+				&& unitService.getJwcpxt_unit_service_id().trim().length() > 0) {
+			connectUnitService = serviceDao
+					.get_unitService_byUnitServiceId(unitService.getJwcpxt_unit_service_id().trim());
+		}
+		if (connectUnitService == null) {
+			return false;
+		}
+		connectUnitService.setEvaluation_count(unitService.getEvaluation_count());
+		connectUnitService.setUnit_service_gmt_modified(TimeUtil.getStringSecond());
+		serviceDao.saveOrUpdateObject(connectUnitService);
+		return true;
+	}
+
+	/**
+	 * 获取所有关联某单位的业务
+	 */
+	@Override
+	public List<ServiceConnectDTO> list_serviceDefinitionDTO_connectService(jwcpxt_unit unit) {
+		if (unit != null && unit.getJwcpxt_unit_id() != null && unit.getJwcpxt_unit_id().trim().length() > 0) {
+			unit = unitService.get_unitDO_byID(unit.getJwcpxt_unit_id().trim());
+		}
+		List<ServiceConnectDTO> listServiceDefinitionDTO = new ArrayList<>();
+		listServiceDefinitionDTO = serviceDao.list_serviceDefinitionDTO_connectService(unit.getJwcpxt_unit_id().trim());
+		return listServiceDefinitionDTO;
+	}
+
+	/**
+	 * 创建单位业务表
+	 */
+	@Override
+	public boolean save_unitService(jwcpxt_unit_service unitSer) {
+		if (unitSer != null) {
+			if (unitSer.getUnit_id() != null && unitSer.getUnit_id().trim().length() > 0) {
+				if (unitService.get_unitDO_byID(unitSer.getUnit_id().trim()) == null)
+					return false;
+			} else {
+				return false;
+			}
+			if (unitSer.getService_definition_id() != null && unitSer.getService_definition_id().trim().length() > 0) {
+				if (serviceDao.get_serviceDefinition_byServiceDefinitionID(
+						unitSer.getService_definition_id().trim()) == null) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+			/**
+			 * 存储
+			 */
+			unitSer.setJwcpxt_unit_service_id(uuidUtil.getUuid());
+			unitSer.setUnit_service_gmt_create(TimeUtil.getStringSecond());
+			unitSer.setUnit_service_gmt_modified(unitSer.getUnit_service_gmt_create());
+			serviceDao.saveOrUpdateObject(unitSer);
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 获取某单位未关联的业务定义
+	 */
+	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinition_notConnectService(jwcpxt_unit unit) {
+		if (unit != null && unit.getJwcpxt_unit_id() != null && unit.getJwcpxt_unit_id().trim().length() > 0) {
+			unit = unitService.get_unitDO_byID(unit.getJwcpxt_unit_id().trim());
+		}
+		List<jwcpxt_service_definition> listServiceDefinition = new ArrayList<>();
+		listServiceDefinition = serviceDao.list_serviceDefinition_notConnectService(unit.getJwcpxt_unit_id().trim());
+		return listServiceDefinition;
 	}
 
 	/**
@@ -441,7 +524,6 @@ public class ServiceServiceImpl implements ServiceService {
 				List<jwcpxt_service_instance> serviceInstanceList = grab_serviceInstance_byServiceDefinitionID(
 						serviceDefinition.getJwcpxt_service_definition_id());
 				// 然后保存进数据库
-				// TODO
 				/*
 				 * 
 				 */
@@ -454,7 +536,6 @@ public class ServiceServiceImpl implements ServiceService {
 					List<jwcpxt_service_instance> serviceInstanceList = grab_serviceInstance_byServiceDefinitionID(
 							serviceDefinition.getJwcpxt_service_definition_id());
 					// 然后保存进数据库
-					// TODO
 				}
 			}
 			//
@@ -467,7 +548,6 @@ public class ServiceServiceImpl implements ServiceService {
 		/*
 		 * 抓取业务
 		 */
-		// TODO Auto-generated method stub
 		return null;
 	}
 
