@@ -23,4 +23,6 @@ public interface UnitService {
 
 	public boolean reset_unitPassword(jwcpxt_unit newUnit);
 
+	public List<jwcpxt_unit> list_unitDO_byFatherUnitID(String jwcpxt_unit_id);
+
 }
