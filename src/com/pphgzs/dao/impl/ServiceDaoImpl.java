@@ -28,6 +28,18 @@ public class ServiceDaoImpl implements ServiceDao {
 		return this.sessionFactory.getCurrentSession();
 	}
 
+	/**
+	 * 保存
+	 * 
+	 * @param obj
+	 */
+	@Override
+	public void saveOrUpdateObject(Object obj) {
+		Session session = getSession();
+		session.saveOrUpdate(obj);
+		session.flush();
+	}
+
 	@Override
 	public int get_serviceInstanceTotalCount_byServiceInstanceVO(ServiceInstanceVO serviceInstanceVO) {
 		Session session = getSession();
@@ -214,9 +226,8 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
 		Session session = getSession();
-		String hql = "select new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition,unit) from jwcpxt_service_definition serviceDefinition , jwcpxt_unit unit"
-				+ " where serviceDefinition.service_definition_unit=unit.jwcpxt_unit_id and serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionID ";
-		//
+		String hql = "select new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition) from jwcpxt_service_definition serviceDefinition"
+				+ " where serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionID  ";
 		Query query = session.createQuery(hql);
 		//
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);

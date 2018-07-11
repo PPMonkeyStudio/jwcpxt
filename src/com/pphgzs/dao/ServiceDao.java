@@ -13,6 +13,17 @@ import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public interface ServiceDao {
 
+	/**
+	 * 
+	 * 
+	 */
+	public void saveOrUpdateObject(Object obj);
+
+	/**
+	 * 
+	 * 
+	 */
+
 	jwcpxt_service_definition get_serviceDefinition_byServiceDefinitionID(String jwcpxt_service_definition_id);
 
 	ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID);
