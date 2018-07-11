@@ -284,7 +284,10 @@ function addService(event){
 				url:'/jwcpxt/Service/list_serviceDefinition_notConnectService?unit.jwcpxt_unit_id='+event.id,
 				type:'GET',
 				success:function(data){
-					
+					var serviceList = JSON.parse(data);
+					for(var i =0 ;i<serviceList.length;i++){
+						$('#service_').html($('#service_').html()+'<option value="'+serviceList[i].jwcpxt_service_definition_id+'">'+serviceList[i].service_definition_describe+'</option>')
+					}
 				}
 			})
 		}
