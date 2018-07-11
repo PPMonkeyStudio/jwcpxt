@@ -57,13 +57,18 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 
 	}
 
-	public void delete_unit() throws IOException {
-		unitService.delete_unit(unit);
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write("1");
+	// public void delete_unit() throws IOException {
+	// unitService.delete_unit(unit);
+	// http_response.setContentType("text/html;charset=utf-8");
+	// http_response.getWriter().write("1");
+	//
+	// }
 
-	}
-
+	/**
+	 * 修改单位名称、账号、电话号码
+	 * 
+	 * @throws IOException
+	 */
 	public void update_unit() throws IOException {
 		unitService.update_unit(unit);
 		http_response.setContentType("text/html;charset=utf-8");
@@ -71,8 +76,22 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 
 	}
 
+	/*
+	 * 修改密码
+	 */
 	public void update_unitPassword() throws IOException {
 		unitService.update_unitPassword(unit);
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write("1");
+	}
+
+	/**
+	 * 重置密码
+	 * 
+	 * @throws IOException
+	 */
+	public void reset_unitPassword() throws IOException {
+		unitService.reset_unitPassword(unit);
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write("1");
 	}
@@ -99,8 +118,8 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 	 * 
 	 * @throws IOException
 	 */
-	public void get_unit_byID() throws IOException {
-		jwcpxt_unit returnUnit = unitService.get_unit_byUnitID(unit.getJwcpxt_unit_id());
+	public void get_unitDO_byID() throws IOException {
+		jwcpxt_unit returnUnit = unitService.get_unitDO_byID(unit.getJwcpxt_unit_id());
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据

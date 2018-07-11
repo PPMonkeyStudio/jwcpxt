@@ -64,7 +64,7 @@ public class UnitDaoImpl implements UnitDao {
 	}
 
 	@Override
-	public jwcpxt_unit get_unit_byUnitID(String unitID) {
+	public jwcpxt_unit get_unitDO_byID(String unitID) {
 		Session session = getSession();
 		String hql = "from jwcpxt_unit where jwcpxt_unit_id='" + unitID + "'";
 		Query query = session.createQuery(hql);
