@@ -44,7 +44,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private List<jwcpxt_service_definition> listServiceDefinition;
 	private List<ServiceConnectDTO> listServiceConnectDTO;
 	private jwcpxt_unit unit;
-	private jwcpxt_unit_service unitService;
+	private jwcpxt_unit_service unitServic;
 
 	/*
 	 * 
@@ -54,9 +54,9 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 * 
 	 * @throws IOException
 	 */
-	public void update_unitServiceCount_byUnitServiceId() throws IOException {
+	public void update_unitServicCount_byunitServicId() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
-		if (serviceService.update_unitServiceCount_byUnitServiceId(unitService)) {
+		if (serviceService.update_unitServiceCount_byUnitServiceId(unitServic)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");
@@ -83,9 +83,9 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 * @throws IOException
 	 *
 	 */
-	public void save_unitService() throws IOException {
+	public void save_unitServic() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
-		if (serviceService.save_unitService(unitService)) {
+		if (serviceService.save_unitService(unitServic)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");
@@ -325,12 +325,12 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		this.unit = unit;
 	}
 
-	public jwcpxt_unit_service getUnitService() {
-		return unitService;
+	public jwcpxt_unit_service getunitServic() {
+		return unitServic;
 	}
 
-	public void setUnitService(jwcpxt_unit_service unitService) {
-		this.unitService = unitService;
+	public void setunitServic(jwcpxt_unit_service unitServic) {
+		this.unitServic = unitServic;
 	}
 
 	public void setListServiceDefinition(List<jwcpxt_service_definition> listServiceDefinition) {
