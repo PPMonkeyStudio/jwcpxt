@@ -31,6 +31,21 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	/**
+	 * 根据业务定义id获取抓取
+	 */
+	@Override
+	public List<jwcpxt_service_grab> list_serviceGrab_byServiceDefinitionId(String serviceDefinitionId) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_grab where service_grab_service_definition = :serviceDefinitionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("serviceDefinitionId", serviceDefinitionId);
+		//
+		List<jwcpxt_service_grab> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	/**
 	 * 删除抓取记录
 	 */
 	@Override

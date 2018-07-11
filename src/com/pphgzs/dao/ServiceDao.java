@@ -14,6 +14,13 @@ import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public interface ServiceDao {
+	/**
+	 * 根据业务定义id获取抓取表
+	 * 
+	 * @param jwcpxt_service_definition_id
+	 * @return
+	 */
+	public List<jwcpxt_service_grab> list_serviceGrab_byServiceDefinitionId(String jwcpxt_service_definition_id);
 
 	/**
 	 * 删除记录

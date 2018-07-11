@@ -20,6 +20,20 @@ public interface ServiceService {
 	 * 
 	 */
 	/**
+	 * 根据抓取id获取抓取记录
+	 */
+	public jwcpxt_service_grab get_serviceGrab(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 根据业务定义id获取抓取表
+	 * 
+	 * @param serviceDefinition
+	 * @return
+	 */
+	public List<jwcpxt_service_grab> list_serviceGrab_byServiceDefinitionId(
+			jwcpxt_service_definition serviceDefinition);
+
+	/**
 	 * 修改抓取记录
 	 * 
 	 * @param serviceGrab

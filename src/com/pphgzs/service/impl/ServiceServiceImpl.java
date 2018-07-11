@@ -56,6 +56,42 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	/**
+	 * 获取抓取
+	 */
+	@Override
+	public jwcpxt_service_grab get_serviceGrab(jwcpxt_service_grab serviceGrab) {
+		jwcpxt_service_grab serviceG = new jwcpxt_service_grab();
+		if (serviceGrab != null && serviceGrab.getJwcpxt_service_grab_id() != null
+				&& serviceGrab.getJwcpxt_service_grab_id().trim().length() > 0) {
+			serviceG = serviceDao.get_serviceGrab_byServiceGrabID(serviceGrab.getJwcpxt_service_grab_id().trim());
+		}
+		return serviceG;
+	}
+
+	/**
+	 * 根据业务定义id获取抓取表
+	 */
+	@Override
+	public List<jwcpxt_service_grab> list_serviceGrab_byServiceDefinitionId(
+			jwcpxt_service_definition serviceDefinition) {
+		// 定义
+		jwcpxt_service_definition serviceDe = new jwcpxt_service_definition();
+		List<jwcpxt_service_grab> listServiceGrab = new ArrayList<>();
+		if (serviceDefinition != null && serviceDefinition.getJwcpxt_service_definition_id() != null
+				&& serviceDefinition.getJwcpxt_service_definition_id().trim().length() > 0) {
+			serviceDe = serviceDao.get_serviceDefinition_byServiceDefinitionID(
+					serviceDefinition.getJwcpxt_service_definition_id().trim());
+		}
+		if (serviceDe == null) {
+			return null;
+		}
+		//
+		listServiceGrab = serviceDao
+				.list_serviceGrab_byServiceDefinitionId(serviceDefinition.getJwcpxt_service_definition_id());
+		return null;
+	}
+
+	/**
 	 * 修改抓取记录
 	 */
 	@Override

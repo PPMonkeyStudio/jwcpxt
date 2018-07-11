@@ -45,6 +45,38 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private List<ServiceConnectDTO> listServiceConnectDTO;
 	private jwcpxt_unit unit;
 	private jwcpxt_unit_service unitServic;
+	private List<jwcpxt_service_grab> listServiceGrab;
+
+	/**
+	 * 根据业务抓取表id获取业务抓取表
+	 * @throws IOException 
+	 */
+	public void get_serviceGrab() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		serviceGrab = serviceService.get_serviceGrab(serviceGrab);
+		http_response.getWriter().write(gson.toJson(serviceGrab));
+	}
+
+	/**
+	 * @throws IOException
+	 *             根据业务定义Id获取所有业务抓取
+	 */
+	public void list_serviceGrab_byServiceDefinitionId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		//
+		listServiceGrab = serviceService.list_serviceGrab_byServiceDefinitionId(serviceDefinition);
+		http_response.getWriter().write(gson.toJson(listServiceGrab));
+	}
 
 	/**
 	 * 修改一个抓取表
