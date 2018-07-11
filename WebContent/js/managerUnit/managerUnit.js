@@ -396,7 +396,11 @@ function updateGrade(event,unitId){
 		},
 		onContentReady:function(){
 			$.ajax({
-				url:'',
+				url:'/jwcpxt/Service/get_untServic_byUnitServicId?unitServic.jwcpxt_unit_service_id='+event.id,
+				type:'GET',
+				success:function(data){
+					$('#update_evaluation_count').val(JSON.parse(data).evaluation_count);
+				}
 			})
 		}
 	})
