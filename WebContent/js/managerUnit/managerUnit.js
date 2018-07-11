@@ -253,7 +253,7 @@ function managerService(event) {
 				},
 				onContentReady:function(){
 					$.ajax({
-						url:'/jwcpxt/Service/list_serviceDefinitionDTO_connectService?unit.unit_id='+event.id,
+						url:'/jwcpxt/Service/list_serviceDefinitionDTO_connectService?unit.jwcpxt_unit_id='+event.id,
 						type:'GET',
 						success:function(data){
 							
@@ -281,7 +281,7 @@ function addService(event){
 		},
 		onContentReady:function(){
 			$.ajax({
-				url:'/jwcpxt/Service/list_serviceDefinition_notConnectService?unit.list_serviceDefinition_notConnectService='+event.id,
+				url:'/jwcpxt/Service/list_serviceDefinition_notConnectService?unit.jwcpxt_unit_id='+event.id,
 				type:'GET',
 				success:function(data){
 					
