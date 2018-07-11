@@ -13,6 +13,16 @@ import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public interface ServiceService {
 
+	/*
+	 * 
+	 */
+
+	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 
+	 */
+
 	/**
 	 * 手动分配实例给测评人员
 	 * 
@@ -103,7 +113,5 @@ public interface ServiceService {
 	void grab_serviceInstance_auto();
 
 	List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID);
-	/*
-	 * 
-	 */
+
 }

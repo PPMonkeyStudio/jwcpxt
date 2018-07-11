@@ -52,6 +52,52 @@ public class ServiceServiceImpl implements ServiceService {
 		this.userService = userService;
 	}
 
+	/**
+	 * 
+	 */
+
+	/**
+	 * 根据业务定义id获取业务定义DTO
+	 */
+	@Override
+	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
+		return serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(serviceDefinitionID);
+	}
+
+	/**
+	 * 创建业务抓取表
+	 */
+	@Override
+	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab) {
+		if (serviceGrab == null) {
+			return false;
+		}
+		serviceGrab.setJwcpxt_service_grab_id(uuidUtil.getUuid());
+		serviceGrab.setService_grab_gmt_create(TimeUtil.getStringSecond());
+		serviceGrab.setService_grab_gmt_modified(serviceGrab.getService_grab_gmt_create());
+		serviceDao.save_serviceGrab(serviceGrab);
+		return true;
+	}
+
+	/**
+	 * 创建业务定义
+	 */
+	@Override
+	public boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
+		if (serviceDefinition == null) {
+			return false;
+		}
+		serviceDefinition.setJwcpxt_service_definition_id(uuidUtil.getUuid());
+		serviceDefinition.setService_definition_gmt_create(TimeUtil.getStringSecond());
+		serviceDefinition.setService_definition_gmt_modified(serviceDefinition.getService_definition_gmt_create());
+		serviceDao.saveOrUpdateObject(serviceDefinition);
+		return true;
+	}
+
+	/**
+	 * 
+	 */
+
 	// @Override
 	// public void distribution_serviceInstance_auto() {
 	//
@@ -226,40 +272,6 @@ public class ServiceServiceImpl implements ServiceService {
 		serviceInstanceVO.setTotalPage(((serviceInstanceVO.getTotalCount() - 1) / serviceInstanceVO.getPageSize()) + 1);
 		//
 		return serviceInstanceVO;
-	}
-
-	@Override
-	public boolean save_serviceDefinition(jwcpxt_service_definition serviceDefinition) {
-		if (serviceDao.ifExist_serviceDefinition_byServiceDefinitionDescribe(
-				serviceDefinition.getService_definition_describe())) {
-			return false;
-		} else {
-			/*
-			 * 业务定义
-			 */
-			// uuid
-			serviceDefinition.setJwcpxt_service_definition_id(uuidUtil.getUuid());
-			// 时间初始化
-			String time = TimeUtil.getStringSecond();
-			serviceDefinition.setService_definition_gmt_create(time);
-			serviceDefinition.setService_definition_gmt_modified(time);
-			// 存入
-			serviceDao.save_serviceDefinition(serviceDefinition);
-			/*
-			 * 业务抓取
-			 */
-			jwcpxt_service_grab serviceGrab = new jwcpxt_service_grab();
-			serviceGrab.setJwcpxt_service_grab_id(uuidUtil.getUuid());
-			serviceGrab.setService_grab_service_definition(serviceDefinition.getJwcpxt_service_definition_id());
-			serviceGrab.setService_grab_gmt_create(time);
-			serviceGrab.setService_grab_gmt_modified(time);
-			serviceDao.save_serviceGrab(serviceGrab);
-			/*
-			 * 
-			 */
-			return true;
-		}
-
 	}
 
 	@Override
@@ -448,11 +460,6 @@ public class ServiceServiceImpl implements ServiceService {
 		 */
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
-		return serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(serviceDefinitionID);
 	}
 
 	/*

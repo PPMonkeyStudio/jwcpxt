@@ -44,6 +44,46 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 */
 
 	/**
+	 * 
+	 */
+	public void list_serviceDTO() {
+		
+	}
+	
+	/**
+	 * 添加业务定义
+	 * 
+	 * @update 2018-7-11
+	 * @throws IOException
+	 */
+	public void save_serviceDefinition() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.save_serviceDefinition(serviceDefinition)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 创建业务抓取表
+	 * 
+	 * @throws IOException
+	 */
+	public void save_serviceGrab() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.save_serviceGrab(serviceGrab)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 
+	 */
+
+	/**
 	 * 获取业务定义列表页面的VO类
 	 * 
 	 * @throws IOException
@@ -70,19 +110,6 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson(serviceInstanceVO));
-	}
-
-	/**
-	 * 添加业务定义
-	 * 
-	 * @throws IOException
-	 */
-	public void save_serviceDefinition() throws IOException {
-		if (serviceService.save_serviceDefinition(serviceDefinition)) {
-			http_response.getWriter().write("1");
-		} else {
-			http_response.getWriter().write("-1");
-		}
 	}
 
 	/**
