@@ -44,6 +44,13 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private List<AnswerDTO> listAnswerDTO;
 
 	/**
+	 * 根据选项获取该选项的所有追问
+	 */
+	public void get_questionInquiries_byOptionId() {
+		
+	}
+
+	/**
 	 * 回答问题
 	 * 
 	 * @throws IOException

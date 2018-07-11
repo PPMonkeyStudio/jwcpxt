@@ -50,6 +50,22 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 * 
 	 */
 	/**
+	 * 根据id获取关联表
+	 * 
+	 * @throws IOException
+	 */
+	public void get_untServic_byUnitServicId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		unitServic = serviceService.get_untServic_byUnitServicId(unitServic);
+		http_response.getWriter().write(gson.toJson(unitServic));
+	}
+
+	/**
 	 * 修改评测数量
 	 * 
 	 * @throws IOException
@@ -328,7 +344,6 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	public jwcpxt_unit_service getunitServic() {
 		return unitServic;
 	}
-
 
 	public jwcpxt_unit_service getUnitServic() {
 		return unitServic;

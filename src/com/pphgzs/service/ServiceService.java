@@ -23,6 +23,14 @@ public interface ServiceService {
 	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab);
 
 	/**
+	 * 根据关联表id获取关联表
+	 * 
+	 * @param unitServic
+	 * @return
+	 */
+	public jwcpxt_unit_service get_untServic_byUnitServicId(jwcpxt_unit_service unitServic);
+
+	/**
 	 * 获取业务定义list
 	 * 
 	 * @return

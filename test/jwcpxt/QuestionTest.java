@@ -184,21 +184,6 @@ public class QuestionTest {
 	}
 
 	/**
-	 * VO 测试
-	 */
-	@Test
-	public void get_questionVOTest() {
-		QuestionVO questionVO = new QuestionVO();
-		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO(null, null);
-		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
-		serviceDefinition.setJwcpxt_service_definition_id("d0d75dfd-32b4-4fdd-b56e-d6af20107625");
-		serviceDefinitionDTO.setServiceDefinition(serviceDefinition);
-		questionVO.setServiceDefinitionDTO(serviceDefinitionDTO);
-		questionVO = questionService.get_questionVO(questionVO);
-		System.out.println("questionVO:" + questionVO);
-	}
-
-	/**
 	 * 
 	 */
 
