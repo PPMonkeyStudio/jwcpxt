@@ -46,6 +46,20 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private jwcpxt_unit unit;
 	private jwcpxt_unit_service unitServic;
 
+	/**
+	 * 修改一个抓取表
+	 * 
+	 * @throws IOException
+	 */
+	public void update_serviceGrab_byServiceGrabId() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.update_serviceGrab_byServiceGrabId(serviceGrab)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
 	/*
 	 * 删除业务抓取表
 	 */

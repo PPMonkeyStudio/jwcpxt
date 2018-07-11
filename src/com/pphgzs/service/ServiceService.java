@@ -19,6 +19,13 @@ public interface ServiceService {
 	/*
 	 * 
 	 */
+	/**
+	 * 修改抓取记录
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
+	public boolean update_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab);
 
 	/**
 	 * 删除抓取记录

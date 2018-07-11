@@ -56,6 +56,38 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	/**
+	 * 修改抓取记录
+	 */
+	@Override
+	public boolean update_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab) {
+		// 定义
+		jwcpxt_service_grab grab = new jwcpxt_service_grab();
+
+		// 根据id获取抓取记录
+		if (serviceGrab != null && serviceGrab.getJwcpxt_service_grab_id() != null
+				&& serviceGrab.getJwcpxt_service_grab_id().trim().length() > 0) {
+			grab = serviceDao.get_serviceGrab_byServiceGrabID(serviceGrab.getJwcpxt_service_grab_id().trim());
+		}
+		if (grab == null) {
+			return false;
+		}
+		grab.setService_grab_single_table(serviceGrab.getService_grab_single_table());
+		grab.setService_grab_project_name(serviceGrab.getService_grab_project_name());
+		grab.setService_grab_interface_one(serviceGrab.getService_grab_interface_one());
+		grab.setService_grab_interface_two(serviceGrab.getService_grab_interface_two());
+		grab.setService_grab_field_name(serviceGrab.getService_grab_field_name());
+		grab.setService_grab_name_field(serviceGrab.getService_grab_name_field());
+		grab.setService_grab_sex_field(serviceGrab.getService_grab_sex_field());
+		grab.setService_grab_phone_field(serviceGrab.getService_grab_phone_field());
+		grab.setService_grab_handle_time_field(serviceGrab.getService_grab_handle_time_field());
+		grab.setService_grab_connect_one_field(serviceGrab.getService_grab_connect_one_field());
+		grab.setService_grab_connect_two_field(serviceGrab.getService_grab_connect_two_field());
+		grab.setService_grab_gmt_modified(TimeUtil.getStringSecond());
+		serviceDao.saveOrUpdateObject(grab);
+		return true;
+	}
+
+	/**
 	 * 删除抓取记录
 	 */
 	@Override
