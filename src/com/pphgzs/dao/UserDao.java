@@ -12,4 +12,6 @@ public interface UserDao {
 
 	public boolean update_user(jwcpxt_user user);
 
+	public jwcpxt_user get_userDO_byUserID(String userID);
+
 }

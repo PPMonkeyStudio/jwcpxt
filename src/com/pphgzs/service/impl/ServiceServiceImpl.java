@@ -385,7 +385,7 @@ public class ServiceServiceImpl implements ServiceService {
 				serviceInstance.getService_instance_service_definition());
 		serviceInstanceDTO.setServiceDefinitionDTO(serviceDefinitionDTO);
 		// 获取分配的人
-		jwcpxt_user judge = userService.get_user_byUserID(serviceInstance.getService_instance_judge());
+		jwcpxt_user judge = userService.get_userDO_byUserID(serviceInstance.getService_instance_judge());
 		serviceInstanceDTO.setJudge(judge);
 		// 获取所有当事人列表
 		List<jwcpxt_service_client> serviceClientList = serviceDao
