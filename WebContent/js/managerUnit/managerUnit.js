@@ -4,63 +4,6 @@
 
 var sonUnitVue;
 
-function managerSonUnit(event) {
-	$
-			.confirm({
-				title : '管理子单位',
-				type : 'blue',
-				boxWidth : '1000px',
-				useBootstrap : false,
-				content : '<button id="'+event.id+'" onclick="addUnit(this)" class="btn btn-default"><i class="ti-plus"></i>增加子单位</button><table id="showSonUnit" class="table table-striped" style="text-align: center;"><thead><tr>'
-						+ '<td>单位名称</td>'
-						+ '<td>机构代码</td>'
-						+ '<td>账号</td>'
-						+ '<td>联系号码</td>'
-						+ '<td>操作</td>'
-						+ '<td>子单位</td>'
-						+ '<td>业务</td>'
-						+ '</tr></thead>'
-						+ '<tbody><template v-for="unit in unitList">'
-						+ '<tr><td>{{ unit.unit_name }}</td>'
-						+ '<td>{{ unit.unit_num }}</td>'
-						+ '<td>{{ unit.unit_account }}</td>'
-						+ '<td>{{ unit.unit_phone }}</td>'
-						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="updateUnit(this)">修改</a>|<a'
-						+ ':id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>'
-						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="managerSonUnit(this)">管理子单位</a></td>'
-						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="">管理业务</a></td></tr>'
-						+ '</template></tbody>' + '</table>',
-				buttons : {
-					cancel : {
-						text : '关闭',
-						btnClass : 'btn-blue',
-						action : function() {
-
-						}
-					}
-				},
-				onContentReady : function() {
-					sonUnitVue = new Vue({
-						el : '#showSonUnit',
-						data : {
-							unitList : ''
-						}
-					})
-					// 查询所有子单位
-					$
-							.ajax({
-								url : '/jwcpxt/Unit/list_unitDO_byFatherUnitID?unit.jwcpxt_unit_id='
-										+ event.id,
-								type : 'GET',
-								success : function(data) {
-									sonUnitVue.unitList = JSON.parse(data);
-								}
-							})
-
-				}
-			})
-}
-
 function resetPassword(event) {
 
 	$
@@ -168,6 +111,66 @@ function updateUnit(event) {
 				}
 			})
 }
+function managerSonUnit(event) {
+	$
+			.confirm({
+				title : '管理子单位',
+				type : 'blue',
+				boxWidth : '1000px',
+				useBootstrap : false,
+				content : '<button id="'
+						+ event.id
+						+ '" onclick="addUnit(this)" class="btn btn-default"><i class="ti-plus"></i>增加子单位</button><table id="showSonUnit" class="table table-striped" style="text-align: center;"><thead><tr>'
+						+ '<td>单位名称</td>'
+						+ '<td>机构代码</td>'
+						+ '<td>账号</td>'
+						+ '<td>联系号码</td>'
+						+ '<td>操作</td>'
+//						+ '<td>子单位</td>'
+						+ '<td>业务</td>'
+						+ '</tr></thead>'
+						+ '<tbody><template v-for="unit in unitList">'
+						+ '<tr><td>{{ unit.unit_name }}</td>'
+						+ '<td>{{ unit.unit_num }}</td>'
+						+ '<td>{{ unit.unit_account }}</td>'
+						+ '<td>{{ unit.unit_phone }}</td>'
+						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="updateUnit(this)">修改</a>|'
+						+ '<a :id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>'
+//						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="managerSonUnit(this)">管理子单位</a></td>'
+						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="managerService(this)">管理业务</a></td></tr>'
+						+ '</template></tbody>' + '</table>',
+				buttons : {
+					cancel : {
+						text : '关闭',
+						btnClass : 'btn-blue',
+						action : function() {
+							loadData();
+						}
+					}
+				},
+				onContentReady : function() {
+					sonUnitVue = new Vue({
+						el : '#showSonUnit',
+						data : {
+							unitList : ''
+						}
+					})
+					// 查询所有子单位
+					loadDataSon(event.id);
+				}
+			})
+}
+
+function loadDataSon(id) {
+	$.ajax({
+		url : '/jwcpxt/Unit/list_unitDO_byFatherUnitID?unit.jwcpxt_unit_id='
+				+id,
+		type : 'GET',
+		success : function(data) {
+			sonUnitVue.unitList = JSON.parse(data);
+		}
+	})
+}
 
 function addUnit(event) {
 	$
@@ -196,8 +199,9 @@ function addUnit(event) {
 						action : function() {
 							var formData = new FormData(document
 									.getElementById("unitForm"));
-							formData.append('unit.unit_father',event.id);
-							formData.append('unit.unit_password',$('#add_unit_phone').val());
+							formData.append('unit.unit_father', event.id);
+							formData.append('unit.unit_password', $(
+									'#add_unit_phone').val());
 							$.ajax({
 								url : '/jwcpxt/Unit/save_unit',
 								type : 'POST',
@@ -207,7 +211,7 @@ function addUnit(event) {
 								success : function(data) {
 									if (data == 1) {
 										toastr.success("新建成功！");
-										loadData();
+										loadDataSon(event.id)
 									} else {
 										toastr.error("新建失败！");
 									}
@@ -220,4 +224,8 @@ function addUnit(event) {
 
 				}
 			})
+}
+
+function managerService(event){
+	
 }
