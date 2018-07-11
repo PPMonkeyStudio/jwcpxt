@@ -31,6 +31,22 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	/**
+	 * 删除抓取记录
+	 */
+	@Override
+	public boolean delete_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab) {
+		Session session = getSession();
+		String hql = "delete from jwcpxt_service_grab where jwcpxt_service_grab_id=:serviceGrabId";
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceGrabId", serviceGrab.getJwcpxt_service_grab_id());
+		//
+		query.executeUpdate();
+		session.flush();
+		return true;
+	}
+
+	/**
 	 * 保存
 	 * 
 	 * @param obj

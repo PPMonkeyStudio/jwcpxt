@@ -20,6 +20,20 @@ public interface ServiceService {
 	 * 
 	 */
 
+	/**
+	 * 删除抓取记录
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
+	public boolean delete_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 保存抓取
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
 	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab);
 
 	/**

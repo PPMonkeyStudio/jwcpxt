@@ -47,8 +47,38 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private jwcpxt_unit_service unitServic;
 
 	/*
-	 * 
+	 * 删除业务抓取表
 	 */
+	public void delete_serviceGrab_byServiceGrabId() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.delete_serviceGrab_byServiceGrabId(serviceGrab)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 添加业务定义
+	 */
+
+	/**
+	 * 业务列表
+	 * 
+	 * @throws IOException
+	 */
+	public void list_serviceDefinition() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		//
+		listServiceDefinition = serviceService.list_serviceDefinition();
+		http_response.getWriter().write(gson.toJson(listServiceDefinition));
+	}
+
 	/**
 	 * 根据id获取关联表
 	 * 
@@ -122,23 +152,6 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		listServiceDefinition = serviceService.list_serviceDefinition_notConnectService(unit);
-		http_response.getWriter().write(gson.toJson(listServiceDefinition));
-	}
-
-	/**
-	 * 业务列表DTO
-	 * 
-	 * @throws IOException
-	 */
-	public void list_serviceDefinition() throws IOException {
-		//
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.serializeNulls().create();
-		//
-		http_response.setContentType("text/html;charset=utf-8");
-		//
-		listServiceDefinition = serviceService.list_serviceDefinition();
 		http_response.getWriter().write(gson.toJson(listServiceDefinition));
 	}
 

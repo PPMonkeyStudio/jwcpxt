@@ -56,6 +56,22 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	/**
+	 * 删除抓取记录
+	 */
+	@Override
+	public boolean delete_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab) {
+		if (serviceGrab != null && serviceGrab.getJwcpxt_service_grab_id() != null
+				&& serviceGrab.getJwcpxt_service_grab_id().trim().length() > 0) {
+			serviceGrab = serviceDao.get_serviceGrab_byServiceGrabID(serviceGrab.getJwcpxt_service_grab_id().trim());
+		}
+		if (serviceGrab == null) {
+			return false;
+		}
+		serviceDao.delete_serviceGrab_byServiceGrabId(serviceGrab);
+		return true;
+	}
+
+	/**
 	 * 获取关联表
 	 */
 	@Override
