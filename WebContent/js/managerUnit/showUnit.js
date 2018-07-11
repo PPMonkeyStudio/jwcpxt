@@ -9,7 +9,7 @@ $(function(){
 			unitVO:''
 		}
 	})
-	loadData();
+//	loadData();
 })
 function loadData(){
 	$('#unitTable').hide();
