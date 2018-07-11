@@ -11,7 +11,7 @@ public interface UnitService {
 
 	public jwcpxt_unit get_unitDO_byID(String unitID);
 
-	public List<jwcpxt_unit> list_unit_all();
+	public List<jwcpxt_unit> list_unitDO_all();
 
 	public boolean delete_unit(jwcpxt_unit unit);
 
