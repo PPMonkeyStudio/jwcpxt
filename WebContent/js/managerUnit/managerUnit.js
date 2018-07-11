@@ -11,7 +11,7 @@ function managerSonUnit(event) {
 				type : 'blue',
 				boxWidth : '1000px',
 				useBootstrap : false,
-				content : '<button onclick="" class="btn btn-default"><i class="ti-plus"></i>增加子单位</button><table id="showSonUnit" class="table table-striped" style="text-align: center;"><thead><tr>'
+				content : '<button id="'+event.id+'" onclick="addUnit(this)" class="btn btn-default"><i class="ti-plus"></i>增加子单位</button><table id="showSonUnit" class="table table-striped" style="text-align: center;"><thead><tr>'
 						+ '<td>单位名称</td>'
 						+ '<td>机构代码</td>'
 						+ '<td>账号</td>'
@@ -169,18 +169,18 @@ function updateUnit(event) {
 			})
 }
 
-function addUnit() {
+function addUnit(event) {
 	$
 			.confirm({
-				title : '新建二级单位',
-				type : 'blue',
+				title : '新建子单位',
+				type : 'orange',
 				boxWidth : '500px',
 				useBootstrap : false,
 				content : '<div><form id="unitForm">'
 						+ '<label>单位名称：</label><input name="unit.unit_name" class="form-control">'
 						+ '<label>机构代码：</label><input name="unit.unit_num" class="form-control">'
 						+ '<label>单位账号：</label><input name="unit.unit_account" class="form-control">'
-						+ '<label>联系电话：</label><input name="unit.unit_phone" class="form-control">'
+						+ '<label>联系电话：</label><input id="add_unit_phone" name="unit.unit_phone" class="form-control">'
 						+ '</form></div>',
 				buttons : {
 					cancel : {
@@ -196,6 +196,8 @@ function addUnit() {
 						action : function() {
 							var formData = new FormData(document
 									.getElementById("unitForm"));
+							formData.append('unit.unit_father',event.id);
+							formData.append('unit.unit_password',$('#add_unit_phone').val());
 							$.ajax({
 								url : '/jwcpxt/Unit/save_unit',
 								type : 'POST',
