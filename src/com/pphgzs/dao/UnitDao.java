@@ -6,7 +6,7 @@ import com.pphgzs.domain.DO.jwcpxt_unit;
 
 public interface UnitDao {
 
-	public List<jwcpxt_unit> list_unit_all();
+	public List<jwcpxt_unit> list_unitDO_all();
 
 	public int get_unitTotalRecords();
 
@@ -19,5 +19,9 @@ public interface UnitDao {
 	public boolean update_unit(jwcpxt_unit unit);
 
 	jwcpxt_unit get_unit_byNameOrAccount(String unit_name, String account);
+
+	public List<jwcpxt_unit> list_unitDO_byOneAndTwo();
+
+	public List<jwcpxt_unit> list_unitDO_byFatherUnitID(String jwcpxt_unit_id);
 
 }

@@ -34,9 +34,6 @@ a:hover {
 									<h4 class="title">单位管理</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
-									<button onclick="addUnit()" class="btn btn-default">
-										<i class="ti-plus"></i>新建一个单位
-									</button>
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
@@ -54,12 +51,20 @@ a:hover {
 											</tr>
 										</thead>
 										<tbody>
+											<template v-for="unit in unitVO.unitList">
 											<tr>
-
+												<td>{{ unit.unit_name }}</td>
+												<td>{{ unit.unit_num }}</td>
+												<td>{{ unit.unit_account }}</td>
+												<td>{{ unit.unit_phone }}</td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="updateUnit(this)">修改</a>|<a
+													:id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="managerSonUnit(this)">管理子单位</a></td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="managerService(this)">管理业务</a></td>
 											</tr>
+											</template>
 										</tbody>
 									</table>
-									<span>单位总数：{{ unitVO.totalRecords }}</span>
 								</div>
 							</div>
 						</div>

@@ -34,7 +34,7 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 	}
 
 	/*
-	 * 没写
+	 * 获取单位列表页面VO（一级单位、二级单位）
 	 */
 	public void get_unitVO() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -45,7 +45,7 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 		http_response.getWriter().write(gson.toJson(unitService.get_unitVO()));
 	}
 
-	public void add_unit() throws IOException {
+	public void save_unit() throws IOException {
 
 		if (unitService.save_unit(unit)) {
 			http_response.setContentType("text/html;charset=utf-8");
@@ -97,12 +97,12 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 	}
 
 	/**
-	 * 获取所有的单位列表
+	 * 通过单位id查找所有子单位
 	 * 
 	 * @throws IOException
 	 */
-	public void list_unit_all() throws IOException {
-		List<jwcpxt_unit> unitList = unitService.list_unit_all();
+	public void list_unitDO_byFatherUnitID() throws IOException {
+		List<jwcpxt_unit> unitList = unitService.list_unitDO_byFatherUnitID(unit.getJwcpxt_unit_id());
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
@@ -110,7 +110,6 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson(unitList));
-
 	}
 
 	/**

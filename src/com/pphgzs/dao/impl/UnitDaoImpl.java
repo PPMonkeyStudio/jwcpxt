@@ -22,7 +22,34 @@ public class UnitDaoImpl implements UnitDao {
 	}
 
 	@Override
-	public List<jwcpxt_unit> list_unit_all() {
+	public List<jwcpxt_unit> list_unitDO_byOneAndTwo() {
+		List<jwcpxt_unit> unit_List = new ArrayList<jwcpxt_unit>();
+
+		Session session = getSession();
+		String hql = "from jwcpxt_unit where unit_grade = 1 or unit_grade = 2 order by unit_grade asc";
+		Query query = session.createQuery(hql);
+		unit_List = query.list();
+		session.clear();
+
+		return unit_List;
+	}
+
+	@Override
+	public List<jwcpxt_unit> list_unitDO_byFatherUnitID(String unit_father) {
+		List<jwcpxt_unit> unit_List = new ArrayList<jwcpxt_unit>();
+
+		Session session = getSession();
+		String hql = "from jwcpxt_unit where unit_father = :unit_father ";
+		Query query = session.createQuery(hql);
+		query.setParameter("unit_father", unit_father);
+		unit_List = query.list();
+		session.clear();
+
+		return unit_List;
+	}
+
+	@Override
+	public List<jwcpxt_unit> list_unitDO_all() {
 
 		List<jwcpxt_unit> unit_List = new ArrayList<jwcpxt_unit>();
 
