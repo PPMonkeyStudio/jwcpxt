@@ -84,7 +84,9 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 			http_response.getWriter().write("1");
 		} else if (ActionContext.getContext().getSession().get("unit") != null) {
 			ActionContext.getContext().getSession().remove("unit");
-			http_response.getWriter().write("2");
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
 		}
 		return "logout";
 	}
