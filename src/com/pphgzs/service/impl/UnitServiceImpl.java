@@ -78,10 +78,11 @@ public class UnitServiceImpl implements UnitService {
 
 	@Override
 	public boolean reset_unitPassword(jwcpxt_unit newUnit) {
-		if (unitDao.get_unitDO_byID(newUnit.getJwcpxt_unit_id()) == null) {
+		jwcpxt_unit oldUnit = unitDao.get_unitDO_byID(newUnit.getJwcpxt_unit_id());
+		if (oldUnit == null) {
 			return false;
 		}
-		jwcpxt_unit oldUnit = unitDao.get_unitDO_byID(newUnit.getJwcpxt_unit_id());
+
 		oldUnit.setUnit_password(MD5Util.GetMD5Code(oldUnit.getUnit_account()));
 
 		unitDao.update_unit(oldUnit);
@@ -122,6 +123,11 @@ public class UnitServiceImpl implements UnitService {
 
 		unitDao.update_unit(oldUnit);
 		return true;
+	}
+
+	@Override
+	public List<jwcpxt_unit> list_unitDO_byFatherUnitID(String jwcpxt_unit_id) {
+		return unitDao.list_unitDO_byFatherUnitID(jwcpxt_unit_id);
 	}
 
 	@Override

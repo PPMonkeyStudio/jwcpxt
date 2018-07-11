@@ -1,14 +1,17 @@
 package com.pphgzs.action;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_user;
-import com.pphgzs.domain.VO.UserVO;
 import com.pphgzs.service.UserService;
 
 @SuppressWarnings("serial")
@@ -22,12 +25,50 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	 * 
 	 */
 	private jwcpxt_user user;
-	private UserVO userVO;
 
 	/*
 	 * 
 	 */
+	public void get_userVO() throws IOException {
 
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(userService.get_userVO()));
+	}
+
+	public void save_user() throws IOException {
+		if (userService.save_user(user)) {
+			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("1");
+		} else {
+			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	public void reset_userPassword_byUserID() throws IOException {
+
+		if (userService.reset_userPassword_byUserID(user.getJwcpxt_user_id())) {
+			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("1");
+		} else {
+			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	public void ban_user_byUserID() throws IOException {
+		if (userService.ban_user_byUserID(user.getJwcpxt_user_id())) {
+			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("1");
+		} else {
+			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("-1");
+		}
+	}
 	/*
 	 * 
 	 */
@@ -76,14 +117,6 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 
 	public void setUser(jwcpxt_user user) {
 		this.user = user;
-	}
-
-	public UserVO getUserVO() {
-		return userVO;
-	}
-
-	public void setUserVO(UserVO userVO) {
-		this.userVO = userVO;
 	}
 
 	/*
