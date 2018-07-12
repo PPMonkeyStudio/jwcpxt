@@ -30,8 +30,10 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	@Override
 	public FeedbackRectificationVO get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
 			jwcpxt_unit unit) {
-		// TODO Auto-generated method stub
-		return null;
+		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
+		// 获取总记录数
+		int totalRecords = dissatisfiedFeedbackDao.get_countFeedbackRectificationVO(feedbackRectificationVO, unit);
+		return feedbackRectificationVO;
 	}
 
 	/**
