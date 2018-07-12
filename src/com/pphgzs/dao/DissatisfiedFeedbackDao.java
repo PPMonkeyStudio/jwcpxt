@@ -82,4 +82,14 @@ public interface DissatisfiedFeedbackDao {
 	 * @return
 	 */
 	public int get_countFeedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO, jwcpxt_unit unit);
+
+	/**
+	 * 获取整改数据
+	 * 
+	 * @param feedbackRectificationVO
+	 * @param unit
+	 * @return
+	 */
+	public List<jwcpxt_feedback_rectification> get_feedbackRectificationVO(
+			FeedbackRectificationVO feedbackRectificationVO, jwcpxt_unit unit);
 }

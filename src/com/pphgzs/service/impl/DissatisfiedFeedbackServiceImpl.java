@@ -33,6 +33,14 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
 		// 获取总记录数
 		int totalRecords = dissatisfiedFeedbackDao.get_countFeedbackRectificationVO(feedbackRectificationVO, unit);
+		// 总页数
+		int totalPages = ((totalRecords - 1) / feedbackRectificationVO.getPageSize()) + 1;
+		// 获取数据
+		listFeedbackRectification = dissatisfiedFeedbackDao.get_feedbackRectificationVO(feedbackRectificationVO, unit);
+		// set
+		feedbackRectificationVO.setTotalCount(totalRecords);
+		feedbackRectificationVO.setTotalPage(totalPages);
+		feedbackRectificationVO.setListFeedbackRectification(listFeedbackRectification);
 		return feedbackRectificationVO;
 	}
 
