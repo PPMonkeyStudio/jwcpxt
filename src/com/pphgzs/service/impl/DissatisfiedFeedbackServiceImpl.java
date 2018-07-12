@@ -24,10 +24,15 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	public DissatisfiedQuestionVO get_dissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {
 		List<DissatisfiedQuestionDTO> listDissatisfiedQuestionDTO = new ArrayList<>();
 		// 获取总数量
-		int totalRecords = dissatisfiedFeedbackDao.get_dissatisfiedQuestionVO(dissatisfiedQuestionVO);
+		int totalRecords = dissatisfiedFeedbackDao.get_countDissatisfiedQuestionVO(dissatisfiedQuestionVO);
+		// 总页数
+		int totalPages = ((totalRecords - 1) / dissatisfiedQuestionVO.getPageSize()) + 1;
 		// 获取分页中的数据
-
-		return null;
+		listDissatisfiedQuestionDTO = dissatisfiedFeedbackDao.get_dataDissatisfiedQuestionVO(dissatisfiedQuestionVO);
+		dissatisfiedQuestionVO.setTotalCount(totalRecords);
+		dissatisfiedQuestionVO.setTotalPage(totalPages);
+		dissatisfiedQuestionVO.setListDissatisfiedQuestionDTO(listDissatisfiedQuestionDTO);
+		return dissatisfiedQuestionVO;
 	}
 
 	/**
