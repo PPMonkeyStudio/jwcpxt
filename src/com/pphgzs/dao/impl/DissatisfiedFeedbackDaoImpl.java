@@ -156,7 +156,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	@Override
 	public jwcpxt_unit get_unit_byDisFeedbackId(String jwcpxt_dissatisfied_feedback_id) {
 		Session session = getSession();
-		String hql = " select client "//
+		String hql = " select unit "//
 				+ " from "//
 				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
 				+ " jwcpxt_answer_choice answerChoice "//
