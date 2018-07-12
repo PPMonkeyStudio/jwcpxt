@@ -2,6 +2,7 @@ package com.pphgzs.dao;
 
 import java.util.List;
 
+import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 
@@ -23,4 +24,25 @@ public interface DissatisfiedFeedbackDao {
 	 */
 	public List<DissatisfiedQuestionDTO> get_dataDissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO);
 
+	/**
+	 * 保存对象
+	 * 
+	 * @param obj
+	 */
+	public void saveOrUpdateObject(Object obj);
+
+	/**
+	 * 根据id获取不满意反馈表
+	 * 
+	 * @param jwcpxt_dissatisfied_feedback_id
+	 * @return
+	 */
+	public jwcpxt_dissatisfied_feedback get_dissatisfiedFeedbackDo_byId(String jwcpxt_dissatisfied_feedback_id);
+
+	/**
+	 * 获取当月最大的编号
+	 * 
+	 * @return
+	 */
+	public String get_maxMounthFeedbackRectifi();
 }

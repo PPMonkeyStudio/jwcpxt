@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 
@@ -19,6 +20,18 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 保存
+	 * 
+	 * @param obj
+	 */
+	@Override
+	public void saveOrUpdateObject(Object obj) {
+		Session session = getSession();
+		session.saveOrUpdate(obj);
+		session.flush();
 	}
 
 	@Override
@@ -86,6 +99,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		List<DissatisfiedQuestionDTO> list = query.list();
 		session.clear();
 		return list;
+	}
+
+	@Override
+	public jwcpxt_dissatisfied_feedback get_dissatisfiedFeedbackDo_byId(String jwcpxt_dissatisfied_feedback_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -33,6 +33,23 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	public jwcpxt_service_client get_serviceClientDo_byId(String serviceClientId) {
+		Session session = getSession();
+		String hql = "from jwcpxt_service_client where jwcpxt_service_client_id=:serviceClientId ";
+		//
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceClientId", serviceClientId);
+		//
+		jwcpxt_service_client jwcpxt_service_client = (jwcpxt_service_client) query.uniqueResult();
+		session.clear();
+		return jwcpxt_service_client;
+	}
+
+	/**
 	 * 获取ClientInstanceDTO内容
 	 */
 	@Override

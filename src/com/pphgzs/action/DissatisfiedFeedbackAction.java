@@ -27,10 +27,30 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
 
 	/**
-	 * 驳回不满意反馈表
+	 * 推送
+	 * @throws IOException 
 	 */
-	public void update_dissatisfiedFeedbackState_toReject() {
-		
+	public void updade_dissatisfiedFeedbackState_toPush() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.updade_dissatisfiedFeedbackState_toPush(dissatisfiedFeedback,feedbackRectification)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 驳回不满意反馈表
+	 * 
+	 * @throws IOException
+	 */
+	public void update_dissatisfiedFeedbackState_toReject() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_dissatisfiedFeedbackState_toReject(dissatisfiedFeedback)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
 	/**
