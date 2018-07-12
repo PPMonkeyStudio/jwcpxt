@@ -57,6 +57,15 @@ public interface DissatisfiedFeedbackService {
 	 * @param feedbackRectificationVO
 	 * @return
 	 */
-	public FeedbackRectificationVO get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,jwcpxt_unit unit);
+	public FeedbackRectificationVO get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
+			jwcpxt_unit unit);
+
+	/**
+	 * 办结操作
+	 * 
+	 * @param feedbackRectification
+	 * @return
+	 */
+	public boolean update_dissatisfiedFeedbackState_toEnd(jwcpxt_feedback_rectification feedbackRectification);
 
 }

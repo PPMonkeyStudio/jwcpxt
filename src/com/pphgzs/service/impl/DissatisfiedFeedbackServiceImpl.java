@@ -25,6 +25,28 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private UnitService unitService;
 
 	/**
+	 * 办结操作
+	 */
+	@Override
+	public boolean update_dissatisfiedFeedbackState_toEnd(jwcpxt_feedback_rectification feedbackRectification) {
+		jwcpxt_feedback_rectification feeRectification = new jwcpxt_feedback_rectification();
+		if (feedbackRectification != null && feedbackRectification.getJwcpxt_feedback_rectification_id() != null
+				&& feedbackRectification.getJwcpxt_feedback_rectification_id().trim().length() > 0) {
+			feeRectification = dissatisfiedFeedbackDao
+					.get_feedbackRectficationDO_byId(feedbackRectification.getJwcpxt_feedback_rectification_id());
+		}
+		if (feeRectification == null) {
+			return false;
+		}
+		feeRectification.setFeedback_rectification_handle_state("2");
+		feeRectification.setFeedback_rectification_date(TimeUtil.getStringSecond());
+		feeRectification.setFeedback_rectification_content(feedbackRectification.getFeedback_rectification_content());
+		feeRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+		dissatisfiedFeedbackDao.saveOrUpdateObject(feeRectification);
+		return true;
+	}
+
+	/**
 	 * 整改VO
 	 */
 	@Override
