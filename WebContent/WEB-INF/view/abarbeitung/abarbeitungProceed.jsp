@@ -50,7 +50,8 @@ a:hover {
 											style="display: inline; width: 150px;">
 									</div>
 									<div id="showDiscontent">
-										<table class="table table-striped" style="text-align: center;">
+										<table class="table table-striped"
+											style="text-align: center; display: none;"">
 											<thead>
 												<tr>
 													<td>问题描述</td>
