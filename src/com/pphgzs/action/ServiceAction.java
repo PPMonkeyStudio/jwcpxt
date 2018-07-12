@@ -11,6 +11,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
@@ -52,7 +53,8 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	/**
 	 * 从session中拿到测评人员的信息
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void get_notServiceClient_byServiceClientId() throws IOException {
 		//
@@ -62,6 +64,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_user user = new jwcpxt_user();
+		user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
 		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
 		http_response.getWriter().write(gson.toJson(clientInstanceDTO));
 	}
