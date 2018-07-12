@@ -19,7 +19,7 @@ a:hover {
 	cursor: pointer;
 }
 </style>
-<title>业务管理</title>
+<title>审核反馈</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -35,38 +35,52 @@ a:hover {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">审核整改</h4>
+									<h4 class="title">审核反馈</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
-										<label>整改时间</label> <input onchange="changeQuery()"
-											id="screenServiceInstanceStartDate"
+										<label>反馈时间</label> <input onchange="changeQuery()"
+											id=""
 											class="mydate form-control"
 											style="display: inline; width: 150px;"><label>&nbsp;至&nbsp;</label><input
-											onchange="changeQuery()" id="screenServiceInstanceStopDate"
+											onchange="changeQuery()" id=""
 											class="mydate form-control"
 											style="display: inline; width: 150px;">
 									</div>
+									<div id="showDiscontent">
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
 									<table id="serviceTable" class="table table-striped"
-										style="text-align: center; display: none;">
+										style="text-align: center;">
 										<thead>
 											<tr>
-
+												<td>问题描述</td>
+												<td><select class="form-control">
+													<option value="1">未审核</option>
+													<option value="2">已推送</option>
+													<option value="3">已驳回</option>
+												</select></td>
+												<td>反馈时间</td>
+												<td>详情</td>
+												<td>操作</td>
 											</tr>
 										</thead>
 										<tbody>
-
+											<template v-for="">
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+											</template>
 										</tbody>
 									</table>
 									<!-- 分页 -->
 									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage"></span>{{
-											serviceVO.currPage }}
-										</span> <span>共:<span id="totalPage">{{
-												serviceVO.totalPage }}</span>页
+										<span>当前页数:<span id="currPage"></span>1
+										</span> <span>共:<span id="totalPage">2</span>页
 										</span> <span onclick="skipToIndexPage()" id="indexPage"
 											class="pageOperation">首页</span> <span
 											onclick="skipToPrimaryPage()" id="previousPage"
@@ -82,6 +96,7 @@ a:hover {
 												class="btn btn-default"
 												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
 										</span>
+									</div>
 									</div>
 								</div>
 							</div>

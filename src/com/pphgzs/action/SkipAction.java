@@ -55,6 +55,10 @@ public class SkipAction {
 		return "navbarAppraisal";
 	}
 
+	public String skipAbarbeitungProceed() {
+		return "skipAbarbeitungProceed";
+	}
+
 	/* hy */
 	public String skipQuestionnaireDetails() {
 		return "skipQuestionnaireDetails";

@@ -23,8 +23,8 @@
 				<li><a href="<%=basePath%>Skip/skipAbarbeitungManager">
 						<p>整改</p>
 				</a></li>
-				<li><a href="<%=basePath%>Skip/skipAbarbeitungManager">
-						<p>审核</p>
+				<li><a href="<%=basePath%>Skip/skipAbarbeitungProceed">
+						<p>反馈</p>
 				</a></li>
 			</ul>
 		</div>
