@@ -64,6 +64,14 @@ public class SkipAction {
 		return "skipQuestionnaireDetailsJsp";
 	}
 
+	public String skipReturnedPartyInformation() {
+		return "skipReturnedPartyInformation";
+	}
+
+	public String skipPoliceAssessmentPage() {
+		return "skipPoliceAssessmentPage";
+	}
+
 	public String getDefinitionId() {
 		return definitionId;
 	}
