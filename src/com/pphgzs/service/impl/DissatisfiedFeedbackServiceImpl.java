@@ -24,6 +24,40 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private UnitService unitService;
 
 	/**
+	 * 通过整改反馈id获得一条记录
+	 * 
+	 * @param feedbackRectification
+	 * @return
+	 */
+	@Override
+	public jwcpxt_feedback_rectification get_feedbackRectficationDO_byId(
+			jwcpxt_feedback_rectification feedbackRectification) {
+		if (feedbackRectification != null && feedbackRectification.getJwcpxt_feedback_rectification_id() != null
+				&& feedbackRectification.getJwcpxt_feedback_rectification_id().trim().length() > 0) {
+			feedbackRectification = dissatisfiedFeedbackDao
+					.get_feedbackRectficationDO_byId(feedbackRectification.getJwcpxt_feedback_rectification_id());
+		}
+		return feedbackRectification;
+	}
+
+	/**
+	 * 通过不满意反馈id获得一条记录
+	 * 
+	 * @param dissatisfiedFeedback
+	 * @return
+	 */
+	@Override
+	public jwcpxt_dissatisfied_feedback get_dissatisfiedFeedbackDO_byId(
+			jwcpxt_dissatisfied_feedback dissatisfiedFeedback) {
+		if (dissatisfiedFeedback != null && dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id() != null
+				&& dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id().trim().length() > 0) {
+			dissatisfiedFeedback = dissatisfiedFeedbackDao
+					.get_dissatisfiedFeedbackDo_byId(dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id());
+		}
+		return dissatisfiedFeedback;
+	}
+
+	/**
 	 * 推送
 	 */
 	@Override
@@ -42,7 +76,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		if (disFeedback == null) {
 			return false;
 		}
-		disFeedback.setDissatisfied_feedback_state("3");
+		disFeedback.setDissatisfied_feedback_state("2");
 		disFeedback
 				.setDissatisfied_feedback_audit_opinion(dissatisfiedFeedback.getDissatisfied_feedback_audit_opinion());
 		disFeedback.setDissatisfied_feedback_gmt_modified(TimeUtil.getStringSecond());
