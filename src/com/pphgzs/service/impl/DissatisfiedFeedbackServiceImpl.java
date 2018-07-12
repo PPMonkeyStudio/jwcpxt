@@ -151,7 +151,8 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		// 责任单位
 		unit = dissatisfiedFeedbackDao.get_unit_byDisFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
 		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_name());
-		feedbackRectification.setFeedback_rectification_unit_people_phone(unit.getUnit_contacts_name());
+		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_contacts_name()   );
+		feedbackRectification.setFeedback_rectification_unit_people_phone(unit.getUnit_phone());
 		feedbackRectification.setFeedback_rectification_handle_state("1");
 		feedbackRectification.setFeedback_rectification_audit_state("1");
 		feedbackRectification.setFeedback_rectification_gmt_create(TimeUtil.getStringSecond());
