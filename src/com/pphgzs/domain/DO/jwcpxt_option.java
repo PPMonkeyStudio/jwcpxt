@@ -5,7 +5,7 @@ public class jwcpxt_option {
 	private String option_describe;
 	private String option_question;
 	private int option_sort;
-	private double option_grade;
+	private double option_grade = 0;
 	private String option_push;
 	private String option_gmt_create;
 	private String option_gmt_modified;

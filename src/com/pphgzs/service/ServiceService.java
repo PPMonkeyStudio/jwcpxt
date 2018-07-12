@@ -6,6 +6,11 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
+import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -16,12 +21,98 @@ public interface ServiceService {
 	/*
 	 * 
 	 */
+	/**
+	 * 获取当事人信息及所涉及的业务
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user);
 
+	/**
+	 * 根据抓取id获取抓取记录
+	 */
+	public jwcpxt_service_grab get_serviceGrab(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 根据业务定义id获取抓取表
+	 * 
+	 * @param serviceDefinition
+	 * @return
+	 */
+	public List<jwcpxt_service_grab> list_serviceGrab_byServiceDefinitionId(
+			jwcpxt_service_definition serviceDefinition);
+
+	/**
+	 * 修改抓取记录
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
+	public boolean update_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 删除抓取记录
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
+	public boolean delete_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 保存抓取
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
 	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab);
 
 	/**
+	 * 根据关联表id获取关联表
 	 * 
+	 * @param unitServic
+	 * @return
 	 */
+	public jwcpxt_unit_service get_untServic_byUnitServicId(jwcpxt_unit_service unitServic);
+
+	/**
+	 * 获取业务定义list
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinition();
+
+	/**
+	 * 未链接某单位的业务
+	 * 
+	 * @param unit
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinition_notConnectService(jwcpxt_unit unit);
+
+	/**
+	 * 更改评测数量
+	 * 
+	 * @param unitService
+	 * @return
+	 */
+	public boolean update_unitServiceCount_byUnitServiceId(jwcpxt_unit_service unitService);
+
+	/**
+	 * 创建单位业务表
+	 * 
+	 * @param unitService
+	 * @return
+	 */
+	public boolean save_unitService(jwcpxt_unit_service unitService);
+
+	/**
+	 * 获取所有关联某单位的业务
+	 * 
+	 * @param unit
+	 * @return
+	 */
+	public List<ServiceConnectDTO> list_serviceDefinitionDTO_connectService(jwcpxt_unit unit);
 
 	/**
 	 * 手动分配实例给测评人员
