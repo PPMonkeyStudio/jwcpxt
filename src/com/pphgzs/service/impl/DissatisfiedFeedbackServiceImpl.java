@@ -69,7 +69,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("2");
 				checkFeedbackRectification.setFeedback_rectification_sjzgbm_opinion(
-						feedbackRectification.getFeedback_rectification_sjzgbm_opinion());
+						feedbackRectification.getFeedback_rectification_cpzx_opinion());
 			}
 			checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
 			dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
@@ -87,16 +87,28 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("3");
 				checkFeedbackRectification.setFeedback_rectification_sjzgbm_opinion(
-						feedbackRectification.getFeedback_rectification_sjzgbm_opinion());
+						feedbackRectification.getFeedback_rectification_cpzx_opinion());
 			}
 			checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
 			dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
+			newFeedbackRectification = checkFeedbackRectification;
 			newFeedbackRectification.setJwcpxt_feedback_rectification_id(uuidUtil.getUuid());
-			newFeedbackRectification.setFeedback_rectification_dissatisfied_feedback(
-					checkFeedbackRectification.getFeedback_rectification_dissatisfied_feedback());
-			
+			// 获取当月最大反馈整改表数
+			String maxMounthFeedbackRectifi = dissatisfiedFeedbackDao.get_maxMounthFeedbackRectifi();
+			newFeedbackRectification
+					.setFeedback_rectification_no((Integer.parseInt(maxMounthFeedbackRectifi) + 1) + "");
+			newFeedbackRectification.setFeedback_rectification_handle_state("1");
+			newFeedbackRectification.setFeedback_rectification_date("");
+			newFeedbackRectification.setFeedback_rectification_content("");
+			newFeedbackRectification.setFeedback_rectification_sjzgbm_opinion("");
+			newFeedbackRectification.setFeedback_rectification_cpzx_opinion("");
+			newFeedbackRectification.setFeedback_rectification_handle_state("1");
+			newFeedbackRectification.setFeedback_rectification_gmt_create(TimeUtil.getStringSecond());
+			newFeedbackRectification.setFeedback_rectification_gmt_modified(
+					newFeedbackRectification.getFeedback_rectification_gmt_create());
+			dissatisfiedFeedbackDao.saveOrUpdateObject(newFeedbackRectification);
 		}
-		return true;
+		return false;
 	}
 
 	/**
