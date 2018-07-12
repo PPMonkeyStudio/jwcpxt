@@ -12,6 +12,7 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
+import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.util.TimeUtil;
@@ -313,7 +314,10 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				//
 				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
-				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime ";
+				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime "//
+				+ " order by "//
+				+ " feedbackRectification.feedback_rectification_gmt_create "//
+				+ " desc ";
 		Query query = session.createQuery(hql);
 		// 办结情况
 		if (feedbackRectificationVO.getScreenHandleState().equals("-1")) {
@@ -350,5 +354,123 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		List<jwcpxt_feedback_rectification> list = query.list();
 		session.clear();
 		return list;
+	}
+
+	@Override
+	public List<jwcpxt_feedback_rectification> get_checkFeedbackRectificationVO(
+			CheckFeedbackRectificationVO checkFeedbackRectificationVO, jwcpxt_unit unit) {
+		Session session = getSession();
+		String hql = "select feedbackRectification "//
+				+ " from "//
+				+ " jwcpxt_feedback_rectification feedbackRectification , "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_unit unit "//
+				//
+				+ " where "//
+				+ " feedbackRectification.feedback_rectification_audit_state like :screenCheckState "//
+				+ " and feedbackRectification.feedback_rectification_title like :screenSearch "//
+				+ " and unit.unit_father like :unitID "// 上级单位是传过来的单位
+				//
+				+ " and feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
+				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
+				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
+				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
+				//
+				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
+				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime " + " order by "//
+				+ " feedbackRectification.feedback_rectification_gmt_create "//
+				+ " desc ";
+		Query query = session.createQuery(hql);
+		// 办结情况
+		if (checkFeedbackRectificationVO.getScreenCheckState().equals("-1")) {
+			query.setParameter("screenCheckState", "%%");
+		} else {
+			query.setParameter("screenCheckState", checkFeedbackRectificationVO.getScreenCheckState());
+		}
+		// 搜索
+		query.setParameter("screenSearch", "%" + checkFeedbackRectificationVO.getScreenSearch() + "%");
+		// 单位
+		if (unit == null || unit.getJwcpxt_unit_id().equals("")) {
+			query.setParameter("unitID", "%%");
+		} else {
+			query.setParameter("unitID", unit.getJwcpxt_unit_id());
+		}
+		//
+		if (checkFeedbackRectificationVO.getScreenStartTime().equals("")) {
+			query.setParameter("screenStartTime", "0000-00-00");
+		} else {
+			query.setParameter("screenStartTime", checkFeedbackRectificationVO.getScreenStartTime());
+		}
+		if (checkFeedbackRectificationVO.getScreenEndTime().equals("")) {
+			query.setParameter("screenEndTime", "9999-99-99");
+		} else {
+			query.setParameter("screenEndTime", checkFeedbackRectificationVO.getScreenEndTime());
+		}
+		//
+		List<jwcpxt_feedback_rectification> list = query.list();
+		session.clear();
+		return list;
+	}
+
+	@Override
+	public int get_checkFeedbackRectificationVOCount(CheckFeedbackRectificationVO checkFeedbackRectificationVO,
+			jwcpxt_unit unit) {
+		Session session = getSession();
+		String hql = "select count(*) "//
+				+ " from "//
+				+ " jwcpxt_feedback_rectification feedbackRectification , "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_unit unit "//
+				//
+				+ " where "//
+				+ " feedbackRectification.feedback_rectification_audit_state like :screenCheckState "//
+				+ " and feedbackRectification.feedback_rectification_title like :screenSearch "//
+				+ " and unit.unit_father like :unitID "// 上级单位是传过来的单位
+				//
+				+ " and feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
+				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
+				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
+				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
+				//
+				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
+				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime ";
+		Query query = session.createQuery(hql);
+		// 办结情况
+		if (checkFeedbackRectificationVO.getScreenCheckState().equals("-1")) {
+			query.setParameter("screenCheckState", "%%");
+		} else {
+			query.setParameter("screenCheckState", checkFeedbackRectificationVO.getScreenCheckState());
+		}
+		// 搜索
+		query.setParameter("screenSearch", "%" + checkFeedbackRectificationVO.getScreenSearch() + "%");
+		// 单位
+		if (unit == null || unit.getJwcpxt_unit_id().equals("")) {
+			query.setParameter("unitID", "%%");
+		} else {
+			query.setParameter("unitID", unit.getJwcpxt_unit_id());
+		}
+		//
+		if (checkFeedbackRectificationVO.getScreenStartTime().equals("")) {
+			query.setParameter("screenStartTime", "0000-00-00");
+		} else {
+			query.setParameter("screenStartTime", checkFeedbackRectificationVO.getScreenStartTime());
+		}
+		if (checkFeedbackRectificationVO.getScreenEndTime().equals("")) {
+			query.setParameter("screenEndTime", "9999-99-99");
+		} else {
+			query.setParameter("screenEndTime", checkFeedbackRectificationVO.getScreenEndTime());
+		}
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		session.clear();
+		return count;
 	}
 }
