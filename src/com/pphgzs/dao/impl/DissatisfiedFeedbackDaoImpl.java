@@ -10,6 +10,7 @@ import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 
@@ -152,4 +153,29 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		return jwcpxt_dissatisfied_feedback;
 	}
 
+	@Override
+	public jwcpxt_unit get_unit_byDisFeedbackId(String jwcpxt_dissatisfied_feedback_id) {
+		Session session = getSession();
+		String hql = " select client "//
+				+ " from "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice answerChoice "//
+				+ " jwcpxt_service_client serviceClient "//
+				+ " jwcpxt_service_instance serviceInstance "//
+				+ " jwcpxt_unit unit "//
+				+ " where "
+				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "
+				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "
+				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "
+				+ " and dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id=:jwcpxt_dissatisfied_feedback_id";
+		//
+		Query query = session.createQuery(hql);
+		query.setParameter("jwcpxt_dissatisfied_feedback_id", jwcpxt_dissatisfied_feedback_id);
+		//
+		jwcpxt_unit jwcpxt_unit = (jwcpxt_unit) query.uniqueResult();
+		session.clear();
+		//
+		return jwcpxt_unit;
+	}
 }
