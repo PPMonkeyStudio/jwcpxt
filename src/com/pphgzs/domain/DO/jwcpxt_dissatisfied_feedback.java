@@ -4,7 +4,7 @@ public class jwcpxt_dissatisfied_feedback {
 	private String jwcpxt_dissatisfied_feedback_id;
 
 	private String dissatisfied_feedback_answer_choice;
-	private int dissatisfied_feedback_state;
+	private String dissatisfied_feedback_state;
 	private String dissatisfied_feedback_audit_opinion;
 	private String dissatisfied_feedback_gmt_create;
 	private String dissatisfied_feedback_gmt_modified;
@@ -35,11 +35,11 @@ public class jwcpxt_dissatisfied_feedback {
 		this.dissatisfied_feedback_answer_choice = dissatisfied_feedback_answer_choice;
 	}
 
-	public int getDissatisfied_feedback_state() {
+	public String getDissatisfied_feedback_state() {
 		return dissatisfied_feedback_state;
 	}
 
-	public void setDissatisfied_feedback_state(int dissatisfied_feedback_state) {
+	public void setDissatisfied_feedback_state(String dissatisfied_feedback_state) {
 		this.dissatisfied_feedback_state = dissatisfied_feedback_state;
 	}
 
