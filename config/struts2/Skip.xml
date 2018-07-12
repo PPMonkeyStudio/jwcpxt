@@ -32,9 +32,14 @@
 			<result name="skipQuestionnaireDetailsJsp">
 				/WEB-INF/view/managerData/questionnaireDetails.jsp
 			</result>
-			<result name="skipReturnedPartyInformation">/WEB-INF/view/evaluationPolice/returnedPartyInformation.jsp
+			<result name="skipReturnedPartyInformation">
+				/WEB-INF/view/evaluationPolice/returnedPartyInformation.jsp
 			</result>
-			<result name="skipPoliceAssessmentPage">/WEB-INF/view/evaluationPolice/policeAssessmentPage.jsp
+			<result name="skipPoliceAssessmentPage" type="redirectAction">
+				skipPoliceAssessmentPageJsp?definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
+			</result>
+			<result name="skipPoliceAssessmentPageJsp">
+				/WEB-INF/view/evaluationPolice/policeAssessmentPage.jsp
 			</result>
 		</action>
 	</package>

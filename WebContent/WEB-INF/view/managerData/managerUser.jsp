@@ -39,11 +39,11 @@ i {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">警员管理</h4>
+									<h4 class="title">用户管理</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
 									<button @click="addUser" class="btn btn-default">
-										<i class="ti-plus"></i>新建一个警员
+										<i class="ti-plus"></i>新建一个用户
 									</button>
 									<!-- <input oninput="changeQuery()" id="searchContent"
 										placeholder="请输入搜索内容" class="form-control"

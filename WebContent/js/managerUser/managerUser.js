@@ -44,7 +44,7 @@ $(function() {
 			  </div>
 			 <div class="form-group">
 			    <label for="password">姓名</label>
-			    <input type="password" class="form-control" id="password" placeholder="姓名">
+			    <input type="text" class="form-control" id="password" placeholder="姓名">
 			 </div>
 			 <div class="form-group">
 			    <label for="type">类型</label>
