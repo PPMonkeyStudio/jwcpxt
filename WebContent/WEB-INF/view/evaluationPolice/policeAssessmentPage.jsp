@@ -45,52 +45,51 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width" v-cloak>
 									<div class="panel panel-primary">
-										<div class="panel-heading">Panel</div>
-										  <div class="panel-body">
-										  
+										<div class="panel-heading">{{serviceDefinition.service_definition_describe}}</div>
+										<div class="panel-body">
 										    <form class="form-inline">
 											  <div class="form-group">
 											    <label for="name">姓名</label>
 											    <div class="col-sm-10">
-											      <p class="form-control-static">{{returnedParty}}</p>
+											      <p class="form-control-static">{{serviceClien.service_client_name}}</p>
 											    </div>
 											  </div>
 											  <div class="form-group">
 											    <label for="sex">性别</label>
 											    <div class="col-sm-10">
-											      <p class="form-control-static">{{returnedParty}}</p>
+											      <p class="form-control-static">{{serviceClien.service_client_sex}}</p>
 											    </div>
 											  </div>
 											  <div class="form-group">
 											    <label for="phone">号码</label>
 											    <div class="col-sm-10">
-											      <p class="form-control-static">{{returnedParty}}</p>
+											      <p class="form-control-static">{{serviceClien.service_client_phone}}</p>
 											    </div>
 											  </div>
 											</form>
-											
-										  </div>
-									</div>
-									<ul class="list-group">
+										</div>
+										<ul class="list-group">
 										<template v-for="(questionDTO,index) in questionData">
 										<li class="list-group-item">
 											<!-- 选择题 -->
 											<template v-if="questionDTO.question.question_type==1">
 												 <div class="form-group">
 													 <label>{{questionDTO.question.question_sort +'.'+ questionDTO.question.question_describe}}</label>
+													 <!-- 选项循环 -->
 													 <template v-for="(optionDTO,index1) in questionDTO.listOptionDTO">
 													 <div class="form-group">
-													 	 <input type="radio" :name="index">
+													 	 <input type="radio" :name="index" :optionID="optionDTO.option.jwcpxt_option_id" @click="checkOption($event,index)">
 														 <label class="control-label">{{optionDTO.option.option_describe}}</label>
 													 </div>
 													 </template>
+													 
 												</div>
 											</template>
 											<!-- 主观题 -->
 											<template v-else-if="questionDTO.question.question_type==2">
 												 <div class="form-group">
 													 <label>{{questionDTO.question.question_sort +'.'+ questionDTO.question.question_describe}}</label>
-													 <textarea class="form-control" rows="3"></textarea>
+													 <textarea class="form-control" rows="3" @change="inputTextarea($event,index)"></textarea>
 												</div>
 											</template>
 											<template v-else>
@@ -102,8 +101,10 @@ th {
 										</li>
 										</template>
 									</ul>
+									</div>
 								</div>
 							</div>
+							<button type="button" @click="finishReturned" class="btn btn-primary">结束回访</button>
 						</div>
 					</div>
 				</div>

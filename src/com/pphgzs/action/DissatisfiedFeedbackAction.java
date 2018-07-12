@@ -10,10 +10,13 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 
 @SuppressWarnings("serial")
@@ -25,8 +28,45 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private jwcpxt_feedback_rectification feedbackRectification;
 	private DissatisfiedQuestionVO dissatisfiedQuestionVO;
 	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
+	private FeedbackRectificationVO feedbackRectificationVO;
+
+	/**
+	 * 办结操作
+	 * 
+	 * @throws IOException
+	 */
+	public void update_dissatisfiedFeedbackState_toEnd() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_dissatisfiedFeedbackState_toEnd(feedbackRectification)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 获取整改反馈表VO
+	 * 
+	 * @throws IOException
+	 */
+	public void get_feedbackRectificationVO() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		jwcpxt_unit unit = new jwcpxt_unit();
+		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
+		unit.setJwcpxt_unit_id("1");
+		feedbackRectificationVO = dissatisfiedFeedbackService.get_feedbackRectificationVO(feedbackRectificationVO,
+				unit);
+		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));
+	}
+
 	/**
 	 * 通过整改反馈id获得一条记录
+	 * 
 	 * @throws IOException
 	 */
 	public void get_feedbackRectficationDO_byId() throws IOException {
@@ -116,6 +156,14 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 
 	public DissatisfiedQuestionVO getDissatisfiedQuestionVO() {
 		return dissatisfiedQuestionVO;
+	}
+
+	public FeedbackRectificationVO getFeedbackRectificationVO() {
+		return feedbackRectificationVO;
+	}
+
+	public void setFeedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO) {
+		this.feedbackRectificationVO = feedbackRectificationVO;
 	}
 
 	public void setDissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {

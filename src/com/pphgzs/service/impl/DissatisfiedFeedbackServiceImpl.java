@@ -10,6 +10,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
@@ -22,6 +23,58 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private ServiceService serviceService;
 	private QuestionService questionService;
 	private UnitService unitService;
+
+	/**
+	 * 办结操作
+	 */
+	@Override
+	public boolean update_dissatisfiedFeedbackState_toEnd(jwcpxt_feedback_rectification feedbackRectification) {
+		jwcpxt_feedback_rectification feeRectification = new jwcpxt_feedback_rectification();
+		if (feedbackRectification != null && feedbackRectification.getJwcpxt_feedback_rectification_id() != null
+				&& feedbackRectification.getJwcpxt_feedback_rectification_id().trim().length() > 0) {
+			feeRectification = dissatisfiedFeedbackDao
+					.get_feedbackRectficationDO_byId(feedbackRectification.getJwcpxt_feedback_rectification_id());
+		}
+		if (feeRectification == null) {
+			return false;
+		}
+		feeRectification.setFeedback_rectification_handle_state("2");
+		feeRectification.setFeedback_rectification_date(TimeUtil.getStringSecond());
+		feeRectification.setFeedback_rectification_content(feedbackRectification.getFeedback_rectification_content());
+		feeRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+		dissatisfiedFeedbackDao.saveOrUpdateObject(feeRectification);
+		return true;
+	}
+
+	/**
+	 * 整改VO
+	 */
+	@Override
+	public FeedbackRectificationVO get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
+			jwcpxt_unit unit) {
+		if (unit == null) {
+			return feedbackRectificationVO;
+		}
+		if (unit.getJwcpxt_unit_id() != null && unit.getJwcpxt_unit_id().trim().length() > 0) {
+			// 获取unit
+			unit = unitService.get_unitDO_byID(unit.getJwcpxt_unit_id());
+		}
+		if (unit == null) {
+			return null;
+		}
+		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
+		// 获取总记录数
+		int totalRecords = dissatisfiedFeedbackDao.get_countFeedbackRectificationVO(feedbackRectificationVO, unit);
+		// 总页数
+		int totalPages = ((totalRecords - 1) / feedbackRectificationVO.getPageSize()) + 1;
+		// 获取数据
+		listFeedbackRectification = dissatisfiedFeedbackDao.get_feedbackRectificationVO(feedbackRectificationVO, unit);
+		// set
+		feedbackRectificationVO.setTotalCount(totalRecords);
+		feedbackRectificationVO.setTotalPage(totalPages);
+		feedbackRectificationVO.setListFeedbackRectification(listFeedbackRectification);
+		return feedbackRectificationVO;
+	}
 
 	/**
 	 * 通过整改反馈id获得一条记录
@@ -98,7 +151,8 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		// 责任单位
 		unit = dissatisfiedFeedbackDao.get_unit_byDisFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
 		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_name());
-		feedbackRectification.setFeedback_rectification_unit_people_phone(unit.getUnit_contacts_name());
+		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_contacts_name()   );
+		feedbackRectification.setFeedback_rectification_unit_people_phone(unit.getUnit_phone());
 		feedbackRectification.setFeedback_rectification_handle_state("1");
 		feedbackRectification.setFeedback_rectification_audit_state("1");
 		feedbackRectification.setFeedback_rectification_gmt_create(TimeUtil.getStringSecond());
@@ -129,6 +183,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				.setDissatisfied_feedback_audit_opinion(dissatisfiedFeedback.getDissatisfied_feedback_audit_opinion());
 		disFeedback.setDissatisfied_feedback_gmt_modified(TimeUtil.getStringSecond());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(disFeedback);
+
 		return true;
 	}
 
