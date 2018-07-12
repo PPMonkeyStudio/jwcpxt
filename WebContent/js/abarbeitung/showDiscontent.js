@@ -7,7 +7,7 @@ var queryTemp ={
 		'currPage':'',
 		'searchTimeStart':'',
 		'searchTimeEnd':'',
-		'searchStatus':''
+		'searchStatus':'-1'
 }
 
 $(function(){
@@ -17,7 +17,6 @@ $(function(){
 			discontentVO:''
 		}
 	})
-	
 	loadData();
 })
 

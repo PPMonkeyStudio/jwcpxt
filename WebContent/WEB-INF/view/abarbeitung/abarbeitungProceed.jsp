@@ -48,13 +48,13 @@ a:hover {
 											style="display: inline; width: 150px;">
 									</div>
 									<div id="showDiscontent">
-
 										<table class="table table-striped" style="text-align: center;">
 											<thead>
 												<tr>
 													<td>问题描述</td>
 													<td><select id="searchState" onchange="changeQuery()"
 														class="form-control">
+															<option value="-1">审核状态</option>
 															<option value="1">未审核</option>
 															<option value="2">已推送</option>
 															<option value="3">已驳回</option>
