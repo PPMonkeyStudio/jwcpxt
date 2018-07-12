@@ -119,14 +119,37 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 
 	@Override
 	public jwcpxt_service_client get_serviceClient_byDisFeedbackId(String jwcpxt_dissatisfied_feedback_id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = getSession();
+		String hql = " select client "//
+				+ " from jwcpxt_service_client client , "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice answerChoice "//
+				+ " where dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
+				+ " and answerChoice.answer_choice_client=client.jwcpxt_service_client_id "
+				+ " and dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id=:jwcpxt_dissatisfied_feedback_id";
+		//
+		Query query = session.createQuery(hql);
+		query.setParameter("jwcpxt_dissatisfied_feedback_id", jwcpxt_dissatisfied_feedback_id);
+		//
+		jwcpxt_service_client jwcpxt_service_client = (jwcpxt_service_client) query.uniqueResult();
+		session.clear();
+		//
+		return jwcpxt_service_client;
 	}
 
 	@Override
 	public jwcpxt_dissatisfied_feedback get_dissatisfiedFeedbackDo_byId(String jwcpxt_dissatisfied_feedback_id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = getSession();
+		String hql = " from jwcpxt_dissatisfied_feedback "//
+				+ " where jwcpxt_dissatisfied_feedback_id = :jwcpxt_dissatisfied_feedback_id";
+		//
+		Query query = session.createQuery(hql);
+		query.setParameter("jwcpxt_dissatisfied_feedback_id", jwcpxt_dissatisfied_feedback_id);
+		//
+		jwcpxt_dissatisfied_feedback jwcpxt_dissatisfied_feedback = (jwcpxt_dissatisfied_feedback) query.uniqueResult();
+		session.clear();
+		//
+		return jwcpxt_dissatisfied_feedback;
 	}
 
 }
