@@ -34,7 +34,7 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private QuestionVO questionVO;
 	private String moveQuestionType;
 	private String moveOptionType;
-	// 一个问题的所有内容
+	// 一个问题的所有选择题
 	private QuestionDTO questionDTO;
 	// 一个业务定义的所有问题
 	private List<QuestionDTO> listQuestionDTO;
@@ -42,27 +42,6 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private jwcpxt_service_client serviceClient;
 	// 回答
 	private List<AnswerDTO> listAnswerDTO;
-
-	/**
-	 * 根据选项获取该选项的所有追问
-	 */
-	public void get_questionInquiries_byOptionId() {
-		
-	}
-
-	/**
-	 * 回答问题
-	 * 
-	 * @throws IOException
-	 */
-	public void save_answer() throws IOException {
-		http_response.setContentType("text/html;charset=utf-8");
-		if (questionService.save_answer(listAnswerDTO, serviceClient)) {
-			http_response.getWriter().write("1");
-		} else {
-			http_response.getWriter().write("-1");
-		}
-	}
 
 	/**
 	 * 根据业务定义Id 获取所有该业务的所有问题
@@ -78,6 +57,20 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 		http_response.setContentType("text/html;charset=utf-8");
 		listQuestionDTO = questionService.list_questionDTO_byServiceDefinition(serviceDefinition);
 		http_response.getWriter().write(gson.toJson(listQuestionDTO));
+	}
+
+	/**
+	 * 回答问题
+	 * 
+	 * @throws IOException
+	 */
+	public void save_answer() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (questionService.save_answer(listAnswerDTO, serviceClient)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
 	/**
