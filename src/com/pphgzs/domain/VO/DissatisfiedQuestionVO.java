@@ -16,7 +16,7 @@ public class DissatisfiedQuestionVO {
 	private String screenStartTime = "0000-00-00";
 	private String screenEndTime = "9999-99-99";
 	// 状态筛选
-	private int screenState = -1;
+	private String screenState = "-1";
 	// 当前页
 	private int currPage = 1;
 	// 总页数
@@ -34,11 +34,11 @@ public class DissatisfiedQuestionVO {
 		this.listDissatisfiedQuestionDTO = listDissatisfiedQuestionDTO;
 	}
 
-	public int getScreenState() {
+	public String getScreenState() {
 		return screenState;
 	}
 
-	public void setScreenState(int screenState) {
+	public void setScreenState(String screenState) {
 		this.screenState = screenState;
 	}
 
