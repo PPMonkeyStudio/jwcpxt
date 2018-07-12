@@ -1,6 +1,11 @@
 package com.pphgzs.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
+import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
@@ -11,6 +16,24 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private ServiceService serviceService;
 	private QuestionService questionService;
 	private UnitService unitService;
+
+	/**
+	 * 获取不满意反馈表VO
+	 */
+	@Override
+	public DissatisfiedQuestionVO get_dissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {
+		List<DissatisfiedQuestionDTO> listDissatisfiedQuestionDTO = new ArrayList<>();
+		// 获取总数量
+		int totalRecords = dissatisfiedFeedbackDao.get_countDissatisfiedQuestionVO(dissatisfiedQuestionVO);
+		// 总页数
+		int totalPages = ((totalRecords - 1) / dissatisfiedQuestionVO.getPageSize()) + 1;
+		// 获取分页中的数据
+		listDissatisfiedQuestionDTO = dissatisfiedFeedbackDao.get_dataDissatisfiedQuestionVO(dissatisfiedQuestionVO);
+		dissatisfiedQuestionVO.setTotalCount(totalRecords);
+		dissatisfiedQuestionVO.setTotalPage(totalPages);
+		dissatisfiedQuestionVO.setListDissatisfiedQuestionDTO(listDissatisfiedQuestionDTO);
+		return dissatisfiedQuestionVO;
+	}
 
 	/**
 	 * 
