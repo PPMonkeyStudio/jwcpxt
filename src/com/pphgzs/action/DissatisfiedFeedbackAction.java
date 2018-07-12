@@ -25,12 +25,64 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private jwcpxt_feedback_rectification feedbackRectification;
 	private DissatisfiedQuestionVO dissatisfiedQuestionVO;
 	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
+	/**
+	 * 通过整改反馈id获得一条记录
+	 * @throws IOException
+	 */
+	public void get_feedbackRectficationDO_byId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		feedbackRectification = dissatisfiedFeedbackService.get_feedbackRectficationDO_byId(feedbackRectification);
+		http_response.getWriter().write(gson.toJson(feedbackRectification));
+	}
+
+	/**
+	 * 通过不满意反馈id获得一条记录
+	 * 
+	 * @throws IOException
+	 */
+	public void get_dissatisfiedFeedbackDO_byId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		dissatisfiedFeedback = dissatisfiedFeedbackService.get_dissatisfiedFeedbackDO_byId(dissatisfiedFeedback);
+		http_response.getWriter().write(gson.toJson(dissatisfiedFeedback));
+	}
+
+	/**
+	 * 推送
+	 * 
+	 * @throws IOException
+	 */
+	public void updade_dissatisfiedFeedbackState_toPush() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.updade_dissatisfiedFeedbackState_toPush(dissatisfiedFeedback,
+				feedbackRectification)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
 
 	/**
 	 * 驳回不满意反馈表
+	 * 
+	 * @throws IOException
 	 */
-	public void update_dissatisfiedFeedbackState_toReject() {
-		
+	public void update_dissatisfiedFeedbackState_toReject() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_dissatisfiedFeedbackState_toReject(dissatisfiedFeedback)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
 	/**

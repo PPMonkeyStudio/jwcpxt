@@ -56,6 +56,25 @@ public class ServiceServiceImpl implements ServiceService {
 		this.userService = userService;
 	}
 
+	@Override
+	public jwcpxt_service_definition get_serviceDefinitionDo_byId(jwcpxt_service_definition serviceDefinition) {
+		if (serviceDefinition != null && serviceDefinition.getJwcpxt_service_definition_id() != null
+				&& serviceDefinition.getJwcpxt_service_definition_id().trim().length() > 0) {
+			serviceDefinition = serviceDao
+					.get_serviceDefinition_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
+		}
+		return serviceDefinition;
+	}
+
+	@Override
+	public jwcpxt_service_client get_serviceClientDo_byId(jwcpxt_service_client serviceClient) {
+		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
+				&& serviceClient.getJwcpxt_service_client_id().trim().length() > 0) {
+			serviceClient = serviceDao.get_serviceClientDo_byId(serviceClient.getJwcpxt_service_client_id().trim());
+		}
+		return serviceClient;
+	}
+
 	/**
 	 * 获取当事人信息及所涉及的业务
 	 */

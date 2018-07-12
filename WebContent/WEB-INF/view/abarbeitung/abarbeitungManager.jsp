@@ -23,7 +23,7 @@ a:hover {
 	display: none;
 }
 </style>
-<title>整改管理</title>
+<title>整改反馈</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -40,7 +40,7 @@ a:hover {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">审核整改</h4>
+									<h4 class="title">整改反馈</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">

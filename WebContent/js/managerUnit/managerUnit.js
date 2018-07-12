@@ -227,6 +227,8 @@ function addUnit(event) {
 			})
 }
 
+var managerServiceVue;
+
 function managerService(event) {
 	$
 			.confirm({
@@ -237,10 +239,16 @@ function managerService(event) {
 				content : '<button id="'
 						+ event.id
 						+ '" onclick="addService(this)" class="btn btn-default"><i class="ti-plus"></i>增加业务</button><table id="showService" class="table table-striped" style="text-align: center;"><thead><tr>'
-						+ '<td>业务名称</td>' + '<td>测评数量</td>' + '<td>关联时间</td>'
-						+ '<td>操作</td>' + '</tr></thead>'
-						+ '<tbody><template><tr>' + '<td></td>' + '<td></td>'
-						+ '<td></td>' + '<td></td>'
+						+ '<td>业务名称</td>'
+						+ '<td>测评数量</td>'
+						+ '<td>关联时间</td>'
+						+ '<td>操作</td>'
+						+ '</tr></thead>'
+						+ '<tbody><template v-for="serviceConnectDTO in serviceConnectDTOList"><tr>'
+						+ '<td>{{ serviceConnectDTO.serviceDefinition.service_definition_describe }}</td>'
+						+ '<td>{{ serviceConnectDTO.unitSer.evaluation_count }}</td>'
+						+ '<td>{{ serviceConnectDTO.unitSer.unit_service_gmt_create }}</td>'
+						+ '<td><a :id="serviceConnectDTO.unitSer.jwcpxt_unit_service_id" onclick="updateGrade(this,'+event.id+')">修改</a></td>'
 						+ '</tr></template></tbody></table>',
 				buttons : {
 					cancel : {
@@ -251,43 +259,147 @@ function managerService(event) {
 						}
 					}
 				},
-				onContentReady:function(){
-					$.ajax({
-						url:'/jwcpxt/Service/list_serviceDefinitionDTO_connectService?unit.jwcpxt_unit_id='+event.id,
-						type:'GET',
-						success:function(data){
-							
+				onContentReady : function() {
+					managerServiceVue = new Vue({
+						el : '#showService',
+						data : {
+							serviceConnectDTOList : ''
 						}
-						
 					})
+					loadDataService(event.id)
 					
+
 				}
 			})
 }
 
-function addService(event){
+function loadDataService(id){
+	$
+	.ajax({
+		url : '/jwcpxt/Service/list_serviceDefinitionDTO_connectService?unit.jwcpxt_unit_id='
+				+ id,
+		type : 'GET',
+		success : function(data) {
+			managerServiceVue.serviceConnectDTOList = JSON
+					.parse(data);
+		}
+
+	})
+}
+
+function addService(event) {
+	$
+			.confirm({
+				title : '关联业务',
+				type : 'orange',
+				boxWidth : '500px',
+				useBootstrap : false,
+				content : '<div><form id="serviceForm">'
+						+ '<label>选择业务：</label><select id="service_" name="unitServic.service_definition_id" class="form-control">'
+						+ '</select>'
+						+ '<label>测评数量：</label><input name="unitServic.evaluation_count" class="form-control">'
+						+ '</form></div>',
+				buttons : {
+					cancel : {
+						text : '关闭',
+						btnClass : 'btn-red',
+						action : function() {
+
+						}
+					},
+					save : {
+						text : '保存',
+						btnClass : 'btn-blue',
+						action : function() {
+							var formData = new FormData(document
+									.getElementById("serviceForm"));
+							formData.append('unitServic.unit_id', event.id);
+							$.ajax({
+								url : '/jwcpxt/Service/save_unitServic',
+								type : 'POST',
+								data : formData,
+								processData : false,
+								contentType : false,
+								success : function(data) {
+									if (data == 1) {
+										toastr.success("新建成功！");
+										loadDataService(event.id);
+									} else {
+										toastr.error("新建失败！");
+									}
+								}
+							})
+						}
+					}
+				},
+				onContentReady : function() {
+					$
+							.ajax({
+								url : '/jwcpxt/Service/list_serviceDefinition_notConnectService?unit.jwcpxt_unit_id='
+										+ event.id,
+								type : 'GET',
+								success : function(data) {
+									var serviceList = JSON.parse(data);
+									for (var i = 0; i < serviceList.length; i++) {
+										$('#service_')
+												.html(
+														$('#service_').html()
+																+ '<option value="'
+																+ serviceList[i].jwcpxt_service_definition_id
+																+ '">'
+																+ serviceList[i].service_definition_describe
+																+ '</option>')
+									}
+								}
+							})
+				}
+			})
+}
+
+function updateGrade(event,unitId){
 	$.confirm({
 		title : '关联业务',
 		type : 'orange',
 		boxWidth : '500px',
 		useBootstrap : false,
-		content : '<div><form id="serviceForm">'
-			+ '<label>选择业务：</label><select id="service_" name="unitServic.service_definition_id" class="form-control">'
-			+'</select>'
-			+ '<label>测评数量：</label><input name="unitServic.evaluation_count" class="form-control">'
-			+ '</form></div>',
-		buttons:{
-			
+		content:'<label>测评数量：</label><input id="update_evaluation_count" class="form-control">',
+		buttons : {
+			cancel : {
+				text : '关闭',
+				btnClass : 'btn-red',
+				action : function() {
+
+				}
+			},
+			save : {
+				text : '修改',
+				btnClass : 'btn-blue',
+				action : function() {
+					$.ajax({
+						url : '/jwcpxt/Service/update_unitServicCount_byunitServicId',
+						type : 'POST',
+						data : {
+							'unitServic.jwcpxt_unit_service_id':event.id,
+							'unitServic.evaluation_count':$('#update_evaluation_count').val()
+						},
+						success : function(data) {
+							if (data == 1) {
+								toastr.success("修改成功！");
+								loadDataService(unitId);
+							} else {
+								toastr.error("修改失败！");
+							}
+						}
+					})
+				}
+			}
 		},
 		onContentReady:function(){
 			$.ajax({
-				url:'/jwcpxt/Service/list_serviceDefinition_notConnectService?unit.jwcpxt_unit_id='+event.id,
+				url:'/jwcpxt/Service/get_untServic_byUnitServicId?unitServic.jwcpxt_unit_service_id='+event.id,
 				type:'GET',
 				success:function(data){
-					var serviceList = JSON.parse(data);
-					for(var i =0 ;i<serviceList.length;i++){
-						$('#service_').html($('#service_').html()+'<option value="'+serviceList[i].jwcpxt_service_definition_id+'">'+serviceList[i].service_definition_describe+'</option>')
-					}
+					$('#update_evaluation_count').val(JSON.parse(data).evaluation_count);
 				}
 			})
 		}

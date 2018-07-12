@@ -205,4 +205,8 @@ public interface ServiceService {
 
 	List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID);
 
+	public jwcpxt_service_definition get_serviceDefinitionDo_byId(jwcpxt_service_definition serviceDefinition);
+
+	public jwcpxt_service_client get_serviceClientDo_byId(jwcpxt_service_client serviceClient);
+
 }

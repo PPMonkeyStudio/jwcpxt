@@ -16,7 +16,7 @@ public class DissatisfiedQuestionVO {
 	private String screenStartTime = "0000-00-00";
 	private String screenEndTime = "9999-99-99";
 	// 状态筛选
-	private String screenState = "";
+	private String screenState = "-1";
 	// 当前页
 	private int currPage = 1;
 	// 总页数
