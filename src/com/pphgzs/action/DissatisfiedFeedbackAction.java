@@ -31,6 +31,20 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private FeedbackRectificationVO feedbackRectificationVO;
 
 	/**
+	 * 办结操作
+	 * 
+	 * @throws IOException
+	 */
+	public void update_dissatisfiedFeedbackState_toEnd() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_dissatisfiedFeedbackState_toEnd(feedbackRectification)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
 	 * 获取整改反馈表VO
 	 * 
 	 * @throws IOException
@@ -45,7 +59,8 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		jwcpxt_unit unit = new jwcpxt_unit();
 		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
 		unit.setJwcpxt_unit_id("1");
-		feedbackRectificationVO = dissatisfiedFeedbackService.get_feedbackRectificationVO(feedbackRectificationVO,unit);
+		feedbackRectificationVO = dissatisfiedFeedbackService.get_feedbackRectificationVO(feedbackRectificationVO,
+				unit);
 		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));
 	}
 
