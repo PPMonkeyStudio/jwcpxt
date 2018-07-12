@@ -78,34 +78,43 @@ a:hover {
 												</tr>
 											</thead>
 											<tbody id="checkTable">
-												<template v-for="checkFeedbackRectification in checkVO.listCheckFeedbackRectification">
+												<template
+													v-for="checkFeedbackRectification in checkVO.listCheckFeedbackRectification">
 												<tr>
-													<td>{{ checkFeedbackRectification.feedback_rectification_no }}</td>
-													<td>{{ checkFeedbackRectification.feedback_rectification_title }}</td>
-													<td>{{ checkFeedbackRectification.feedback_rectification_unit_name }}</td>
-													<td>{{ checkFeedbackRectification.feedback_rectification_client_name }}</td>
-													<td>
-														<template v-if="checkFeedbackRectification.feedback_rectification_audit_state == 1">
-															未审核
-														</template>
-														<template v-if="checkFeedbackRectification.feedback_rectification_audit_state == 2">
-															主管部门审核通过
-														</template>
-														<template v-if="checkFeedbackRectification.feedback_rectification_audit_state == 3">
-															主管部门审核驳回
-														</template>
-														<template v-if="checkFeedbackRectification.feedback_rectification_audit_state == 4">
-															测评中心审核通过
-														</template>
-														<template v-if="checkFeedbackRectification.feedback_rectification_audit_state == 5">
-															测评中心审核驳回
-														</template>
-													</td>
-													<td>
-														<s:if test="#session.unit.unit_grade">
-															
-														</s:if>
-													</td>
+													<td>{{
+														checkFeedbackRectification.feedback_rectification_no }}</td>
+													<td>{{
+														checkFeedbackRectification.feedback_rectification_title }}</td>
+													<td>{{
+														checkFeedbackRectification.feedback_rectification_unit_name
+														}}</td>
+													<td>{{
+														checkFeedbackRectification.feedback_rectification_client_name
+														}}</td>
+													<td><template
+															v-if="checkFeedbackRectification.feedback_rectification_audit_state == 1">
+														未审核 </template> <template
+															v-if="checkFeedbackRectification.feedback_rectification_audit_state == 2">
+														主管部门审核通过 </template> <template
+															v-if="checkFeedbackRectification.feedback_rectification_audit_state == 3">
+														主管部门审核驳回 </template> <template
+															v-if="checkFeedbackRectification.feedback_rectification_audit_state == 4">
+														测评中心审核通过 </template> <template
+															v-if="checkFeedbackRectification.feedback_rectification_audit_state == 5">
+														测评中心审核驳回 </template></td>
+													<td><s:if test="#session.unit.unit_grade == 2">
+															<template
+																v-if="checkFeedbackRectification.feedback_rectification_audit_state != 1">
+															无操作 </template>
+															<tempalte v-else> <a onclick="checkRectification(this,2)" :id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">通过</a>|
+															<a onclick="checkRectification(this,3)" :id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">驳回</a> </tempalte>
+														</s:if> <s:if test="#session.unit.unit_grade == 1">
+															<template
+																v-if="checkFeedbackRectification.feedback_rectification_audit_state == 2">
+															<a onclick="checkRectification(this,2)" :id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">通过</a>
+															|<a onclick="checkRectification(this,3)" :id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">驳回</a> </template>
+															<template v-else> 无操作 </template>
+														</s:if></td>
 												</tr>
 												</template>
 											</tbody>
