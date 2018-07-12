@@ -4,7 +4,7 @@
 
 var discontentVue;
 var queryTemp ={
-		'currPage':'',
+		'currPage':'1',
 		'searchTimeStart':'',
 		'searchTimeEnd':'',
 		'searchStatus':'-1'
