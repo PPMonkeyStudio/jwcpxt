@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 //import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
@@ -32,6 +33,16 @@ public class QuestionTest {
 	private QuestionService questionService;
 	@Resource
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	/**
+	 * 
+	 */
+	@Test
+	public void get_fdfd() {
+		jwcpxt_service_client ji = new jwcpxt_service_client();
+		ji.setJwcpxt_service_client_id("1");
+		System.out.println(serviceService.get_serviceClientDo_byId(ji));
+	}
 
 	/**
 	 * 测试当事人
