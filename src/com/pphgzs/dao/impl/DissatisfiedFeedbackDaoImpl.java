@@ -23,7 +23,6 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 
 	@Override
 	public int get_countDissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {
-		System.out.println(dissatisfiedQuestionVO);
 		Session session = getSession();
 		String hql = "select count(*) from jwcpxt_dissatisfied_feedback "//
 				+ " where dissatisfied_feedback_state like :screenState "//
