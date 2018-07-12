@@ -7,12 +7,16 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+//import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
-import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
-import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
-import com.pphgzs.domain.VO.QuestionVO;
+import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
+//import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
+//import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
+//import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
@@ -30,11 +34,41 @@ public class QuestionTest {
 	@Resource
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 
+	/**
+	 * 
+	 */
 	@Test
-	public void get_dissatisfiedFeedbackVOTest() {
-		DissatisfiedFeedbackVO dissatisfiedFeedbackVO = new DissatisfiedFeedbackVO();
-		dissatisfiedFeedbackService.get_dissatisfiedFeedbackVO(dissatisfiedFeedbackVO);
+	public void get_fdfd() {
+		jwcpxt_service_client ji = new jwcpxt_service_client();
+		ji.setJwcpxt_service_client_id("1");
+		System.out.println(serviceService.get_serviceClientDo_byId(ji));
 	}
+
+	/**
+	 * 测试当事人
+	 */
+	@Test
+	public void get_notServiceClient_byServiceClientId() {
+		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
+		jwcpxt_user user = new jwcpxt_user();
+		user.setJwcpxt_user_id("1");
+		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
+		System.out.println(clientInstanceDTO);
+	}
+
+	/*
+	 * @Test public void get_feedbackRectification_byRectificationId() {
+	 * jwcpxt_feedback_rectification feedBackRectification = new
+	 * jwcpxt_feedback_rectification();
+	 * feedBackRectification.setJwcpxt_feedback_rectification_id("1");
+	 * dissatisfiedFeedbackService.get_feedbackRectification_byRectificationId(
+	 * feedBackRectification); }
+	 * 
+	 * @Test public void get_dissatisfiedFeedbackVOTest() { DissatisfiedFeedbackVO
+	 * dissatisfiedFeedbackVO = new DissatisfiedFeedbackVO();
+	 * dissatisfiedFeedbackService.get_dissatisfiedFeedbackVO(dissatisfiedFeedbackVO
+	 * ); }
+	 */
 
 	/**
 	 * 
@@ -173,21 +207,6 @@ public class QuestionTest {
 		question.setQuestion_type("3");
 		question.setQuestion_service_definition("40391b04-333a-4d71-8d87-c45fe43b4b45");
 		questionService.save_question(question);
-	}
-
-	/**
-	 * VO 测试
-	 */
-	@Test
-	public void get_questionVOTest() {
-		QuestionVO questionVO = new QuestionVO();
-		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO(null, null);
-		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
-		serviceDefinition.setJwcpxt_service_definition_id("d0d75dfd-32b4-4fdd-b56e-d6af20107625");
-		serviceDefinitionDTO.setServiceDefinition(serviceDefinition);
-		questionVO.setServiceDefinitionDTO(serviceDefinitionDTO);
-		questionVO = questionService.get_questionVO(questionVO);
-		System.out.println("questionVO:" + questionVO);
 	}
 
 	/**

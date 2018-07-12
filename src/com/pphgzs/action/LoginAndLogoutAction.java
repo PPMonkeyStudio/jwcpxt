@@ -13,6 +13,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.service.LoginAndLogoutService;
 
 @SuppressWarnings("serial")
@@ -27,17 +29,10 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 
 	private String account;
 	private String password;
-
+	private String loginType;
 	/*
 	 * 
 	 */
-	public String index() {
-		return "index";
-	}
-
-	public String navbar() {
-		return "navbar";
-	}
 
 	/**
 	 * 登录并存入session
@@ -49,27 +44,26 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 		/*
 		 * 
 		 */
-		Object userOrAdmin = loginAndLogoutService.login(account, password);
-		if (userOrAdmin != null) {
-			if (userOrAdmin.getClass().toString().equals("class com.pphgzs.domain.DO.jwcpxt_user")) {
-				/*
-				 * 用户权限
-				 */
-				ActionContext.getContext().getSession().remove("user");
-				ActionContext.getContext().getSession().put("user", userOrAdmin);
-				http_response.getWriter().write("1");
-			} else if (userOrAdmin.getClass().toString().equals("class com.pphgzs.domain.DO.jwcpxt_admin")) {
-				/*
-				 * 管理员权限
-				 */
-				ActionContext.getContext().getSession().remove("admin");
-				ActionContext.getContext().getSession().put("admin", userOrAdmin);
-				http_response.getWriter().write("2");
-			} else {
+		if (loginType.equals("user")) {
+			jwcpxt_user user = loginAndLogoutService.userLogin(account, password);
+			if (user == null) {
 				http_response.getWriter().write("-1");
+
+			} else {
+				ActionContext.getContext().getSession().remove("user");
+				ActionContext.getContext().getSession().put("user", user);
+				http_response.getWriter().write("1");
 			}
 		} else {
-			http_response.getWriter().write("-1");
+			jwcpxt_unit unit = loginAndLogoutService.unitLogin(account, password);
+			if (unit == null) {
+				http_response.getWriter().write("-1");
+
+			} else {
+				ActionContext.getContext().getSession().remove("unit");
+				ActionContext.getContext().getSession().put("unit", unit);
+				http_response.getWriter().write("2");
+			}
 		}
 		/*
 		 * 
@@ -88,9 +82,11 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 		if (ActionContext.getContext().getSession().get("user") != null) {
 			ActionContext.getContext().getSession().remove("user");
 			http_response.getWriter().write("1");
-		} else if (ActionContext.getContext().getSession().get("admin") != null) {
-			ActionContext.getContext().getSession().remove("admin");
-			http_response.getWriter().write("2");
+		} else if (ActionContext.getContext().getSession().get("unit") != null) {
+			ActionContext.getContext().getSession().remove("unit");
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
 		}
 		return "logout";
 	}
@@ -159,6 +155,14 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getLoginType() {
+		return loginType;
+	}
+
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
 	}
 
 	/*

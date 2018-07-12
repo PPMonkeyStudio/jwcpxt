@@ -6,12 +6,113 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
+import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public interface ServiceService {
+
+	/*
+	 * 
+	 */
+	/**
+	 * 获取当事人信息及所涉及的业务
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user);
+
+	/**
+	 * 根据抓取id获取抓取记录
+	 */
+	public jwcpxt_service_grab get_serviceGrab(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 根据业务定义id获取抓取表
+	 * 
+	 * @param serviceDefinition
+	 * @return
+	 */
+	public List<jwcpxt_service_grab> list_serviceGrab_byServiceDefinitionId(
+			jwcpxt_service_definition serviceDefinition);
+
+	/**
+	 * 修改抓取记录
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
+	public boolean update_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 删除抓取记录
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
+	public boolean delete_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 保存抓取
+	 * 
+	 * @param serviceGrab
+	 * @return
+	 */
+	public boolean save_serviceGrab(jwcpxt_service_grab serviceGrab);
+
+	/**
+	 * 根据关联表id获取关联表
+	 * 
+	 * @param unitServic
+	 * @return
+	 */
+	public jwcpxt_unit_service get_untServic_byUnitServicId(jwcpxt_unit_service unitServic);
+
+	/**
+	 * 获取业务定义list
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinition();
+
+	/**
+	 * 未链接某单位的业务
+	 * 
+	 * @param unit
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> list_serviceDefinition_notConnectService(jwcpxt_unit unit);
+
+	/**
+	 * 更改评测数量
+	 * 
+	 * @param unitService
+	 * @return
+	 */
+	public boolean update_unitServiceCount_byUnitServiceId(jwcpxt_unit_service unitService);
+
+	/**
+	 * 创建单位业务表
+	 * 
+	 * @param unitService
+	 * @return
+	 */
+	public boolean save_unitService(jwcpxt_unit_service unitService);
+
+	/**
+	 * 获取所有关联某单位的业务
+	 * 
+	 * @param unit
+	 * @return
+	 */
+	public List<ServiceConnectDTO> list_serviceDefinitionDTO_connectService(jwcpxt_unit unit);
 
 	/**
 	 * 手动分配实例给测评人员
@@ -25,13 +126,15 @@ public interface ServiceService {
 	/**
 	 * 自动分配任务实例的线程执行方法
 	 */
-	void distribution_serviceInstance_auto();
+	// void distribution_serviceInstance_auto();
 
 	/**
 	 * 随机分配给定数量的任务实例给测评人员
 	 */
-	void distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(int num,
-			String serviceDefinitionID, String date);
+	// void
+	// distributionRandom_serviceInstance_byNoJudgeAndNumAndServiceDefinitionIDAndDate(int
+	// num,
+	// String serviceDefinitionID, String date);
 
 	jwcpxt_service_definition get_serviceDefinitionDO_byServiceDefinitionID(String serviceDefinitionID);
 
@@ -45,7 +148,9 @@ public interface ServiceService {
 	 * @param serviceDefinitionID
 	 * @return
 	 */
-	int get_serviceInstanceDistributionCount_byTodayAndServiceDefinitionID(String serviceDefinitionID);
+	// int
+	// get_serviceInstanceDistributionCount_byTodayAndServiceDefinitionID(String
+	// serviceDefinitionID);
 
 	/**
 	 * 通过业务实例的ID获取业务实例的DTO
@@ -72,8 +177,10 @@ public interface ServiceService {
 	/**
 	 * 在给定任务定义中，随机抽取给定数量的任务实例
 	 */
-	List<jwcpxt_service_instance> list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(int num,
-			String serviceDefinitionID, String date);
+	// List<jwcpxt_service_instance>
+	// list_serviceInstance_byNoJudgeAndRandomAndNumAndServiceDefinitionIDAndDate(int
+	// num,
+	// String serviceDefinitionID, String date);
 
 	List<ServiceInstanceDTO> list_serviceInstanceDTO_byServiceDefinitionID(String serviceDefinitionID);
 
@@ -97,7 +204,9 @@ public interface ServiceService {
 	void grab_serviceInstance_auto();
 
 	List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID);
-	/*
-	 * 
-	 */
+
+	public jwcpxt_service_definition get_serviceDefinitionDo_byId(jwcpxt_service_definition serviceDefinition);
+
+	public jwcpxt_service_client get_serviceClientDo_byId(jwcpxt_service_client serviceClient);
+
 }

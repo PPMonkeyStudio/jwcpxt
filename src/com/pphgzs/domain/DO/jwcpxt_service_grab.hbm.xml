@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-7-8 7:27:33 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-7-12 9:37:56 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_service_grab" table="JWCPXT_SERVICE_GRAB">
         <id name="jwcpxt_service_grab_id" type="java.lang.String">
@@ -11,26 +11,53 @@
         <property name="service_grab_service_definition" type="java.lang.String">
             <column name="SERVICE_GRAB_SERVICE_DEFINITION" />
         </property>
-        <property name="service_grab_Interface" type="java.lang.String">
-            <column name="SERVICE_GRAB_INTERFACE" />
+        <property name="service_grab_service_num" type="java.lang.String">
+            <column name="SERVICE_GRAB_SERVICE_NUM" />
         </property>
-        <property name="service_grab_table" type="java.lang.String">
-            <column name="SERVICE_GRAB_TABLE" />
+        <property name="service_grab_interface_identifying" type="java.lang.String">
+            <column name="SERVICE_GRAB_INTERFACE_IDENTIFYING" />
         </property>
-        <property name="service_grab_field_nid" type="java.lang.String">
-            <column name="SERVICE_GRAB_FIELD_NID" />
+        <property name="service_grab_source_username" type="java.lang.String">
+            <column name="SERVICE_GRAB_SOURCE_USERNAME" />
         </property>
-        <property name="service_grab_field_client_name" type="java.lang.String">
-            <column name="SERVICE_GRAB_FIELD_CLIENT_NAME" />
+        <property name="service_grab_source_password" type="java.lang.String">
+            <column name="SERVICE_GRAB_SOURCE_PASSWORD" />
         </property>
-        <property name="service_grab_field_client_sex" type="java.lang.String">
-            <column name="SERVICE_GRAB_FIELD_CLIENT_SEX" />
+        <property name="service_grab_machine_ip" type="java.lang.String">
+            <column name="SERVICE_GRAB_MACHINE_IP" />
         </property>
-        <property name="service_grab_field_client_phone" type="java.lang.String">
-            <column name="SERVICE_GRAB_FIELD_CLIENT_PHONE" />
+        <property name="service_grab_single_table" type="int">
+            <column name="SERVICE_GRAB_SINGLE_TABLE" />
         </property>
-        <property name="service_grab_field_date" type="java.lang.String">
-            <column name="SERVICE_GRAB_FIELD_DATE" />
+        <property name="service_grab_project_name" type="java.lang.String">
+            <column name="SERVICE_GRAB_PROJECT_NAME" />
+        </property>
+        <property name="service_grab_interface_one" type="java.lang.String">
+            <column name="SERVICE_GRAB_INTERFACE_ONE" />
+        </property>
+        <property name="service_grab_interface_two" type="java.lang.String">
+            <column name="SERVICE_GRAB_INTERFACE_TWO" />
+        </property>
+        <property name="service_grab_field_name" type="java.lang.String">
+            <column name="SERVICE_GRAB_FIELD_NAME" />
+        </property>
+        <property name="service_grab_name_field" type="java.lang.String">
+            <column name="SERVICE_GRAB_NAME_FIELD" />
+        </property>
+        <property name="service_grab_sex_field" type="java.lang.String">
+            <column name="SERVICE_GRAB_SEX_FIELD" />
+        </property>
+        <property name="service_grab_phone_field" type="java.lang.String">
+            <column name="SERVICE_GRAB_PHONE_FIELD" />
+        </property>
+        <property name="service_grab_handle_time_field" type="java.lang.String">
+            <column name="SERVICE_GRAB_HANDLE_TIME_FIELD" />
+        </property>
+        <property name="service_grab_connect_one_field" type="java.lang.String">
+            <column name="SERVICE_GRAB_CONNECT_ONE_FIELD" />
+        </property>
+        <property name="service_grab_connect_two_field" type="java.lang.String">
+            <column name="SERVICE_GRAB_CONNECT_TWO_FIELD" />
         </property>
         <property name="service_grab_gmt_create" type="java.lang.String">
             <column name="SERVICE_GRAB_GMT_CREATE" />

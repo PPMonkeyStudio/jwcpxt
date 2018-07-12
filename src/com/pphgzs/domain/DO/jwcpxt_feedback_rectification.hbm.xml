@@ -1,21 +1,63 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-7-9 14:37:48 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-7-12 14:51:14 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_feedback_rectification" table="JWCPXT_FEEDBACK_RECTIFICATION">
         <id name="jwcpxt_feedback_rectification_id" type="java.lang.String">
             <column name="JWCPXT_FEEDBACK_RECTIFICATION_ID" />
             <generator class="assigned" />
         </id>
+        <property name="feedback_rectification_dissatisfied_feedback" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_DISSATISFIED_FEEDBACK" />
+        </property>
+        <property name="feedback_rectification_no" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_NO" />
+        </property>
+        <property name="feedback_rectification_title" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_TITLE" />
+        </property>
+        <property name="feedback_rectification_collect_channel" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_COLLECT_CHANNEL" />
+        </property>
+        <property name="feedback_rectification_collect_time" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_COLLECT_TIME" />
+        </property>
+        <property name="feedback_rectification_client_name" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_CLIENT_NAME" />
+        </property>
+        <property name="feedback_rectification_client_phone" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_CLIENT_PHONE" />
+        </property>
+        <property name="feedback_rectification_question_describe" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_QUESTION_DESCRIBE" />
+        </property>
+        <property name="feedback_rectification_unit_name" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_UNIT_NAME" />
+        </property>
+        <property name="feedback_rectification_unit_people" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_UNIT_PEOPLE" />
+        </property>
+        <property name="feedback_rectification_unit_people_phone" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_UNIT_PEOPLE_PHONE" />
+        </property>
+        <property name="feedback_rectification_handle_state" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_HANDLE_STATE" />
+        </property>
+        <property name="feedback_rectification_date" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_DATE" />
+        </property>
         <property name="feedback_rectification_content" type="java.lang.String">
             <column name="FEEDBACK_RECTIFICATION_CONTENT" />
         </property>
-        <property name="feedback_rectification_state" type="java.lang.String">
-            <column name="FEEDBACK_RECTIFICATION_STATE" />
+        <property name="feedback_rectification_sjzgbm_opinion" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_SJZGBM_OPINION" />
         </property>
-        <property name="feedback_rectification_time" type="java.lang.String">
-            <column name="FEEDBACK_RECTIFICATION_TIME" />
+        <property name="feedback_rectification_cpzx_opinion" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_CPZX_OPINION" />
+        </property>
+        <property name="feedback_rectification_audit_state" type="java.lang.String">
+            <column name="FEEDBACK_RECTIFICATION_AUDIT_STATE" />
         </property>
         <property name="feedback_rectification_gmt_create" type="java.lang.String">
             <column name="FEEDBACK_RECTIFICATION_GMT_CREATE" />

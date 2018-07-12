@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-6-15 13:27:48 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-7-12 15:45:15 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_unit" table="JWCPXT_UNIT">
         <id name="jwcpxt_unit_id" type="java.lang.String">
@@ -11,8 +11,26 @@
         <property name="unit_name" type="java.lang.String">
             <column name="UNIT_NAME" />
         </property>
-        <property name="unit_reorganizer" type="java.lang.String">
-            <column name="UNIT_REORGANIZER" />
+        <property name="unit_contacts_name" type="java.lang.String">
+            <column name="UNIT_CONTACTS_NAME" />
+        </property>
+        <property name="unit_father" type="java.lang.String">
+            <column name="UNIT_FATHER" />
+        </property>
+        <property name="unit_num" type="java.lang.String">
+            <column name="UNIT_NUM" />
+        </property>
+        <property name="unit_grade" type="int">
+            <column name="UNIT_GRADE" />
+        </property>
+        <property name="unit_account" type="java.lang.String">
+            <column name="UNIT_ACCOUNT" />
+        </property>
+        <property name="unit_password" type="java.lang.String">
+            <column name="UNIT_PASSWORD" />
+        </property>
+        <property name="unit_phone" type="java.lang.String">
+            <column name="UNIT_PHONE" />
         </property>
         <property name="unit_gmt_create" type="java.lang.String">
             <column name="UNIT_GMT_CREATE" />

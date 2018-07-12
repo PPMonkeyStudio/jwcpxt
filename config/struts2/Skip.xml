@@ -25,11 +25,21 @@
 			</result>
 			<result name="navbarAbarbeitung">/WEB-INF/view/navbarAbarbeitung.jsp</result>
 			<result name="navbarAppraisal">/WEB-INF/view/navbarAppraisal.jsp</result>
+			<result name="skipAbarbeitungProceed">/WEB-INF/view/abarbeitung/abarbeitungProceed.jsp</result>
 			<result name="skipQuestionnaireDetails" type="redirectAction">
 				skipQuestionnaireDetailsJsp?definitionId=${definitionId}
 			</result>
 			<result name="skipQuestionnaireDetailsJsp">
 				/WEB-INF/view/managerData/questionnaireDetails.jsp
+			</result>
+			<result name="skipReturnedPartyInformation">
+				/WEB-INF/view/evaluationPolice/returnedPartyInformation.jsp
+			</result>
+			<result name="skipPoliceAssessmentPage" type="redirectAction">
+				skipPoliceAssessmentPageJsp?definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
+			</result>
+			<result name="skipPoliceAssessmentPageJsp">
+				/WEB-INF/view/evaluationPolice/policeAssessmentPage.jsp
 			</result>
 		</action>
 	</package>

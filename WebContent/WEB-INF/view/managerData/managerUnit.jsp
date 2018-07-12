@@ -34,43 +34,37 @@ a:hover {
 									<h4 class="title">单位管理</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
-									<button onclick="addUnit()" class="btn btn-default">
-										<i class="ti-plus"></i>新建一个单位
-									</button>
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
 									<table id="unitTable" class="table table-striped"
-										style="display: none; text-align: center;">
+										style="text-align: center;">
 										<thead>
 											<tr>
 												<td>单位名称</td>
-												<td>整改员</td>
-												<td>创建时间</td>
-												<td>修改时间</td>
+												<td>机构代码</td>
+												<td>账号</td>
+												<td>联系号码</td>
 												<td>操作</td>
+												<td>子单位</td>
+												<td>业务</td>
 											</tr>
 										</thead>
 										<tbody>
-											<template v-for="unitDTO in unitVO.unitDTOList">
+											<template v-for="unit in unitVO.unitList">
 											<tr>
-												<td>{{ unitDTO.unit.unit_name }}</td>
-												<template v-if="unitDTO.user==undifined">
-													<td></td>						
-												</template>
-												<template v-else>
-													<td>{{ unitDTO.user.user_name }}</td>
-												</template>
-												<td>{{ unitDTO.unit.unit_gmt_create }}</td>
-												<td>{{ unitDTO.unit.unit_gmt_modified }}</td>
-												<td><a :id="unitDTO.unit.jwcpxt_unit_id" onclick="updateUnit(this)"><i
-														class="ti-pencil-alt"></i></a> <a :id="unitDTO.unit.jwcpxt_unit_id"
-													onclick="deleteUnit(this)"><i class="ti-trash"></i></a></td>
+												<td>{{ unit.unit_name }}</td>
+												<td>{{ unit.unit_num }}</td>
+												<td>{{ unit.unit_account }}</td>
+												<td>{{ unit.unit_phone }}</td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="updateUnit(this)">修改</a>|<a
+													:id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="managerSonUnit(this)">管理子单位</a></td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="managerService(this)">管理业务</a></td>
 											</tr>
 											</template>
 										</tbody>
 									</table>
-									<span>单位总数：{{ unitVO.totalRecords }}</span>
 								</div>
 							</div>
 						</div>

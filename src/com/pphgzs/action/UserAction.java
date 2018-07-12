@@ -1,8 +1,6 @@
 package com.pphgzs.action;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +12,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_user;
-import com.pphgzs.domain.DTO.UserDTO;
-import com.pphgzs.domain.VO.UserVO;
 import com.pphgzs.service.UserService;
 
 @SuppressWarnings("serial")
@@ -29,122 +25,53 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	 * 
 	 */
 	private jwcpxt_user user;
-	private UserVO userVO;
-
-	/*
-	 * 
-	 */
-	public String userList() {
-		return "userList";
-	}
 
 	/*
 	 * 
 	 */
 	public void get_userVO() throws IOException {
-		if (userVO == null) {
-			userVO = new UserVO();
-		}
-		userVO = userService.get_userVO(userVO);
-		//
+
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(userVO));
-	}
-
-	/**
-	 * 获得所有用户的DTO列表
-	 * 
-	 * @throws IOException
-	 */
-	public void list_userDTO_all() throws IOException {
-		List<UserDTO> userDTOList = userService.list_userDTO_all();
-		//
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		//
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(userDTOList));
-	}
-
-	public void list_user_byJurisdiction() throws IOException {
-		List<jwcpxt_user> userList = userService.list_user_byJurisdiction(user);
-		//
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		//
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(userList));
-	}
-
-	/**
-	 * 
-	 * @throws IOException
-	 */
-	public void get_userDTO_byUserID() throws IOException {
-		UserDTO userDTO = userService.get_userDTO_byUserID(user.getJwcpxt_user_id());
-		//
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		//
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(userDTO));
-	}
-
-	/**
-	 * 
-	 * @throws IOException
-	 */
-	public void list_user_all() throws IOException {
-
-		List<jwcpxt_user> userList = new ArrayList<jwcpxt_user>();
-
-		userList = userService.list_user_all();
-		//
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		//
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(userList));
-
+		http_response.getWriter().write(gson.toJson(userService.get_userVO()));
 	}
 
 	public void save_user() throws IOException {
-		http_response.setContentType("text/html;charset=utf-8");
 		if (userService.save_user(user)) {
+			http_response.setContentType("text/html;charset=utf-8");
 			http_response.getWriter().write("1");
 		} else {
+			http_response.setContentType("text/html;charset=utf-8");
 			http_response.getWriter().write("-1");
 		}
 	}
 
-	public void delete_user() throws IOException {
-		http_response.setContentType("text/html;charset=utf-8");
-		if (userService.delete_user(user)) {
+	public void reset_userPassword_byUserID() throws IOException {
+
+		if (userService.reset_userPassword_byUserID(user.getJwcpxt_user_id())) {
+			http_response.setContentType("text/html;charset=utf-8");
 			http_response.getWriter().write("1");
 		} else {
+			http_response.setContentType("text/html;charset=utf-8");
 			http_response.getWriter().write("-1");
 		}
 	}
 
-	public void update_user() throws IOException {
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.create();
-		http_response.setContentType("text/html;charset=utf-8");
-		if (userService.update_user(user)) {
+	public void ban_user_byUserID() throws IOException {
+		if (userService.ban_user_byUserID(user.getJwcpxt_user_id())) {
+			http_response.setContentType("text/html;charset=utf-8");
 			http_response.getWriter().write("1");
 		} else {
+			http_response.setContentType("text/html;charset=utf-8");
 			http_response.getWriter().write("-1");
 		}
 	}
+	/*
+	 * 
+	 */
 
 	/*
 	 * 
@@ -190,14 +117,6 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 
 	public void setUser(jwcpxt_user user) {
 		this.user = user;
-	}
-
-	public UserVO getUserVO() {
-		return userVO;
-	}
-
-	public void setUserVO(UserVO userVO) {
-		this.userVO = userVO;
 	}
 
 	/*

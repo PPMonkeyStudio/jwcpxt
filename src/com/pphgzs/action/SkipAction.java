@@ -2,6 +2,7 @@ package com.pphgzs.action;
 
 public class SkipAction {
 	private String definitionId;
+	private String serviceClientId;
 
 	public String skipSidebar() {
 		return "skipSidebar";
@@ -55,6 +56,10 @@ public class SkipAction {
 		return "navbarAppraisal";
 	}
 
+	public String skipAbarbeitungProceed() {
+		return "skipAbarbeitungProceed";
+	}
+
 	/* hy */
 	public String skipQuestionnaireDetails() {
 		return "skipQuestionnaireDetails";
@@ -64,12 +69,32 @@ public class SkipAction {
 		return "skipQuestionnaireDetailsJsp";
 	}
 
+	public String skipReturnedPartyInformation() {
+		return "skipReturnedPartyInformation";
+	}
+
+	public String skipPoliceAssessmentPage() {
+		return "skipPoliceAssessmentPage";
+	}
+
+	public String skipPoliceAssessmentPageJsp() {
+		return "skipPoliceAssessmentPageJsp";
+	}
+
 	public String getDefinitionId() {
 		return definitionId;
 	}
 
 	public void setDefinitionId(String definitionId) {
 		this.definitionId = definitionId;
+	}
+
+	public String getServiceClientId() {
+		return serviceClientId;
+	}
+
+	public void setServiceClientId(String serviceClientId) {
+		this.serviceClientId = serviceClientId;
 	}
 
 }

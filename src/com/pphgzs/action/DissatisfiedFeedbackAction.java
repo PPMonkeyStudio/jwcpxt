@@ -10,8 +10,14 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
+import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
+import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 
 @SuppressWarnings("serial")
@@ -20,43 +26,207 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
-	private DissatisfiedFeedbackVO dissatisfiedFeedbackVO;
+	private jwcpxt_feedback_rectification feedbackRectification;
+	private DissatisfiedQuestionVO dissatisfiedQuestionVO;
+	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
+	private FeedbackRectificationVO feedbackRectificationVO;
+	private CheckFeedbackRectificationVO checkFeedbackRectificationVO;
 
 	/**
-	 * 获取整改反馈VO
+	 * 审核操作
 	 * 
 	 * @throws IOException
-	 * 
 	 */
-	public void get_dissatisfiedFeedbackVO() throws IOException {
-		if (dissatisfiedFeedbackVO == null) {
-			dissatisfiedFeedbackVO = new DissatisfiedFeedbackVO();
+	public void checkFeedbackRectification() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		jwcpxt_unit unit = new jwcpxt_unit();
+		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
+		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
+		if (dissatisfiedFeedbackService.checkFeedbackRectification(feedbackRectification, unit)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
 		}
-		dissatisfiedFeedbackVO = dissatisfiedFeedbackService.get_dissatisfiedFeedbackVO(dissatisfiedFeedbackVO);
+	}
+
+	/**
+	 * 获取审核的整改反馈表
+	 * 
+	 * @throws IOException
+	 */
+	public void get_checkFeedbackRectificationVO() throws IOException {
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.serializeNulls().create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(dissatisfiedFeedbackVO));
+		jwcpxt_unit unit = new jwcpxt_unit();
+		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
+		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
+		unit.setUnit_grade(2);
+		ActionContext.getContext().getSession().remove("unit");
+		ActionContext.getContext().getSession().put("unit", unit);
+		checkFeedbackRectificationVO = dissatisfiedFeedbackService
+				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
+		System.out.println("checkFeedbackRectificationVO:" + checkFeedbackRectificationVO);
+		http_response.getWriter().write(gson.toJson(checkFeedbackRectificationVO));
 	}
 
 	/**
+	 * （整改）获取整改反馈表VO
 	 * 
+	 * @throws IOException
 	 */
+	public void get_feedbackRectificationVO() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		jwcpxt_unit unit = new jwcpxt_unit();
+		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
+		unit.setJwcpxt_unit_id("1");
+		feedbackRectificationVO = dissatisfiedFeedbackService.get_feedbackRectificationVO(feedbackRectificationVO,
+				unit);
+		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));
+	}
+
+	/**
+	 * 办结操作
+	 * 
+	 * @throws IOException
+	 */
+	public void update_dissatisfiedFeedbackState_toEnd() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_dissatisfiedFeedbackState_toEnd(feedbackRectification)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 通过整改反馈id获得一条记录
+	 * 
+	 * @throws IOException
+	 */
+	public void get_feedbackRectficationDO_byId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		feedbackRectification = dissatisfiedFeedbackService.get_feedbackRectficationDO_byId(feedbackRectification);
+		http_response.getWriter().write(gson.toJson(feedbackRectification));
+	}
+
+	/**
+	 * 通过不满意反馈id获得一条记录
+	 * 
+	 * @throws IOException
+	 */
+	public void get_dissatisfiedFeedbackDO_byId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		dissatisfiedFeedback = dissatisfiedFeedbackService.get_dissatisfiedFeedbackDO_byId(dissatisfiedFeedback);
+		http_response.getWriter().write(gson.toJson(dissatisfiedFeedback));
+	}
+
+	/**
+	 * 推送
+	 * 
+	 * @throws IOException
+	 */
+	public void updade_dissatisfiedFeedbackState_toPush() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.updade_dissatisfiedFeedbackState_toPush(dissatisfiedFeedback,
+				feedbackRectification)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 驳回不满意反馈表
+	 * 
+	 * @throws IOException
+	 */
+	public void update_dissatisfiedFeedbackState_toReject() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_dissatisfiedFeedbackState_toReject(dissatisfiedFeedback)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 获取不满意反馈表VO
+	 * 
+	 * @throws IOException
+	 */
+	public void get_dissatisfiedQuestionVO() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		dissatisfiedQuestionVO = dissatisfiedFeedbackService.get_dissatisfiedQuestionVO(dissatisfiedQuestionVO);
+		http_response.getWriter().write(gson.toJson(dissatisfiedQuestionVO));
+	}
+
+	public jwcpxt_dissatisfied_feedback getDissatisfiedFeedback() {
+		return dissatisfiedFeedback;
+	}
+
+	public void setDissatisfiedFeedback(jwcpxt_dissatisfied_feedback dissatisfiedFeedback) {
+		this.dissatisfiedFeedback = dissatisfiedFeedback;
+	}
+
+	public CheckFeedbackRectificationVO getCheckFeedbackRectificationVO() {
+		return checkFeedbackRectificationVO;
+	}
+
+	public void setCheckFeedbackRectificationVO(CheckFeedbackRectificationVO checkFeedbackRectificationVO) {
+		this.checkFeedbackRectificationVO = checkFeedbackRectificationVO;
+	}
 
 	@Override
 	public void setServletRequest(HttpServletRequest http_request) {
 		this.http_request = http_request;
 	}
 
-	public DissatisfiedFeedbackVO getDissatisfiedFeedbackVO() {
-		return dissatisfiedFeedbackVO;
+	public DissatisfiedQuestionVO getDissatisfiedQuestionVO() {
+		return dissatisfiedQuestionVO;
 	}
 
-	public void setDissatisfiedFeedbackVO(DissatisfiedFeedbackVO dissatisfiedFeedbackVO) {
-		this.dissatisfiedFeedbackVO = dissatisfiedFeedbackVO;
+	public FeedbackRectificationVO getFeedbackRectificationVO() {
+		return feedbackRectificationVO;
+	}
+
+	public void setFeedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO) {
+		this.feedbackRectificationVO = feedbackRectificationVO;
+	}
+
+	public void setDissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {
+		this.dissatisfiedQuestionVO = dissatisfiedQuestionVO;
+	}
+
+	public jwcpxt_feedback_rectification getFeedbackRectification() {
+		return feedbackRectification;
+	}
+
+	public void setFeedbackRectification(jwcpxt_feedback_rectification feedbackRectification) {
+		this.feedbackRectification = feedbackRectification;
 	}
 
 	public DissatisfiedFeedbackService getDissatisfiedFeedbackService() {

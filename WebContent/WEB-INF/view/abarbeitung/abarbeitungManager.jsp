@@ -18,8 +18,12 @@ a:hover {
 .pageOperation:hover {
 	cursor: pointer;
 }
+
+.hideALl {
+	display: none;
+}
 </style>
-<title>业务管理</title>
+<title>整改反馈</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -36,13 +40,12 @@ a:hover {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">审核整改</h4>
+									<h4 class="title">整改反馈</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
 										<label>整改时间</label> <input onchange="changeQuery()"
-											id="searchTimeStart"
-											class="mydate form-control"
+											id="searchTimeStart" class="mydate form-control"
 											style="display: inline; width: 150px;"><label>&nbsp;至&nbsp;</label><input
 											onchange="changeQuery()" id="searchTimeEnd"
 											class="mydate form-control"
@@ -56,7 +59,8 @@ a:hover {
 											style="text-align: center; display: none;">
 											<thead>
 												<tr>
-													<td><select class="form-control" id="searchUnit">
+													<td><select onchange="changeQuery()"
+														class="form-control" id="searchUnit">
 															<option value="">整改单位</option>
 													</select></td>
 													<td>整改员</td>
@@ -66,7 +70,31 @@ a:hover {
 												</tr>
 											</thead>
 											<tbody>
-
+												<template
+													v-for="rectificationFeedback in abarbeitungVO.listRectificationFeedback">
+												<tr>
+													<td>{{ rectificationFeedback.unit.unit_name }}</td>
+													<td>{{ rectificationFeedback.user.user_name }}</td>
+													<template
+														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 0">
+													<td><span class="label label-primary">未审核</span></td>
+													</template>
+													<template
+														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 1">
+													<td><span class="label label-success">审核已通过</span></td>
+													</template>
+													<template
+														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 2">
+													<td><span class="label label-danger">审核未通过</span></td>
+													</template>
+													<td>{{
+														rectificationFeedback.feedbackRectification.feedback_rectification_gmt_create
+														}}</td>
+													<td><a
+														:id="rectificationFeedback.feedbackRectification.jwcpxt_feedback_rectification_id"
+														onclick="viewRectification(this)"><i class="ti-eye"></i></a></td>
+												</tr>
+												</template>
 											</tbody>
 										</table>
 										<!-- 分页 -->
@@ -128,4 +156,6 @@ a:hover {
 </script>
 <script type="text/javascript"
 	src="<%=basePath%>js/abarbeitung/showAbarbeitungManager.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>js/abarbeitung/managerAbarbeitungManager.js"></script>
 </html>

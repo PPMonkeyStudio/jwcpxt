@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.LoginAndLogoutDao;
-import com.pphgzs.domain.DO.jwcpxt_admin;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_user;
 
 public class LoginAndLogoutDaoImpl implements LoginAndLogoutDao {
@@ -32,14 +32,13 @@ public class LoginAndLogoutDaoImpl implements LoginAndLogoutDao {
 	}
 
 	@Override
-	public jwcpxt_admin getAdminByAccount(String account) {
-		jwcpxt_admin admin = null;
+	public jwcpxt_unit getunitByAccount(String account) {
+		jwcpxt_unit unit = null;
 		Session session = getSession();
-		String hql = "from jwcpxt_admin where admin_account='" + account + "'";
+		String hql = "from jwcpxt_unit where unit_account='" + account + "'";
 		Query query = session.createQuery(hql);
-		admin = (jwcpxt_admin) query.uniqueResult();
+		unit = (jwcpxt_unit) query.uniqueResult();
 		session.clear();
-		return admin;
+		return unit;
 	}
-
 }

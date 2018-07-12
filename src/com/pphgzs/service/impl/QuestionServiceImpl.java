@@ -61,7 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// 新建
 		List<jwcpxt_question> questionList = new ArrayList<>();
 		// 根据业务Id获取业务对象
-		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO(null, null);
+		ServiceDefinitionDTO serviceDefinitionDTO = new ServiceDefinitionDTO();
 		// 首先根据业务定义Id获取业务定义对象
 		serviceDefinitionDTO = serviceService.get_serviceDefinitionDTO_byServiceDefinitionID(
 				questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id());
@@ -654,8 +654,8 @@ public class QuestionServiceImpl implements QuestionService {
 					dissatisfiedFeedback.setJwcpxt_dissatisfied_feedback_id(uuidUtil.getUuid());
 					dissatisfiedFeedback
 							.setDissatisfied_feedback_answer_choice(answerChoice.getJwcpxt_answer_choice_id());
-					dissatisfiedFeedback.setDissatisfied_feedback_time(TimeUtil.getStringSecond());
-					dissatisfiedFeedback.setDissatisfied_feedback_state("1");
+					// dissatisfiedFeedback.setDissatisfied_feedback_time(TimeUtil.getStringSecond());
+					// dissatisfiedFeedback.setDissatisfied_feedback_state("1");
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_create(TimeUtil.getStringSecond());
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_modified(
 							dissatisfiedFeedback.getDissatisfied_feedback_gmt_create());

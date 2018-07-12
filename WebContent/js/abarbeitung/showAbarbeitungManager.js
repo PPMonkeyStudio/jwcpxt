@@ -58,6 +58,13 @@ function loadData() {
 	})
 }
 
+function changeQuery(){
+	queryTemp.timeStart=$('#searchTimeStart').val();
+	queryTemp.timeEnd = $('#searchTimeEnd').val();
+	queryTemp.searchUnit=$('#searchUnit').val();
+	loadData();
+}
+
 // 首页
 function skipToIndexPage() {
 	if (abarbeitungVue.abarbeitungVO.currPage == '1') {

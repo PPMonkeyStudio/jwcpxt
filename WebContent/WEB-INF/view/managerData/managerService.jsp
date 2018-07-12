@@ -18,6 +18,9 @@ a:hover {
 .pageOperation:hover {
 	cursor: pointer;
 }
+.interfaceTable tr{
+	border: solid;
+}
 </style>
 <title>业务管理</title>
 </head>
@@ -41,9 +44,6 @@ a:hover {
 									<button onclick="addService()" class="btn btn-default">
 										<i class="ti-plus"></i>新建一个业务
 									</button>
-									<input oninput="changeQuery()" id="searchContent"
-										placeholder="请输入搜索内容" class="form-control"
-										style="float: right; width: 250px;">
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
@@ -52,68 +52,25 @@ a:hover {
 										<thead>
 											<tr>
 												<td>业务名</td>
-												<td><select onchange="changeQuery()" id="searchUnit"
-													class="form-control">
-														<option value="">请选择单位</option>
-												</select></td>
-												<td>抽样比例</td>
 												<td>创建时间</td>
 												<td>进入问题</td>
 												<td>修改业务</td>
-												<td>修改接口</td>
+												<td>接口管理</td>
 											</tr>
 										</thead>
 										<tbody>
-											<template
-												v-for="serviceDefinitionDTO in serviceVO.serviceDefinitionDTOList">
-											<tr>
-												<td><a
-													:id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
-													onclick="intoInstance(this)">{{
-														serviceDefinitionDTO.serviceDefinition.service_definition_describe
-														}}</a></td>
-												<td>{{ serviceDefinitionDTO.unit.unit_name }}</td>
-												<td>{{
-													serviceDefinitionDTO.serviceDefinition.service_definition_sampling_proportion
-													}}%</td>
-												<td>{{
-													serviceDefinitionDTO.serviceDefinition.service_definition_gmt_create
-													}}</td>
-												<td><a
-													:id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
-													onclick="intoQuestion(this)"><i class="ti-arrow-right"></i></a></td>
-												<td><a
-													:id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
-													onclick="updateService(this)"><i class="ti-pencil-alt"></i></a></td>
-												<td><a
-													:id="serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id"
-													onclick="updateInterface(this)"><i class="ti-pencil"></i></a></td>
-											</tr>
+											<template v-for="service in serviceList">
+												<tr>
+													<td>{{ service.service_definition_describe }}</td>
+													<td>{{ service.service_definition_gmt_create }}</td>
+													<td><a :id="service.jwcpxt_service_definition_id" onclick="intoQuestion(this)"><i class="ti-arrow-right"></i></a></td>
+													<td><a :id="service.jwcpxt_service_definition_id" onclick="updateService(this)"><i class="ti-pencil-alt"></i></a></td>
+													<td><a :id="service.jwcpxt_service_definition_id" onclick="showInterface(this)"><i class="ti-key"></i></a></td>
+												</tr>
 											</template>
 										</tbody>
 									</table>
 									<!-- 分页 -->
-									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage"></span>{{
-											serviceVO.currPage }}
-										</span> <span>共:<span id="totalPage">{{
-												serviceVO.totalPage }}</span>页
-										</span> <span onclick="skipToIndexPage()" id="indexPage"
-											class="pageOperation">首页</span> <span
-											onclick="skipToPrimaryPage()" id="previousPage"
-											class="pageOperation">上一页</span> <span
-											onclick="skipToNextPage()" id="nextPage"
-											class="pageOperation">下一页</span> <span
-											onclick="skipToLastPage()" id="lastPage"
-											class="pageOperation">末页</span> <span> <input
-											id="skipPage" type="text"
-											style="text-align: center; width: 60px; height: 30px;"
-											class="queryInput">
-											<button onclick="skipToArbitrarilyPage()"
-												class="btn btn-default"
-												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
-										</span>
-									</div>
 								</div>
 							</div>
 						</div>

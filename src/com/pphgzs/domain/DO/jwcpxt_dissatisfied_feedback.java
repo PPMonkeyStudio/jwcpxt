@@ -1,25 +1,22 @@
 package com.pphgzs.domain.DO;
 
-/**
- * 
- * @author JXX
- *
- */
 public class jwcpxt_dissatisfied_feedback {
 	private String jwcpxt_dissatisfied_feedback_id;
+
 	private String dissatisfied_feedback_answer_choice;
-	private String dissatisfied_feedback;
-	private String dissatisfied_feedback_time;
 	private String dissatisfied_feedback_state;
+	private String dissatisfied_feedback_audit_opinion;
 	private String dissatisfied_feedback_gmt_create;
 	private String dissatisfied_feedback_gmt_modified;
 
-	public String getDissatisfied_feedback() {
-		return dissatisfied_feedback;
-	}
-
-	public void setDissatisfied_feedback(String dissatisfied_feedback) {
-		this.dissatisfied_feedback = dissatisfied_feedback;
+	@Override
+	public String toString() {
+		return "jwcpxt_dissatisfied_feedback 【\njwcpxt_dissatisfied_feedback_id=" + jwcpxt_dissatisfied_feedback_id
+				+ ", \ndissatisfied_feedback_answer_choice=" + dissatisfied_feedback_answer_choice
+				+ ", \ndissatisfied_feedback_state=" + dissatisfied_feedback_state
+				+ ", \ndissatisfied_feedback_audit_opinion=" + dissatisfied_feedback_audit_opinion
+				+ ", \ndissatisfied_feedback_gmt_create=" + dissatisfied_feedback_gmt_create
+				+ ", \ndissatisfied_feedback_gmt_modified=" + dissatisfied_feedback_gmt_modified + "\n】";
 	}
 
 	public String getJwcpxt_dissatisfied_feedback_id() {
@@ -38,20 +35,20 @@ public class jwcpxt_dissatisfied_feedback {
 		this.dissatisfied_feedback_answer_choice = dissatisfied_feedback_answer_choice;
 	}
 
-	public String getDissatisfied_feedback_time() {
-		return dissatisfied_feedback_time;
-	}
-
-	public void setDissatisfied_feedback_time(String dissatisfied_feedback_time) {
-		this.dissatisfied_feedback_time = dissatisfied_feedback_time;
-	}
-
 	public String getDissatisfied_feedback_state() {
 		return dissatisfied_feedback_state;
 	}
 
 	public void setDissatisfied_feedback_state(String dissatisfied_feedback_state) {
 		this.dissatisfied_feedback_state = dissatisfied_feedback_state;
+	}
+
+	public String getDissatisfied_feedback_audit_opinion() {
+		return dissatisfied_feedback_audit_opinion;
+	}
+
+	public void setDissatisfied_feedback_audit_opinion(String dissatisfied_feedback_audit_opinion) {
+		this.dissatisfied_feedback_audit_opinion = dissatisfied_feedback_audit_opinion;
 	}
 
 	public String getDissatisfied_feedback_gmt_create() {
@@ -68,16 +65,6 @@ public class jwcpxt_dissatisfied_feedback {
 
 	public void setDissatisfied_feedback_gmt_modified(String dissatisfied_feedback_gmt_modified) {
 		this.dissatisfied_feedback_gmt_modified = dissatisfied_feedback_gmt_modified;
-	}
-
-	@Override
-	public String toString() {
-		return "jwcpxt_dissatisfied_feedback [jwcpxt_dissatisfied_feedback_id=" + jwcpxt_dissatisfied_feedback_id
-				+ ", dissatisfied_feedback_answer_choice=" + dissatisfied_feedback_answer_choice
-				+ ", dissatisfied_feedback=" + dissatisfied_feedback + ", dissatisfied_feedback_time="
-				+ dissatisfied_feedback_time + ", dissatisfied_feedback_state=" + dissatisfied_feedback_state
-				+ ", dissatisfied_feedback_gmt_create=" + dissatisfied_feedback_gmt_create
-				+ ", dissatisfied_feedback_gmt_modified=" + dissatisfied_feedback_gmt_modified + "]";
 	}
 
 }
