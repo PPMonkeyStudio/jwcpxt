@@ -785,7 +785,9 @@ $(function() {
 					},
 				});
 			},
-			onDestroy : function() {},
+			onDestroy : function() {
+				modifyInquiriesOptionConfirmVue = null;
+			},
 			buttons : {
 				addOption : {
 					text : '添加选项',

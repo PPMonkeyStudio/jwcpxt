@@ -78,11 +78,10 @@ th {
 													 <!-- 选项循环 -->
 													 <template v-for="(optionDTO,index1) in questionDTO.listOptionDTO">
 													 <div class="form-group">
-													 	 <input type="radio" :name="index" :optionID="optionDTO.option.jwcpxt_option_id" @click="checkOption($event,index)">
+													 	 <input type="radio" :name="index" :optionIndex="index1" :optionID="optionDTO.option.jwcpxt_option_id">
 														 <label class="control-label">{{optionDTO.option.option_describe}}</label>
 													 </div>
 													 </template>
-													 
 												</div>
 											</template>
 											<!-- 主观题 -->
