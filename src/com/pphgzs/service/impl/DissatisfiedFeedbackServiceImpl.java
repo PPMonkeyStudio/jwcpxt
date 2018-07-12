@@ -52,6 +52,16 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	@Override
 	public FeedbackRectificationVO get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
 			jwcpxt_unit unit) {
+		if (unit == null) {
+			return feedbackRectificationVO;
+		}
+		if (unit.getJwcpxt_unit_id() != null && unit.getJwcpxt_unit_id().trim().length() > 0) {
+			// 获取unit
+			unit = unitService.get_unitDO_byID(unit.getJwcpxt_unit_id());
+		}
+		if (unit == null) {
+			return null;
+		}
 		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
 		// 获取总记录数
 		int totalRecords = dissatisfiedFeedbackDao.get_countFeedbackRectificationVO(feedbackRectificationVO, unit);
