@@ -67,20 +67,35 @@ a:hover {
 											</tr>
 										</thead>
 										<tbody>
-											<template v-for="">
+											<template v-for="dissatisfiedQuestionDTO in discontentVO.listDissatisfiedQuestionDTO">
 												<tr>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
+													<td>{{ dissatisfiedQuestionDTO.question.question_describe }}</td>
+													<td>
+														<template v-if="dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_state == 1">
+															<span class="label label-primary">未审核</span>
+														</template>
+														<template v-if="dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_state == 2">
+															<span class="label label-success">已推送</span>
+														</template>
+														<template v-if="dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_state == 3">
+															<span class="label label-danger">已驳回</span>
+														</template>
+													</td>
+													<td>{{ dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_gmt_create }}</td>
+													<td><a onclick="" :id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id"><i class="ti-eye"></i></a></td>
+													<td>
+														<template v-if="dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_state == 1">
+															<a>推送</a>|<a>驳回</a>
+														</template>
+													</td>
 												</tr>
 											</template>
 										</tbody>
 									</table>
 									<!-- 分页 -->
 									<div id="bottomPage" style="padding: 20px;">
-										<span>当前页数:<span id="currPage"></span>1
-										</span> <span>共:<span id="totalPage">2</span>页
+										<span>当前页数:<span id="currPage"></span>{{ discontentVO.currPage }}
+										</span> <span>共:<span id="totalPage">{{ discontentVO.totalPage }}</span>页
 										</span> <span onclick="skipToIndexPage()" id="indexPage"
 											class="pageOperation">首页</span> <span
 											onclick="skipToPrimaryPage()" id="previousPage"
