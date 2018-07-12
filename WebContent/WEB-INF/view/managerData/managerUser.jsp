@@ -11,16 +11,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
+[v-cloak] {
+	display: none;
+}
+
 a:hover {
 	cursor: pointer;
 }
 
 i {
-	cursor: :pointer;
-}
-
-.pageOperation:hover {
-	cursor: pointer;
+	cursor: :pointer !important;
 }
 </style>
 <title>用户信息</title>
@@ -51,8 +51,7 @@ i {
 									<!-- <div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div> -->
-									<table id="userTable" class="table table-striped"
-										style=" text-align: center;">
+									<table class="table" style=" text-align: center;">
 										<thead>
 											<tr>
 												<td>账号</td>
@@ -66,21 +65,23 @@ i {
 												<td>操作</td>
 											</tr>
 										</thead>
-										<tbody>
-											<!-- <template v-for="dto in ">
+										<tbody v-cloak>
+											<template v-for="(user,index) in userInfo">
 											<tr>
-												<td>{{ userInfo }}</td>
-												<td>{{ userInfo }}</td>
-												<td>{{ userInfo }}</td>
-												<template v-if="dto.user.user_state==1">
-												<td>正常</td>
-												</template>
-												<template v-else>
-												<td>禁用</td>
-												</template>
-												<td><i class="ti-pencil-alt"></i></td>
+												<td>{{user.user_account}}</td>
+												<td>{{user.user_name}}</td>
+												<td><template v-if="user.user_type==1"> <span
+														class="label label-info">测评员</span> </template> <template
+														v-else-if="user.user_type==2"> <span
+														class="label label-primary">统计员</span> </template></td>
+												<td><template v-if="user.user_state==1"> <span
+														class="label label-info">活动</span> </template> <template
+														v-if="user.user_state==2"> <span
+														class="label label-danger">禁用</span> </template></td>
+												<td><a><i @click="resetPassword(index)" class="fa fa-undo"></i></a>&nbsp;
+													<a><i @click="banUser(index)" class="fa fa-ban fa-fw"></i></a></td>
 											</tr>
-											</template> -->
+											</template>
 										</tbody>
 									</table>
 								</div>

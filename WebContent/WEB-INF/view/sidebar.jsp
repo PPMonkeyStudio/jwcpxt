@@ -55,7 +55,9 @@
 				<li id="sideIndex"><a href="#"> <i class="ti-world"></i>
 						<p>首页</p>
 				</a></li>
-				<li id="sidePolice"><a href="#"> <i class="ti-user"></i>
+				<li id="sidePolice"><a
+					href="<%=basePath%>Skip/skipReturnedPartyInformation"> <i
+						class="ti-user"></i>
 						<p>测评警务</p>
 				</a></li>
 				<li id="sideAbarbeitung"><a

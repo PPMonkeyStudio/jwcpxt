@@ -42,7 +42,7 @@ th {
 									<h4 class="title">当事人信息</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
-									<form class="form-horizontal">
+									<form class="form-horizontal" v-cloak>
 										<div class="form-group">
 											<label class="col-sm-2 control-label">姓名</label>
 											<div class="col-sm-10">
