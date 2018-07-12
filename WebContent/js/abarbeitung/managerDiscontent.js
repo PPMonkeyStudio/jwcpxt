@@ -61,8 +61,8 @@ function pushDiscontent(event) {
 				useBootstrap : false,
 				content : '<form id="pushDiscontentForm"><table class="table table-bordered">'
 						+ '<tr><td>问题标题</td><td colspan="3"><input type="text" name="feedbackRectification.feedback_rectification_title" class="form-control"><td></tr>'
-						+ '<tr><td>收集渠道</td><td colspan="3"><input type="text" name="feedback_rectification_collect_channel" class="form-control"><td></tr>'
-						+ '<tr><td>问题简述</td><td colspan="3"><textarea type="text" name="feedback_rectification_question_describe" class="form-control"></textarea><td></tr>'
+						+ '<tr><td>收集渠道</td><td colspan="3"><input type="text" name="feedbackRectification.feedback_rectification_collect_channel" class="form-control"><td></tr>'
+						+ '<tr><td>问题简述</td><td colspan="3"><textarea type="text" name="feedbackRectification.feedback_rectification_question_describe" class="form-control"></textarea><td></tr>'
 						+ '<tr><td>审核意见</td><td colspan="3"><textarea type="text" name="dissatisfiedFeedback.dissatisfied_feedback_audit_opinion" class="form-control"></textarea><td></tr>'
 						+ '</table></form>',
 				buttons : {
@@ -85,7 +85,7 @@ function pushDiscontent(event) {
 											event.id);
 							$
 									.ajax({
-										url : '/jwcpxt/DissatisfiedFeedback/update_dissatisfiedFeedbackState_toReject',
+										url : '/jwcpxt/DissatisfiedFeedback/updade_dissatisfiedFeedbackState_toPush',
 										type : 'POST',
 										data : formData,
 										processData : false,
