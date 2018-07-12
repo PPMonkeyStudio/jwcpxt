@@ -40,7 +40,8 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	public void checkFeedbackRectification() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
-		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
+		// unit = (jwcpxt_unit)
+		// ActionContext.getContext().getSession().get("unit");
 		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
 		if (dissatisfiedFeedbackService.checkFeedbackRectification(feedbackRectification, unit)) {
 			http_response.getWriter().write("1");
@@ -62,9 +63,22 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
-		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
-		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
-		unit.setUnit_grade(2);
+		// unit = (jwcpxt_unit)
+		// ActionContext.getContext().getSession().get("unit");
+
+		// 二级单位
+
+		// unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
+		// unit.setUnit_grade(2);
+
+		// 一级单位
+		unit.setJwcpxt_unit_id("1");
+		unit.setUnit_grade(1);
+
+		// 三级单位
+
+		// unit.setJwcpxt_unit_id("b7c79378-0681-4feb-a88f-6032ea239385");
+		// unit.setUnit_grade(3);
 		ActionContext.getContext().getSession().remove("unit");
 		ActionContext.getContext().getSession().put("unit", unit);
 		checkFeedbackRectificationVO = dissatisfiedFeedbackService
@@ -86,8 +100,9 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
-		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
-		unit.setJwcpxt_unit_id("1");
+		// unit = (jwcpxt_unit)
+		// ActionContext.getContext().getSession().get("unit");
+		unit.setJwcpxt_unit_id("b7c79378-0681-4feb-a88f-6032ea239385");
 		feedbackRectificationVO = dissatisfiedFeedbackService.get_feedbackRectificationVO(feedbackRectificationVO,
 				unit);
 		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));
