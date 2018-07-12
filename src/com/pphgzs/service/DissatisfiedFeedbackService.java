@@ -1,6 +1,7 @@
 package com.pphgzs.service;
 
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 
 public interface DissatisfiedFeedbackService {
@@ -27,6 +28,6 @@ public interface DissatisfiedFeedbackService {
 	 * @param dissatisfiedFeedback
 	 * @return
 	 */
-	public boolean updade_dissatisfiedFeedbackState_toPush(jwcpxt_dissatisfied_feedback dissatisfiedFeedback);
+	public boolean updade_dissatisfiedFeedbackState_toPush(jwcpxt_dissatisfied_feedback dissatisfiedFeedback,jwcpxt_feedback_rectification feedbackRectification);
 
 }

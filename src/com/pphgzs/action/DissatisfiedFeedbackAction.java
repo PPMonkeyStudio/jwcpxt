@@ -32,7 +32,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	 */
 	public void updade_dissatisfiedFeedbackState_toPush() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
-		if (dissatisfiedFeedbackService.updade_dissatisfiedFeedbackState_toPush(dissatisfiedFeedback)) {
+		if (dissatisfiedFeedbackService.updade_dissatisfiedFeedbackState_toPush(dissatisfiedFeedback,feedbackRectification)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");

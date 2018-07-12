@@ -38,4 +38,11 @@ public interface DissatisfiedFeedbackDao {
 	 * @return
 	 */
 	public jwcpxt_dissatisfied_feedback get_dissatisfiedFeedbackDo_byId(String jwcpxt_dissatisfied_feedback_id);
+
+	/**
+	 * 获取当月最大的编号
+	 * 
+	 * @return
+	 */
+	public String get_maxMounthFeedbackRectifi();
 }
