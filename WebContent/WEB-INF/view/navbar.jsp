@@ -27,13 +27,10 @@
 						<p>业务</p>
 				</a></li>
 				<li><a href="<%=basePath%>Skip/skipManagerUser">
-						<p>警员</p>
+						<p>用户</p>
 				</a></li>
 				<li><a href="<%=basePath%>Skip/skipManagerUnit">
 						<p>单位</p>
-				</a></li>
-				<li><a href="<%=basePath%>Skip/skipManagerUnit">
-						<p>整改</p>
 				</a></li>
 			</ul>
 		</div>
