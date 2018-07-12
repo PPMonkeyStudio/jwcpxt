@@ -22,7 +22,7 @@ $(function(){
 
 function loadData(){
 	$('#discontentTable').hide();
-	$('#loadingLayer').show();
+	$('#loadingLayer').show(); 
 	var queryCondition={
 		'dissatisfiedQuestionVO.screenStartTime':queryTemp.searchTimeStart,
 		'dissatisfiedQuestionVO.screenEndTime':queryTemp.searchTimeEnd,

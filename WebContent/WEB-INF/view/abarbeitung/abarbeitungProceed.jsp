@@ -40,9 +40,11 @@ a:hover {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
-										<label style="color: black">反馈时间</label> <input onchange="changeQuery()"
-											id="startTime" class="mydate form-control"
-											style="display: inline; width: 150px;"><label style="color: black">&nbsp;至&nbsp;</label><input
+										<label style="color: black">反馈时间</label> <input
+											onchange="changeQuery()" id="startTime"
+											class="mydate form-control"
+											style="display: inline; width: 150px;"><label
+											style="color: black">&nbsp;至&nbsp;</label><input
 											onchange="changeQuery()" id="endTime"
 											class="mydate form-control"
 											style="display: inline; width: 150px;">
@@ -85,7 +87,11 @@ a:hover {
 															class="ti-eye"></i></a></td>
 													<td><template
 															v-if="dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_state == 1">
-														<a>推送</a>|<a>驳回</a> </template> <template v-else> 无操作 </template></td>
+														<a onclick="pushDiscontent(this)"
+															:id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id">推送</a>|<a
+															onclick="refuseDiscontent(this)"
+															:id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id">驳回</a>
+														</template> <template v-else> 无操作 </template></td>
 												</tr>
 												</template>
 											</tbody>
@@ -154,4 +160,6 @@ a:hover {
 </script>
 <script type="text/javascript"
 	src="<%=basePath%>js/abarbeitung/showDiscontent.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>js/abarbeitung/managerDiscontent.js"></script>
 </html>
