@@ -70,7 +70,8 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	/**
 	 * 根据当事人id获取当事人信息
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void get_serviceClientDo_byId() throws IOException {
 		//
@@ -500,6 +501,30 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public void setServiceService(ServiceService serviceService) {
 		this.serviceService = serviceService;
+	}
+
+	public jwcpxt_service_client getServiceClient() {
+		return serviceClient;
+	}
+
+	public void setServiceClient(jwcpxt_service_client serviceClient) {
+		this.serviceClient = serviceClient;
+	}
+
+	public List<jwcpxt_service_grab> getListServiceGrab() {
+		return listServiceGrab;
+	}
+
+	public void setListServiceGrab(List<jwcpxt_service_grab> listServiceGrab) {
+		this.listServiceGrab = listServiceGrab;
+	}
+
+	public ClientInstanceDTO getClientInstanceDTO() {
+		return clientInstanceDTO;
+	}
+
+	public void setClientInstanceDTO(ClientInstanceDTO clientInstanceDTO) {
+		this.clientInstanceDTO = clientInstanceDTO;
 	}
 
 	public void setServiceDefinitionVO(ServiceDefinitionVO serviceDefinitionVO) {

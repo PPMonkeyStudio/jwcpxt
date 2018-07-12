@@ -2,6 +2,7 @@ package com.pphgzs.action;
 
 public class SkipAction {
 	private String definitionId;
+	private String serviceClientId;
 
 	public String skipSidebar() {
 		return "skipSidebar";
@@ -80,12 +81,24 @@ public class SkipAction {
 		return "skipPoliceAssessmentPage";
 	}
 
+	public String skipPoliceAssessmentPageJsp() {
+		return "skipPoliceAssessmentPageJsp";
+	}
+
 	public String getDefinitionId() {
 		return definitionId;
 	}
 
 	public void setDefinitionId(String definitionId) {
 		this.definitionId = definitionId;
+	}
+
+	public String getServiceClientId() {
+		return serviceClientId;
+	}
+
+	public void setServiceClientId(String serviceClientId) {
+		this.serviceClientId = serviceClientId;
 	}
 
 }

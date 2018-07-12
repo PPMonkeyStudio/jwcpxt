@@ -45,29 +45,31 @@ th {
 									<form class="form-horizontal" v-cloak>
 										<div class="form-group">
 											<label class="col-sm-2 control-label">姓名</label>
-											<div class="col-sm-10">
-												<p class="form-control-static"></p>
+											<div>
+												<p class="form-control-static">{{returnedParty.serviceClient.service_client_name}}</p>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label">性别</label>
-											<div class="col-sm-10">
-												<p class="form-control-static"></p>
+											<div>
+												<p v-if="returnedParty.serviceClient.service_client_sex"
+													class="form-control-static">{{returnedParty.serviceClient.service_client_sex==1?"男":"女"}}</p>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label">电话</label>
-											<div class="col-sm-10">
-												<p class="form-control-static"></p>
+											<div>
+												<p class="form-control-static">{{returnedParty.serviceClient.service_client_phone}}</p>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label">回访业务</label>
-											<div class="col-sm-10">
-												<p class="form-control-static"></p>
+											<div>
+												<p class="form-control-static">{{returnedParty.serviceDefinition.service_definition_describe}}</p>
 											</div>
 										</div>
-										<button type="button" class="btn btn-primary">开始回访</button>
+										<button type="button" @click="beginReturned"
+											class="btn btn-primary">开始回访</button>
 									</form>
 								</div>
 							</div>
@@ -82,7 +84,7 @@ th {
 </body>
 <script type="text/javascript">
 	/* 处理侧边栏选项 */
-	$('#sideManager').attr("class", "active");
+	$('#sidePolice').attr("class", "active");
 </script>
 <script
 	src="<%=basePath%>js/evaluationPolice/returnedPartyInformation.js"></script>

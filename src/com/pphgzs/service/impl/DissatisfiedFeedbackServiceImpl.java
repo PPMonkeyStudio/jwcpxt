@@ -9,6 +9,7 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
+import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
@@ -23,6 +24,68 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private ServiceService serviceService;
 	private QuestionService questionService;
 	private UnitService unitService;
+
+	/**
+	 * 获取审核的整改反馈表
+	 */
+	@Override
+	public CheckFeedbackRectificationVO get_checkFeedbackRectificationVO(
+			CheckFeedbackRectificationVO checkFeedbackRectificationVO, jwcpxt_unit unit) {
+		// 定义
+		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
+		if (unit == null) {
+			return checkFeedbackRectificationVO;
+		}
+		if (unit.getJwcpxt_unit_id() != null && unit.getJwcpxt_unit_id().trim().length() > 0) {
+			// 获取unit
+			unit = unitService.get_unitDO_byID(unit.getJwcpxt_unit_id());
+		}
+		if (unit == null) {
+			return null;
+		}
+		// 获取总记录数
+		int totalRecords = dissatisfiedFeedbackDao.get_checkFeedbackRectificationVOCount(checkFeedbackRectificationVO,
+				unit);
+		// 总页数
+		int totalPages = ((totalRecords - 1) / checkFeedbackRectificationVO.getPageSize()) + 1;
+		listFeedbackRectification = dissatisfiedFeedbackDao
+				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
+		// set
+		checkFeedbackRectificationVO.setTotalCount(totalRecords);
+		checkFeedbackRectificationVO.setTotalPage(totalPages);
+		checkFeedbackRectificationVO.setListCheckFeedbackRectification(listFeedbackRectification);
+		return checkFeedbackRectificationVO;
+	}
+
+	/**
+	 * 整改VO
+	 */
+	@Override
+	public FeedbackRectificationVO get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
+			jwcpxt_unit unit) {
+		if (unit == null) {
+			return feedbackRectificationVO;
+		}
+		if (unit.getJwcpxt_unit_id() != null && unit.getJwcpxt_unit_id().trim().length() > 0) {
+			// 获取unit
+			unit = unitService.get_unitDO_byID(unit.getJwcpxt_unit_id());
+		}
+		if (unit == null) {
+			return null;
+		}
+		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
+		// 获取总记录数
+		int totalRecords = dissatisfiedFeedbackDao.get_countFeedbackRectificationVO(feedbackRectificationVO, unit);
+		// 总页数
+		int totalPages = ((totalRecords - 1) / feedbackRectificationVO.getPageSize()) + 1;
+		// 获取数据
+		listFeedbackRectification = dissatisfiedFeedbackDao.get_feedbackRectificationVO(feedbackRectificationVO, unit);
+		// set
+		feedbackRectificationVO.setTotalCount(totalRecords);
+		feedbackRectificationVO.setTotalPage(totalPages);
+		feedbackRectificationVO.setListFeedbackRectification(listFeedbackRectification);
+		return feedbackRectificationVO;
+	}
 
 	/**
 	 * 办结操作
@@ -44,26 +107,6 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		feeRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(feeRectification);
 		return true;
-	}
-
-	/**
-	 * 整改VO
-	 */
-	@Override
-	public FeedbackRectificationVO get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
-			jwcpxt_unit unit) {
-		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
-		// 获取总记录数
-		int totalRecords = dissatisfiedFeedbackDao.get_countFeedbackRectificationVO(feedbackRectificationVO, unit);
-		// 总页数
-		int totalPages = ((totalRecords - 1) / feedbackRectificationVO.getPageSize()) + 1;
-		// 获取数据
-		listFeedbackRectification = dissatisfiedFeedbackDao.get_feedbackRectificationVO(feedbackRectificationVO, unit);
-		// set
-		feedbackRectificationVO.setTotalCount(totalRecords);
-		feedbackRectificationVO.setTotalPage(totalPages);
-		feedbackRectificationVO.setListFeedbackRectification(listFeedbackRectification);
-		return feedbackRectificationVO;
 	}
 
 	/**
@@ -141,7 +184,8 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		// 责任单位
 		unit = dissatisfiedFeedbackDao.get_unit_byDisFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
 		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_name());
-		feedbackRectification.setFeedback_rectification_unit_people_phone(unit.getUnit_contacts_name());
+		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_contacts_name());
+		feedbackRectification.setFeedback_rectification_unit_people_phone(unit.getUnit_phone());
 		feedbackRectification.setFeedback_rectification_handle_state("1");
 		feedbackRectification.setFeedback_rectification_audit_state("1");
 		feedbackRectification.setFeedback_rectification_gmt_create(TimeUtil.getStringSecond());
