@@ -7,6 +7,7 @@ import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
@@ -31,6 +32,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		// 定义
 		jwcpxt_dissatisfied_feedback disFeedback = new jwcpxt_dissatisfied_feedback();
 		jwcpxt_service_client serviceClient = new jwcpxt_service_client();
+		jwcpxt_unit unit = new jwcpxt_unit();
 		// 更改不满意反馈表的状态
 		if (dissatisfiedFeedback != null && dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id() != null
 				&& dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id().trim().length() > 0) {
@@ -59,7 +61,16 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				.get_serviceClient_byDisFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
 		feedbackRectification.setFeedback_rectification_client_name(serviceClient.getService_client_name());
 		feedbackRectification.setFeedback_rectification_client_phone(serviceClient.getService_client_phone());
-		
+		// 责任单位
+		unit = dissatisfiedFeedbackDao.get_unit_byDisFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
+		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_name());
+		feedbackRectification.setFeedback_rectification_unit_people_phone(unit.getUnit_contacts_name());
+		feedbackRectification.setFeedback_rectification_handle_state("1");
+		feedbackRectification.setFeedback_rectification_audit_state("1");
+		feedbackRectification.setFeedback_rectification_gmt_create(TimeUtil.getStringSecond());
+		feedbackRectification
+				.setFeedback_rectification_gmt_modified(feedbackRectification.getFeedback_rectification_gmt_create());
+		dissatisfiedFeedbackDao.saveOrUpdateObject(feedbackRectification);
 		return true;
 	}
 

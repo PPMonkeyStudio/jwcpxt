@@ -3,6 +3,7 @@ package com.pphgzs.domain.DO;
 public class jwcpxt_unit {
 	private String jwcpxt_unit_id;
 	private String unit_name;
+	private String unit_contacts_name;
 	private String unit_father = "none";
 	private String unit_num = "none";// 机构代码，只有三级机构需要
 	private int unit_grade;// 等级，方便查询
@@ -14,6 +15,14 @@ public class jwcpxt_unit {
 
 	public String getJwcpxt_unit_id() {
 		return jwcpxt_unit_id;
+	}
+
+	public String getUnit_contacts_name() {
+		return unit_contacts_name;
+	}
+
+	public void setUnit_contacts_name(String unit_contacts_name) {
+		this.unit_contacts_name = unit_contacts_name;
 	}
 
 	public void setJwcpxt_unit_id(String jwcpxt_unit_id) {
@@ -94,10 +103,11 @@ public class jwcpxt_unit {
 
 	@Override
 	public String toString() {
-		return "jwcpxt_unit [jwcpxt_unit_id=" + jwcpxt_unit_id + ", unit_name=" + unit_name + ", unit_father="
-				+ unit_father + ", unit_num=" + unit_num + ", unit_grade=" + unit_grade + ", unit_account="
-				+ unit_account + ", unit_password=" + unit_password + ", unit_phone=" + unit_phone
-				+ ", unit_gmt_create=" + unit_gmt_create + ", unit_gmt_modified=" + unit_gmt_modified + "]";
+		return "jwcpxt_unit [jwcpxt_unit_id=" + jwcpxt_unit_id + ", unit_name=" + unit_name + ", unit_contacts_name="
+				+ unit_contacts_name + ", unit_father=" + unit_father + ", unit_num=" + unit_num + ", unit_grade="
+				+ unit_grade + ", unit_account=" + unit_account + ", unit_password=" + unit_password + ", unit_phone="
+				+ unit_phone + ", unit_gmt_create=" + unit_gmt_create + ", unit_gmt_modified=" + unit_gmt_modified
+				+ "]";
 	}
 
 }
