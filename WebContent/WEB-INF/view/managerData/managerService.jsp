@@ -19,7 +19,7 @@ a:hover {
 	cursor: pointer;
 }
 .interfaceTable tr{
-	
+	border: solid;
 }
 </style>
 <title>业务管理</title>
