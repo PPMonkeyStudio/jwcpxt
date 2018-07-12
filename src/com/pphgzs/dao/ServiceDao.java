@@ -126,4 +126,12 @@ public interface ServiceDao {
 
 	boolean save_grabJournal(jwcpxt_grab_journal grabJournal);
 
+	/**
+	 * 根据id获取当事人
+	 * 
+	 * @param trim
+	 * @return
+	 */
+	public jwcpxt_service_client get_serviceClientDo_byId(String trim);
+
 }
