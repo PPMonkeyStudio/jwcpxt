@@ -46,6 +46,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		}
 		// 定义
 		jwcpxt_feedback_rectification checkFeedbackRectification = new jwcpxt_feedback_rectification();
+		jwcpxt_feedback_rectification newFeedbackRectification = new jwcpxt_feedback_rectification();
 		//
 		if (feedbackRectification != null && feedbackRectification.getJwcpxt_feedback_rectification_id() != null
 				&& feedbackRectification.getJwcpxt_feedback_rectification_id().trim().length() > 0) {
@@ -55,29 +56,45 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		if (checkFeedbackRectification == null) {
 			return false;
 		}
-		//
+		// 通过
 		if (feedbackRectification.getFeedback_rectification_audit_state() != null
 				&& "2".equals(feedbackRectification.getFeedback_rectification_audit_state())) {
-			// 通过
 			if (unit.getUnit_grade() == 0) {
 				return false;
 			}
 			if (unit.getUnit_grade() == 1) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("4");
+				checkFeedbackRectification.setFeedback_rectification_cpzx_opinion(
+						feedbackRectification.getFeedback_rectification_cpzx_opinion());
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("2");
+				checkFeedbackRectification.setFeedback_rectification_sjzgbm_opinion(
+						feedbackRectification.getFeedback_rectification_sjzgbm_opinion());
 			}
-			
+			checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+			dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
+			return true;
 		} else if (feedbackRectification.getFeedback_rectification_audit_state() != null
 				&& "3".equals(feedbackRectification.getFeedback_rectification_audit_state())) {
+			// 驳回
 			if (unit.getUnit_grade() == 0) {
 				return false;
 			}
 			if (unit.getUnit_grade() == 1) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("5");
+				checkFeedbackRectification.setFeedback_rectification_cpzx_opinion(
+						feedbackRectification.getFeedback_rectification_cpzx_opinion());
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("3");
+				checkFeedbackRectification.setFeedback_rectification_sjzgbm_opinion(
+						feedbackRectification.getFeedback_rectification_sjzgbm_opinion());
 			}
+			checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+			dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
+			newFeedbackRectification.setJwcpxt_feedback_rectification_id(uuidUtil.getUuid());
+			newFeedbackRectification.setFeedback_rectification_dissatisfied_feedback(
+					checkFeedbackRectification.getFeedback_rectification_dissatisfied_feedback());
+			
 		}
 		return true;
 	}
