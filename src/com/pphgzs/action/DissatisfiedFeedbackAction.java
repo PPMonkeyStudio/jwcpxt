@@ -1,13 +1,18 @@
 package com.pphgzs.action;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 
 @SuppressWarnings("serial")
@@ -17,14 +22,35 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
 	private jwcpxt_feedback_rectification feedbackRectification;
+	private DissatisfiedQuestionVO dissatisfiedQuestionVO;
 
 	/**
+	 * 获取不满意反馈表VO
 	 * 
+	 * @throws IOException
 	 */
+	public void get_dissatisfiedQuestionVO() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		dissatisfiedQuestionVO = dissatisfiedFeedbackService.get_dissatisfiedQuestionVO(dissatisfiedQuestionVO);
+		http_response.getWriter().write(gson.toJson(dissatisfiedQuestionVO));
+	}
 
 	@Override
 	public void setServletRequest(HttpServletRequest http_request) {
 		this.http_request = http_request;
+	}
+
+	public DissatisfiedQuestionVO getDissatisfiedQuestionVO() {
+		return dissatisfiedQuestionVO;
+	}
+
+	public void setDissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {
+		this.dissatisfiedQuestionVO = dissatisfiedQuestionVO;
 	}
 
 	public jwcpxt_feedback_rectification getFeedbackRectification() {
