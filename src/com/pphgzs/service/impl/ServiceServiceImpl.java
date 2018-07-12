@@ -61,9 +61,16 @@ public class ServiceServiceImpl implements ServiceService {
 	 */
 	@Override
 	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user) {
+		//
+		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
+		//
 		if (user != null && user.getJwcpxt_user_id() != null && user.getJwcpxt_user_id().trim().length() > 0) {
-			// user =
+			user = userService.get_userDO_byUserID(user.getJwcpxt_user_id());
 		}
+		if (user == null) {
+			return null;
+		}
+		// clientInstanceDTO = serviceDao.get_
 		return null;
 	}
 
@@ -100,7 +107,7 @@ public class ServiceServiceImpl implements ServiceService {
 		//
 		listServiceGrab = serviceDao
 				.list_serviceGrab_byServiceDefinitionId(serviceDefinition.getJwcpxt_service_definition_id());
-		return null;
+		return listServiceGrab;
 	}
 
 	/**
