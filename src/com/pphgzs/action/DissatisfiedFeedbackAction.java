@@ -11,6 +11,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
+import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
@@ -23,6 +24,15 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private HttpServletRequest http_request;
 	private jwcpxt_feedback_rectification feedbackRectification;
 	private DissatisfiedQuestionVO dissatisfiedQuestionVO;
+	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
+	
+
+	/**
+	 * 驳回不满意反馈表
+	 */
+	public void update_dissatisfiedFeedbackState_toReject() {
+
+	}
 
 	/**
 	 * 获取不满意反馈表VO
