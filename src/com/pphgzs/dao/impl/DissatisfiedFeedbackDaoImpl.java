@@ -40,8 +40,10 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	@Override
 	public String get_maxMounthFeedbackRectifi() {
 		Session session = getSession();
-		String hql = " from jwcpxt_feedback_rectification "//
-				+ " order by feedback_rectification_no desc ";
+		String hql = " from "//
+				+ " jwcpxt_feedback_rectification "//
+				+ " order by "//
+				+ " feedback_rectification_no desc ";
 		//
 		Query query = session.createQuery(hql);
 		query.setMaxResults(1);
@@ -55,8 +57,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	@Override
 	public int get_countDissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {
 		Session session = getSession();
-		String hql = "select count(*) from jwcpxt_dissatisfied_feedback "//
-				+ " where dissatisfied_feedback_state like :screenState "//
+		String hql = "select count(*) "//
+				+ " from "//
+				+ " jwcpxt_dissatisfied_feedback "//
+				+ " where "//
+				+ " dissatisfied_feedback_state like :screenState "//
 				+ " and dissatisfied_feedback_gmt_create >= :screenStartTime "//
 				+ " and dissatisfied_feedback_gmt_create <= :screenEndTime ";
 		Query query = session.createQuery(hql);
@@ -85,16 +90,21 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	@Override
 	public List<DissatisfiedQuestionDTO> get_dataDissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {
 		Session session = getSession();
-		String hql = "select new com.pphgzs.domain.DTO.DissatisfiedQuestionDTO(dessatisfiedFeedback,question) "//
-				+ " from jwcpxt_dissatisfied_feedback dessatisfiedFeedback,"//
+		String hql = "select "//
+				+ " new com.pphgzs.domain.DTO.DissatisfiedQuestionDTO(dessatisfiedFeedback,question) "//
+				+ " from "//
+				+ " jwcpxt_dissatisfied_feedback dessatisfiedFeedback,"//
 				+ " jwcpxt_answer_choice choice,"//
 				+ " jwcpxt_question question "//
-				+ " where dessatisfiedFeedback.dissatisfied_feedback_answer_choice = choice.jwcpxt_answer_choice_id "//
+				+ " where "//
+				+ " dessatisfiedFeedback.dissatisfied_feedback_answer_choice = choice.jwcpxt_answer_choice_id "//
 				+ " and choice.answer_choice_question = question.jwcpxt_question_id "//
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_state  like :screenState " //
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create >= :screenStartTime "//
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create <= :screenEndTime "//
-				+ " order by dessatisfiedFeedback.dissatisfied_feedback_gmt_create desc";
+				+ " order by "//
+				+ " dessatisfiedFeedback.dissatisfied_feedback_gmt_create "//
+				+ " desc ";
 		Query query = session.createQuery(hql);
 		//
 		if (dissatisfiedQuestionVO.getScreenState().equals("-1")) {
@@ -122,10 +132,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	public jwcpxt_service_client get_serviceClient_byDisFeedbackId(String jwcpxt_dissatisfied_feedback_id) {
 		Session session = getSession();
 		String hql = " select serviceClient "//
-				+ " from jwcpxt_service_client serviceClient , "//
+				+ " from "//
+				+ " jwcpxt_service_client serviceClient , "//
 				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
 				+ " jwcpxt_answer_choice answerChoice "//
-				+ " where dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
+				+ " where "//
+				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
 				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "
 				+ " and dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id=:jwcpxt_dissatisfied_feedback_id";
 		//
@@ -141,8 +153,10 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	@Override
 	public jwcpxt_dissatisfied_feedback get_dissatisfiedFeedbackDo_byId(String jwcpxt_dissatisfied_feedback_id) {
 		Session session = getSession();
-		String hql = " from jwcpxt_dissatisfied_feedback "//
-				+ " where jwcpxt_dissatisfied_feedback_id = :jwcpxt_dissatisfied_feedback_id";
+		String hql = " from "//
+				+ " jwcpxt_dissatisfied_feedback "//
+				+ " where "//
+				+ " jwcpxt_dissatisfied_feedback_id = :jwcpxt_dissatisfied_feedback_id";
 		//
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_dissatisfied_feedback_id", jwcpxt_dissatisfied_feedback_id);
