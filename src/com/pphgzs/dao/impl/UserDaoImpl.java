@@ -35,6 +35,19 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public jwcpxt_user get_user_byAccount(String user_account) {
+		Session session = getSession();
+		String hql = "from jwcpxt_user where user_account=:user_account";
+		//
+		Query query = session.createQuery(hql);
+		query.setParameter("user_account", user_account);
+		//
+		jwcpxt_user user = (jwcpxt_user) query.uniqueResult();
+		session.clear();
+		return user;
+	}
+
+	@Override
 	public jwcpxt_user get_userDO_byUserID(String userID) {
 		Session session = getSession();
 		String hql = "from jwcpxt_user where jwcpxt_user_id='" + userID + "'";
