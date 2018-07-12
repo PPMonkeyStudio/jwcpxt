@@ -107,8 +107,8 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		String hql = "select "//
 				+ " new com.pphgzs.domain.DTO.DissatisfiedQuestionDTO(dessatisfiedFeedback,question) "//
 				+ " from "//
-				+ " jwcpxt_dissatisfied_feedback dessatisfiedFeedback,"//
-				+ " jwcpxt_answer_choice choice,"//
+				+ " jwcpxt_dissatisfied_feedback dessatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice choice , "//
 				+ " jwcpxt_question question "//
 				+ " where "//
 				+ " dessatisfiedFeedback.dissatisfied_feedback_answer_choice = choice.jwcpxt_answer_choice_id "//
@@ -187,9 +187,9 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		String hql = " select unit "//
 				+ " from "//
 				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
-				+ " jwcpxt_answer_choice answerChoice "//
-				+ " jwcpxt_service_client serviceClient "//
-				+ " jwcpxt_service_instance serviceInstance "//
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_instance serviceInstance , "//
 				+ " jwcpxt_unit unit "//
 				+ " where "//
 				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
@@ -230,11 +230,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		Session session = getSession();
 		String hql = "select count(*) "//
 				+ " from "//
-				+ " jwcpxt_feedback_rectification feedbackRectification,"//
-				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
-				+ " jwcpxt_answer_choice answerChoice "//
-				+ " jwcpxt_service_client serviceClient "//
-				+ " jwcpxt_service_instance serviceInstance "//
+				+ " jwcpxt_feedback_rectification feedbackRectification , "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_instance serviceInstance , "//
 				+ " jwcpxt_unit unit "//
 				+ " where "//
 				+ " feedbackRectification.feedback_rectification_handle_state like :screenHandleState "//
@@ -294,11 +294,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		Session session = getSession();
 		String hql = "select feedbackRectification "//
 				+ " from "//
-				+ " jwcpxt_feedback_rectification feedbackRectification,"//
-				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
-				+ " jwcpxt_answer_choice answerChoice "//
-				+ " jwcpxt_service_client serviceClient "//
-				+ " jwcpxt_service_instance serviceInstance "//
+				+ " jwcpxt_feedback_rectification feedbackRectification , "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_instance serviceInstance , "//
 				+ " jwcpxt_unit unit "//
 				+ " where "//
 				+ " feedbackRectification.feedback_rectification_handle_state like :screenHandleState "//
