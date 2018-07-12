@@ -85,7 +85,7 @@ function pushDiscontent(event) {
 											event.id);
 							$
 									.ajax({
-										url : '/jwcpxt/DissatisfiedFeedback/update_dissatisfiedFeedbackState_toReject',
+										url : '/jwcpxt/DissatisfiedFeedback/updade_dissatisfiedFeedbackState_toPush',
 										type : 'POST',
 										data : formData,
 										processData : false,

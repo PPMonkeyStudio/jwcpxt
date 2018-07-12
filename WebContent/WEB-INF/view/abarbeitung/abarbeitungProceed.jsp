@@ -51,7 +51,7 @@ a:hover {
 									</div>
 									<div id="showDiscontent">
 										<table class="table table-striped"
-											style="text-align: center; display: none;"">
+											style="text-align: center;">
 											<thead>
 												<tr>
 													<td>问题描述</td>

@@ -55,7 +55,7 @@ a:hover {
 									</div>
 									<div id="showContent">
 										<table class="table table-striped"
-											style="text-align: center; display: none;">
+											style="text-align: center;">
 											<thead>
 												<tr>
 													<td>编号</td>
