@@ -3,37 +3,39 @@
  */
 
 var discontentVue;
-var queryTemp ={
-		'currPage':'1',
-		'searchTimeStart':'',
-		'searchTimeEnd':'',
-		'searchStatus':'-1'
+var queryTemp = {
+	'currPage' : '1',
+	'searchTimeStart' : '',
+	'searchTimeEnd' : '',
+	'searchStatus' : '-1'
 }
 
-$(function(){
+$(function() {
 	discontentVue = new Vue({
-		el:'#showDiscontent',
-		data:{
-			discontentVO:''
+		el : '#showDiscontent',
+		data : {
+			discontentVO : ''
 		}
 	})
+	$('#startTime').val('');
+	$('#endTime').val('');
 	loadData();
 })
 
-function loadData(){
+function loadData() {
 	$('#discontentTable').hide();
-	$('#loadingLayer').show(); 
-	var queryCondition={
-		'dissatisfiedQuestionVO.screenStartTime':queryTemp.searchTimeStart,
-		'dissatisfiedQuestionVO.screenEndTime':queryTemp.searchTimeEnd,
-		'dissatisfiedQuestionVO.screenState':queryTemp.searchStatus,
-		'dissatisfiedQuestionVO.currPage':queryTemp.currPage
+	$('#loadingLayer').show();
+	var queryCondition = {
+		'dissatisfiedQuestionVO.screenStartTime' : queryTemp.searchTimeStart,
+		'dissatisfiedQuestionVO.screenEndTime' : queryTemp.searchTimeEnd,
+		'dissatisfiedQuestionVO.screenState' : queryTemp.searchStatus,
+		'dissatisfiedQuestionVO.currPage' : queryTemp.currPage
 	}
 	$.ajax({
-		url:'/jwcpxt/DissatisfiedFeedback/get_dissatisfiedQuestionVO',
-		type:'POST',
-		data:queryCondition,
-		success:function(data){
+		url : '/jwcpxt/DissatisfiedFeedback/get_dissatisfiedQuestionVO',
+		type : 'POST',
+		data : queryCondition,
+		success : function(data) {
 			discontentVue.discontentVO = JSON.parse(data);
 			$('#loadingLayer').hide();
 			$('#discontentTable').show();
@@ -41,14 +43,14 @@ function loadData(){
 	})
 }
 
-function changeQuery(){
+function changeQuery() {
 	queryTemp.searchTimeStart = $('#startTime').val();
 	queryTemp.searchTimeEnd = $('#endTime').val();
 	queryTemp.searchStatus = $('#searchState').val();
 	loadData();
 }
 
-//首页
+// 首页
 function skipToIndexPage() {
 	if (discontentVue.discontentVO.currPage == 1) {
 		toastr.error("已经是首页");
@@ -94,4 +96,3 @@ function skipToArbitrarilyPage() {
 		loadData();
 	}
 }
-

@@ -53,9 +53,84 @@ function refuseDiscontent(event) {
 }
 
 function pushDiscontent(event) {
+	$
+			.confirm({
+				title : '推送反馈',
+				type : 'blue',
+				boxWidth : '800px',
+				useBootstrap : false,
+				content : '<form id="pushDiscontentForm"><table class="table table-bordered">'
+						+ '<tr><td>问题标题</td><td colspan="3"><input type="text" name="feedbackRectification.feedback_rectification_title" class="form-control"><td></tr>'
+						+ '<tr><td>收集渠道</td><td colspan="3"><input type="text" name="feedback_rectification_collect_channel" class="form-control"><td></tr>'
+						+ '<tr><td>问题简述</td><td colspan="3"><textarea type="text" name="feedback_rectification_question_describe" class="form-control"></textarea><td></tr>'
+						+ '<tr><td>审核意见</td><td colspan="3"><textarea type="text" name="dissatisfiedFeedback.dissatisfied_feedback_audit_opinion" class="form-control"></textarea><td></tr>'
+						+ '</table></form>',
+				buttons : {
+					cancel : {
+						text : '关闭',
+						btnClass : 'btn-red',
+						action : function() {
 
+						}
+					},
+					save : {
+						text : '推送',
+						btnClass : 'btn-blue',
+						action : function() {
+							var formData = new FormData(document
+									.getElementById("pushDiscontentForm"));
+							formData
+									.append(
+											"dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id",
+											event.id);
+							$
+									.ajax({
+										url : '/jwcpxt/DissatisfiedFeedback/update_dissatisfiedFeedbackState_toReject',
+										type : 'POST',
+										data : formData,
+										processData : false,
+										contentType : false,
+										success : function(data) {
+											if (data == 1) {
+												toastr.success("推送成功！");
+												loadData();
+											} else {
+												toastr.error("推送失败！");
+											}
+										}
+									})
+						}
+					}
+				},
+			})
 }
 
 function showDiscontent(event) {
+	$
+			.confirm({
+				title : '查看审核意见',
+				type : 'blue',
+				boxWidth : '500px',
+				useBootstrap : false,
+				content : '<label>审核意见：</label><textarea readonly="true" id="show_dissatisfied_feedback_audit_opinion" class="form-control"></textarea>',
+				buttons : {
+					cancel : {
+						text : '关闭',
+						btnClass : 'btn-blue',
+						action : function() {
 
+						}
+					},
+
+				},
+				onContentReady : function() {
+					$.ajax({
+						url:'/jwcpxt/DissatisfiedFeedback/get_dissatisfiedFeedbackDO_byId?dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id='+event.id,
+						type:'GET',
+						success:function(data){
+							$('#show_dissatisfied_feedback_audit_opinion').val(JSON.parse(data).dissatisfied_feedback_audit_opinion);
+						}
+					})
+				}
+			})
 }

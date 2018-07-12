@@ -82,7 +82,7 @@ a:hover {
 													<td>{{
 														dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_gmt_create
 														}}</td>
-													<td><a onclick=""
+													<td><a onclick="showDiscontent(this)"
 														:id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id"><i
 															class="ti-eye"></i></a></td>
 													<td><template
