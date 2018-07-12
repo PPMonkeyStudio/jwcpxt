@@ -18,6 +18,8 @@ import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -46,10 +48,28 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private jwcpxt_unit unit;
 	private jwcpxt_unit_service unitServic;
 	private List<jwcpxt_service_grab> listServiceGrab;
+	private ClientInstanceDTO clientInstanceDTO;
+
+	/**
+	 * 从session中拿到测评人员的信息
+	 * @throws IOException 
+	 */
+	public void get_notServiceClient_byServiceClientId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		jwcpxt_user user = new jwcpxt_user();
+		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
+		http_response.getWriter().write(gson.toJson(clientInstanceDTO));
+	}
 
 	/**
 	 * 根据业务抓取表id获取业务抓取表
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void get_serviceGrab() throws IOException {
 		//

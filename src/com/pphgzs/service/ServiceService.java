@@ -8,6 +8,8 @@ import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
@@ -19,6 +21,14 @@ public interface ServiceService {
 	/*
 	 * 
 	 */
+	/**
+	 * 获取当事人信息及所涉及的业务
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user);
+
 	/**
 	 * 根据抓取id获取抓取记录
 	 */
