@@ -41,7 +41,14 @@ th {
 								<div class="header">
 									<h4 class="title">问卷管理</h4>
 								</div>
-								<div class="content table-responsive table-full-width"></div>
+								<div class="content table-responsive table-full-width">
+
+									<div class="panel panel-default">
+										<div class="panel-heading">Panel heading without title</div>
+										<div class="panel-body">Panel content</div>
+									</div>
+
+								</div>
 							</div>
 						</div>
 					</div>
@@ -56,6 +63,5 @@ th {
 	/* 处理侧边栏选项 */
 	$('#sideManager').attr("class", "active");
 </script>
-<script
-	src="<%=basePath%>js/questionnaireDetails/questionnaireDetails.js"></script>
+<script src="<%=basePath%>js/evaluationPolice/policeAssessmentPage.js"></script>
 </html>
