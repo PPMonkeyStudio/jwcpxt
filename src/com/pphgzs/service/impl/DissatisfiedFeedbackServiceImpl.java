@@ -55,18 +55,6 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		if (checkFeedbackRectification == null) {
 			return false;
 		}
-		/*
-		 * if (unit.getUnit_grade() == 1) { if
-		 * (feedbackRectification.getFeedback_rectification_audit_state() != null &&
-		 * "2".equals(feedbackRectification.getFeedback_rectification_audit_state())) {
-		 * checkFeedbackRectification.setFeedback_rectification_audit_state("4"); } else
-		 * if (feedbackRectification.getFeedback_rectification_audit_state() != null &&
-		 * "3".equals(feedbackRectification.getFeedback_rectification_audit_state())) {
-		 * checkFeedbackRectification.setFeedback_rectification_audit_state("5"); } }
-		 * else if (unit.getUnit_grade() == 2) {
-		 * 
-		 * }
-		 */
 		//
 		if (feedbackRectification.getFeedback_rectification_audit_state() != null
 				&& "2".equals(feedbackRectification.getFeedback_rectification_audit_state())) {
@@ -79,7 +67,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("2");
 			}
-
+			
 		} else if (feedbackRectification.getFeedback_rectification_audit_state() != null
 				&& "3".equals(feedbackRectification.getFeedback_rectification_audit_state())) {
 			if (unit.getUnit_grade() == 0) {
