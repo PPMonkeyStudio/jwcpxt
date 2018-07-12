@@ -10,6 +10,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
@@ -40,7 +41,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
 		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
-		unit.setJwcpxt_unit_id("1");
+		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
 		if (dissatisfiedFeedbackService.checkFeedbackRectification(feedbackRectification, unit)) {
 			http_response.getWriter().write("1");
 		} else {
@@ -63,6 +64,9 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		jwcpxt_unit unit = new jwcpxt_unit();
 		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
 		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
+		unit.setUnit_grade(2);
+		ActionContext.getContext().getSession().remove("unit");
+		ActionContext.getContext().getSession().put("unit", unit);
 		checkFeedbackRectificationVO = dissatisfiedFeedbackService
 				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
 		System.out.println("checkFeedbackRectificationVO:" + checkFeedbackRectificationVO);
