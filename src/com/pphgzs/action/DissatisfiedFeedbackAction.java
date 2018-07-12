@@ -10,11 +10,11 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
@@ -29,23 +29,30 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private DissatisfiedQuestionVO dissatisfiedQuestionVO;
 	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
 	private FeedbackRectificationVO feedbackRectificationVO;
+	private CheckFeedbackRectificationVO checkFeedbackRectificationVO;
 
 	/**
-	 * 办结操作
+	 * 获取审核的整改反馈表
 	 * 
 	 * @throws IOException
 	 */
-	public void update_dissatisfiedFeedbackState_toEnd() throws IOException {
+	public void get_checkFeedbackRectificationVO() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
 		http_response.setContentType("text/html;charset=utf-8");
-		if (dissatisfiedFeedbackService.update_dissatisfiedFeedbackState_toEnd(feedbackRectification)) {
-			http_response.getWriter().write("1");
-		} else {
-			http_response.getWriter().write("-1");
-		}
+		jwcpxt_unit unit = new jwcpxt_unit();
+		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
+		unit.setJwcpxt_unit_id("1");
+		checkFeedbackRectificationVO = dissatisfiedFeedbackService.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO,
+				unit);
+		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));
 	}
 
 	/**
-	 * 获取整改反馈表VO
+	 * （整改）获取整改反馈表VO
 	 * 
 	 * @throws IOException
 	 */
@@ -62,6 +69,20 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		feedbackRectificationVO = dissatisfiedFeedbackService.get_feedbackRectificationVO(feedbackRectificationVO,
 				unit);
 		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));
+	}
+
+	/**
+	 * 办结操作
+	 * 
+	 * @throws IOException
+	 */
+	public void update_dissatisfiedFeedbackState_toEnd() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_dissatisfiedFeedbackState_toEnd(feedbackRectification)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
 	}
 
 	/**
@@ -147,6 +168,14 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 
 	public void setDissatisfiedFeedback(jwcpxt_dissatisfied_feedback dissatisfiedFeedback) {
 		this.dissatisfiedFeedback = dissatisfiedFeedback;
+	}
+
+	public CheckFeedbackRectificationVO getCheckFeedbackRectificationVO() {
+		return checkFeedbackRectificationVO;
+	}
+
+	public void setCheckFeedbackRectificationVO(CheckFeedbackRectificationVO checkFeedbackRectificationVO) {
+		this.checkFeedbackRectificationVO = checkFeedbackRectificationVO;
 	}
 
 	@Override

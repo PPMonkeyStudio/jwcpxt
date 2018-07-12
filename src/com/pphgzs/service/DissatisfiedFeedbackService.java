@@ -3,6 +3,7 @@ package com.pphgzs.service;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
 
@@ -67,5 +68,15 @@ public interface DissatisfiedFeedbackService {
 	 * @return
 	 */
 	public boolean update_dissatisfiedFeedbackState_toEnd(jwcpxt_feedback_rectification feedbackRectification);
+
+	/**
+	 * （审核）分页获得所有该单位下所需审核的整改反馈
+	 * 
+	 * @param checkFeedbackRectificationVO
+	 * @param unit
+	 * @return
+	 */
+	public CheckFeedbackRectificationVO get_checkFeedbackRectificationVO(
+			CheckFeedbackRectificationVO checkFeedbackRectificationVO, jwcpxt_unit unit);
 
 }
