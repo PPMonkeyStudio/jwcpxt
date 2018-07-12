@@ -62,7 +62,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
 		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
-		unit.setJwcpxt_unit_id("1");
+		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
 		checkFeedbackRectificationVO = dissatisfiedFeedbackService
 				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
 		System.out.println("checkFeedbackRectificationVO:" + checkFeedbackRectificationVO);
