@@ -121,12 +121,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	@Override
 	public jwcpxt_service_client get_serviceClient_byDisFeedbackId(String jwcpxt_dissatisfied_feedback_id) {
 		Session session = getSession();
-		String hql = " select client "//
-				+ " from jwcpxt_service_client client , "//
+		String hql = " select serviceClient "//
+				+ " from jwcpxt_service_client serviceClient , "//
 				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
 				+ " jwcpxt_answer_choice answerChoice "//
 				+ " where dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
-				+ " and answerChoice.answer_choice_client=client.jwcpxt_service_client_id "
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "
 				+ " and dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id=:jwcpxt_dissatisfied_feedback_id";
 		//
 		Query query = session.createQuery(hql);
