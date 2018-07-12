@@ -62,7 +62,7 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user) {
 		if (user != null && user.getJwcpxt_user_id() != null && user.getJwcpxt_user_id().trim().length() > 0) {
-//			user = 
+			// user =
 		}
 		return null;
 	}
@@ -119,6 +119,11 @@ public class ServiceServiceImpl implements ServiceService {
 		if (grab == null) {
 			return false;
 		}
+		grab.setService_grab_service_num(serviceGrab.getService_grab_service_num());
+		grab.setService_grab_interface_identifying(serviceGrab.getService_grab_interface_identifying());
+		grab.setService_grab_source_username(serviceGrab.getService_grab_source_username());
+		grab.setService_grab_source_password(serviceGrab.getService_grab_source_password());
+		grab.setService_grab_machine_ip(serviceGrab.getService_grab_machine_ip());
 		grab.setService_grab_single_table(serviceGrab.getService_grab_single_table());
 		grab.setService_grab_project_name(serviceGrab.getService_grab_project_name());
 		grab.setService_grab_interface_one(serviceGrab.getService_grab_interface_one());
