@@ -8,12 +8,21 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
 public interface ServiceDao {
+	/**
+	 * 获取 ClientInstanceDTO
+	 * 
+	 * @param jwcpxt_user_id
+	 * @return
+	 */
+	public ClientInstanceDTO get_notServiceClientDTO_byServiceClientId(String userId);
+
 	/**
 	 * 根据业务定义id获取抓取表
 	 * 

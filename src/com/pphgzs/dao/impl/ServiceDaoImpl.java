@@ -1,5 +1,6 @@
 package com.pphgzs.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -13,6 +14,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -28,6 +30,27 @@ public class ServiceDaoImpl implements ServiceDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 获取ClientInstanceDTO内容
+	 */
+	@Override
+	public ClientInstanceDTO get_notServiceClientDTO_byServiceClientId(String userId) {
+		List<ClientInstanceDTO> listClientInstanceDTO = new ArrayList<>();
+		Session session = getSession();
+		String hql = "select com.pphgzs.domain.DTO.ClientInstanceDTO(serviceInstance,serviceClient,serviceDefinition) from jwcpxt_service_instance serviceInstance,jwcpxt_service_client serviceClient"
+				+ "jwcpxt_service_definition serviceDefinition where serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance and "
+				+ " serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id and serviceClient.service_client_visit= '2' and "
+				+ " serviceInstance.service_instance_judge = :userId";
+		System.out.println("fd:" + hql);
+		Query query = session.createQuery(hql);
+		query.setParameter("userId", userId);
+		listClientInstanceDTO = query.list();
+		if (listClientInstanceDTO.size() <= 0) {
+			return null;
+		}
+		return listClientInstanceDTO.get(0);
 	}
 
 	/**

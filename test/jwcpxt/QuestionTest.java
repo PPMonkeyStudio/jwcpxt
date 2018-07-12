@@ -11,6 +11,8 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 import com.pphgzs.domain.VO.QuestionVO;
@@ -30,6 +32,17 @@ public class QuestionTest {
 	private QuestionService questionService;
 	@Resource
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	/**
+	 * 测试当事人
+	 */
+	@Test
+	public void get_notServiceClient_byServiceClientId() {
+		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
+		jwcpxt_user user = new jwcpxt_user();
+		user.setJwcpxt_user_id("33");
+		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
+	}
 
 	@Test
 	public void get_feedbackRectification_byRectificationId() {

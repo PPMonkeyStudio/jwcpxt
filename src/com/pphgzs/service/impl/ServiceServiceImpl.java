@@ -70,8 +70,8 @@ public class ServiceServiceImpl implements ServiceService {
 		if (user == null) {
 			return null;
 		}
-		// clientInstanceDTO = serviceDao.get_
-		return null;
+		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
+		return clientInstanceDTO;
 	}
 
 	/**
