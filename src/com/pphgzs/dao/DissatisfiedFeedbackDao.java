@@ -8,6 +8,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationVO;
 
 public interface DissatisfiedFeedbackDao {
 
@@ -72,4 +73,23 @@ public interface DissatisfiedFeedbackDao {
 	 * @return
 	 */
 	public jwcpxt_feedback_rectification get_feedbackRectficationDO_byId(String jwcpxt_feedback_rectification_id);
+
+	/**
+	 * 获取整改总记录数
+	 * 
+	 * @param feedbackRectificationVO
+	 * @param unit
+	 * @return
+	 */
+	public int get_countFeedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO, jwcpxt_unit unit);
+
+	/**
+	 * 获取整改数据
+	 * 
+	 * @param feedbackRectificationVO
+	 * @param unit
+	 * @return
+	 */
+	public List<jwcpxt_feedback_rectification> get_feedbackRectificationVO(
+			FeedbackRectificationVO feedbackRectificationVO, jwcpxt_unit unit);
 }

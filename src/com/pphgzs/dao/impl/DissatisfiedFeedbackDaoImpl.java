@@ -13,6 +13,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.util.TimeUtil;
 
 public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	private SessionFactory sessionFactory;
@@ -42,16 +43,28 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		Session session = getSession();
 		String hql = " from "//
 				+ " jwcpxt_feedback_rectification "//
+				+ " where "//
+				+ " feedback_rectification_gmt_create >= :toMonth "//
 				+ " order by "//
 				+ " feedback_rectification_no desc ";
 		//
 		Query query = session.createQuery(hql);
+
+		query.setParameter("toMonth", TimeUtil.getStringDay().substring(0, 7));
 		query.setMaxResults(1);
 		//
 		jwcpxt_feedback_rectification jwcpxt_feedback_rectification = (jwcpxt_feedback_rectification) query
 				.uniqueResult();
 		session.clear();
-		return jwcpxt_feedback_rectification.getFeedback_rectification_no();
+		//
+		String no = "";
+		if (jwcpxt_feedback_rectification == null) {
+			no = TimeUtil.getStringDay().substring(0, 4) + TimeUtil.getStringDay().substring(5, 7) + "0000";
+		} else {
+			no = jwcpxt_feedback_rectification.getFeedback_rectification_no();
+		}
+		//
+		return no;
 	}
 
 	@Override
@@ -138,7 +151,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " jwcpxt_answer_choice answerChoice "//
 				+ " where "//
 				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
-				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
 				+ " and dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id=:jwcpxt_dissatisfied_feedback_id";
 		//
 		Query query = session.createQuery(hql);
@@ -177,11 +190,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " jwcpxt_service_client serviceClient "//
 				+ " jwcpxt_service_instance serviceInstance "//
 				+ " jwcpxt_unit unit "//
-				+ " where "
+				+ " where "//
 				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
-				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "
-				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "
-				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
+				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
+				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				+ " and dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id=:jwcpxt_dissatisfied_feedback_id";
 		//
 		Query query = session.createQuery(hql);

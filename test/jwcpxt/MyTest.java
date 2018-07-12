@@ -12,6 +12,7 @@ import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UserService;
+import com.pphgzs.util.TimeUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext*.xml" })
@@ -67,7 +68,7 @@ public class MyTest {
 
 	@Test
 	public void tttt() {
-
+		System.out.println(TimeUtil.getStringDay().substring(0, 7));
 	}
 
 	@Test
