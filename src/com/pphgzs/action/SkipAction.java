@@ -59,6 +59,10 @@ public class SkipAction {
 		return "skipAbarbeitungProceed";
 	}
 
+	public String skipAbarbeitungCheck() {
+		return "skipAbarbeitungCheck";
+	}
+
 	/* hy */
 	public String skipQuestionnaireDetails() {
 		return "skipQuestionnaireDetails";

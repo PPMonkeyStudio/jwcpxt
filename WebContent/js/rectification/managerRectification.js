@@ -74,6 +74,15 @@ function preview(event) {
 						+ '<tr><td>上级主管部门意见</td><td colspan="3">{{ transfer.feedback_rectification_sjzgbm_opinion }}</td></tr>'
 						+ '<tr><td>测评中心意见</td><td colspan="3">{{ transfer.feedback_rectification_cpzx_opinion }}</td></tr>'
 						+ '</table></div>',
+					buttons:{
+						cancel:{
+							text : '关闭',
+							btnClass : 'btn-blue',
+							action : function() {
+
+							}
+						}
+					},
 				onContentReady : function() {
 					transferListVue = new Vue({
 						el : '#transferList',

@@ -26,7 +26,7 @@
 				<li><a href="<%=basePath%>Skip/skipAbarbeitungProceed">
 						<p>反馈</p>
 				</a></li>
-				<li><a href="<%=basePath%>Skip/skipAbarbeitungProceed">
+				<li><a href="<%=basePath%>Skip/skipAbarbeitungCheck">
 						<p>审核</p>
 				</a></li>
 			</ul>
