@@ -10,6 +10,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
@@ -22,6 +23,16 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private ServiceService serviceService;
 	private QuestionService questionService;
 	private UnitService unitService;
+
+	/**
+	 * 整改VO
+	 */
+	@Override
+	public FeedbackRectificationVO get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
+			jwcpxt_unit unit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * 通过整改反馈id获得一条记录
@@ -129,6 +140,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				.setDissatisfied_feedback_audit_opinion(dissatisfiedFeedback.getDissatisfied_feedback_audit_opinion());
 		disFeedback.setDissatisfied_feedback_gmt_modified(TimeUtil.getStringSecond());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(disFeedback);
+
 		return true;
 	}
 
