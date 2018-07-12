@@ -66,7 +66,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		checkFeedbackRectificationVO = dissatisfiedFeedbackService
 				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
 		System.out.println("checkFeedbackRectificationVO:" + checkFeedbackRectificationVO);
-		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));
+		http_response.getWriter().write(gson.toJson(checkFeedbackRectificationVO));
 	}
 
 	/**
