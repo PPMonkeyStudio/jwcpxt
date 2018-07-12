@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
+import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 
@@ -32,6 +33,21 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		Session session = getSession();
 		session.saveOrUpdate(obj);
 		session.flush();
+	}
+
+	@Override
+	public String get_maxMounthFeedbackRectifi() {
+		Session session = getSession();
+		String hql = " from jwcpxt_feedback_rectification "//
+				+ " order by feedback_rectification_no desc ";
+		//
+		Query query = session.createQuery(hql);
+		query.setMaxResults(1);
+		//
+		jwcpxt_feedback_rectification jwcpxt_feedback_rectification = (jwcpxt_feedback_rectification) query
+				.uniqueResult();
+		session.clear();
+		return jwcpxt_feedback_rectification.getFeedback_rectification_no();
 	}
 
 	@Override
