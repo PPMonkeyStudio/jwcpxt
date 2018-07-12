@@ -3,7 +3,12 @@ package com.pphgzs.domain.DO;
 public class jwcpxt_service_grab {
 	private String jwcpxt_service_grab_id;
 	private String service_grab_service_definition;
-	private int service_grab_single_table = 0;
+	private String service_grab_service_num;
+	private String service_grab_interface_identifying;
+	private String service_grab_source_username;
+	private String service_grab_source_password;
+	private String service_grab_machine_ip;
+	private int service_grab_single_table = 1;
 	private String service_grab_project_name = "none";
 	private String service_grab_interface_one = "none";
 	private String service_grab_interface_two = "none";
@@ -137,17 +142,60 @@ public class jwcpxt_service_grab {
 		this.service_grab_gmt_modified = service_grab_gmt_modified;
 	}
 
+	public String getService_grab_service_num() {
+		return service_grab_service_num;
+	}
+
+	public void setService_grab_service_num(String service_grab_service_num) {
+		this.service_grab_service_num = service_grab_service_num;
+	}
+
+	public String getService_grab_interface_identifying() {
+		return service_grab_interface_identifying;
+	}
+
+	public void setService_grab_interface_identifying(String service_grab_interface_identifying) {
+		this.service_grab_interface_identifying = service_grab_interface_identifying;
+	}
+
+	public String getService_grab_source_username() {
+		return service_grab_source_username;
+	}
+
+	public void setService_grab_source_username(String service_grab_source_username) {
+		this.service_grab_source_username = service_grab_source_username;
+	}
+
+	public String getService_grab_source_password() {
+		return service_grab_source_password;
+	}
+
+	public void setService_grab_source_password(String service_grab_source_password) {
+		this.service_grab_source_password = service_grab_source_password;
+	}
+
+	public String getService_grab_machine_ip() {
+		return service_grab_machine_ip;
+	}
+
+	public void setService_grab_machine_ip(String service_grab_machine_ip) {
+		this.service_grab_machine_ip = service_grab_machine_ip;
+	}
+
 	@Override
 	public String toString() {
 		return "jwcpxt_service_grab [jwcpxt_service_grab_id=" + jwcpxt_service_grab_id
-				+ ", service_grab_service_definition=" + service_grab_service_definition
-				+ ", service_grab_single_table=" + service_grab_single_table + ", service_grab_project_name="
-				+ service_grab_project_name + ", service_grab_interface_one=" + service_grab_interface_one
-				+ ", service_grab_interface_two=" + service_grab_interface_two + ", service_grab_field_name="
-				+ service_grab_field_name + ", service_grab_name_field=" + service_grab_name_field
-				+ ", service_grab_sex_field=" + service_grab_sex_field + ", service_grab_phone_field="
-				+ service_grab_phone_field + ", service_grab_handle_time_field=" + service_grab_handle_time_field
-				+ ", service_grab_connect_one_field=" + service_grab_connect_one_field
+				+ ", service_grab_service_definition=" + service_grab_service_definition + ", service_grab_service_num="
+				+ service_grab_service_num + ", service_grab_interface_identifying="
+				+ service_grab_interface_identifying + ", service_grab_source_username=" + service_grab_source_username
+				+ ", service_grab_source_password=" + service_grab_source_password + ", service_grab_machine_ip="
+				+ service_grab_machine_ip + ", service_grab_single_table=" + service_grab_single_table
+				+ ", service_grab_project_name=" + service_grab_project_name + ", service_grab_interface_one="
+				+ service_grab_interface_one + ", service_grab_interface_two=" + service_grab_interface_two
+				+ ", service_grab_field_name=" + service_grab_field_name + ", service_grab_name_field="
+				+ service_grab_name_field + ", service_grab_sex_field=" + service_grab_sex_field
+				+ ", service_grab_phone_field=" + service_grab_phone_field + ", service_grab_handle_time_field="
+				+ service_grab_handle_time_field + ", service_grab_connect_one_field=" + service_grab_connect_one_field
 				+ ", service_grab_connect_two_field=" + service_grab_connect_two_field + ", service_grab_gmt_create="
 				+ service_grab_gmt_create + ", service_grab_gmt_modified=" + service_grab_gmt_modified + "]";
 	}

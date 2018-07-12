@@ -18,6 +18,8 @@ import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -45,10 +47,104 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private List<ServiceConnectDTO> listServiceConnectDTO;
 	private jwcpxt_unit unit;
 	private jwcpxt_unit_service unitServic;
+	private List<jwcpxt_service_grab> listServiceGrab;
+	private ClientInstanceDTO clientInstanceDTO;
+
+	/**
+	 * 从session中拿到测评人员的信息
+	 * @throws IOException 
+	 */
+	public void get_notServiceClient_byServiceClientId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		jwcpxt_user user = new jwcpxt_user();
+		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
+		http_response.getWriter().write(gson.toJson(clientInstanceDTO));
+	}
+
+	/**
+	 * 根据业务抓取表id获取业务抓取表
+	 * 
+	 * @throws IOException
+	 */
+	public void get_serviceGrab() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		serviceGrab = serviceService.get_serviceGrab(serviceGrab);
+		http_response.getWriter().write(gson.toJson(serviceGrab));
+	}
+
+	/**
+	 * @throws IOException
+	 *             根据业务定义Id获取所有业务抓取
+	 */
+	public void list_serviceGrab_byServiceDefinitionId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		//
+		listServiceGrab = serviceService.list_serviceGrab_byServiceDefinitionId(serviceDefinition);
+		http_response.getWriter().write(gson.toJson(listServiceGrab));
+	}
+
+	/**
+	 * 修改一个抓取表
+	 * 
+	 * @throws IOException
+	 */
+	public void update_serviceGrab_byServiceGrabId() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.update_serviceGrab_byServiceGrabId(serviceGrab)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
 
 	/*
-	 * 
+	 * 删除业务抓取表
 	 */
+	public void delete_serviceGrab_byServiceGrabId() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.delete_serviceGrab_byServiceGrabId(serviceGrab)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
+	 * 添加业务定义
+	 */
+
+	/**
+	 * 业务列表
+	 * 
+	 * @throws IOException
+	 */
+	public void list_serviceDefinition() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		//
+		listServiceDefinition = serviceService.list_serviceDefinition();
+		http_response.getWriter().write(gson.toJson(listServiceDefinition));
+	}
+
 	/**
 	 * 根据id获取关联表
 	 * 
@@ -122,23 +218,6 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		listServiceDefinition = serviceService.list_serviceDefinition_notConnectService(unit);
-		http_response.getWriter().write(gson.toJson(listServiceDefinition));
-	}
-
-	/**
-	 * 业务列表DTO
-	 * 
-	 * @throws IOException
-	 */
-	public void list_serviceDefinition() throws IOException {
-		//
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();// 格式化json数据
-		Gson gson = gsonBuilder.serializeNulls().create();
-		//
-		http_response.setContentType("text/html;charset=utf-8");
-		//
-		listServiceDefinition = serviceService.list_serviceDefinition();
 		http_response.getWriter().write(gson.toJson(listServiceDefinition));
 	}
 

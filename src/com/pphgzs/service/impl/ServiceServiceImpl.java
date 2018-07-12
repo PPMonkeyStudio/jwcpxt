@@ -12,6 +12,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
@@ -53,6 +54,106 @@ public class ServiceServiceImpl implements ServiceService {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	/**
+	 * 获取当事人信息及所涉及的业务
+	 */
+	@Override
+	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user) {
+		if (user != null && user.getJwcpxt_user_id() != null && user.getJwcpxt_user_id().trim().length() > 0) {
+			// user =
+		}
+		return null;
+	}
+
+	/**
+	 * 获取抓取
+	 */
+	@Override
+	public jwcpxt_service_grab get_serviceGrab(jwcpxt_service_grab serviceGrab) {
+		jwcpxt_service_grab serviceG = new jwcpxt_service_grab();
+		if (serviceGrab != null && serviceGrab.getJwcpxt_service_grab_id() != null
+				&& serviceGrab.getJwcpxt_service_grab_id().trim().length() > 0) {
+			serviceG = serviceDao.get_serviceGrab_byServiceGrabID(serviceGrab.getJwcpxt_service_grab_id().trim());
+		}
+		return serviceG;
+	}
+
+	/**
+	 * 根据业务定义id获取抓取表
+	 */
+	@Override
+	public List<jwcpxt_service_grab> list_serviceGrab_byServiceDefinitionId(
+			jwcpxt_service_definition serviceDefinition) {
+		// 定义
+		jwcpxt_service_definition serviceDe = new jwcpxt_service_definition();
+		List<jwcpxt_service_grab> listServiceGrab = new ArrayList<>();
+		if (serviceDefinition != null && serviceDefinition.getJwcpxt_service_definition_id() != null
+				&& serviceDefinition.getJwcpxt_service_definition_id().trim().length() > 0) {
+			serviceDe = serviceDao.get_serviceDefinition_byServiceDefinitionID(
+					serviceDefinition.getJwcpxt_service_definition_id().trim());
+		}
+		if (serviceDe == null) {
+			return null;
+		}
+		//
+		listServiceGrab = serviceDao
+				.list_serviceGrab_byServiceDefinitionId(serviceDefinition.getJwcpxt_service_definition_id());
+		return null;
+	}
+
+	/**
+	 * 修改抓取记录
+	 */
+	@Override
+	public boolean update_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab) {
+		// 定义
+		jwcpxt_service_grab grab = new jwcpxt_service_grab();
+
+		// 根据id获取抓取记录
+		if (serviceGrab != null && serviceGrab.getJwcpxt_service_grab_id() != null
+				&& serviceGrab.getJwcpxt_service_grab_id().trim().length() > 0) {
+			grab = serviceDao.get_serviceGrab_byServiceGrabID(serviceGrab.getJwcpxt_service_grab_id().trim());
+		}
+		if (grab == null) {
+			return false;
+		}
+		grab.setService_grab_service_num(serviceGrab.getService_grab_service_num());
+		grab.setService_grab_interface_identifying(serviceGrab.getService_grab_interface_identifying());
+		grab.setService_grab_source_username(serviceGrab.getService_grab_source_username());
+		grab.setService_grab_source_password(serviceGrab.getService_grab_source_password());
+		grab.setService_grab_machine_ip(serviceGrab.getService_grab_machine_ip());
+		grab.setService_grab_single_table(serviceGrab.getService_grab_single_table());
+		grab.setService_grab_project_name(serviceGrab.getService_grab_project_name());
+		grab.setService_grab_interface_one(serviceGrab.getService_grab_interface_one());
+		grab.setService_grab_interface_two(serviceGrab.getService_grab_interface_two());
+		grab.setService_grab_field_name(serviceGrab.getService_grab_field_name());
+		grab.setService_grab_name_field(serviceGrab.getService_grab_name_field());
+		grab.setService_grab_sex_field(serviceGrab.getService_grab_sex_field());
+		grab.setService_grab_phone_field(serviceGrab.getService_grab_phone_field());
+		grab.setService_grab_handle_time_field(serviceGrab.getService_grab_handle_time_field());
+		grab.setService_grab_connect_one_field(serviceGrab.getService_grab_connect_one_field());
+		grab.setService_grab_connect_two_field(serviceGrab.getService_grab_connect_two_field());
+		grab.setService_grab_gmt_modified(TimeUtil.getStringSecond());
+		serviceDao.saveOrUpdateObject(grab);
+		return true;
+	}
+
+	/**
+	 * 删除抓取记录
+	 */
+	@Override
+	public boolean delete_serviceGrab_byServiceGrabId(jwcpxt_service_grab serviceGrab) {
+		if (serviceGrab != null && serviceGrab.getJwcpxt_service_grab_id() != null
+				&& serviceGrab.getJwcpxt_service_grab_id().trim().length() > 0) {
+			serviceGrab = serviceDao.get_serviceGrab_byServiceGrabID(serviceGrab.getJwcpxt_service_grab_id().trim());
+		}
+		if (serviceGrab == null) {
+			return false;
+		}
+		serviceDao.delete_serviceGrab_byServiceGrabId(serviceGrab);
+		return true;
 	}
 
 	/**
