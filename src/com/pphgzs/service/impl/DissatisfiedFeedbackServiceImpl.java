@@ -107,6 +107,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			newFeedbackRectification.setFeedback_rectification_gmt_modified(
 					newFeedbackRectification.getFeedback_rectification_gmt_create());
 			dissatisfiedFeedbackDao.saveOrUpdateObject(newFeedbackRectification);
+			return true;
 		}
 		return false;
 	}
