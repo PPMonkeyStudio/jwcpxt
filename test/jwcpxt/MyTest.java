@@ -61,7 +61,7 @@ public class MyTest {
 	public void ttt() {
 
 		DissatisfiedQuestionVO dissatisfiedQuestionVO = new DissatisfiedQuestionVO();
-
+		dissatisfiedQuestionVO.setScreenState("1");
 		System.out.println(dissatisfiedFeedbackService.get_dissatisfiedQuestionVO(dissatisfiedQuestionVO));
 	}
 

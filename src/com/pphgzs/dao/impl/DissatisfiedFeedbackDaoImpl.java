@@ -192,4 +192,23 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		//
 		return jwcpxt_unit;
 	}
+
+	@Override
+	public jwcpxt_feedback_rectification get_feedbackRectficationDO_byId(String jwcpxt_feedback_rectification_id) {
+		Session session = getSession();
+		String hql = " from "//
+				+ " jwcpxt_feedback_rectification "//
+				+ " where "//
+				+ " jwcpxt_feedback_rectification_id = :jwcpxt_feedback_rectification_id";
+		//
+		Query query = session.createQuery(hql);
+		query.setParameter("jwcpxt_feedback_rectification_id", jwcpxt_feedback_rectification_id);
+		//
+		jwcpxt_feedback_rectification jwcpxt_feedback_rectification = (jwcpxt_feedback_rectification) query
+				.uniqueResult();
+		session.clear();
+		//
+		return jwcpxt_feedback_rectification;
+	}
+
 }
