@@ -13,12 +13,12 @@ public class jwcpxt_feedback_rectification {
 	private String feedback_rectification_unit_name;
 	private String feedback_rectification_unit_people;
 	private String feedback_rectification_unit_people_phone;
-	private int feedback_rectification_handle_state;
+	private String feedback_rectification_handle_state;
 	private String feedback_rectification_date;
 	private String feedback_rectification_content;
 	private String feedback_rectification_sjzgbm_opinion;
 	private String feedback_rectification_cpzx_opinion;
-	private int feedback_rectification_audit_state;
+	private String feedback_rectification_audit_state;
 	private String feedback_rectification_gmt_create;
 	private String feedback_rectification_gmt_modified;
 
@@ -141,19 +141,19 @@ public class jwcpxt_feedback_rectification {
 		this.feedback_rectification_unit_people_phone = feedback_rectification_unit_people_phone;
 	}
 
-	public int getFeedback_rectification_handle_state() {
+	public String getFeedback_rectification_handle_state() {
 		return feedback_rectification_handle_state;
 	}
 
-	public void setFeedback_rectification_handle_state(int feedback_rectification_handle_state) {
+	public void setFeedback_rectification_handle_state(String feedback_rectification_handle_state) {
 		this.feedback_rectification_handle_state = feedback_rectification_handle_state;
 	}
 
-	public int getFeedback_rectification_audit_state() {
+	public String getFeedback_rectification_audit_state() {
 		return feedback_rectification_audit_state;
 	}
 
-	public void setFeedback_rectification_audit_state(int feedback_rectification_audit_state) {
+	public void setFeedback_rectification_audit_state(String feedback_rectification_audit_state) {
 		this.feedback_rectification_audit_state = feedback_rectification_audit_state;
 	}
 

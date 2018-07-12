@@ -7,6 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UserService;
 
@@ -17,6 +20,26 @@ public class MyTest {
 	private UserService userService;
 	@Resource
 	private ServiceService serviceService;
+	@Resource
+	private DissatisfiedFeedbackDao dissatisfiedFeedbackDao;
+	@Resource
+	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	public DissatisfiedFeedbackService getDissatisfiedFeedbackService() {
+		return dissatisfiedFeedbackService;
+	}
+
+	public void setDissatisfiedFeedbackService(DissatisfiedFeedbackService dissatisfiedFeedbackService) {
+		this.dissatisfiedFeedbackService = dissatisfiedFeedbackService;
+	}
+
+	public DissatisfiedFeedbackDao getDissatisfiedFeedbackDao() {
+		return dissatisfiedFeedbackDao;
+	}
+
+	public void setDissatisfiedFeedbackDao(DissatisfiedFeedbackDao dissatisfiedFeedbackDao) {
+		this.dissatisfiedFeedbackDao = dissatisfiedFeedbackDao;
+	}
 
 	public ServiceService getServiceService() {
 		return serviceService;
@@ -37,10 +60,14 @@ public class MyTest {
 	@Test
 	public void ttt() {
 
+		DissatisfiedQuestionVO dissatisfiedQuestionVO = new DissatisfiedQuestionVO();
+
+		System.out.println(dissatisfiedFeedbackService.get_dissatisfiedQuestionVO(dissatisfiedQuestionVO));
 	}
 
 	@Test
 	public void tttt() {
+
 	}
 
 	@Test

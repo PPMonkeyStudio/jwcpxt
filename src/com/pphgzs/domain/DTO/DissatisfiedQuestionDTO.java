@@ -13,6 +13,14 @@ public class DissatisfiedQuestionDTO {
 	private jwcpxt_dissatisfied_feedback dessatisfiedFeedback;
 	private jwcpxt_question question;
 
+	public DissatisfiedQuestionDTO() {
+	}
+
+	public DissatisfiedQuestionDTO(jwcpxt_dissatisfied_feedback dessatisfiedFeedback, jwcpxt_question question) {
+		this.dessatisfiedFeedback = dessatisfiedFeedback;
+		this.question = question;
+	}
+
 	public jwcpxt_dissatisfied_feedback getDessatisfiedFeedback() {
 		return dessatisfiedFeedback;
 	}
