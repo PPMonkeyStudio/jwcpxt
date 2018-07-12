@@ -372,7 +372,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				//
 				+ " where "//
 				+ " feedbackRectification.feedback_rectification_audit_state like :screenCheckState "//
-				+ " and feedbackRectification.feedback_rectification_title like :screenSearch "//
+				//
+				+ " and "//
+				+ " ( feedbackRectification.feedback_rectification_title like :screenSearch "//
+				+ " or feedbackRectification.feedback_rectification_client_name like :screenSearch "//
+				+ " or feedbackRectification.feedback_rectification_unit_name like :screenSearch ) "//
+				//
 				+ " and unit.unit_father like :unitID "// 上级单位是传过来的单位
 				//
 				+ " and feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
@@ -436,7 +441,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				//
 				+ " where "//
 				+ " feedbackRectification.feedback_rectification_audit_state like :screenCheckState "//
-				+ " and feedbackRectification.feedback_rectification_title like :screenSearch "//
+				//
+				+ " and "//
+				+ " ( feedbackRectification.feedback_rectification_title like :screenSearch "//
+				+ " or feedbackRectification.feedback_rectification_client_name like :screenSearch "//
+				+ " or feedbackRectification.feedback_rectification_unit_name like :screenSearch ) "//
+				//
 				+ " and unit.unit_father like :unitID "// 上级单位是传过来的单位
 				//
 				+ " and feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
