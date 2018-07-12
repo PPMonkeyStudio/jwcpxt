@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
-import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
@@ -29,8 +29,8 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	public boolean updade_dissatisfiedFeedbackState_toPush(jwcpxt_dissatisfied_feedback dissatisfiedFeedback,
 			jwcpxt_feedback_rectification feedbackRectification) {
 		// 定义
-		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
 		jwcpxt_dissatisfied_feedback disFeedback = new jwcpxt_dissatisfied_feedback();
+		jwcpxt_service_client serviceClient = new jwcpxt_service_client();
 		// 更改不满意反馈表的状态
 		if (dissatisfiedFeedback != null && dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id() != null
 				&& dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id().trim().length() > 0) {
@@ -40,7 +40,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		if (disFeedback == null) {
 			return false;
 		}
-		disFeedback.setDissatisfied_feedback_state(3);
+		disFeedback.setDissatisfied_feedback_state("3");
 		disFeedback
 				.setDissatisfied_feedback_audit_opinion(dissatisfiedFeedback.getDissatisfied_feedback_audit_opinion());
 		disFeedback.setDissatisfied_feedback_gmt_modified(TimeUtil.getStringSecond());
@@ -54,6 +54,11 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		String maxMounthFeedbackRectifi = dissatisfiedFeedbackDao.get_maxMounthFeedbackRectifi();
 		feedbackRectification.setFeedback_rectification_no((Integer.parseInt(maxMounthFeedbackRectifi) + 1) + "");
 		// 收集时间----不反馈
+		feedbackRectification.setFeedback_rectification_collect_time(disFeedback.getDissatisfied_feedback_gmt_create());
+		serviceClient = dissatisfiedFeedbackDao
+				.get_serviceClient_byDisFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
+		feedbackRectification.setFeedback_rectification_client_name(serviceClient.getService_client_name());
+		feedbackRectification.setFeedback_rectification_client_phone(serviceClient.getService_client_phone());
 		
 		return true;
 	}
@@ -74,7 +79,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		if (dissatisfiedFeedback == null) {
 			return false;
 		}
-		disFeedback.setDissatisfied_feedback_state(3);
+		disFeedback.setDissatisfied_feedback_state("3");
 		disFeedback
 				.setDissatisfied_feedback_audit_opinion(dissatisfiedFeedback.getDissatisfied_feedback_audit_opinion());
 		disFeedback.setDissatisfied_feedback_gmt_modified(TimeUtil.getStringSecond());
