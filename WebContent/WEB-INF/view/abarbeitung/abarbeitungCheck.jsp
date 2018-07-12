@@ -106,13 +106,21 @@ a:hover {
 															<template
 																v-if="checkFeedbackRectification.feedback_rectification_audit_state != 1">
 															无操作 </template>
-															<tempalte v-else> <a onclick="checkRectification(this,2)" :id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">通过</a>|
-															<a onclick="checkRectification(this,3)" :id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">驳回</a> </tempalte>
+															<template v-else> <template
+																v-if="checkFeedbackRectification.feedback_rectification_handle_state == 2">
+															<a onclick="checkRectification(this,2)"
+																:id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">通过</a>|
+															<a onclick="checkRectification(this,3)"
+																:id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">驳回</a></template>
+															<template v-else> 无操作 </template> </template>
 														</s:if> <s:if test="#session.unit.unit_grade == 1">
 															<template
 																v-if="checkFeedbackRectification.feedback_rectification_audit_state == 2">
-															<a onclick="checkRectification(this,2)" :id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">通过</a>
-															|<a onclick="checkRectification(this,3)" :id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">驳回</a> </template>
+															<a onclick="checkRectification(this,2)"
+																:id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">通过</a>
+															|<a onclick="checkRectification(this,3)"
+																:id="checkFeedbackRectification.jwcpxt_feedback_rectification_id">驳回</a>
+															</template>
 															<template v-else> 无操作 </template>
 														</s:if></td>
 												</tr>
