@@ -54,22 +54,44 @@ a:hover {
 											style="display: inline; width: 150px;">
 									</div>
 									<div id="showContent">
-										<table class="table table-striped"
-											style="text-align: center;">
+										<table class="table table-striped" style="text-align: center;">
 											<thead>
 												<tr>
 													<td>编号</td>
 													<td>问题标题</td>
-													<td>办理情况</td>
+													<td><select class="form-control">
+															<option value="-1">办理情况</option>
+															<option value="1">未办</option>
+															<option value="2">办结</option>
+													</select></td>
 													<td>当事人</td>
 													<td>审核状态</td>
 													<td>操作</td>
 												</tr>
 											</thead>
 											<tbody id="rectificationTable">
-												<template>
+												<template
+													v-for=" feedbackRectification in rectificationVO.listFeedbackRectification ">
 												<tr>
-
+													<td>{{ feedbackRectification.feedback_rectification_no
+														}}</td>
+													<td>{{
+														feedbackRectification.feedback_rectification_title }}</td>
+													<td>{{ }} <template
+															v-if="feedbackRectification.feedback_rectification_handle_state == 1">
+														<span class="label label-primary">未办</span> </template> <template
+															v-else> <span class="label label-success">办结</span>
+														</template>
+													</td>
+													<td>{{
+														feedbackRectification.feedback_rectification_client_name
+														}}</td>
+													<td>{{
+														feedbackRectification.feedback_rectification_audit_state
+														}}</td>
+													<td>
+														<a :id="feedbackRectification.jwcpxt_feedback_rectification_id" onclick="">整改</a>
+													</td>
 												</tr>
 												</template>
 											</tbody>
@@ -79,8 +101,10 @@ a:hover {
 										</div>
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;">
-											<span>当前页数:<span id="currPage"></span>1
-											</span> <span>共:<span id="totalPage">1</span>页
+											<span>当前页数:<span id="currPage"></span>{{
+												rectificationVO.currPage }}
+											</span> <span>共:<span id="totalPage">{{
+													rectificationVO.totalPage }}</span>页
 											</span> <span onclick="skipToIndexPage()" id="indexPage"
 												class="pageOperation">首页</span> <span
 												onclick="skipToPrimaryPage()" id="previousPage"
