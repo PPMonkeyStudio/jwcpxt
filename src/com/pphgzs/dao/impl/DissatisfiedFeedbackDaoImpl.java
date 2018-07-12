@@ -381,7 +381,8 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				//
 				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
-				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime " + " order by "//
+				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime "//
+				+ " order by "//
 				+ " feedbackRectification.feedback_rectification_gmt_create "//
 				+ " desc ";
 		Query query = session.createQuery(hql);
@@ -396,9 +397,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		// 单位
 		if (unit == null || unit.getJwcpxt_unit_id().equals("")) {
 			query.setParameter("unitID", "%%");
+		} else if (unit.getUnit_grade() == 1) {
+			query.setParameter("unitID", "%%");
 		} else {
 			query.setParameter("unitID", unit.getJwcpxt_unit_id());
 		}
+
 		//
 		if (checkFeedbackRectificationVO.getScreenStartTime().equals("")) {
 			query.setParameter("screenStartTime", "0000-00-00");
@@ -453,6 +457,8 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		query.setParameter("screenSearch", "%" + checkFeedbackRectificationVO.getScreenSearch() + "%");
 		// 单位
 		if (unit == null || unit.getJwcpxt_unit_id().equals("")) {
+			query.setParameter("unitID", "%%");
+		} else if (unit.getUnit_grade() == 1) {
 			query.setParameter("unitID", "%%");
 		} else {
 			query.setParameter("unitID", unit.getJwcpxt_unit_id());
