@@ -78,10 +78,9 @@ a:hover {
 												</tr>
 											</thead>
 											<tbody id="checkTable">
-												<template
-													v-for="">
+												<template v-for="">
 												<tr>
-													
+
 												</tr>
 												</template>
 											</tbody>
@@ -92,9 +91,9 @@ a:hover {
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;">
 											<span>当前页数:<span id="currPage"></span>{{
-												rectificationVO.currPage }}
+												checkVO.currPage }}
 											</span> <span>共:<span id="totalPage">{{
-													rectificationVO.totalPage }}</span>页
+													checkVO.totalPage }}</span>页
 											</span> <span onclick="skipToIndexPage()" id="indexPage"
 												class="pageOperation">首页</span> <span
 												onclick="skipToPrimaryPage()" id="previousPage"
@@ -148,4 +147,6 @@ a:hover {
 		maxDate : '2050/01/01', // 设置最大日期
 	});
 </script>
+<script type="text/javascript"
+	src="<%=basePath%>js/rectification/showCheck.js"></script>
 </html>

@@ -31,7 +31,8 @@ function loadData() {
 		'checkFeedbackRectificationVO.screenCheckState' : queryTemp.screenCheckState,
 		'checkFeedbackRectificationVO.screenSearch' : queryTemp.screenSearch,
 		'checkFeedbackRectificationVO.screenStartTime' : queryTemp.screenStartTime,
-		'checkFeedbackRectificationVO.screenEndTime' : queryTemp.screenEndTime
+		'checkFeedbackRectificationVO.screenEndTime' : queryTemp.screenEndTime,
+		'checkFeedbackRectificationVO.currPage':queryTemp.currPage
 	}
 	$.ajax({
 		url : '/jwcpxt/DissatisfiedFeedback/get_checkFeedbackRectificationVO',
