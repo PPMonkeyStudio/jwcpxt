@@ -79,4 +79,12 @@ public interface DissatisfiedFeedbackService {
 	public CheckFeedbackRectificationVO get_checkFeedbackRectificationVO(
 			CheckFeedbackRectificationVO checkFeedbackRectificationVO, jwcpxt_unit unit);
 
+	/**
+	 * 审核操作
+	 * 
+	 * @param feedbackRectification
+	 * @return
+	 */
+	public boolean checkFeedbackRectification(jwcpxt_feedback_rectification feedbackRectification,jwcpxt_unit unit);
+
 }

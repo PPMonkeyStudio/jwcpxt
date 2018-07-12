@@ -32,6 +32,23 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private CheckFeedbackRectificationVO checkFeedbackRectificationVO;
 
 	/**
+	 * 审核操作
+	 * 
+	 * @throws IOException
+	 */
+	public void checkFeedbackRectification() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		jwcpxt_unit unit = new jwcpxt_unit();
+		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
+		unit.setJwcpxt_unit_id("1");
+		if (dissatisfiedFeedbackService.checkFeedbackRectification(feedbackRectification, unit)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
 	 * 获取审核的整改反馈表
 	 * 
 	 * @throws IOException
@@ -46,8 +63,8 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		jwcpxt_unit unit = new jwcpxt_unit();
 		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
 		unit.setJwcpxt_unit_id("1");
-		checkFeedbackRectificationVO = dissatisfiedFeedbackService.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO,
-				unit);
+		checkFeedbackRectificationVO = dissatisfiedFeedbackService
+				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
 		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));
 	}
 
