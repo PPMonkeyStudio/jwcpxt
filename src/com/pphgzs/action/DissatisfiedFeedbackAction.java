@@ -25,13 +25,12 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private jwcpxt_feedback_rectification feedbackRectification;
 	private DissatisfiedQuestionVO dissatisfiedQuestionVO;
 	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
-	
 
 	/**
 	 * 驳回不满意反馈表
 	 */
 	public void update_dissatisfiedFeedbackState_toReject() {
-
+		
 	}
 
 	/**
@@ -48,6 +47,14 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		http_response.setContentType("text/html;charset=utf-8");
 		dissatisfiedQuestionVO = dissatisfiedFeedbackService.get_dissatisfiedQuestionVO(dissatisfiedQuestionVO);
 		http_response.getWriter().write(gson.toJson(dissatisfiedQuestionVO));
+	}
+
+	public jwcpxt_dissatisfied_feedback getDissatisfiedFeedback() {
+		return dissatisfiedFeedback;
+	}
+
+	public void setDissatisfiedFeedback(jwcpxt_dissatisfied_feedback dissatisfiedFeedback) {
+		this.dissatisfiedFeedback = dissatisfiedFeedback;
 	}
 
 	@Override
