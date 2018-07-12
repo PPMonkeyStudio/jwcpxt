@@ -20,6 +20,10 @@ $(function() {
 			rectificationVO : ''
 		}
 	})
+	$('#searchTimeStart').val('');
+	$('#searchTimeEnd').val('');
+	$('#searchTitle').val('');
+	loadData();
 })
 
 function loadData() {
@@ -34,11 +38,11 @@ function loadData() {
 		'feedbackRectificationVO.currPage' : queryTemp.currPage
 	}
 	$.ajax({
-		url : '',
+		url : '/jwcpxt/DissatisfiedFeedback/get_feedbackRectificationVO',
 		type : 'POST',
 		data : queryCondition,
 		success : function(data) {
-			rectificationVO = JSON.parse(data);
+			rectificationVue.rectificationVO = JSON.parse(data);
 			$('#loadingLayer').hide();
 			$('#rectificationTable').show();
 		}
@@ -46,7 +50,12 @@ function loadData() {
 }
 
 function changeQuery() {
-
+	queryTemp.startTime = $('#searchTimeStart').val();
+	queryTemp.endTime = $('#searchTimeEnd').val();
+	queryTemp.searchHandleState = $('#searchHandleState').val();
+	queryTemp.searchTitle = $('#searchTitle').val();
+	queryTemp.searchAuditState = $('#searchAuditState').val();
+	loadData();
 }
 
 // 首页

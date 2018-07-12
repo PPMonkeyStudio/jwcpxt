@@ -51,7 +51,11 @@ a:hover {
 											style="color: black;">&nbsp;至&nbsp;</label><input
 											onchange="changeQuery()" id="searchTimeEnd"
 											class="mydate form-control"
-											style="display: inline; width: 150px;">
+											style="display: inline; width: 150px;"> <input
+											id="searchTitle" style="display: inline; width: 250px;"
+											oninput="changeQuery()" class="form-control"
+											placeholder="请输入搜索内容">
+
 									</div>
 									<div id="showContent">
 										<table class="table table-striped" style="text-align: center;">
@@ -59,13 +63,22 @@ a:hover {
 												<tr>
 													<td>编号</td>
 													<td>问题标题</td>
-													<td><select class="form-control">
+													<td><select id="searchHandleState"
+														onchange="changeQuery()" class="form-control">
 															<option value="-1">办理情况</option>
 															<option value="1">未办</option>
 															<option value="2">办结</option>
 													</select></td>
 													<td>当事人</td>
-													<td>审核状态</td>
+													<td><select id="searchAuditState"
+														onchange="changeQuery()" class="form-control">
+															<option value="-1">审核状态</option>
+															<option value="1">未审核</option>
+															<option value="2">主管部门审核通过</option>
+															<option value="3">主管部门审核驳回</option>
+															<option value="4">测评中心审核通过</option>
+															<option value="5">测评中心审核驳回</option>
+													</select></td>
 													<td>操作</td>
 												</tr>
 											</thead>
@@ -77,21 +90,31 @@ a:hover {
 														}}</td>
 													<td>{{
 														feedbackRectification.feedback_rectification_title }}</td>
-													<td>{{ }} <template
+													<td><template
 															v-if="feedbackRectification.feedback_rectification_handle_state == 1">
 														<span class="label label-primary">未办</span> </template> <template
 															v-else> <span class="label label-success">办结</span>
-														</template>
-													</td>
+														</template></td>
 													<td>{{
 														feedbackRectification.feedback_rectification_client_name
 														}}</td>
-													<td>{{
-														feedbackRectification.feedback_rectification_audit_state
-														}}</td>
-													<td>
-														<a :id="feedbackRectification.jwcpxt_feedback_rectification_id" onclick="">整改</a>
-													</td>
+													<td><template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 1">
+														未审核 </template> <template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 2">
+														主管部门审核通过 </template> <template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 3">
+														主管部门审核驳回 </template> <template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 4">
+														测评中心审核通过 </template> <template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 5">
+														测评中心审核驳回 </template></td>
+													<td><a
+														:id="feedbackRectification.jwcpxt_feedback_rectification_id"
+														onclick="handleEnd(this)">整改|</a>
+														<a
+														:id="feedbackRectification.jwcpxt_feedback_rectification_id"
+														onclick="preview(this)">流转单 </a></td>
 												</tr>
 												</template>
 											</tbody>
@@ -158,4 +181,8 @@ a:hover {
 		maxDate : '2050/01/01', // 设置最大日期
 	});
 </script>
+<script type="text/javascript"
+	src="<%=basePath%>js/rectification/showRectification.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>js/rectification/managerRectification.js"></script>
 </html>
