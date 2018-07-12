@@ -39,6 +39,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private jwcpxt_service_definition serviceDefinition;
 	private jwcpxt_service_instance serviceInstance;
 	private jwcpxt_service_grab serviceGrab;
+	private jwcpxt_service_client serviceClient;
 	/* 
 	 * 
 	 */
@@ -50,6 +51,37 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private jwcpxt_unit_service unitServic;
 	private List<jwcpxt_service_grab> listServiceGrab;
 	private ClientInstanceDTO clientInstanceDTO;
+
+	/**
+	 * 根据业务定义id获取业务定义信息
+	 * 
+	 * @throws IOException
+	 */
+	public void get_serviceDefinitionDo_byId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		serviceDefinition = serviceService.get_serviceDefinitionDo_byId(serviceDefinition);
+		http_response.getWriter().write(gson.toJson(serviceDefinition));
+	}
+
+	/**
+	 * 根据当事人id获取当事人信息
+	 * @throws IOException 
+	 */
+	public void get_serviceClientDo_byId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		serviceClient = serviceService.get_serviceClientDo_byId(serviceClient);
+		http_response.getWriter().write(gson.toJson(serviceClient));
+	}
 
 	/**
 	 * 从session中拿到测评人员的信息
@@ -64,7 +96,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_user user = new jwcpxt_user();
-		//user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
+		// user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
 		user.setJwcpxt_user_id("1");
 		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
 		http_response.getWriter().write(gson.toJson(clientInstanceDTO));
