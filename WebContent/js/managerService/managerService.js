@@ -34,10 +34,10 @@ function showInterface(event) {
 					}
 				},
 				onContentReady : function() {
-					sonUnitVue = new Vue({
-						el : '#showSonUnit',
+					interfaceVue = new Vue({
+						el : '#showInterface',
 						data : {
-							unitList : ''
+							interfaceList : ''
 						}
 					})
 					// 查询所有子单位
@@ -47,7 +47,13 @@ function showInterface(event) {
 }
 
 function loadDataInterface(id) {
-
+	$.ajax({
+		url:'/jwcpxt/Service/list_serviceGrab_byServiceDefinitionId?serviceDefinition.jwcpxt_service_definition_id='+id,
+		type:'GET',
+		success:function(data){
+			interfaceVue.interfaceList = JSON.parse(data);
+		}
+	})
 }
 
 function addInterface(event) {
@@ -105,6 +111,7 @@ function addInterface(event) {
 								success : function(data) {
 									if (data == 1) {
 										toastr.success("保存成功");
+										loadDataInterface(event.id);
 									} else {
 										toastr.error("保存失败");
 									}
