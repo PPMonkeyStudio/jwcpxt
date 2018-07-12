@@ -38,6 +38,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		Session session = getSession();
 		session.saveOrUpdate(obj);
 		session.flush();
+		session.clear();
 	}
 
 	@Override
