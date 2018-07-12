@@ -654,8 +654,8 @@ public class QuestionServiceImpl implements QuestionService {
 					dissatisfiedFeedback.setJwcpxt_dissatisfied_feedback_id(uuidUtil.getUuid());
 					dissatisfiedFeedback
 							.setDissatisfied_feedback_answer_choice(answerChoice.getJwcpxt_answer_choice_id());
-					dissatisfiedFeedback.setDissatisfied_feedback_time(TimeUtil.getStringSecond());
-					dissatisfiedFeedback.setDissatisfied_feedback_state("1");
+					// dissatisfiedFeedback.setDissatisfied_feedback_time(TimeUtil.getStringSecond());
+					// dissatisfiedFeedback.setDissatisfied_feedback_state("1");
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_create(TimeUtil.getStringSecond());
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_modified(
 							dissatisfiedFeedback.getDissatisfied_feedback_gmt_create());
