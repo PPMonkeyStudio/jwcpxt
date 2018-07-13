@@ -68,6 +68,9 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 						feedbackRectification.getFeedback_rectification_cpzx_opinion());
 				checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
 				dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
+				/*
+				 * 测评中心通过之后，生成实例
+				 */
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("2");
 				checkFeedbackRectification.setFeedback_rectification_sjzgbm_opinion(
