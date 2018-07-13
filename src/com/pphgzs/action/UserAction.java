@@ -69,6 +69,15 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 			http_response.getWriter().write("-1");
 		}
 	}
+
+	/*
+	 * 修改密码
+	 */
+	public void update_userPassword() throws IOException {
+		userService.update_userPassword(user);
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write("1");
+	}
 	/*
 	 * 
 	 */

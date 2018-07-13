@@ -98,7 +98,7 @@ public class UnitServiceImpl implements UnitService {
 		if (newUnit.getUnit_password() == null) {
 			return false;
 		}
-		oldUnit.setUnit_password(newUnit.getUnit_password());
+		oldUnit.setUnit_password(MD5Util.GetMD5Code(newUnit.getUnit_password()));
 
 		unitDao.update_unit(oldUnit);
 		return true;
