@@ -54,7 +54,7 @@ function updateUnit(event) {
 				content : '<div><form id="updateUnitForm">'
 						+ '<label>单位名称：</label><input id="update_unit_name" name="unit.unit_name" class="form-control unitInput">'
 						+ '<label>机构代码：</label><input id="update_unit_num" name="unit.unit_num" class="form-control unitInput">'
-						+ '<label>单位账号：</label><input id="update_unit_account" name="unit.unit_account" class="form-control unitInput">'
+						+ '<label>单位账号：</label><input readonly="false" id="update_unit_account" name="unit.unit_account" class="form-control unitInput">'
 						+ '<label>联系电话：</label><input id="update_unit_phone" name="unit.unit_phone" class="form-control unitInput">'
 						+ '</form></div>',
 				buttons : {
