@@ -216,7 +216,7 @@ function addUnit(event) {
 						text : '保存',
 						btnClass : 'btn-blue',
 						action : function() {
-							
+
 							var flag;
 							var inputName = document
 									.getElementsByClassName("unitInput");
@@ -227,8 +227,8 @@ function addUnit(event) {
 									flag = true;
 								}
 							}
-							
-							if(flag){
+
+							if (flag) {
 								var formData = new FormData(document
 										.getElementById("unitForm"));
 								formData.append('unit.unit_father', event.id);
@@ -249,12 +249,11 @@ function addUnit(event) {
 										}
 									}
 								})
-							}
-							else{
+							} else {
 								toastr.error("不能有空白输入");
 								return false;
 							}
-							
+
 						}
 					}
 				},
