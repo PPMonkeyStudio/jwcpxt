@@ -55,7 +55,7 @@ var transferListVue;
 function preview(event) {
 	$
 			.confirm({
-				title : '推送反馈',
+				title : '预览流转单',
 				type : 'blue',
 				boxWidth : '1000px',
 				useBootstrap : false,
