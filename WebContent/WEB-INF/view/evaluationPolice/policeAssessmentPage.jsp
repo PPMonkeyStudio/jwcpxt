@@ -111,7 +111,7 @@ th {
 									</div>
 <!-- 								</div> -->
 							</div>
-							<button type="button" @click="finishReturned" class="btn btn-primary">结束回访</button>
+							<button type="button" @click="finishReturned($event)" class="btn btn-primary">结束回访</button>
 						</div>
 					</div>
 				</div>
