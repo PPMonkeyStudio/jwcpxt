@@ -52,10 +52,10 @@ function updateUnit(event) {
 				boxWidth : '500px',
 				useBootstrap : false,
 				content : '<div><form id="updateUnitForm">'
-						+ '<label>单位名称：</label><input id="update_unit_name" name="unit.unit_name" class="form-control">'
-						+ '<label>机构代码：</label><input id="update_unit_num" name="unit.unit_num" class="form-control">'
-						+ '<label>单位账号：</label><input id="update_unit_account" name="unit.unit_account" class="form-control">'
-						+ '<label>联系电话：</label><input id="update_unit_phone" name="unit.unit_phone" class="form-control">'
+						+ '<label>单位名称：</label><input id="update_unit_name" name="unit.unit_name" class="form-control unitInput">'
+						+ '<label>机构代码：</label><input id="update_unit_num" name="unit.unit_num" class="form-control unitInput">'
+						+ '<label>单位账号：</label><input id="update_unit_account" name="unit.unit_account" class="form-control unitInput">'
+						+ '<label>联系电话：</label><input id="update_unit_phone" name="unit.unit_phone" class="form-control unitInput">'
 						+ '</form></div>',
 				buttons : {
 					cancel : {
@@ -69,24 +69,42 @@ function updateUnit(event) {
 						text : '修改',
 						btnClass : 'btn-blue',
 						action : function() {
-							var formData = new FormData(document
-									.getElementById("updateUnitForm"));
-							formData.append('unit.jwcpxt_unit_id', event.id)
-							$.ajax({
-								url : '/jwcpxt/Unit/update_unit',
-								type : 'POST',
-								data : formData,
-								processData : false,
-								contentType : false,
-								success : function(data) {
-									if (data == 1) {
-										toastr.success("修改成功！");
-										loadData();
-									} else {
-										toastr.error("修改失败！");
-									}
+							var flag;
+							var inputName = document
+									.getElementsByClassName("unitInput");
+							for (var i = 0; i < inputName.length; i++) {
+								if (inputName[i].value == "") {
+									flag = false;
+								} else {
+									flag = true;
 								}
-							})
+							}
+
+							if (flag) {
+								var formData = new FormData(document
+										.getElementById("updateUnitForm"));
+								formData
+										.append('unit.jwcpxt_unit_id', event.id)
+								$.ajax({
+									url : '/jwcpxt/Unit/update_unit',
+									type : 'POST',
+									data : formData,
+									processData : false,
+									contentType : false,
+									success : function(data) {
+										if (data == 1) {
+											toastr.success("修改成功！");
+											loadData();
+										} else {
+											toastr.error("修改失败！");
+										}
+									}
+								})
+							} else {
+								toastr.error("不能有空白输入");
+								return false;
+							}
+
 						}
 					}
 				},
@@ -181,10 +199,10 @@ function addUnit(event) {
 				boxWidth : '500px',
 				useBootstrap : false,
 				content : '<div><form id="unitForm">'
-						+ '<label>单位名称：</label><input name="unit.unit_name" class="form-control">'
-						+ '<label>机构代码：</label><input name="unit.unit_num" class="form-control">'
-						+ '<label>单位账号：</label><input name="unit.unit_account" class="form-control">'
-						+ '<label>联系电话：</label><input id="add_unit_phone" name="unit.unit_phone" class="form-control">'
+						+ '<label>单位名称：</label><input name="unit.unit_name" class="form-control unitInput">'
+						+ '<label>机构代码：</label><input name="unit.unit_num" class="form-control unitInput">'
+						+ '<label>单位账号：</label><input name="unit.unit_account" class="form-control unitInput">'
+						+ '<label>联系电话：</label><input id="add_unit_phone" name="unit.unit_phone" class="form-control unitInput">'
 						+ '</form></div>',
 				buttons : {
 					cancel : {
@@ -198,26 +216,45 @@ function addUnit(event) {
 						text : '保存',
 						btnClass : 'btn-blue',
 						action : function() {
-							var formData = new FormData(document
-									.getElementById("unitForm"));
-							formData.append('unit.unit_father', event.id);
-							formData.append('unit.unit_password', $(
-									'#add_unit_phone').val());
-							$.ajax({
-								url : '/jwcpxt/Unit/save_unit',
-								type : 'POST',
-								data : formData,
-								processData : false,
-								contentType : false,
-								success : function(data) {
-									if (data == 1) {
-										toastr.success("新建成功！");
-										loadDataSon(event.id)
-									} else {
-										toastr.error("新建失败！");
-									}
+							
+							var flag;
+							var inputName = document
+									.getElementsByClassName("unitInput");
+							for (var i = 0; i < inputName.length; i++) {
+								if (inputName[i].value == "") {
+									flag = false;
+								} else {
+									flag = true;
 								}
-							})
+							}
+							
+							if(flag){
+								var formData = new FormData(document
+										.getElementById("unitForm"));
+								formData.append('unit.unit_father', event.id);
+								formData.append('unit.unit_password', $(
+										'#add_unit_phone').val());
+								$.ajax({
+									url : '/jwcpxt/Unit/save_unit',
+									type : 'POST',
+									data : formData,
+									processData : false,
+									contentType : false,
+									success : function(data) {
+										if (data == 1) {
+											toastr.success("新建成功！");
+											loadDataSon(event.id)
+										} else {
+											toastr.error("新建失败！");
+										}
+									}
+								})
+							}
+							else{
+								toastr.error("不能有空白输入");
+								return false;
+							}
+							
 						}
 					}
 				},
@@ -248,7 +285,8 @@ function managerService(event) {
 						+ '<td>{{ serviceConnectDTO.serviceDefinition.service_definition_describe }}</td>'
 						+ '<td>{{ serviceConnectDTO.unitSer.evaluation_count }}</td>'
 						+ '<td>{{ serviceConnectDTO.unitSer.unit_service_gmt_create }}</td>'
-						+ '<td><a :id="serviceConnectDTO.unitSer.jwcpxt_unit_service_id" onclick="updateGrade(this,'+event.id+')">修改</a></td>'
+						+ '<td><a :id="serviceConnectDTO.unitSer.jwcpxt_unit_service_id" onclick="updateGrade(this,'
+						+ event.id + ')">修改</a></td>'
 						+ '</tr></template></tbody></table>',
 				buttons : {
 					cancel : {
@@ -267,24 +305,22 @@ function managerService(event) {
 						}
 					})
 					loadDataService(event.id)
-					
 
 				}
 			})
 }
 
-function loadDataService(id){
+function loadDataService(id) {
 	$
-	.ajax({
-		url : '/jwcpxt/Service/list_serviceDefinitionDTO_connectService?unit.jwcpxt_unit_id='
-				+ id,
-		type : 'GET',
-		success : function(data) {
-			managerServiceVue.serviceConnectDTOList = JSON
-					.parse(data);
-		}
+			.ajax({
+				url : '/jwcpxt/Service/list_serviceDefinitionDTO_connectService?unit.jwcpxt_unit_id='
+						+ id,
+				type : 'GET',
+				success : function(data) {
+					managerServiceVue.serviceConnectDTOList = JSON.parse(data);
+				}
 
-	})
+			})
 }
 
 function addService(event) {
@@ -356,52 +392,59 @@ function addService(event) {
 			})
 }
 
-function updateGrade(event,unitId){
-	$.confirm({
-		title : '关联业务',
-		type : 'orange',
-		boxWidth : '500px',
-		useBootstrap : false,
-		content:'<label>测评数量：</label><input id="update_evaluation_count" class="form-control">',
-		buttons : {
-			cancel : {
-				text : '关闭',
-				btnClass : 'btn-red',
-				action : function() {
+function updateGrade(event, unitId) {
+	$
+			.confirm({
+				title : '关联业务',
+				type : 'orange',
+				boxWidth : '500px',
+				useBootstrap : false,
+				content : '<label>测评数量：</label><input id="update_evaluation_count" class="form-control">',
+				buttons : {
+					cancel : {
+						text : '关闭',
+						btnClass : 'btn-red',
+						action : function() {
 
-				}
-			},
-			save : {
-				text : '修改',
-				btnClass : 'btn-blue',
-				action : function() {
-					$.ajax({
-						url : '/jwcpxt/Service/update_unitServicCount_byunitServicId',
-						type : 'POST',
-						data : {
-							'unitServic.jwcpxt_unit_service_id':event.id,
-							'unitServic.evaluation_count':$('#update_evaluation_count').val()
-						},
-						success : function(data) {
-							if (data == 1) {
-								toastr.success("修改成功！");
-								loadDataService(unitId);
-							} else {
-								toastr.error("修改失败！");
-							}
 						}
-					})
-				}
-			}
-		},
-		onContentReady:function(){
-			$.ajax({
-				url:'/jwcpxt/Service/get_untServic_byUnitServicId?unitServic.jwcpxt_unit_service_id='+event.id,
-				type:'GET',
-				success:function(data){
-					$('#update_evaluation_count').val(JSON.parse(data).evaluation_count);
+					},
+					save : {
+						text : '修改',
+						btnClass : 'btn-blue',
+						action : function() {
+							$
+									.ajax({
+										url : '/jwcpxt/Service/update_unitServicCount_byunitServicId',
+										type : 'POST',
+										data : {
+											'unitServic.jwcpxt_unit_service_id' : event.id,
+											'unitServic.evaluation_count' : $(
+													'#update_evaluation_count')
+													.val()
+										},
+										success : function(data) {
+											if (data == 1) {
+												toastr.success("修改成功！");
+												loadDataService(unitId);
+											} else {
+												toastr.error("修改失败！");
+											}
+										}
+									})
+						}
+					}
+				},
+				onContentReady : function() {
+					$
+							.ajax({
+								url : '/jwcpxt/Service/get_untServic_byUnitServicId?unitServic.jwcpxt_unit_service_id='
+										+ event.id,
+								type : 'GET',
+								success : function(data) {
+									$('#update_evaluation_count').val(
+											JSON.parse(data).evaluation_count);
+								}
+							})
 				}
 			})
-		}
-	})
 }
