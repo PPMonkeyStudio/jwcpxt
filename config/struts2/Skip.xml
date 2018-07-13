@@ -5,6 +5,8 @@
 <struts>
 	<package name="Skip" namespace="/Skip" extends="struts-default">
 		<action name="*" class="com.pphgzs.action.SkipAction" method="{1}">
+			<result name="skipNavbarIndex">/WEB-INF/view/navbarIndex.jsp</result>
+			<result name="skipSystemIndex">/WEB-INF/view/systemIndex.jsp</result>
 			<result name="skipSidebar">/WEB-INF/view/sidebar.jsp</result>
 			<result name="skipFooter">/WEB-INF/view/footer.jsp</result>
 			<result name="skipNavbar">/WEB-INF/view/navbar.jsp</result>

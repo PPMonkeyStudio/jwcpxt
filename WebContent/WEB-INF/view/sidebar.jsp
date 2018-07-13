@@ -52,26 +52,42 @@
 			</div>
 
 			<ul class="nav">
-				<li id="sideIndex"><a href="#"> <i class="ti-world"></i>
+				<li id="sideIndex"><a href="<%=basePath%>Skip/skipSystemIndex">
+						<i class="ti-world"></i>
 						<p>首页</p>
 				</a></li>
-				<li id="sidePolice"><a
-					href="<%=basePath%>Skip/skipReturnedPartyInformation"> <i
-						class="ti-user"></i>
-						<p>测评警务</p>
-				</a></li>
-				<li id="sideAbarbeitung"><a
-					href="<%=basePath%>Skip/skipAbarbeitungIndex"> <i
-						class="ti-hummer"></i>
-						<p>整改审核</p>
-				</a></li>
-				<li id="sideStatis"><a href="#"> <i class="ti-stats-up"></i>
-						<p>统计数据</p>
-				</a></li>
-				<li id="sideManager"><a
-					href="<%=basePath%>Skip/skipManagerIndex"> <i class="ti-panel"></i>
-						<p>管理数据</p>
-				</a></li>
+				<s:if test="#session.loginType=='user'">
+					<s:if test="#session.user.user_type==1">
+						<li id="sidePolice"><a
+							href="<%=basePath%>Skip/skipReturnedPartyInformation"> <i
+								class="ti-user"></i>
+								<p>测评警务</p>
+						</a></li>
+					</s:if>
+				</s:if>
+				<s:if test="#session.loginType=='unit'">
+					<li id="sideAbarbeitung"><a
+						href="<%=basePath%>Skip/skipAbarbeitungIndex"> <i
+							class="ti-hummer"></i>
+							<p>整改审核</p>
+					</a></li>
+				</s:if>
+				<s:if test="#session.loginType=='user'">
+					<s:if test="#session.user.user_type==2">
+						<li id="sideStatis"><a href="#"> <i class="ti-stats-up"></i>
+								<p>统计数据</p>
+						</a></li>
+					</s:if>
+				</s:if>
+				<s:if test="#session.loginType=='unit'">
+					<s:if test="#session.unit.unit_grade==1">
+						<li id="sideManager"><a
+							href="<%=basePath%>Skip/skipManagerIndex"> <i
+								class="ti-panel"></i>
+								<p>管理数据</p>
+						</a></li>
+					</s:if>
+				</s:if>
 			</ul>
 		</div>
 	</div>
