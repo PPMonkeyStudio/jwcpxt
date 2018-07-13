@@ -49,14 +49,14 @@
 						<i class="ti-panel"></i>
 						<p>Stats</p>
 				</a></li> -->
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
+				<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="ti-bell"></i>
 						<p class="notification">1</p>
 						<p>通知</p> <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="#">张斌天天写bug</a></li>
-					</ul></li>
+					</ul></li> -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="ti-user"></i>
 						<p>
