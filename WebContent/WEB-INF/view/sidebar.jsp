@@ -74,7 +74,7 @@
 				</s:if>
 				<s:if test="#session.loginType=='user'">
 					<s:if test="#session.user.user_type==2">
-						<li id="sideStatis"><a href="#"> <i class="ti-stats-up"></i>
+						<li id="sideStatis"><a href="<%=basePath%>Skip/skipStatisticalData"> <i class="ti-stats-up"></i>
 								<p>统计数据</p>
 						</a></li>
 					</s:if>
