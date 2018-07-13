@@ -65,7 +65,7 @@
 						class="ti-hummer"></i>
 						<p>整改审核</p>
 				</a></li>
-				<li id="sideStatis"><a href="#"> <i class="ti-stats-up"></i>
+				<li id="sideStatis"><a href="<%=basePath%>Skip/skipStatisticalData"> <i class="ti-stats-up"></i>
 						<p>统计数据</p>
 				</a></li>
 				<li id="sideManager"><a

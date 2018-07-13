@@ -47,6 +47,9 @@
 			<result name="skipPreviewPoliceAssessmentPageJsp">
 				/WEB-INF/view/evaluationPolice/previewPoliceAssessmentPage.jsp
 			</result>
+			<result name="skipStatisticalData">
+				/WEB-INF/view/statisticalData/statisticalData.jsp
+			</result>
 		</action>
 	</package>
 </struts>
