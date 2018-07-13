@@ -15,4 +15,6 @@ public interface UserService {
 
 	boolean ban_user_byUserID(String userID);
 
+	boolean update_userPassword(jwcpxt_user user);
+
 }
