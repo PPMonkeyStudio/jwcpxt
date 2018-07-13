@@ -85,14 +85,7 @@ public class MyTest {
 	@Test
 	public void tttdf() {
 
-<<<<<<< HEAD
-		jwcpxt_unit unit = new jwcpxt_unit();
-		unit.setJwcpxt_unit_id("75689bdb-bfaa-4a11-b15b-685caa46384a");
-		unit.setUnit_phone("sssss");
-		System.out.println(unitService.update_unit(unit));
-=======
 		System.out.println(userService.get_userDO_byRandomAndTypeCP());
->>>>>>> origin/ZB
 	}
 
 }
