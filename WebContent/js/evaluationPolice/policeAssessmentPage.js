@@ -166,8 +166,8 @@ $(function() {
 		let answerInquiriesConfirmVue;
 		let answerInquiriesConfirm = $.confirm({
 			smoothContent : false, //关闭动画
-			/*	closeIcon : true, //关闭图标
-				closeIconClass : 'fa fa-close', //图标样式*/
+			closeIcon : true, //关闭图标
+			closeIconClass : 'fa fa-close', //图标样式
 			type : 'dark', //弹出框类型
 			typeAnimated : true, //未知。。。。
 			boxWidth : '30%', //设置宽度
@@ -246,7 +246,7 @@ $(function() {
 					text : '确认',
 					btnClass : 'btn-success',
 					action : function() {
-						let falg = false;
+						/*let falg = false;
 						if (answerData.length > 0) {
 							let length = answerData.length;
 							for (var int = 0; int < length; int++) {
@@ -264,7 +264,11 @@ $(function() {
 							$('input[type="radio"][optionID="' + optionID + '"]').parent().siblings('.inquiriesContent').html(inquiriesStr);
 							toastr.success('追问回访成功');
 						}
-						return falg;
+						return falg;*/
+						if (answerData.length > 0)
+							listAnswerInquiriesDTO[index] = answerData;
+						if (inquiriesStr)
+							$('input[type="radio"][optionID="' + optionID + '"]').parent().siblings('.inquiriesContent').html(inquiriesStr);
 					}
 				},
 			},
