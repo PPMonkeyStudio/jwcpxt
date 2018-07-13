@@ -126,7 +126,7 @@ th {
 										<label for="questionDescribe">问题描述</label>
 										<textarea class="form-control"
 											v-model="addQuestionModalData.question_describe"
-											placeholder="Problem description。。"></textarea>
+											placeholder="请输入问题描述。。"></textarea>
 									</div>
 									<div class="form-group">
 										<label for="questionType">问题类型</label> <select
