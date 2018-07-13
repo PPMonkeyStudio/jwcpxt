@@ -41,24 +41,28 @@
 <body>
 	<div class="panel" style="width: 550px; margin: 100px auto;">
 		<div class="panel-heading">
-<!-- 			<div> -->
-<%-- 				<img src="<%=basePath%>img/logo.jpg" height="40px"> --%>
-<!-- 			</div> -->
+			<!-- 			<div> -->
+			<%-- 				<img src="<%=basePath%>img/logo.jpg" height="40px"> --%>
+			<!-- 			</div> -->
 			<h2 style="text-align: center;">警务测评系统</h2>
 		</div>
 		<div class="panel-body" style="margin: 0 0 20px 0;">
 			<div class="form-group">
 				<input type="email" class="form-control" id="login_username"
 					placeholder="账号">
-			</div> 
+			</div>
 			<div class="form-group">
 				<input type="password" class="form-control" id="login_password"
 					placeholder="密码">
 			</div>
 			<br>
-			<button id="button_login" class="btn btn-primary  btn-block"
-				onclick="login()">登录</button>
+			<button style="float: right;" id="button_login"
+				class="btn btn-primary" onclick="login('user')">用户登录</button>
+
+			<button style="float: right; margin-right: 10px;"
+				class="btn btn-primary" onclick="login('unit')">单位登陆</button>
 		</div>
 	</div>
+	<script type="text/javascript" src="<%=basePath%>js/user/login.js"></script>
 </body>
 </html>

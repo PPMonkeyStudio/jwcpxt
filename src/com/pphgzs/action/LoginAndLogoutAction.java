@@ -52,6 +52,7 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 			} else {
 				ActionContext.getContext().getSession().remove("user");
 				ActionContext.getContext().getSession().put("user", user);
+				ActionContext.getContext().getSession().put("loginType", "user");
 				http_response.getWriter().write("1");
 			}
 		} else {
@@ -62,6 +63,7 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 			} else {
 				ActionContext.getContext().getSession().remove("unit");
 				ActionContext.getContext().getSession().put("unit", unit);
+				ActionContext.getContext().getSession().put("loginType", "unit");
 				http_response.getWriter().write("2");
 			}
 		}
