@@ -1,4 +1,5 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%
@@ -18,7 +19,8 @@ a:hover {
 .pageOperation:hover {
 	cursor: pointer;
 }
-.interfaceTable tr{
+
+.interfaceTable tr {
 	border: solid;
 }
 </style>
@@ -44,6 +46,9 @@ a:hover {
 									<button onclick="addService()" class="btn btn-default">
 										<i class="ti-plus"></i>新建一个业务
 									</button>
+									<button  id="revisit" onclick="intoQuestion(this)" class="btn btn-default">
+										<i class="ti-angle-right"></i>进入整改回访的问题
+									</button>
 									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
 										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 									</div>
@@ -60,13 +65,16 @@ a:hover {
 										</thead>
 										<tbody>
 											<template v-for="service in serviceList">
-												<tr>
-													<td>{{ service.service_definition_describe }}</td>
-													<td>{{ service.service_definition_gmt_create }}</td>
-													<td><a :id="service.jwcpxt_service_definition_id" onclick="intoQuestion(this)"><i class="ti-arrow-right"></i></a></td>
-													<td><a :id="service.jwcpxt_service_definition_id" onclick="updateService(this)"><i class="ti-pencil-alt"></i></a></td>
-													<td><a :id="service.jwcpxt_service_definition_id" onclick="showInterface(this)"><i class="ti-key"></i></a></td>
-												</tr>
+											<tr>
+												<td>{{ service.service_definition_describe }}</td>
+												<td>{{ service.service_definition_gmt_create }}</td>
+												<td><a :id="service.jwcpxt_service_definition_id"
+													onclick="intoQuestion(this)"><i class="ti-arrow-right"></i></a></td>
+												<td><a :id="service.jwcpxt_service_definition_id"
+													onclick="updateService(this)"><i class="ti-pencil-alt"></i></a></td>
+												<td><a :id="service.jwcpxt_service_definition_id"
+													onclick="showInterface(this)"><i class="ti-key"></i></a></td>
+											</tr>
 											</template>
 										</tbody>
 									</table>

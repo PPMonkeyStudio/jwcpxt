@@ -167,7 +167,7 @@ th {
 									<div class="form-group">
 										<label>问题描述</label>
 										<textarea class="form-control"
-											placeholder="Problem description。。"
+											placeholder="请填写问题描述。。"
 											v-model="checkQuestionModalData.question.question_describe"></textarea>
 									</div>
 									<%-- <div class="form-group">

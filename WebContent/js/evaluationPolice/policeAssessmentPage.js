@@ -170,7 +170,7 @@ $(function() {
 			boxWidth : '30%', //设置宽度
 			useBootstrap : false, //设置是否使用bootstropt样式
 			offsetTop : 10, //设置距离浏览器高度
-			title : '修改选项',
+			title : '追问',
 			content : `
 			<div id="answerInquiries">
 			<template v-for="(inquiriesOption,index) in inquiriesOptionData">
