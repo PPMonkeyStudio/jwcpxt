@@ -80,13 +80,27 @@ th {
 													 <template v-for="(optionDTO,index1) in questionDTO.listOptionDTO">
 													 <div class="form-group">
 													 	 <input type="radio" :name="index" :optionIndex="index1" :optionID="optionDTO.option.jwcpxt_option_id">
-														 <template v-if="optionDTO.option.option_push==1">
-														 	<label class="control-label"><span style="color:red;">{{optionDTO.option.option_describe}}</span></label>
+														 <label class="control-label">{{optionDTO.option.option_describe}}</label>
+														 <!-- 追问 -->
+														 <template v-for="(listInquiriesOption,inde2) in optionDTO.listInquiriesOptionDTO">
+														 	<template v-if="listInquiriesOption.inquiriesQuestion.question_type==4">
+															 	<div style="margin-left: 30px;" class="form-group">
+															 		<label>{{questionDTO.question.question_sort +'.'+ questionDTO.question.question_describe}}</label>
+															 		<template v-for="(inquiriesOption,index3) in listInquiriesOption.listInquiriesOption">
+															 			 <div class="form-group">
+																	 	 	<input type="radio" :name="listInquiriesOption.inquiriesQuestion.jwcpxt_question_id" :optionIndex="index3" :optionID="inquiriesOption.jwcpxt_option_id">
+																		 	<label class="control-label">{{inquiriesOption.option_describe}}</label>
+																		 </div>
+															 		</template>
+															 	</div>
+														 	</template>
+														 	<template v-if="listInquiriesOption.inquiriesQuestion.question_type==3">
+															 	<div class="form-group">
+															 		<label>{{questionDTO.question.question_sort +'.'+ questionDTO.question.question_describe}}</label>
+															 		<textarea class="form-control" rows="3"></textarea>
+															 	</div>
+														 	</template>
 														 </template>
-														 <template v-if="optionDTO.option.option_push==2">
-														 	<label class="control-label">{{optionDTO.option.option_describe}}</label>
-														 </template><small style="color:red;" v-if="optionDTO.listInquiriesOptionDTO.length>0">(追问)</small>
-														 <div style="margin-left: 20px;" class="inquiriesContent"></div>
 													 </div>
 													 </template>
 												</div>
@@ -95,7 +109,7 @@ th {
 											<template v-else-if="questionDTO.question.question_type==2">
 												 <div class="form-group">
 													 <label>{{questionDTO.question.question_sort +'.'+ questionDTO.question.question_describe}}</label>
-													 <textarea class="form-control" rows="3" @change="inputTextarea($event,index)"></textarea>
+													 <textarea class="form-control" rows="3"></textarea>
 												</div>
 											</template>
 											<template v-else>
@@ -111,7 +125,6 @@ th {
 									</div>
 <!-- 								</div> -->
 							</div>
-							<button type="button" @click="finishReturned" class="btn btn-primary">结束回访</button>
 						</div>
 					</div>
 				</div>
@@ -125,5 +138,5 @@ th {
 	/* 处理侧边栏选项 */
 	$('#sidePolice').attr("class", "active");
 </script>
-<script src="<%=basePath%>js/evaluationPolice/policeAssessmentPage.js"></script>
+<script src="<%=basePath%>js/evaluationPolice/previewPoliceAssessmentPage.js"></script>
 </html>

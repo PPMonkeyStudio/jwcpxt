@@ -141,6 +141,10 @@ $(function() {
 					}
 				}, 'text');
 			},
+			preview () {
+				//&serviceClientId=${this.returnedParty.serviceClient.jwcpxt_service_client_id}
+				window.open(`/jwcpxt/Skip/skipPreviewPoliceAssessmentPage?definitionId=${myData.definitionId}`, '_blank');
+			},
 			deleteQuestion (index) {
 				//使用删除接口
 				deleteInterface('/jwcpxt/Question/delete_question', {
@@ -176,7 +180,6 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			lastPage () {
-				console.log(myData.page.isLastPage);
 				if (myData.page.isLastPage) {
 					toastr.error("已经是在尾页了哦~");
 					return;
@@ -234,7 +237,10 @@ $(function() {
 							<tr style="border-top: 1px solid #ddd;">
 								<td><a data-toggle="collapse" :href="'#collapse'+index" @click="transform"><i class="fa fa-caret-right"></i></a></td>
 								<th>{{optionDTO.option.option_sort}}</th>
-								<td>{{optionDTO.option.option_describe}}</td>
+								<td>
+									<span style="color:red;" v-if="optionDTO.option.option_push==1">{{optionDTO.option.option_describe}}</span>
+									<span style="" v-if="optionDTO.option.option_push==2">{{optionDTO.option.option_describe}}</span>
+								</td>
 								<td>{{optionDTO.option.option_grade}}</td>
 								<td>
 									<i title="修改选项" class="ti-pencil-alt" @click="modifyOption(index)"></i>&nbsp; 
@@ -429,6 +435,13 @@ $(function() {
 						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
 						onblur="this.v();">
 				</div>
+				<div class="form-group">
+					<label>是否推送</label>
+					<select class="form-control" id="addOptionConfirm_push">
+						<option value="2">不推送</option>
+						<option value="1">推送</option>
+					</select>
+				</div>
 			</form>
 			`,
 			buttons : {
@@ -450,7 +463,8 @@ $(function() {
 						let params = {
 							"option.option_question" : vm.checkQuestionModalData.question.jwcpxt_question_id,
 							"option.option_describe" : describe,
-							"option.option_grade" : grade
+							"option.option_grade" : grade,
+							"option.option_push" : addOptionConfirm.$content.find('#addOptionConfirm_push').val()
 						};
 						$.post('/jwcpxt/Question/save_option', params, response => {
 							if (response == "1") {
@@ -785,7 +799,9 @@ $(function() {
 					},
 				});
 			},
-			onDestroy : function() {},
+			onDestroy : function() {
+				modifyInquiriesOptionConfirmVue = null;
+			},
 			buttons : {
 				addOption : {
 					text : '添加选项',

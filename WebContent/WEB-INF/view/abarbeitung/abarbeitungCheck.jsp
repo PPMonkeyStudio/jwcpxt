@@ -74,6 +74,7 @@ a:hover {
 															<option value="4">测评中心审核通过</option>
 															<option value="5">测评中心审核驳回</option>
 													</select></td>
+													<td>查看</td>
 													<td>操作</td>
 												</tr>
 											</thead>
@@ -102,6 +103,9 @@ a:hover {
 														测评中心审核通过 </template> <template
 															v-if="checkFeedbackRectification.feedback_rectification_audit_state == 5">
 														测评中心审核驳回 </template></td>
+														<td><a
+														:id="checkFeedbackRectification.jwcpxt_feedback_rectification_id"
+														onclick="preview(this)">流转单 </a></td>
 													<td><s:if test="#session.unit.unit_grade == 2">
 															<template
 																v-if="checkFeedbackRectification.feedback_rectification_audit_state != 1">

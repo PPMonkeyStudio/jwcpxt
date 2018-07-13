@@ -64,6 +64,14 @@ public class SkipAction {
 		return "skipAbarbeitungCheck";
 	}
 
+	public String skipNavbarIndex() {
+		return "skipNavbarIndex";
+	}
+
+	public String skipSystemIndex() {
+		return "skipSystemIndex";
+	}
+
 	/* hy */
 	public String skipQuestionnaireDetails() {
 		return "skipQuestionnaireDetails";
@@ -83,6 +91,14 @@ public class SkipAction {
 
 	public String skipPoliceAssessmentPageJsp() {
 		return "skipPoliceAssessmentPageJsp";
+	}
+
+	public String skipPreviewPoliceAssessmentPage() {
+		return "skipPreviewPoliceAssessmentPage";
+	}
+
+	public String skipPreviewPoliceAssessmentPageJsp() {
+		return "skipPreviewPoliceAssessmentPageJsp";
 	}
 
 	public String getDefinitionId() {

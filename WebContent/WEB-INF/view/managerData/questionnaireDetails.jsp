@@ -46,6 +46,9 @@ th {
 										data-toggle="modal" data-target="#addQuestionModal">
 										<i class="ti-plus"></i>添加一个问题
 									</button>
+									<button type="button" class="btn btn-default" @click="preview">
+										<i class="fa fa-th-list"></i>预览
+									</button>
 									<input @keyup="queryQuestion" placeholder="请输入搜索内容"
 										name="questionVO.screenSearch" class="form-control"
 										style="float: right; width: 250px;">
@@ -164,7 +167,7 @@ th {
 									<div class="form-group">
 										<label>问题描述</label>
 										<textarea class="form-control"
-											placeholder="Problem description。。"
+											placeholder="请填写问题描述。。"
 											v-model="checkQuestionModalData.question.question_describe"></textarea>
 									</div>
 									<%-- <div class="form-group">
