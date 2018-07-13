@@ -659,7 +659,7 @@ public class QuestionServiceImpl implements QuestionService {
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_create(TimeUtil.getStringSecond());
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_modified(
 							dissatisfiedFeedback.getDissatisfied_feedback_gmt_create());
-					questionDao.saveOrUpdateObject(answerChoice);
+					questionDao.saveOrUpdateObject(dissatisfiedFeedback);
 				}
 				// 此时应该还需要生成通知表，但是通知还没有确定，所有暂时还没有写 7.8 9:23 AM
 			} else if ("2".equals(question.getQuestion_type().trim())
@@ -674,6 +674,9 @@ public class QuestionServiceImpl implements QuestionService {
 				questionDao.saveOrUpdateObject(answerOpen);
 			}
 		}
+		client.setService_client_visit("1");
+		client.setService_client_gmt_modified(TimeUtil.getStringSecond());
+		questionDao.saveOrUpdateObject(client);
 		return true;
 	}
 
