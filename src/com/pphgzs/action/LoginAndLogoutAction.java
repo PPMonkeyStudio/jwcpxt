@@ -80,18 +80,19 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 	 * @return
 	 * @throws IOException
 	 */
-	public String logout() throws IOException {
+	public void logout() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
 		if (ActionContext.getContext().getSession().get("user") != null) {
 			ActionContext.getContext().getSession().remove("user");
+			ActionContext.getContext().getSession().remove("loginType");
 			http_response.getWriter().write("1");
 		} else if (ActionContext.getContext().getSession().get("unit") != null) {
 			ActionContext.getContext().getSession().remove("unit");
+			ActionContext.getContext().getSession().remove("loginType");
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");
 		}
-		return "logout";
 	}
 
 	/*

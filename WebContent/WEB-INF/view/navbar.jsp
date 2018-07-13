@@ -62,7 +62,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="#">账户信息</a></li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="#" onclick="logout()">退出</a></li>
 					</ul></li>
 			</ul>
 

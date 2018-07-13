@@ -119,7 +119,5 @@ td .label {
 	line-height: 33px !important;
 }
 </style>
-<script>
-	
-</script>
+<script type="text/javascript" src="<%=basePath %>js/user/login.js"></script>
 </html>
