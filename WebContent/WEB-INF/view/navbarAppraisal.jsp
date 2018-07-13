@@ -39,12 +39,19 @@
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="ti-user"></i>
-						<p>孙毅</p> <b class="caret"></b>
+						<p>
+							<s:if test="#session.loginType=='user'">
+								<s:property value="#session.user.user_name" />
+							</s:if>
+							<s:else>
+								<s:property value="#session.unit.unit_name" />
+							</s:else>
+						</p> <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="#">账户信息</a></li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="#" onclick="logout()">退出</a></li>
 					</ul></li>
 			</ul>
 
