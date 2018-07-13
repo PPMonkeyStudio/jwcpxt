@@ -49,10 +49,10 @@ $(function() {
 				}, 'json');
 			},
 			pageInit (response) {
-				this.page.haveNextPage = response.currentPage < response.totalPage;
-				this.page.havePrePage = response.currentPage > 1;
-				this.page.isFirstPage = response.currentPage != 1;
-				this.page.isLastPage = response.currentPage != response.totalPage;
+				myData.page.haveNextPage = response.currentPage < response.totalPage;
+				myData.page.havePrePage = response.currentPage > 1;
+				myData.page.isFirstPage = response.currentPage == 1;
+				myData.page.isLastPage = response.currentPage == response.totalPage;
 			},
 			addQuestion () {
 				if (!myData.addQuestionModalData.question_describe) {
@@ -164,7 +164,7 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			prePage () {
-				if (!myData.page.havePrePage) {
+				if (myData.page.havePrePage) {
 					toastr.error("没有上一页了哦~");
 					return;
 				}
@@ -172,7 +172,7 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			nextPage () {
-				if (!myData.page.haveNextPage) {
+				if (myData.page.haveNextPage) {
 					toastr.error("没有下一页了哦~");
 					return;
 				}
