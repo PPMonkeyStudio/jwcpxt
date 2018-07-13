@@ -66,13 +66,16 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				checkFeedbackRectification.setFeedback_rectification_audit_state("4");
 				checkFeedbackRectification.setFeedback_rectification_cpzx_opinion(
 						feedbackRectification.getFeedback_rectification_cpzx_opinion());
+				checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+				dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("2");
 				checkFeedbackRectification.setFeedback_rectification_sjzgbm_opinion(
 						feedbackRectification.getFeedback_rectification_cpzx_opinion());
+				checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+				dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
 			}
-			checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
-			dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
+
 			return true;
 		} else if (feedbackRectification.getFeedback_rectification_audit_state() != null
 				&& "3".equals(feedbackRectification.getFeedback_rectification_audit_state())) {

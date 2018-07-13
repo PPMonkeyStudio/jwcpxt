@@ -8,9 +8,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.ServiceService;
+import com.pphgzs.service.UnitService;
 import com.pphgzs.service.UserService;
 import com.pphgzs.util.TimeUtil;
 
@@ -20,11 +22,21 @@ public class MyTest {
 	@Resource
 	private UserService userService;
 	@Resource
+	private UnitService unitService;
+	@Resource
 	private ServiceService serviceService;
 	@Resource
 	private DissatisfiedFeedbackDao dissatisfiedFeedbackDao;
 	@Resource
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	public UnitService getUnitService() {
+		return unitService;
+	}
+
+	public void setUnitService(UnitService unitService) {
+		this.unitService = unitService;
+	}
 
 	public DissatisfiedFeedbackService getDissatisfiedFeedbackService() {
 		return dissatisfiedFeedbackService;
@@ -73,6 +85,11 @@ public class MyTest {
 
 	@Test
 	public void tttdf() {
+
+		jwcpxt_unit unit = new jwcpxt_unit();
+		unit.setJwcpxt_unit_id("adsafsdf");
+		unit.setUnit_phone("asdasdsad");
+		System.out.println(unitService.update_unit(unit));
 	}
 
 }
