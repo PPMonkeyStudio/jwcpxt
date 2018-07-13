@@ -117,7 +117,7 @@ function addInterface(event) {
 							var mustWrite = document
 									.getElementsByClassName("mustWrite");
 							for (var i = 0; i < mustWrite.length; i++) {
-								if (mustWrite[i].value = "") {
+								if (mustWrite[i].value == "") {
 									flag = false;
 								} else {
 									flag = true;
