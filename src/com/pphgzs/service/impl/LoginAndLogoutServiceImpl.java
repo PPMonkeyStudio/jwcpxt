@@ -4,6 +4,7 @@ import com.pphgzs.dao.LoginAndLogoutDao;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.service.LoginAndLogoutService;
+import com.pphgzs.util.MD5Util;
 
 public class LoginAndLogoutServiceImpl implements LoginAndLogoutService {
 	private LoginAndLogoutDao loginAndLogoutDao;
@@ -21,7 +22,7 @@ public class LoginAndLogoutServiceImpl implements LoginAndLogoutService {
 		jwcpxt_unit unit = loginAndLogoutDao.getunitByAccount(account);
 		if (unit == null) {
 			return null;
-		} else if (unit.getUnit_password().equals(password)) {
+		} else if (unit.getUnit_password().equals(MD5Util.GetMD5Code(password))) {
 			return unit;
 		} else {
 			return null;
@@ -34,7 +35,7 @@ public class LoginAndLogoutServiceImpl implements LoginAndLogoutService {
 
 		if (user == null) {
 			return null;
-		} else if (user.getUser_password().equals(password)) {
+		} else if (user.getUser_password().equals(MD5Util.GetMD5Code(password))) {
 			return user;
 		} else {
 			return null;
