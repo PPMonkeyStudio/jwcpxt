@@ -33,7 +33,7 @@ th {
 		<script src="<%=basePath%>js/icheck.js"></script>
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbar" namespace="/Skip" executeResult="true" />
+			<s:action name="skipNavbarIndex" namespace="/Skip" executeResult="true" />
 			<div class="content" id="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -41,7 +41,7 @@ th {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">问卷测评</h4>
+									<h4 class="title">警务测评</h4>
 								</div>
 								<div class="content table-responsive table-full-width" v-cloak>
 <!-- 									<div class="panel panel-def"> -->
@@ -111,7 +111,7 @@ th {
 									</div>
 <!-- 								</div> -->
 							</div>
-							<button type="button" @click="finishReturned" class="btn btn-primary">结束回访</button>
+							<button type="button" @click="finishReturned($event)" class="btn btn-primary">结束回访</button>
 						</div>
 					</div>
 				</div>

@@ -22,8 +22,12 @@ i {
 th {
 	text-align: center !important;
 }
+
+#bottomPage span {
+	cursor: pointer;
+}
 </style>
-<title>用户信息</title>
+<title>问卷管理</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -166,8 +170,7 @@ th {
 								<div class="modal-body">
 									<div class="form-group">
 										<label>问题描述</label>
-										<textarea class="form-control"
-											placeholder="请填写问题描述。。"
+										<textarea class="form-control" placeholder="请填写问题描述。。"
 											v-model="checkQuestionModalData.question.question_describe"></textarea>
 									</div>
 									<%-- <div class="form-group">
