@@ -41,7 +41,7 @@ th {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">问卷测评</h4>
+									<h4 class="title">警务测评</h4>
 								</div>
 								<div class="content table-responsive table-full-width" v-cloak>
 <!-- 									<div class="panel panel-def"> -->
