@@ -49,6 +49,7 @@ function updatePasswordUser(event) {
 							}
 							else{
 								toastr.error("两次密码输入不一致");
+								return false;
 							}
 						}
 					}
@@ -103,6 +104,7 @@ function updatePasswordUnit(event) {
 					}
 					else{
 						toastr.error("两次密码输入不一致");
+						return false;
 					}
 				}
 			}
