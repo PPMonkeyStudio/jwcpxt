@@ -209,4 +209,6 @@ public interface ServiceService {
 
 	public jwcpxt_service_client get_serviceClientDo_byId(jwcpxt_service_client serviceClient);
 
+	public void saveServiceInstance(jwcpxt_service_instance serviceInstance);
+
 }

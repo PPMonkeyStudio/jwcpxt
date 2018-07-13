@@ -25,4 +25,6 @@ public interface UnitService {
 
 	public List<jwcpxt_unit> list_unitDO_byFatherUnitID(String jwcpxt_unit_id);
 
+	public List<jwcpxt_unit> list_unitDO_byDistributionService();
+
 }

@@ -22,6 +22,23 @@ public class UnitDaoImpl implements UnitDao {
 	}
 
 	@Override
+	public List<jwcpxt_unit> list_unitDO_byDistributionService() {
+
+		Session session = getSession();
+		String hql = "select unit "//
+				+ " from "//
+				+ " jwcpxt_unit unit , "//
+				+ " jwcpxt_unit_service unitService "//
+				+ " where "//
+				+ " unit.jwcpxt_unit_id=unitService.jwcpxt_unit_service_id";
+		Query query = session.createQuery(hql);
+		List<jwcpxt_unit> list = query.list();
+		session.clear();
+
+		return list;
+	}
+
+	@Override
 	public List<jwcpxt_unit> list_unitDO_byOneAndTwo() {
 		List<jwcpxt_unit> unit_List = new ArrayList<jwcpxt_unit>();
 

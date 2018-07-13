@@ -85,7 +85,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	}
 
 	/**
-	 * 从session中拿到测评人员的信息
+	 * 从session中拿到当前被分配的第一条测评人员的信息
 	 * 
 	 * @throws IOException
 	 */

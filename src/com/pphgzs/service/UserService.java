@@ -17,4 +17,6 @@ public interface UserService {
 
 	boolean update_userPassword(jwcpxt_user user);
 
+	jwcpxt_user get_userDO_byRandomAndTypeCP();
+
 }
