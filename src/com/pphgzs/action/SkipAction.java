@@ -81,6 +81,14 @@ public class SkipAction {
 		return "skipPoliceAssessmentPageJsp";
 	}
 
+	public String skipPreviewPoliceAssessmentPage() {
+		return "skipPreviewPoliceAssessmentPage";
+	}
+
+	public String skipPreviewPoliceAssessmentPageJsp() {
+		return "skipPreviewPoliceAssessmentPageJsp";
+	}
+
 	public String getDefinitionId() {
 		return definitionId;
 	}

@@ -141,6 +141,10 @@ $(function() {
 					}
 				}, 'text');
 			},
+			preview () {
+				//&serviceClientId=${this.returnedParty.serviceClient.jwcpxt_service_client_id}
+				window.open(`/jwcpxt/Skip/skipPreviewPoliceAssessmentPage?definitionId=${myData.definitionId}`, '_blank');
+			},
 			deleteQuestion (index) {
 				//使用删除接口
 				deleteInterface('/jwcpxt/Question/delete_question', {

@@ -41,6 +41,12 @@
 			<result name="skipPoliceAssessmentPageJsp">
 				/WEB-INF/view/evaluationPolice/policeAssessmentPage.jsp
 			</result>
+			<result name="skipPreviewPoliceAssessmentPage" type="redirectAction">
+				skipPreviewPoliceAssessmentPageJsp?definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
+			</result>
+			<result name="skipPreviewPoliceAssessmentPageJsp">
+				/WEB-INF/view/evaluationPolice/previewPoliceAssessmentPage.jsp
+			</result>
 		</action>
 	</package>
 </struts>

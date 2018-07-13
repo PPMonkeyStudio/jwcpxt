@@ -37,9 +37,21 @@ $(function() {
 				let answer = {
 					"question.jwcpxt_question_id" : myData.questionData[index].question.jwcpxt_question_id, //所属问题id
 					"option.jwcpxt_option_id" : $event.target.attributes.optionid.value, //所属选项id
-				//"serviceClient.jwcpxt_service_client_id" : myData.serviceClientId, //当事人id
 				}
 				listAnswerDTO[index] = answer;
+
+				let allOption = myData.questionData[index].listOptionDTO;
+				allOption.forEach(function(item, i) {
+					//console.log($('input[type="radio"][optionID="' + allOption[i].option.jwcpxt_option_id + '"]'));
+					$('input[type="radio"][optionID="' + allOption[i].option.jwcpxt_option_id + '"]').parent().siblings('.inquiriesContent').html('');
+				})
+
+				/*for (let item in allOption) {
+					console.log(allOption[item.jwcpxt_option_id]);
+					console.log($('input[type="radio"][optionID="' + allOption[item.jwcpxt_option_id] + '"]'));
+					$('input[type="radio"][optionID="' + allOption[item.jwcpxt_option_id] + '"]').parent().siblings('.inquiriesContent').html();
+				}*/
+
 				if (myData.questionData[index].listOptionDTO[opyionIndex].listInquiriesOptionDTO.length > 0) {
 					//问题的index索引
 					//inquiriesOptionDTO 所选的选项的全部追问
@@ -108,6 +120,7 @@ $(function() {
 									$.post('/jwcpxt/Question/save_answer', params, response => {
 										if (response == "1") {
 											toastr.success("回访结束");
+
 										} else if (response == "-1") {
 											toastr.error("结束失败");
 										}
@@ -146,6 +159,7 @@ $(function() {
 	//answer 追问的答案
 	function answerInquiries(index, inquiriesOptionDTO, optionID) {
 		let answerData = [];
+		let inquiriesStr = '';
 		let answerInquiriesConfirmVue;
 		let answerInquiriesConfirm = $.confirm({
 			smoothContent : false, //关闭动画
@@ -168,7 +182,7 @@ $(function() {
 						<template v-for="(option,index1) in inquiriesOption.listInquiriesOption">
 							<div class="form-group">
 								<!-- 直接使用name当做索引和单选组会和问题的选项冲突，所以取消用name做索引 -->
-								<input type="radio" :name="inquiriesOption.inquiriesQuestion.jwcpxt_question_id" :index="index" :optionID="option.jwcpxt_option_id">
+								<input type="radio" :name="inquiriesOption.inquiriesQuestion.jwcpxt_question_id" :optionIndex="index1" :index="index" :optionID="option.jwcpxt_option_id">
 								<label class="control-label">{{option.option_describe}}</label>
 							</div>
 						</template>
@@ -198,6 +212,8 @@ $(function() {
 								"option.jwcpxt_option_id" : $event.target.attributes.optionid.value, //所属选项id
 							}
 							answerData[index] = answer;
+							let optionIndex = $event.target.attributes.optionIndex.value;
+							inquiriesStr += `<br/><small>${this.inquiriesOptionData[index].listInquiriesOption[optionIndex].option_describe}</small>`;
 						},
 						inputInquiriesTextarea (event, index) {
 							let answer = {
@@ -205,6 +221,7 @@ $(function() {
 								"answerOpen.answer_open_content" : $event.target.value //开放题回答的内容
 							}
 							answerData[index] = answer;
+							inquiriesStr += `<br/><small>${answer["answerOpen.answer_open_content"]}</small>`;
 						},
 					},
 					mounted () {
@@ -215,7 +232,6 @@ $(function() {
 								increaseArea : '20%' // optional
 							});
 							answerInquiriesConfirm.$content.find('input').on('ifChecked', function(event) {
-								console.log(event.target.attributes.index.value);
 								answerInquiriesConfirmVue.checkOption(event, event.target.attributes.index.value);
 							});
 						});
@@ -242,6 +258,7 @@ $(function() {
 						}
 						if (falg) {
 							listAnswerInquiriesDTO[index] = answerData;
+							$('input[type="radio"][optionID="' + optionID + '"]').parent().siblings('.inquiriesContent').html(inquiriesStr);
 							toastr.success('追问回访成功');
 						}
 						return falg;
