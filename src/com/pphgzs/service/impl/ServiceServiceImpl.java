@@ -89,7 +89,6 @@ public class ServiceServiceImpl implements ServiceService {
 		if (user == null) {
 			return null;
 		}
-		System.out.println("fd");
 		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
 		return clientInstanceDTO;
 	}

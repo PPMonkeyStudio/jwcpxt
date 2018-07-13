@@ -59,10 +59,13 @@ public class ServiceDaoImpl implements ServiceDao {
 		String hql = "select new com.pphgzs.domain.DTO.ClientInstanceDTO(serviceInstance,serviceClient,serviceDefinition) from jwcpxt_service_instance serviceInstance,jwcpxt_service_client serviceClient,"
 				+ "jwcpxt_service_definition serviceDefinition where serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance and "
 				+ " serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id and serviceClient.service_client_visit= '2' and "
-				+ " serviceInstance.service_instance_judge = :userId";
+				+ " serviceInstance.service_instance_judge = :userId "
+				+ " order by serviceInstance.service_instance_gmt_create asc ";
 		System.out.println("fd:" + hql);
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);
+		query.setMaxResults(1);
+		//
 		listClientInstanceDTO = query.list();
 		if (listClientInstanceDTO.size() <= 0) {
 			return null;
