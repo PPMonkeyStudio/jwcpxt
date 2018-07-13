@@ -80,7 +80,12 @@ th {
 													 <template v-for="(optionDTO,index1) in questionDTO.listOptionDTO">
 													 <div class="form-group">
 													 	 <input type="radio" :name="index" :optionIndex="index1" :optionID="optionDTO.option.jwcpxt_option_id">
-														 <label class="control-label">{{optionDTO.option.option_describe}}</label>
+														 <template v-if="optionDTO.option.option_push==1">
+														 	<label class="control-label"><span style="color:red;">{{optionDTO.option.option_describe}}</span></label>
+														 </template>
+														 <template v-if="optionDTO.option.option_push==2">
+														 	<label class="control-label">{{optionDTO.option.option_describe}}</label>
+														 </template><small style="color:red;" v-if="optionDTO.listInquiriesOptionDTO.length>0">(追问)</small>
 														 <div style="margin-left: 20px;" class="inquiriesContent"></div>
 													 </div>
 													 </template>
