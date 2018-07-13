@@ -84,6 +84,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean update_userPassword(jwcpxt_user newUser) {
+		jwcpxt_user oldUser = userDao.get_userDO_byUserID(newUser.getJwcpxt_user_id());
+		if (oldUser == null) {
+			return false;
+		}
+
+		if (newUser.getUser_password() == null) {
+			return false;
+		}
+		oldUser.setUser_password(MD5Util.GetMD5Code(newUser.getUser_password()));
+
+		userDao.update_user(oldUser);
+		return true;
+	}
+
+	@Override
 	public boolean ban_user_byUserID(String userID) {
 		jwcpxt_user user = userDao.get_userDO_byUserID(userID);
 

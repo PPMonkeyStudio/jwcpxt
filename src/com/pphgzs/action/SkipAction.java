@@ -60,6 +60,18 @@ public class SkipAction {
 		return "skipAbarbeitungProceed";
 	}
 
+	public String skipAbarbeitungCheck() {
+		return "skipAbarbeitungCheck";
+	}
+
+	public String skipNavbarIndex() {
+		return "skipNavbarIndex";
+	}
+
+	public String skipSystemIndex() {
+		return "skipSystemIndex";
+	}
+
 	/* hy */
 	public String skipQuestionnaireDetails() {
 		return "skipQuestionnaireDetails";

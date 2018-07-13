@@ -98,7 +98,7 @@ public class UnitServiceImpl implements UnitService {
 		if (newUnit.getUnit_password() == null) {
 			return false;
 		}
-		oldUnit.setUnit_password(newUnit.getUnit_password());
+		oldUnit.setUnit_password(MD5Util.GetMD5Code(newUnit.getUnit_password()));
 
 		unitDao.update_unit(oldUnit);
 		return true;
@@ -108,14 +108,8 @@ public class UnitServiceImpl implements UnitService {
 	public boolean update_unit(jwcpxt_unit newUnit) {
 		jwcpxt_unit oldUnit = unitDao.get_unitDO_byID(newUnit.getJwcpxt_unit_id());
 
-		if (unitDao.get_unit_byNameOrAccount(newUnit.getUnit_name(), newUnit.getUnit_account()) == null) {
-			// 修改名称
-			oldUnit.setUnit_name(newUnit.getUnit_name());
-			// 账号
-			oldUnit.setUnit_account(newUnit.getUnit_account());
-		} else {
-			return false;
-		}
+		// 修改名称
+		oldUnit.setUnit_name(newUnit.getUnit_name());
 
 		// 手机号码
 		oldUnit.setUnit_phone(newUnit.getUnit_phone());

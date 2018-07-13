@@ -35,7 +35,7 @@ th {
 			<div class="" id="content"
 				style="width: calc( 100% - 800px )   ;margin: 50px 400px 50px 400px ">
 				<!-- 主内容 -->  
-				<div class="card" style="padding: 20px">
+				<div class="card" style="padding: 20px;">
 					<div class="" style="">
 						<form class="" v-cloak>
 							<div style="">
@@ -63,7 +63,6 @@ th {
 				</div>
 			</div>
 			<!-- 引入底部 -->
-			<s:action name="skipFooter" namespace="/Skip" executeResult="true" />
 		</div>
 	</div>
 </body>

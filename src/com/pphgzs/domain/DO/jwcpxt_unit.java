@@ -6,7 +6,7 @@ public class jwcpxt_unit {
 	private String unit_contacts_name;
 	private String unit_father = "none";
 	private String unit_num = "none";// 机构代码，只有三级机构需要
-	private int unit_grade;// 等级，方便查询
+	private int unit_grade = 1;// 等级，方便查询
 	private String unit_account;
 	private String unit_password;
 	private String unit_phone;

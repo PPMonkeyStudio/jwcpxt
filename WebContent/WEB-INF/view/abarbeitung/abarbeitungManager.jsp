@@ -44,63 +44,91 @@ a:hover {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
-										<label>整改时间</label> <input onchange="changeQuery()"
-											id="searchTimeStart" class="mydate form-control"
-											style="display: inline; width: 150px;"><label>&nbsp;至&nbsp;</label><input
+										<label style="color: black;">整改时间</label> <input
+											onchange="changeQuery()" id="searchTimeStart"
+											class="mydate form-control"
+											style="display: inline; width: 150px;"><label
+											style="color: black;">&nbsp;至&nbsp;</label><input
 											onchange="changeQuery()" id="searchTimeEnd"
 											class="mydate form-control"
-											style="display: inline; width: 150px;">
-									</div>
-									<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
-										<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+											style="display: inline; width: 150px;"> <input
+											id="searchTitle" style="display: inline; width: 250px;"
+											oninput="changeQuery()" class="form-control"
+											placeholder="请输入搜索内容">
+
 									</div>
 									<div id="showContent">
-										<table id="serviceTable" class="table table-striped"
-											style="text-align: center; display: none;">
+										<table class="table table-striped" style="text-align: center;">
 											<thead>
 												<tr>
-													<td><select onchange="changeQuery()"
-														class="form-control" id="searchUnit">
-															<option value="">整改单位</option>
+													<td>编号</td>
+													<td>问题标题</td>
+													<td><select id="searchHandleState"
+														onchange="changeQuery()" class="form-control">
+															<option value="-1">办理情况</option>
+															<option value="1">未办</option>
+															<option value="2">办结</option>
 													</select></td>
-													<td>整改员</td>
-													<td>审核状态</td>
-													<td>整改时间</td>
-													<td>整改详情</td>
+													<td>当事人</td>
+													<td><select id="searchAuditState"
+														onchange="changeQuery()" class="form-control">
+															<option value="-1">审核状态</option>
+															<option value="1">未审核</option>
+															<option value="2">主管部门审核通过</option>
+															<option value="3">主管部门审核驳回</option>
+															<option value="4">测评中心审核通过</option>
+															<option value="5">测评中心审核驳回</option>
+													</select></td>
+													<td>操作</td>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody id="rectificationTable">
 												<template
-													v-for="rectificationFeedback in abarbeitungVO.listRectificationFeedback">
+													v-for=" feedbackRectification in rectificationVO.listFeedbackRectification ">
 												<tr>
-													<td>{{ rectificationFeedback.unit.unit_name }}</td>
-													<td>{{ rectificationFeedback.user.user_name }}</td>
-													<template
-														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 0">
-													<td><span class="label label-primary">未审核</span></td>
-													</template>
-													<template
-														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 1">
-													<td><span class="label label-success">审核已通过</span></td>
-													</template>
-													<template
-														v-if="rectificationFeedback.feedbackRectification.feedback_rectification_state == 2">
-													<td><span class="label label-danger">审核未通过</span></td>
-													</template>
-													<td>{{
-														rectificationFeedback.feedbackRectification.feedback_rectification_gmt_create
+													<td>{{ feedbackRectification.feedback_rectification_no
 														}}</td>
-													<td><a
-														:id="rectificationFeedback.feedbackRectification.jwcpxt_feedback_rectification_id"
-														onclick="viewRectification(this)"><i class="ti-eye"></i></a></td>
+													<td>{{
+														feedbackRectification.feedback_rectification_title }}</td>
+													<td><template
+															v-if="feedbackRectification.feedback_rectification_handle_state == 1">
+														<span class="label label-primary">未办</span> </template> <template
+															v-else> <span class="label label-success">办结</span>
+														</template></td>
+													<td>{{
+														feedbackRectification.feedback_rectification_client_name
+														}}</td>
+													<td><template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 1">
+														未审核 </template> <template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 2">
+														主管部门审核通过 </template> <template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 3">
+														主管部门审核驳回 </template> <template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 4">
+														测评中心审核通过 </template> <template
+															v-if="feedbackRectification.feedback_rectification_audit_state == 5">
+														测评中心审核驳回 </template></td>
+													<td><template
+															v-if="feedbackRectification.feedback_rectification_handle_state == 1">
+														<a
+															:id="feedbackRectification.jwcpxt_feedback_rectification_id"
+															onclick="handleEnd(this)">整改|</a> </template> <a
+														:id="feedbackRectification.jwcpxt_feedback_rectification_id"
+														onclick="preview(this)">流转单 </a></td>
 												</tr>
 												</template>
 											</tbody>
 										</table>
+										<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
+											<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+										</div>
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;">
-											<span>当前页数:<span id="currPage"></span>1
-											</span> <span>共:<span id="totalPage">1</span>页
+											<span>当前页数:<span id="currPage"></span>{{
+												rectificationVO.currPage }}
+											</span> <span>共:<span id="totalPage">{{
+													rectificationVO.totalPage }}</span>页
 											</span> <span onclick="skipToIndexPage()" id="indexPage"
 												class="pageOperation">首页</span> <span
 												onclick="skipToPrimaryPage()" id="previousPage"
@@ -155,7 +183,7 @@ a:hover {
 	});
 </script>
 <script type="text/javascript"
-	src="<%=basePath%>js/abarbeitung/showAbarbeitungManager.js"></script>
+	src="<%=basePath%>js/rectification/showRectification.js"></script>
 <script type="text/javascript"
-	src="<%=basePath%>js/abarbeitung/managerAbarbeitungManager.js"></script>
+	src="<%=basePath%>js/rectification/managerRectification.js"></script>
 </html>
