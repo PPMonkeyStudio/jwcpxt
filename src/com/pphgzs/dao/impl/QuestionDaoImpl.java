@@ -56,13 +56,13 @@ public class QuestionDaoImpl implements QuestionDao {
 		String hql = "from jwcpxt_question" + " where question_service_definition like :definitionId and"
 				+ " question_type like :screenType and question_describe like :screenSearch order by question_sort";
 		Query query = session.createQuery(hql);
-		query.setParameter("definitionId", "%"
-				+ questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id() + "%");
+		query.setParameter("definitionId",
+				questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id());
 		// 类型筛选
 		if (questionVO.getScreenType().equals("")) {
 			query.setParameter("screenType", "%%");
 		} else {
-			query.setParameter("screenType", "%" + questionVO.getScreenType() + "%");
+			query.setParameter("screenType", questionVO.getScreenType());
 		}
 		// 搜索筛选
 		if (questionVO.getScreenSearch().equals("")) {
@@ -89,13 +89,13 @@ public class QuestionDaoImpl implements QuestionDao {
 				+ " where question_service_definition like :jwcpxt_service_definition_id and"
 				+ " question_type like :screenType and question_describe like :screenSearch";
 		Query query = session.createQuery(hql);
-		query.setParameter("jwcpxt_service_definition_id", "%"
-				+ questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id() + "%");
+		query.setParameter("jwcpxt_service_definition_id",
+				questionVO.getServiceDefinitionDTO().getServiceDefinition().getJwcpxt_service_definition_id());
 		// 类型筛选
 		if (questionVO.getScreenType().equals("")) {
 			query.setParameter("screenType", "%%");
 		} else {
-			query.setParameter("screenType", "%" + questionVO.getScreenType() + "%");
+			query.setParameter("screenType", questionVO.getScreenType());
 		}
 		// 搜索筛选
 		if (questionVO.getScreenSearch().equals("")) {
