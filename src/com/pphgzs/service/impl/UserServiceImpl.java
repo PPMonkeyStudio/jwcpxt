@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public jwcpxt_user get_userDO_byRandomAndTypeCP() {
+		return userDao.get_userDO_byRandomAndTypeCP();
+	}
+
+	@Override
 	public UserVO get_userVO() {
 		UserVO userVO = new UserVO();
 		List<jwcpxt_user> userList = userDao.list_user_all();

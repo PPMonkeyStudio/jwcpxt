@@ -8,7 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
-import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.ServiceService;
@@ -86,10 +85,7 @@ public class MyTest {
 	@Test
 	public void tttdf() {
 
-		jwcpxt_unit unit = new jwcpxt_unit();
-		unit.setJwcpxt_unit_id("adsafsdf");
-		unit.setUnit_phone("asdasdsad");
-		System.out.println(unitService.update_unit(unit));
+		System.out.println(userService.get_userDO_byRandomAndTypeCP());
 	}
 
 }

@@ -299,6 +299,11 @@ public class ServiceServiceImpl implements ServiceService {
 		return serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(serviceDefinitionID);
 	}
 
+	@Override
+	public void saveServiceInstance(jwcpxt_service_instance serviceInstance) {
+		serviceDao.saveOrUpdateObject(serviceInstance);
+	}
+
 	/**
 	 * 创建业务抓取表
 	 */
