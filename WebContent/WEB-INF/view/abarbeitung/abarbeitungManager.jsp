@@ -109,10 +109,11 @@ a:hover {
 														测评中心审核通过 </template> <template
 															v-if="feedbackRectification.feedback_rectification_audit_state == 5">
 														测评中心审核驳回 </template></td>
-													<td><a
-														:id="feedbackRectification.jwcpxt_feedback_rectification_id"
-														onclick="handleEnd(this)">整改|</a>
+													<td><template
+															v-if="feedbackRectification.feedback_rectification_handle_state == 1">
 														<a
+															:id="feedbackRectification.jwcpxt_feedback_rectification_id"
+															onclick="handleEnd(this)">整改|</a> </template> <a
 														:id="feedbackRectification.jwcpxt_feedback_rectification_id"
 														onclick="preview(this)">流转单 </a></td>
 												</tr>

@@ -77,25 +77,25 @@ function addInterface(event) {
 				boxWidth : '900px',
 				useBootstrap : false,
 				content : '<form id="addInterface"><table style="margin:0 auto;" class="table table-bordered">'
-						+ '<tr><td>服务编号</td><td><input type="text" name="serviceGrab.service_grab_service_num" class="form-control"></td>'
-						+ '<td>接口唯一标识</td><td><input type="text" name="serviceGrab.service_grab_interface_identifying" class="form-control"></td>'
-						+ '<td>使用机器ip</td><td><input type="text" name="serviceGrab.service_grab_machine_ip" class="form-control"></td></tr>'
+						+ '<tr><td><span style="color:red;">*</span>服务编号</td><td><input type="text" name="serviceGrab.service_grab_service_num" class="form-control mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>接口唯一标识</td><td><input type="text" name="serviceGrab.service_grab_interface_identifying" class="form-control mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>使用机器ip</td><td><input type="text" name="serviceGrab.service_grab_machine_ip" class="form-control mustWrite"></td></tr>'
 
-						+ '<tr><td>资源用户名</td><td><input type="text" name="serviceGrab.service_grab_source_username" class="form-control"></td>'
-						+ '<td>资源密码</td><td><input type="text" name="serviceGrab.service_grab_source_password" class="form-control"></td>'
-						+ '<td>业务项目名</td><td><input type="text" name="serviceGrab.service_grab_project_name" class="form-control"></td></tr>'
+						+ '<tr><td><span style="color:red;">*</span>资源用户名</td><td><input type="text" name="serviceGrab.service_grab_source_username" class="form-control mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>资源密码</td><td><input type="text" name="serviceGrab.service_grab_source_password" class="form-control mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>业务项目名</td><td><input type="text" name="serviceGrab.service_grab_project_name" class="form-control mustWrite"></td></tr>'
 
 						+ '<tr><td>是否单表</td>'
 						+ '<td><select class="form-control" name="serviceGrab.service_grab_single_table"><option value="1">是</option><option value="2">否</option></select></td>'
-						+ '<td>接口名一</td><td><input type="text" name="serviceGrab.service_grab_interface_one" class="form-control"></td>'
+						+ '<td><span style="color:red;">*</span>接口名一</td><td><input type="text" name="serviceGrab.service_grab_interface_one" class="form-control mustWrite"></td>'
 						+ '<td>接口名二</td><td><input type="text" name="serviceGrab.service_grab_interface_two" class="form-control"></td></tr>'
 
-						+ '<tr><td>业务唯一识别编号</td><td><input type="text" name="serviceGrab.service_grab_field_name" class="form-control"></td>'
-						+ '<td>当事人姓名</td><td><input type="text" name="serviceGrab.service_grab_name_field" class="form-control"></td>'
-						+ '<td>当事人性别</td><td><input type="text" name="serviceGrab.service_grab_sex_field" class="form-control"></td></tr>'
+						+ '<tr><td><span style="color:red;">*</span>业务唯一识别编号</td><td><input type="text" name="serviceGrab.service_grab_field_name" class="form-control mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>当事人姓名</td><td><input type="text" name="serviceGrab.service_grab_name_field" class="form-control mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>当事人性别</td><td><input type="text" name="serviceGrab.service_grab_sex_field" class="form-control mustWrite"></td></tr>'
 
-						+ '<tr><td>当事人电话</td><td><input type="text" name="serviceGrab.service_grab_phone_field" class="form-control"></td>'
-						+ '<td>业务办理时间</td><td><input type="text" name="serviceGrab.service_grab_handle_time_gield" class="form-control"></td>'
+						+ '<tr><td><span style="color:red;">*</span>当事人电话</td><td><input type="text" name="serviceGrab.service_grab_phone_field" class="form-control mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>业务办理时间</td><td><input type="text" name="serviceGrab.service_grab_handle_time_gield" class="form-control mustWrite"></td>'
 						+ '<td>连接1</td><td><input type="text" name="serviceGrab.service_grab_connect_one_field" class="form-control"></td></tr>'
 
 						+ '<td>连接2</td><td><input type="text" name="serviceGrab.service_grab_connect_two_field" class="form-control"></td></tr>'
@@ -112,28 +112,43 @@ function addInterface(event) {
 						text : '保存',
 						btnClass : 'btn-blue',
 						action : function() {
-							var formData = new FormData(document
-									.getElementById("addInterface"));
-							formData
-									.append(
-											'serviceGrab.service_grab_service_definition',
-											event.id);
-							$.ajax({
-								url : '/jwcpxt/Service/save_serviceGrab',
-								type : 'POST',
-								data : formData,
-								processData : false,
-								contentType : false,
-								success : function(data) {
-									if (data == 1) {
-										toastr.success("保存成功");
-										loadDataInterface(event.id);
-									} else {
-										toastr.error("保存失败");
-									}
-								}
-							})
 
+							var flag;
+							var mustWrite = document
+									.getElementsByClassName("mustWrite");
+							for (var i = 0; i < mustWrite.length; i++) {
+								if (mustWrite[i].value == "") {
+									flag = false;
+								} else {
+									flag = true;
+								}
+							}
+							if (flag) {
+								var formData = new FormData(document
+										.getElementById("addInterface"));
+								formData
+										.append(
+												'serviceGrab.service_grab_service_definition',
+												event.id);
+								$.ajax({
+									url : '/jwcpxt/Service/save_serviceGrab',
+									type : 'POST',
+									data : formData,
+									processData : false,
+									contentType : false,
+									success : function(data) {
+										if (data == 1) {
+											toastr.success("保存成功");
+											loadDataInterface(event.id);
+										} else {
+											toastr.error("保存失败");
+										}
+									}
+								})
+							} else {
+								toastr.error("不能有空项");
+								return false;
+							}
 						}
 					}
 				}
@@ -148,25 +163,25 @@ function updateInterface(event) {
 				boxWidth : '900px',
 				useBootstrap : false,
 				content : '<form id="updateInterface"><table style="margin:0 auto;" class="table table-bordered">'
-						+ '<tr><td>服务编号</td><td><input type="text" name="serviceGrab.service_grab_service_num" class="form-control updateIn"></td>'
-						+ '<td>接口唯一标识</td><td><input type="text" name="serviceGrab.service_grab_interface_identifying" class="form-control updateIn"></td>'
-						+ '<td>使用机器ip</td><td><input type="text" name="serviceGrab.service_grab_machine_ip" class="form-control updateIn"></td></tr>'
+						+ '<tr><td><span style="color:red;">*</span>服务编号</td><td><input type="text" name="serviceGrab.service_grab_service_num" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>接口唯一标识</td><td><input type="text" name="serviceGrab.service_grab_interface_identifying" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>使用机器ip</td><td><input type="text" name="serviceGrab.service_grab_machine_ip" class="form-control updateIn mustWrite"></td></tr>'
 
-						+ '<tr><td>资源用户名</td><td><input type="text" name="serviceGrab.service_grab_source_username" class="form-control updateIn"></td>'
-						+ '<td>资源密码</td><td><input type="text" name="serviceGrab.service_grab_source_password" class="form-control updateIn"></td>'
-						+ '<td>业务项目名</td><td><input type="text" name="serviceGrab.service_grab_project_name" class="form-control updateIn"></td></tr>'
+						+ '<tr><td><span style="color:red;">*</span>资源用户名</td><td><input type="text" name="serviceGrab.service_grab_source_username" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>资源密码</td><td><input type="text" name="serviceGrab.service_grab_source_password" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>业务项目名</td><td><input type="text" name="serviceGrab.service_grab_project_name" class="form-control updateIn mustWrite"></td></tr>'
 
 						+ '<tr><td>是否单表</td>'
 						+ '<td><select class="form-control updateIn" name="serviceGrab.service_grab_single_table"><option value="1">是</option><option value="2">否</option></select></td>'
-						+ '<td>接口名一</td><td><input type="text" name="serviceGrab.service_grab_interface_one" class="form-control updateIn"></td>'
-						+ '<td>接口名二</td><td><input type="text" name="serviceGrab.service_grab_interface_two" class="form-control updateIn"></td></tr>'
+						+ '<td><span style="color:red;">*</span>表名一</td><td><input type="text" name="serviceGrab.service_grab_interface_one" class="form-control updateIn mustWrite"></td>'
+						+ '<td>表名二</td><td><input type="text" name="serviceGrab.service_grab_interface_two" class="form-control updateIn"></td></tr>'
 
-						+ '<tr><td>业务唯一识别编号</td><td><input type="text" name="serviceGrab.service_grab_field_name" class="form-control updateIn"></td>'
-						+ '<td>当事人姓名</td><td><input type="text" name="serviceGrab.service_grab_name_field" class="form-control updateIn"></td>'
-						+ '<td>当事人性别</td><td><input type="text" name="serviceGrab.service_grab_sex_field" class="form-control updateIn"></td></tr>'
+						+ '<tr><td><span style="color:red;">*</span>业务唯一识别编号</td><td><input type="text" name="serviceGrab.service_grab_field_name" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>当事人姓名</td><td><input type="text" name="serviceGrab.service_grab_name_field" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>当事人性别</td><td><input type="text" name="serviceGrab.service_grab_sex_field" class="form-control updateIn mustWrite"></td></tr>'
 
-						+ '<tr><td>当事人电话</td><td><input type="text" name="serviceGrab.service_grab_phone_field" class="form-control updateIn"></td>'
-						+ '<td>业务办理时间</td><td><input type="text" name="serviceGrab.service_grab_handle_time_gield" class="form-control updateIn"></td>'
+						+ '<tr><td><span style="color:red;">*</span>当事人电话</td><td><input type="text" name="serviceGrab.service_grab_phone_field" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>业务办理时间</td><td><input type="text" name="serviceGrab.service_grab_handle_time_gield" class="form-control updateIn mustWrite"></td>'
 						+ '<td>连接1</td><td><input type="text" name="serviceGrab.service_grab_connect_one_field" class="form-control updateIn"></td></tr>'
 
 						+ '<td>连接2</td><td><input type="text" name="serviceGrab.service_grab_connect_two_field" class="form-control updateIn"></td></tr>'
@@ -183,27 +198,44 @@ function updateInterface(event) {
 						text : '修改',
 						btnClass : 'btn-blue',
 						action : function() {
-							var formData = new FormData(document
-									.getElementById("updateInterface"));
-							formData
-									.append(
-											'serviceGrab.jwcpxt_service_grab_id',
-											event.id);
-							$.ajax({
-								url : '/jwcpxt/Service/update_serviceGrab_byServiceGrabId',
-								type : 'POST',
-								data : formData,
-								processData : false,
-								contentType : false,
-								success : function(data) {
-									if (data == 1) {
-										toastr.success("保存成功");
-										loadDataInterface(definitionId);
-									} else {
-										toastr.error("保存失败");
-									}
+
+							var flag;
+							var mustWrite = document
+									.getElementsByClassName("mustWrite");
+							for (var i = 0; i < mustWrite.length; i++) {
+								if (mustWrite[i].value == "") {
+									flag = false;
+								} else {
+									flag = true;
 								}
-							})
+							}
+							if (flag) {
+
+								var formData = new FormData(document
+										.getElementById("updateInterface"));
+								formData.append(
+										'serviceGrab.jwcpxt_service_grab_id',
+										event.id);
+								$
+										.ajax({
+											url : '/jwcpxt/Service/update_serviceGrab_byServiceGrabId',
+											type : 'POST',
+											data : formData,
+											processData : false,
+											contentType : false,
+											success : function(data) {
+												if (data == 1) {
+													toastr.success("修改成功");
+													loadDataInterface(definitionId);
+												} else {
+													toastr.error("修改失败");
+												}
+											}
+										})
+							} else {
+								toastr.error("不能有空项");
+								return false;
+							}
 
 						}
 					}
