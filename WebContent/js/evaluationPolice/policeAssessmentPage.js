@@ -122,7 +122,7 @@ $(function() {
 											$($event.target).attr("disabled", "disabled");
 											toastr.success("回访结束,3秒后跳转..");
 											setTimeout(function() {
-												window.location.href = "/Skip/skipReturnedPartyInformation";
+												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
 											}, 3000);
 										} else if (response == "-1") {
 											toastr.error("结束失败");
