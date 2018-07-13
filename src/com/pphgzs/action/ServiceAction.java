@@ -119,6 +119,20 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	}
 
 	/**
+	 * 获取所有的业务
+	 * 
+	 * @throws IOException
+	 */
+	public void list_serviceDefinition_all() throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceService.list_serviceDefinitionDO_all()));
+	}
+
+	/**
 	 * @throws IOException
 	 *             根据业务定义Id获取所有业务抓取
 	 */
