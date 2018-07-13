@@ -83,6 +83,7 @@ public class QuestionServiceImpl implements QuestionService {
 	/**
 	 * 保存问题
 	 */
+	@Override
 	public boolean save_question(jwcpxt_question question) {
 		question.setJwcpxt_question_id(uuidUtil.getUuid());
 		question.setQuestion_gmt_create(TimeUtil.getStringSecond());
@@ -263,26 +264,28 @@ public class QuestionServiceImpl implements QuestionService {
 	 * 获取选项列表
 	 */
 	/*
-	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
-	 * // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO> listOptionDTO =
-	 * new ArrayList<>(); List<jwcpxt_option> listOption = new ArrayList<>();
-	 * List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>(); //
-	 * 1.获取问题对象 if (question != null && question.getJwcpxt_question_id() != null &&
-	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象 question =
-	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim()
-	 * ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
+	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question)
+	 * { // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO>
+	 * listOptionDTO = new ArrayList<>(); List<jwcpxt_option> listOption = new
+	 * ArrayList<>(); List<jwcpxt_option_inquiries> listOptionInquireies = new
+	 * ArrayList<>(); // 1.获取问题对象 if (question != null &&
+	 * question.getJwcpxt_question_id() != null &&
+	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象
+	 * question =
+	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().
+	 * trim() ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
 	 * ("1".equals(question.getQuestion_type())) { // 获取选项列表 listOption =
-	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim());
-	 * // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO = new
-	 * OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表 if
-	 * (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null &&
-	 * jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
+	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim
+	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO =
+	 * new OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表
+	 * if (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null
+	 * && jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
 	 * listOptionInquireies = questionDao
-	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim());
-	 * } optionDTO.setOption(jwcpxt_option);
+	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim
+	 * ()); } optionDTO.setOption(jwcpxt_option);
 	 * optionDTO.setInquiriesList(listOptionInquireies);
-	 * listOptionDTO.add(optionDTO); } } else { return null; } return listOptionDTO;
-	 * }
+	 * listOptionDTO.add(optionDTO); } } else { return null; } return
+	 * listOptionDTO; }
 	 */
 	/**
 	 * 保存选项
@@ -659,9 +662,11 @@ public class QuestionServiceImpl implements QuestionService {
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_create(TimeUtil.getStringSecond());
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_modified(
 							dissatisfiedFeedback.getDissatisfied_feedback_gmt_create());
-					questionDao.saveOrUpdateObject(answerChoice);
+					questionDao.saveOrUpdateObject(dissatisfiedFeedback);
 				}
-				// 此时应该还需要生成通知表，但是通知还没有确定，所有暂时还没有写 7.8 9:23 AM
+				/*
+				 * 此时应该还需要生成通知表，但是通知还没有确定，所有暂时还没有写 7.8 9:23 AM
+				 */
 			} else if ("2".equals(question.getQuestion_type().trim())
 					|| "3".equals(question.getQuestion_type().trim())) {
 				// 如果是开放题
