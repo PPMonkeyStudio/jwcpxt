@@ -102,11 +102,12 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			newFeedbackRectification.setFeedback_rectification_content("");
 			newFeedbackRectification.setFeedback_rectification_sjzgbm_opinion("");
 			newFeedbackRectification.setFeedback_rectification_cpzx_opinion("");
-			newFeedbackRectification.setFeedback_rectification_handle_state("1");
+			newFeedbackRectification.setFeedback_rectification_audit_state("1");
 			newFeedbackRectification.setFeedback_rectification_gmt_create(TimeUtil.getStringSecond());
 			newFeedbackRectification.setFeedback_rectification_gmt_modified(
 					newFeedbackRectification.getFeedback_rectification_gmt_create());
 			dissatisfiedFeedbackDao.saveOrUpdateObject(newFeedbackRectification);
+			return true;
 		}
 		return false;
 	}

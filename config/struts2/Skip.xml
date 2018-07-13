@@ -26,6 +26,7 @@
 			<result name="navbarAbarbeitung">/WEB-INF/view/navbarAbarbeitung.jsp</result>
 			<result name="navbarAppraisal">/WEB-INF/view/navbarAppraisal.jsp</result>
 			<result name="skipAbarbeitungProceed">/WEB-INF/view/abarbeitung/abarbeitungProceed.jsp</result>
+			<result name="skipAbarbeitungCheck">/WEB-INF/view/abarbeitung/abarbeitungCheck.jsp</result>
 			<result name="skipQuestionnaireDetails" type="redirectAction">
 				skipQuestionnaireDetailsJsp?definitionId=${definitionId}
 			</result>
