@@ -49,8 +49,16 @@
 						</p> <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">账户信息</a></li>
-						<li><a href="#">修改密码</a></li>
+						<s:if test="#session.loginType == 'user'">
+							<li><a
+								id='<s:property value="#session.user.jwcpxt_user_id" />'
+								href="#" onclick="updatePasswordUser(this)">修改密码</a></li>
+						</s:if>
+						<s:if test="#session.loginType == 'unit'">
+							<li><a
+								id='<s:property value="#session.unit.jwcpxt_unit_id" />'
+								href="#" onclick="updatePasswordUnit(this)">修改密码</a></li>
+						</s:if>
 						<li><a href="#" onclick="logout()">退出</a></li>
 					</ul></li>
 			</ul>
