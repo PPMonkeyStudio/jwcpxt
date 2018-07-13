@@ -120,4 +120,5 @@ td .label {
 }
 </style>
 <script type="text/javascript" src="<%=basePath %>js/user/login.js"></script>
+<script type="text/javascript" src="<%=basePath %>js/user/updatePassword.js"></script>
 </html>
