@@ -11,11 +11,13 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.QuestionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
@@ -66,7 +68,8 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	 */
 	public void save_answer() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
-		if (questionService.save_answer(listAnswerDTO, serviceClient)) {
+		jwcpxt_user pcry = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
+		if (questionService.save_answer(listAnswerDTO, serviceClient, pcry)) {
 			http_response.getWriter().write("1");
 		} else {
 			http_response.getWriter().write("-1");
@@ -340,8 +343,8 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	/*
 	 * public int getMoveOptionAction() { return moveOptionAction; }
 	 * 
-	 * public void setMoveOptionAction(int moveOptionAction) { this.moveOptionAction
-	 * = moveOptionAction; }
+	 * public void setMoveOptionAction(int moveOptionAction) {
+	 * this.moveOptionAction = moveOptionAction; }
 	 * 
 	 * public int getMoveQuestionAction() { return moveQuestionAction; }
 	 * 

@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_grab_journal;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
@@ -474,6 +475,39 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode) {
+		Session session = getSession();
+
+		String hql = "from "//
+				+ " jwcpxt_grab_instance grabInstance , "//
+				//
+				+ " where "//
+				+ " grabInstance.grab_instance_distribution='2' "//
+				//
+				+ " grabInstance.grab_instance_organization_code=:organizationCode "//
+				+ " grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
+		//
+
+		;
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("organizationCode", organizationCode);
+		//
+		query.setMaxResults(1);
+		//
+		List<jwcpxt_grab_instance> list = query.list();
+		session.clear();
+		if (list.size() > 0) {
+			return list.get(0);
+		} else {
+			return null;
+		}
+
+	}
+
+	@Override
 	public jwcpxt_grab_journal get_grabJournal_byServiceDefinitionIDAndDate(String serviceDefinitionID, String date) {
 		Session session = getSession();
 
@@ -547,6 +581,14 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance) {
+		Session session = getSession();
+		session.update(grabInstance);
+		session.flush();
+		return true;
+	}
+
+	@Override
 	public boolean update_serviceInstance(jwcpxt_service_instance serviceInstance) {
 		Session session = getSession();
 		session.update(serviceInstance);
@@ -594,6 +636,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		session.flush();
 		return true;
 	}
+
 	/*
 	 * 
 	 */

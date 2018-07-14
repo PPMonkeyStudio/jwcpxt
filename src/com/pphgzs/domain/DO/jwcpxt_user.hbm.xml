@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-7-11 10:33:57 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-7-14 15:41:13 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_user" table="JWCPXT_USER">
         <id name="jwcpxt_user_id" type="java.lang.String">
