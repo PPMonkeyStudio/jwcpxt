@@ -26,6 +26,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		List<UnitHaveServiceGradeDTO> unitHaveServiceGradeDTOList = new ArrayList<UnitHaveServiceGradeDTO>();
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO;
 		for (int i = 0; i < unitIds.length; i++) {
+			int totalGrade = 0;
 			// 创建一个单位
 			unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
 			jwcpxt_unit unit = unitDao.get_unitDO_byID(unitIds[i]);
@@ -35,6 +36,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 			// 遍历需要统计的业务，查询这项业务分数
 			for (ServiceGradeDTO serviceGradeDTO : serviceGradeDTOList) {
 				int statisticsGrade;
+
 				// 创建一个业务分数DTO
 				ServiceGradeBelongUnitDTO serviceGradeBelongUnitDTO = new ServiceGradeBelongUnitDTO();
 				// 将业务DO放入到DTO中
@@ -49,7 +51,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 					statisticsGrade = statisticsDao.geteStatisticsGrade(serviceGradeDTO, unitIds[i], searchTimeStart,
 							searchTimeEnd);
 				}
-
+				totalGrade = totalGrade + statisticsGrade;
 				// 将所得分放入到DTO中
 				serviceGradeBelongUnitDTO.setGrade(statisticsGrade);
 				// 将一个业务及他的分数的DTO放入到DTO列表中
@@ -57,6 +59,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 			}
 			// 把所有业务的分数放入到单位中
 			unitHaveServiceGradeDTO.setServiceGradeBelongUnitDTOList(serviceGradeBelongUnitDTOList);
+			unitHaveServiceGradeDTO.setTotalGrade(totalGrade);
 			// 这个单位DTO放入到单位列表中
 			unitHaveServiceGradeDTOList.add(unitHaveServiceGradeDTO);
 		}
