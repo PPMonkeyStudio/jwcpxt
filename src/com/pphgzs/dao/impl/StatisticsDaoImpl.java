@@ -27,17 +27,17 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			String searchTimeEnd) {
 		Session session = getSession();
 		String hql = " select "//
-				+ " ((((count(distinct serviceClient)*100)  -  sum(option.option_grade))  /  count(distinct serviceClient)) / 100) * :grade "//
+				+ " ((((count(distinct serviceClient)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient)) / 100) * :grade "//
 				+ " from "//
 				+ " jwcpxt_service_instance serviceInstance , "//
 				+ " and jwcpxt_service_client serviceClient , "//
-				+ " and jwcpxt_answer_choice answerChoice"//
-				+ " and jwcpxt_option option"//
+				+ " and jwcpxt_answer_choice answerChoice , "//
+				+ " and jwcpxt_option _option "//
 				//
 				+ " where "
-				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id"//
+				+ " serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id"//
 				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id"//
-				+ " and answerChoice.answer_choice_option=option.jwcpxt_option_id"//
+				+ " and answerChoice.answer_choice_option=_option.jwcpxt_option_id"//
 				//
 				+ " and serviceInstance.service_instance_belong_unit = :unitId "//
 				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
