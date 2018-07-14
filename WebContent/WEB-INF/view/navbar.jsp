@@ -40,14 +40,14 @@
 						<i class="ti-panel"></i>
 						<p>Stats</p>
 				</a></li> -->
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
+				<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="ti-bell"></i>
 						<p class="notification">1</p>
 						<p>通知</p> <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="#">张斌天天写bug</a></li>
-					</ul></li>
+					</ul></li> -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="ti-user"></i>
 						<p>
@@ -60,8 +60,16 @@
 						</p> <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">账户信息</a></li>
-						<li><a href="#">修改密码</a></li>
+						<s:if test="#session.loginType == 'user'">
+							<li><a
+								id='<s:property value="#session.user.jwcpxt_user_id" />'
+								href="#" onclick="updatePasswordUser(this)">修改密码</a></li>
+						</s:if>
+						<s:if test="#session.loginType == 'unit'">
+							<li><a
+								id='<s:property value="#session.unit.jwcpxt_unit_id" />'
+								href="#" onclick="updatePasswordUnit(this)">修改密码</a></li>
+						</s:if>
 						<li><a href="#" onclick="logout()">退出</a></li>
 					</ul></li>
 			</ul>

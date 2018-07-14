@@ -89,7 +89,6 @@ public class ServiceServiceImpl implements ServiceService {
 		if (user == null) {
 			return null;
 		}
-		System.out.println("fd");
 		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
 		return clientInstanceDTO;
 	}
@@ -297,6 +296,11 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
 		return serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(serviceDefinitionID);
+	}
+
+	@Override
+	public void saveServiceInstance(jwcpxt_service_instance serviceInstance) {
+		serviceDao.saveOrUpdateObject(serviceInstance);
 	}
 
 	/**
@@ -686,6 +690,9 @@ public class ServiceServiceImpl implements ServiceService {
 
 	}
 
+	/**
+	 * 这个方法是废弃的吗？
+	 */
 	@Override
 	public List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID) {
 		/*

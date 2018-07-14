@@ -48,7 +48,7 @@
 		data-active-color="danger">
 		<div class="sidebar-wrapper">
 			<div class="logo">
-				<a href="#" class="simple-text"> 警务测评系统 </a>
+				<a href="<%=basePath%>Skip/skipSystemIndex" class="simple-text">警务测评系统 </a>
 			</div>
 
 			<ul class="nav">
@@ -120,4 +120,5 @@ td .label {
 }
 </style>
 <script type="text/javascript" src="<%=basePath %>js/user/login.js"></script>
+<script type="text/javascript" src="<%=basePath %>js/user/updatePassword.js"></script>
 </html>

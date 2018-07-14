@@ -87,7 +87,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	}
 
 	/**
-	 * 从session中拿到测评人员的信息
+	 * 从session中拿到当前被分配的第一条测评人员的信息
 	 * 
 	 * @throws IOException
 	 */
@@ -118,6 +118,20 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.setContentType("text/html;charset=utf-8");
 		serviceGrab = serviceService.get_serviceGrab(serviceGrab);
 		http_response.getWriter().write(gson.toJson(serviceGrab));
+	}
+
+	/**
+	 * 获取所有的业务
+	 * 
+	 * @throws IOException
+	 */
+	public void list_serviceDefinition_all() throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceService.list_serviceDefinitionDO_all()));
 	}
 
 	/**

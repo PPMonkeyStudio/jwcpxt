@@ -1,6 +1,7 @@
 package com.pphgzs.domain.DO;
 
 public class jwcpxt_service_grab {
+
 	private String jwcpxt_service_grab_id;
 	private String service_grab_service_definition;
 	private String service_grab_service_num;

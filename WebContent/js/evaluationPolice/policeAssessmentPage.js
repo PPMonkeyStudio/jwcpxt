@@ -67,7 +67,7 @@ $(function() {
 				}
 				listAnswerDTO[index] = answer;
 			},
-			finishReturned () {
+			finishReturned ($event) {
 				let falg = false;
 				if (listAnswerDTO.length > 0) {
 					let length = this.questionData.length;
@@ -119,8 +119,11 @@ $(function() {
 									//
 									$.post('/jwcpxt/Question/save_answer', params, response => {
 										if (response == "1") {
-											toastr.success("回访结束");
-
+											$($event.target).attr("disabled", "disabled");
+											toastr.success("回访结束,3秒后跳转..");
+											setTimeout(function() {
+												window.location.href = "/Skip/skipReturnedPartyInformation";
+											}, 3000);
 										} else if (response == "-1") {
 											toastr.error("结束失败");
 										}

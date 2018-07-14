@@ -59,6 +59,24 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public jwcpxt_user get_userDO_byRandomAndTypeCP() {
+		Session session = getSession();
+		String hql = "from "//
+				+ " jwcpxt_user "//
+				+ " where "//
+				+ " user_state!=2 "//
+				+ " and user_type=1"//
+				+ " order by rand()";
+		//
+		Query query = session.createQuery(hql);
+		query.setMaxResults(1);
+		//
+		List<jwcpxt_user> userList = query.list();
+		session.clear();
+		return userList.get(0);
+	}
+
+	@Override
 	public boolean save_user(jwcpxt_user user) {
 		Session session = getSession();
 		session.save(user);

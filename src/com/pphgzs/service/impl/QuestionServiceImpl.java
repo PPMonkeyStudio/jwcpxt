@@ -11,6 +11,7 @@ import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.InquiriesOptionDTO;
 import com.pphgzs.domain.DTO.OptionDTO;
@@ -264,26 +265,28 @@ public class QuestionServiceImpl implements QuestionService {
 	 * 获取选项列表
 	 */
 	/*
-	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
-	 * // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO> listOptionDTO =
-	 * new ArrayList<>(); List<jwcpxt_option> listOption = new ArrayList<>();
-	 * List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>(); //
-	 * 1.获取问题对象 if (question != null && question.getJwcpxt_question_id() != null &&
-	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象 question =
+	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question)
+	 * { // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO>
+	 * listOptionDTO = new ArrayList<>(); List<jwcpxt_option> listOption = new
+	 * ArrayList<>(); List<jwcpxt_option_inquiries> listOptionInquireies = new
+	 * ArrayList<>(); // 1.获取问题对象 if (question != null &&
+	 * question.getJwcpxt_question_id() != null &&
+	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象
+	 * question =
 	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().
 	 * trim() ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
 	 * ("1".equals(question.getQuestion_type())) { // 获取选项列表 listOption =
 	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim
-	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO = new
-	 * OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表 if
-	 * (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null &&
-	 * jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
+	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO =
+	 * new OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表
+	 * if (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null
+	 * && jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
 	 * listOptionInquireies = questionDao
 	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim
 	 * ()); } optionDTO.setOption(jwcpxt_option);
 	 * optionDTO.setInquiriesList(listOptionInquireies);
-	 * listOptionDTO.add(optionDTO); } } else { return null; } return listOptionDTO;
-	 * }
+	 * listOptionDTO.add(optionDTO); } } else { return null; } return
+	 * listOptionDTO; }
 	 */
 	/**
 	 * 保存选项
@@ -722,6 +725,53 @@ public class QuestionServiceImpl implements QuestionService {
 		client.setService_client_visit("1");
 		client.setService_client_gmt_modified(TimeUtil.getStringSecond());
 		questionDao.saveOrUpdateObject(client);
+
+		/*
+		 * 最后分配新的实例给测评人员
+		 * 
+		 * TODO
+		 * 
+		 * 1、查询所有单位关联业务表
+		 * 
+		 * 2、当天业务实例中，属于这个单位的，且属于这个业务定义的数量
+		 * 
+		 * 3、对比数量和单位关联业务表中填写的需求数量，数量大于需求数量的，就移出list
+		 * 
+		 * 4、在剩下的list中随机选取一个单位业务关联DO，通过这个DO，随机取一个抓取实例分配到业务实例中给这个测评员
+		 * 
+		 * 
+		 * 
+		 */
+
+		// 查询所有单位关联业务表
+		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
+		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
+		for (jwcpxt_unit_service unitService : unitServiceList) {
+			// 需求数量
+			int wantNum = unitService.getEvaluation_count();
+			// 已分配数量
+			int currNum = 0;
+		}
+		//
+
+		//
+
+		//
+
+		//
+
+		//
+
+		//
+
+		//
+
+		//
+
+		//
+		/*
+		 * 
+		 */
 		return true;
 	}
 

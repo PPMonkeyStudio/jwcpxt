@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pphgzs.dao.UnitDao;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.VO.UnitVO;
 import com.pphgzs.service.UnitService;
 import com.pphgzs.service.UserService;
@@ -98,7 +99,7 @@ public class UnitServiceImpl implements UnitService {
 		if (newUnit.getUnit_password() == null) {
 			return false;
 		}
-		oldUnit.setUnit_password(newUnit.getUnit_password());
+		oldUnit.setUnit_password(MD5Util.GetMD5Code(newUnit.getUnit_password()));
 
 		unitDao.update_unit(oldUnit);
 		return true;
@@ -108,14 +109,8 @@ public class UnitServiceImpl implements UnitService {
 	public boolean update_unit(jwcpxt_unit newUnit) {
 		jwcpxt_unit oldUnit = unitDao.get_unitDO_byID(newUnit.getJwcpxt_unit_id());
 
-		if (unitDao.get_unit_byNameOrAccount(newUnit.getUnit_name(), newUnit.getUnit_account()) == null) {
-			// 修改名称
-			oldUnit.setUnit_name(newUnit.getUnit_name());
-			// 账号
-			oldUnit.setUnit_account(newUnit.getUnit_account());
-		} else {
-			return false;
-		}
+		// 修改名称
+		oldUnit.setUnit_name(newUnit.getUnit_name());
 
 		// 手机号码
 		oldUnit.setUnit_phone(newUnit.getUnit_phone());
@@ -131,6 +126,11 @@ public class UnitServiceImpl implements UnitService {
 	}
 
 	@Override
+	public List<jwcpxt_unit> list_unitDO_byDistributionService() {
+		return unitDao.list_unitDO_byDistributionService();
+	}
+
+	@Override
 	public List<jwcpxt_unit> list_unitDO_all() {
 		List<jwcpxt_unit> unitList = unitDao.list_unitDO_all();
 		return unitList;
@@ -139,6 +139,11 @@ public class UnitServiceImpl implements UnitService {
 	@Override
 	public jwcpxt_unit get_unitDO_byID(String unitID) {
 		return unitDao.get_unitDO_byID(unitID);
+	}
+
+	@Override
+	public List<jwcpxt_unit_service> list_unitServiceDO_all() {
+		return unitDao.list_unitServiceDO_all();
 	}
 
 	@Override

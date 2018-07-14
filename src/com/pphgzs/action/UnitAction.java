@@ -70,10 +70,28 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 	 * @throws IOException
 	 */
 	public void update_unit() throws IOException {
-		unitService.update_unit(unit);
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write("1");
+		if (unitService.update_unit(unit)) {
+			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("1");
+		} else {
+			http_response.setContentType("text/html;charset=utf-8");
+			http_response.getWriter().write("-1");
+		}
 
+	}
+
+	/**
+	 * 获取所有已有被分配业务的单位
+	 * 
+	 * @throws IOException
+	 */
+	public void list_unitDO_byDistributionService() throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(unitService.list_unitDO_byDistributionService()));
 	}
 
 	/*

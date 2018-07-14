@@ -4,23 +4,20 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<bean id="dissatisfiedFeedbackAction"
-		class="com.pphgzs.action.DissatisfiedFeedbackAction" scope="prototype">
-		<property name="dissatisfiedFeedbackService"
-			ref="dissatisfiedFeedbackService"></property>
+	<bean id="dissatisfiedFeedbackAction" class="com.pphgzs.action.DissatisfiedFeedbackAction"
+		scope="prototype">
+		<property name="dissatisfiedFeedbackService" ref="dissatisfiedFeedbackService"></property>
 	</bean>
 
-	<bean id="dissatisfiedFeedbackService"
-		class="com.pphgzs.service.impl.DissatisfiedFeedbackServiceImpl">
-		<property name="dissatisfiedFeedbackDao"
-			ref="dissatisfiedFeedbackDao"></property>
+	<bean id="dissatisfiedFeedbackService" class="com.pphgzs.service.impl.DissatisfiedFeedbackServiceImpl">
+		<property name="dissatisfiedFeedbackDao" ref="dissatisfiedFeedbackDao"></property>
 		<property name="questionService" ref="questionService"></property>
 		<property name="unitService" ref="unitService"></property>
+		<property name="userService" ref="userService"></property>
 		<property name="serviceService" ref="serviceService"></property>
 	</bean>
 
-	<bean id="dissatisfiedFeedbackDao"
-		class="com.pphgzs.dao.impl.DissatisfiedFeedbackDaoImpl">
+	<bean id="dissatisfiedFeedbackDao" class="com.pphgzs.dao.impl.DissatisfiedFeedbackDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
