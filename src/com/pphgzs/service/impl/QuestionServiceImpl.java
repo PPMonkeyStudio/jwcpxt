@@ -748,15 +748,30 @@ public class QuestionServiceImpl implements QuestionService {
 		// 查询所有单位关联业务表
 		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
 		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
-		for (jwcpxt_unit_service unitService : unitServiceList) {
+		for (jwcpxt_unit_service unitServiceDO : unitServiceList) {
+
 			// 需求数量
-			int wantNum = unitService.getEvaluation_count();
-			// 已分配数量：获取当天该单位该业务的业务实例的数量
-			int currNum = serviceService.get_serviceInstanceCount_byServiceDefinitionAndUnit(
-					unitService.getService_definition_id(), unitService.getUnit_id());
+			int wantNum = unitServiceDO.getEvaluation_count();
+			/*
+			 * 如果这个单位是二级单位，那么就查出他所有子单位已分配的实例数量
+			 * 
+			 * TODO
+			 */
+			int currNum = 0;
+			jwcpxt_unit unit = unitService.get_unitDO_byID(unitServiceDO.getUnit_id());
+			if (unit.getUnit_grade() == 2) {
+				// 二级单位
+				currNum = serviceService.get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(
+						unitServiceDO.getService_definition_id(), unitServiceDO.getUnit_id());
+			} else {
+				// 已分配数量：获取当天该单位该业务的业务实例的数量
+				currNum = serviceService.get_serviceInstanceCount_byServiceDefinitionAndUnit(
+						unitServiceDO.getService_definition_id(), unitServiceDO.getUnit_id());
+			}
+
 			// 分配足够了的就移出列表
 			if (currNum >= wantNum) {
-				unitServiceList.remove(unitService);
+				unitServiceList.remove(unitServiceDO);
 			}
 		}
 		// 随机取一个单位业务关联DO作为分配，如果这个单位没有数据，那么就换一个单位
@@ -767,10 +782,19 @@ public class QuestionServiceImpl implements QuestionService {
 			int random = (int) (Math.random() * unitServiceList.size());
 			thisUnitService = unitServiceList.get(random);
 			unit = unitService.get_unitDO_byID(thisUnitService.getUnit_id());
-			// 随机此业务，此单位，未被分配的一个抓取实例
-			grabInstance = serviceService
-					.get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
-							thisUnitService.getService_definition_id(), unit.getUnit_num());
+
+			if (unit.getUnit_grade() == 2) {
+				// 二级单位
+				grabInstance = serviceService
+						.get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+								thisUnitService.getService_definition_id(), unit.getUnit_num());
+			} else {
+				// 随机此业务，此单位，未被分配的一个抓取实例
+				grabInstance = serviceService
+						.get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+								thisUnitService.getService_definition_id(), unit.getUnit_num());
+			}
+
 			if (grabInstance != null) {
 				break;
 			} else {

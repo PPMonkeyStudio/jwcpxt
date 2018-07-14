@@ -62,7 +62,6 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id and serviceClient.service_client_visit= '2' and "
 				+ " serviceInstance.service_instance_judge = :userId "
 				+ " order by serviceInstance.service_instance_gmt_create asc ";
-		System.out.println("fd:" + hql);
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);
 		query.setMaxResults(1);
@@ -88,6 +87,32 @@ public class ServiceDaoImpl implements ServiceDao {
 		Query query = session.createQuery(hql);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("unitID", unitID);
+		query.setParameter("date", TimeUtil.getStringDay());
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public int get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(String serviceDefinitionID,
+			String fatherUnitID) {
+		Session session = getSession();
+		String hql = " select "//
+				+ " count(*) "//
+				+ " from "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_unit unit"//
+				+ " where "//
+				+ " serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
+				//
+				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
+				+ " and unit.unit_father = :fatherUnitID "//
+				+ " and serviceInstance.service_instance_gmt_create >= :date ";
+		Query query = session.createQuery(hql);
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("fatherUnitID", fatherUnitID);
 		query.setParameter("date", TimeUtil.getStringDay());
 		//
 		int count = ((Number) query.uniqueResult()).intValue();
@@ -475,20 +500,55 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode) {
+		Session session = getSession();
+		String hql = "select grabInstance "//
+				+ " from "//
+				+ " jwcpxt_grab_instance grabInstance , "//
+				+ " jwcpxt_unit unit "//
+				+ " jwcpxt_unit fatherUnit "//
+				//
+				+ " where "//
+				+ " grabInstance.grab_instance_distribution='2' "//
+				//
+				+ " unit.unit_father=fatherUnit.jwcpxt_unit_id "// 连接二三级单位
+				//
+				+ " fatherUnit.unit_num=:organizationCode "// 查出二级单位
+				+ " grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
+				+ " grabInstance.grab_instance_organization_code=unit.unit_num "// 抓取实例的机构代码=三级单位的机构代码
+				+ " order by rand() "//
+		;
+		Query query = session.createQuery(hql);
+		//
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("organizationCode", organizationCode);
+		//
+		query.setMaxResults(1);
+		//
+		List<jwcpxt_grab_instance> list = query.list();
+		session.clear();
+		if (list.size() > 0) {
+			return list.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
 	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
 			String serviceDefinitionID, String organizationCode) {
 		Session session = getSession();
-
-		String hql = "from "//
-				+ " jwcpxt_grab_instance grabInstance , "//
+		String hql = "select grabInstance "//
+				+ " from "//
+				+ " jwcpxt_grab_instance grabInstance "//
 				//
 				+ " where "//
 				+ " grabInstance.grab_instance_distribution='2' "//
 				//
 				+ " grabInstance.grab_instance_organization_code=:organizationCode "//
 				+ " grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
-		//
-
+				+ " order by rand() "//
 		;
 		Query query = session.createQuery(hql);
 		//
