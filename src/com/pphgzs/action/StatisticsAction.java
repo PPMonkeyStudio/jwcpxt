@@ -47,7 +47,6 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 				}
 			}
 		}
-
 		Gson gson = new Gson();
 		String result = gson.toJson(statisticsVO);
 		try {
