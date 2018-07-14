@@ -85,7 +85,7 @@ public class MyTest {
 	@Test
 	public void tttdf() {
 
-		System.out.println(userService.get_userDO_byRandomAndTypeCP());
+		System.out.println(unitService.list_unitDO_byDistributionService());
 	}
 
 }

@@ -30,7 +30,7 @@ public class UnitDaoImpl implements UnitDao {
 				+ " jwcpxt_unit unit , "//
 				+ " jwcpxt_unit_service unitService "//
 				+ " where "//
-				+ " unit.jwcpxt_unit_id=unitService.jwcpxt_unit_service_id";
+				+ " unit.jwcpxt_unit_id=unitService.unit_id";
 		Query query = session.createQuery(hql);
 		List<jwcpxt_unit> list = query.list();
 		session.clear();
