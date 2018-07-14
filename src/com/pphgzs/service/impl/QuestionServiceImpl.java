@@ -759,7 +759,7 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		// 随机取一个单位业务关联DO作为分配
 		int random = (int) (Math.random() * unitServiceList.size());
-		unitServiceList.get(random);
+		jwcpxt_unit_service thisUnitService = unitServiceList.get(random);
 		//
 
 		//

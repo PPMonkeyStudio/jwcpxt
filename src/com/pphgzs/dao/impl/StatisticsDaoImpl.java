@@ -1,9 +1,11 @@
 package com.pphgzs.dao.impl;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.StatisticsDao;
+import com.pphgzs.domain.DTO.ServiceGradeDTO;
 
 public class StatisticsDaoImpl implements StatisticsDao {
 	private SessionFactory sessionFactory;
@@ -20,4 +22,42 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Override
+	public int geteStatisticsGrade(ServiceGradeDTO serviceGradeDTO, String unitId, String searchTimeStart,
+			String searchTimeEnd) {
+		Session session = getSession();
+		String hql = " select "//
+				+ " ((((count(distinct serviceClient)*100)  -  sum(option.option_grade))  /  count(distinct serviceClient)) / 100) * :grade "//
+				+ " from "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " and jwcpxt_service_client serviceClient , "//
+				+ " and jwcpxt_answer_choice answerChoice"//
+				+ " and jwcpxt_option option"//
+				//
+				+ " where "
+				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id"//
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id"//
+				+ " and answerChoice.answer_choice_option=option.jwcpxt_option_id"//
+				//
+				+ " and serviceInstance.service_instance_belong_unit = :unitId "//
+				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
+				//
+				+ " and serviceInstance.service_instance_date >= :searchTimeStart "//
+				+ " and serviceInstance.service_instance_date <= :searchTimeEnd "//
+		;
+		System.out.println(hql);
+		Query query = session.createQuery(hql);
+		query.setParameter("unitId", unitId);
+		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
+		//
+		query.setParameter("searchTimeStart", searchTimeStart);
+		query.setParameter("searchTimeEnd", searchTimeEnd);
+		//
+		query.setParameter("grade", serviceGradeDTO.getGrade());
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
 }
