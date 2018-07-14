@@ -1,6 +1,5 @@
 package com.pphgzs.dao.impl;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -59,7 +58,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
-		} catch (HibernateException e) {
+		} catch (ClassCastException e) {
 			System.err.println(e);
 			return 0;
 		} finally {
