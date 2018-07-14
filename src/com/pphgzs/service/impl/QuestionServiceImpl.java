@@ -264,26 +264,28 @@ public class QuestionServiceImpl implements QuestionService {
 	 * 获取选项列表
 	 */
 	/*
-	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
-	 * // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO> listOptionDTO =
-	 * new ArrayList<>(); List<jwcpxt_option> listOption = new ArrayList<>();
-	 * List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>(); //
-	 * 1.获取问题对象 if (question != null && question.getJwcpxt_question_id() != null &&
-	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象 question =
+	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question)
+	 * { // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO>
+	 * listOptionDTO = new ArrayList<>(); List<jwcpxt_option> listOption = new
+	 * ArrayList<>(); List<jwcpxt_option_inquiries> listOptionInquireies = new
+	 * ArrayList<>(); // 1.获取问题对象 if (question != null &&
+	 * question.getJwcpxt_question_id() != null &&
+	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象
+	 * question =
 	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().
 	 * trim() ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
 	 * ("1".equals(question.getQuestion_type())) { // 获取选项列表 listOption =
 	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim
-	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO = new
-	 * OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表 if
-	 * (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null &&
-	 * jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
+	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO =
+	 * new OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表
+	 * if (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null
+	 * && jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
 	 * listOptionInquireies = questionDao
 	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim
 	 * ()); } optionDTO.setOption(jwcpxt_option);
 	 * optionDTO.setInquiriesList(listOptionInquireies);
-	 * listOptionDTO.add(optionDTO); } } else { return null; } return listOptionDTO;
-	 * }
+	 * listOptionDTO.add(optionDTO); } } else { return null; } return
+	 * listOptionDTO; }
 	 */
 	/**
 	 * 保存选项
@@ -722,6 +724,15 @@ public class QuestionServiceImpl implements QuestionService {
 		client.setService_client_visit("1");
 		client.setService_client_gmt_modified(TimeUtil.getStringSecond());
 		questionDao.saveOrUpdateObject(client);
+		/*
+		 * 最后分配新的实例给测评人员
+		 */
+
+		//
+
+		/*
+		 * 
+		 */
 		return true;
 	}
 

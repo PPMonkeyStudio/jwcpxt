@@ -690,6 +690,9 @@ public class ServiceServiceImpl implements ServiceService {
 
 	}
 
+	/**
+	 * 这个方法是废弃的吗？
+	 */
 	@Override
 	public List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID) {
 		/*
