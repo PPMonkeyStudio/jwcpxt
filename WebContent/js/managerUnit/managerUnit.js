@@ -145,7 +145,7 @@ function managerSonUnit(event) {
 						+ '<td>联系号码</td>'
 						+ '<td>操作</td>'
 						// + '<td>子单位</td>'
-						+ '<td>业务</td>'
+						+ '<td class="hideTwo">业务</td>'
 						+ '</tr></thead>'
 						+ '<tbody><template v-for="unit in unitList">'
 						+ '<tr><td>{{ unit.unit_name }}</td>'
@@ -156,7 +156,7 @@ function managerSonUnit(event) {
 						+ '<a :id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>'
 						// + '<td><a :id="unit.jwcpxt_unit_id"
 						// onclick="managerSonUnit(this)">管理子单位</a></td>'
-						+ '<td><a :id="unit.jwcpxt_unit_id" onclick="managerService(this)">管理业务</a></td></tr>'
+						+ '<td class="hideTwo"><a :id="unit.jwcpxt_unit_id" onclick="managerService(this)">管理业务</a></td></tr>'
 						+ '</template></tbody>' + '</table>',
 				buttons : {
 					cancel : {
@@ -176,6 +176,18 @@ function managerSonUnit(event) {
 					})
 					// 查询所有子单位
 					loadDataSon(event.id);
+					$.ajax({
+						url:'/jwcpxt/Unit/get_unitDO_byID?unit.jwcpxt_unit_id='+event.id,
+						type:'GET',
+						success:function(data){
+							var unit = JSON.parse(data);
+							if(unit.unit_grade==1){
+								$('.hideTwo').hide();
+							}else{
+							}
+						}
+					})
+					
 				}
 			})
 }
