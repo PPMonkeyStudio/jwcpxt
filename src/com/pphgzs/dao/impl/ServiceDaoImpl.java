@@ -73,6 +73,28 @@ public class ServiceDaoImpl implements ServiceDao {
 		return listClientInstanceDTO.get(0);
 	}
 
+	@Override
+	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String serviceDefinitionID, String unitID) {
+		Session session = getSession();
+		String hql = " select "//
+				+ " count(*) "//
+				+ " from "//
+				+ " jwcpxt_service_instance "//
+				+ " where "//
+				+ " service_instance_service_definition = :serviceDefinitionID "//
+				+ " and service_instance_belong_unit = :unitID "//
+				+ " and service_instance_gmt_create >= :date ";
+		Query query = session.createQuery(hql);
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("unitID", unitID);
+		query.setParameter("date", TimeUtil.getStringDay());
+		//
+		int count = ((Number) query.uniqueResult()).intValue();
+		//
+		session.clear();
+		return count;
+	}
+
 	/**
 	 * 根据业务定义id获取抓取
 	 */
@@ -218,9 +240,14 @@ public class ServiceDaoImpl implements ServiceDao {
 	public int get_serviceInstanceDistributionCount_byDateAndServiceDefinitionID(String date,
 			String serviceDefinitionID) {
 		Session session = getSession();
-		String hql = "select count(*) from jwcpxt_service_instance "
-				+ " where service_instance_service_definition = :serviceDefinitionID "
-				+ " and service_instance_gmt_create >= :date " + " and service_instance_judge != 'none' ";
+		String hql = "select "//
+				+ " count(*) "//
+				+ " from "//
+				+ " jwcpxt_service_instance "//
+				+ " where "//
+				+ " service_instance_service_definition = :serviceDefinitionID "//
+				+ " and service_instance_gmt_create >= :date "//
+				+ " and service_instance_judge != 'none' ";
 		Query query = session.createQuery(hql);
 		//
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);

@@ -21,6 +21,7 @@ public interface ServiceService {
 	/*
 	 * 
 	 */
+
 	/**
 	 * 获取当事人信息及所涉及的业务
 	 * 
@@ -210,5 +211,7 @@ public interface ServiceService {
 	public jwcpxt_service_client get_serviceClientDo_byId(jwcpxt_service_client serviceClient);
 
 	public void saveServiceInstance(jwcpxt_service_instance serviceInstance);
+
+	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String service_definition_id, String unit_id);
 
 }

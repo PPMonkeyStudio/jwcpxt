@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pphgzs.dao.UnitDao;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.VO.UnitVO;
 import com.pphgzs.service.UnitService;
 import com.pphgzs.service.UserService;
@@ -138,6 +139,11 @@ public class UnitServiceImpl implements UnitService {
 	@Override
 	public jwcpxt_unit get_unitDO_byID(String unitID) {
 		return unitDao.get_unitDO_byID(unitID);
+	}
+
+	@Override
+	public List<jwcpxt_unit_service> list_unitServiceDO_all() {
+		return unitDao.list_unitServiceDO_all();
 	}
 
 	@Override

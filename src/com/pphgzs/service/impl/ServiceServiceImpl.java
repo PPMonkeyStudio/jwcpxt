@@ -701,6 +701,10 @@ public class ServiceServiceImpl implements ServiceService {
 		return null;
 	}
 
+	@Override
+	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String service_definition_id, String unit_id) {
+		return serviceDao.get_serviceInstanceCount_byServiceDefinitionAndUnit(service_definition_id, unit_id);
+	}
 	/*
 	 * 
 	 */

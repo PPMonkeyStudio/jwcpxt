@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.UnitDao;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
 
 public class UnitDaoImpl implements UnitDao {
 	private SessionFactory sessionFactory;
@@ -19,6 +20,18 @@ public class UnitDaoImpl implements UnitDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	@Override
+	public List<jwcpxt_unit_service> list_unitServiceDO_all() {
+		Session session = getSession();
+		String hql = " from "//
+				+ " jwcpxt_unit_service ";
+		Query query = session.createQuery(hql);
+		List<jwcpxt_unit_service> list = query.list();
+		session.clear();
+
+		return list;
 	}
 
 	@Override
