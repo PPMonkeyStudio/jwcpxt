@@ -30,9 +30,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " ((((count(distinct serviceClient)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient)) / 100) * :grade "//
 				+ " from "//
 				+ " jwcpxt_service_instance serviceInstance , "//
-				+ " and jwcpxt_service_client serviceClient , "//
-				+ " and jwcpxt_answer_choice answerChoice , "//
-				+ " and jwcpxt_option _option "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_option _option "//
 				//
 				+ " where "
 				+ " serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id"//
