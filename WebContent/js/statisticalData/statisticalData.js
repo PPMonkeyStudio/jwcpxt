@@ -1,5 +1,7 @@
 $(function() {
 	let myData = {
+		statisticalResultsData : [],
+		ready : false,
 		unit : {
 			type : '单位',
 			url : '/jwcpxt/Unit/list_unitDO_byDistributionService',
@@ -220,8 +222,8 @@ $(function() {
 								processData : false,
 								contentType : false,
 								success : response => {
-									console.log(response);
-
+									myData.statisticalResultsData = response.unitHaveServiceGradeDTOList;
+									myData.ready = true;
 									//清空这次操作的的数据
 									myData.unitSelect = [];
 									myData.unitSelectIdArr = [];

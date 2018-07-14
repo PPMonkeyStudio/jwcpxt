@@ -33,8 +33,7 @@ th {
 		<s:action name="skipSidebar" namespace="/Skip" executeResult="true" />
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbarIndex" namespace="/Skip"
-				executeResult="true" />
+			<s:action name="skipNavbarIndex" namespace="/Skip" executeResult="true" />
 			<div class="content" id="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -54,12 +53,31 @@ th {
 										2.多选业务
 										每个业务要给分数，所有业务的分数加起来等于100分，不等就要报错
 									 -->
-									<table class="table" style="text-align: center; width: 100%;">
+									<table v-if="ready" class="table" style="text-align: center; width: 100%;">
 										<thead>
 											<tr>
-												<th></th>
+												<template v-if="statisticalResultsData.length>0">
+													<th style="width: 150px;">评测内容单位</th>
+														<template v-for="serviceGradeDTO in statisticalResultsData[0].serviceGradeBelongUnitDTOList">
+															<th>{{serviceGradeDTO.serviceDefinition.service_definition_describe}}</th>
+														</template>
+													<th style="width: 60px;">测评总分</th>
+													<th style="width: 40px;">排名</th>
+												</template>
 											</tr>
 										</thead>
+										<tbody>
+											<template v-for="(statisticalResultsDTO,index) in statisticalResultsData">
+												<tr>
+													<td>{{statisticalResultsDTO.unit.unit_name}}</td>
+													<template v-for="serviceGradeDTO in statisticalResultsDTO.serviceGradeBelongUnitDTOList">
+														<td>{{serviceGradeDTO.grade}}</td>
+													</template>
+													<td>{{100}}</td>
+													<td>{{index+1}}</td>
+												</tr>
+											</template>
+										</tbody>
 									</table>
 								</div>
 							</div>
