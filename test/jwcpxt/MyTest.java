@@ -11,6 +11,7 @@ import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.ServiceService;
+import com.pphgzs.service.UnitService;
 import com.pphgzs.service.UserService;
 import com.pphgzs.util.TimeUtil;
 
@@ -20,11 +21,21 @@ public class MyTest {
 	@Resource
 	private UserService userService;
 	@Resource
+	private UnitService unitService;
+	@Resource
 	private ServiceService serviceService;
 	@Resource
 	private DissatisfiedFeedbackDao dissatisfiedFeedbackDao;
 	@Resource
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	public UnitService getUnitService() {
+		return unitService;
+	}
+
+	public void setUnitService(UnitService unitService) {
+		this.unitService = unitService;
+	}
 
 	public DissatisfiedFeedbackService getDissatisfiedFeedbackService() {
 		return dissatisfiedFeedbackService;
@@ -59,7 +70,7 @@ public class MyTest {
 	}
 
 	@Test
-	public void ttt() {
+	public void ttttt1() {
 
 		DissatisfiedQuestionVO dissatisfiedQuestionVO = new DissatisfiedQuestionVO();
 		dissatisfiedQuestionVO.setScreenState("1");
@@ -67,12 +78,14 @@ public class MyTest {
 	}
 
 	@Test
-	public void tttt() {
+	public void ttttt2() {
 		System.out.println(TimeUtil.getStringDay().substring(0, 7));
 	}
 
 	@Test
-	public void tttdf() {
+	public void ttttt3() {
+
+		System.out.println(unitService.list_unitDO_byDistributionService());
 	}
 
 }

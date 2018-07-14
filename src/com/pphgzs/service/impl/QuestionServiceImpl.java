@@ -7,10 +7,15 @@ import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
+import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.InquiriesOptionDTO;
 import com.pphgzs.domain.DTO.OptionDTO;
@@ -83,6 +88,7 @@ public class QuestionServiceImpl implements QuestionService {
 	/**
 	 * 保存问题
 	 */
+	@Override
 	public boolean save_question(jwcpxt_question question) {
 		question.setJwcpxt_question_id(uuidUtil.getUuid());
 		question.setQuestion_gmt_create(TimeUtil.getStringSecond());
@@ -263,26 +269,28 @@ public class QuestionServiceImpl implements QuestionService {
 	 * 获取选项列表
 	 */
 	/*
-	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
-	 * // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO> listOptionDTO =
-	 * new ArrayList<>(); List<jwcpxt_option> listOption = new ArrayList<>();
-	 * List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>(); //
-	 * 1.获取问题对象 if (question != null && question.getJwcpxt_question_id() != null &&
-	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象 question =
-	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().trim()
-	 * ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
+	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question)
+	 * { // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO>
+	 * listOptionDTO = new ArrayList<>(); List<jwcpxt_option> listOption = new
+	 * ArrayList<>(); List<jwcpxt_option_inquiries> listOptionInquireies = new
+	 * ArrayList<>(); // 1.获取问题对象 if (question != null &&
+	 * question.getJwcpxt_question_id() != null &&
+	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象
+	 * question =
+	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().
+	 * trim() ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
 	 * ("1".equals(question.getQuestion_type())) { // 获取选项列表 listOption =
-	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim());
-	 * // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO = new
-	 * OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表 if
-	 * (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null &&
-	 * jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
+	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim
+	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO =
+	 * new OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表
+	 * if (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null
+	 * && jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
 	 * listOptionInquireies = questionDao
-	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim());
-	 * } optionDTO.setOption(jwcpxt_option);
+	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim
+	 * ()); } optionDTO.setOption(jwcpxt_option);
 	 * optionDTO.setInquiriesList(listOptionInquireies);
-	 * listOptionDTO.add(optionDTO); } } else { return null; } return listOptionDTO;
-	 * }
+	 * listOptionDTO.add(optionDTO); } } else { return null; } return
+	 * listOptionDTO; }
 	 */
 	/**
 	 * 保存选项
@@ -597,8 +605,11 @@ public class QuestionServiceImpl implements QuestionService {
 	 * 保存回答
 	 */
 	@Override
-	public boolean save_answer(List<AnswerDTO> listAnswerDTO, jwcpxt_service_client serviceClient) {
+	public boolean save_answer(List<AnswerDTO> listAnswerDTO, jwcpxt_service_client serviceClient, jwcpxt_user user) {
 		// 定义
+		List<QuestionDTO> listQuestionDTO = new ArrayList<>();
+		AnswerDTO answerD = new AnswerDTO();
+		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
 		jwcpxt_question question = new jwcpxt_question();
 		jwcpxt_option option = new jwcpxt_option();
 		jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
@@ -615,6 +626,8 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		// 遍历回答列表
 		for (AnswerDTO answerDTO : listAnswerDTO) {
+			listQuestionDTO = new ArrayList<>();
+			serviceDefinition = new jwcpxt_service_definition();
 			// 定义
 			question = new jwcpxt_question();
 			option = new jwcpxt_option();
@@ -650,18 +663,57 @@ public class QuestionServiceImpl implements QuestionService {
 				answerChoice.setAnswer_choice_gmt_modified(answerChoice.getAnswer_choice_gmt_create());
 				questionDao.saveOrUpdateObject(answerChoice);
 				// 如果属于需要推送的选项，则生成
+				// 1.是不是推送？
+				// 2.如果不是 如果他的开放题追问被回答就推送
 				if ("1".equals(option.getOption_push())) {
 					dissatisfiedFeedback.setJwcpxt_dissatisfied_feedback_id(uuidUtil.getUuid());
 					dissatisfiedFeedback
 							.setDissatisfied_feedback_answer_choice(answerChoice.getJwcpxt_answer_choice_id());
 					// dissatisfiedFeedback.setDissatisfied_feedback_time(TimeUtil.getStringSecond());
-					// dissatisfiedFeedback.setDissatisfied_feedback_state("1");
+					dissatisfiedFeedback.setDissatisfied_feedback_state("1");
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_create(TimeUtil.getStringSecond());
 					dissatisfiedFeedback.setDissatisfied_feedback_gmt_modified(
 							dissatisfiedFeedback.getDissatisfied_feedback_gmt_create());
-					questionDao.saveOrUpdateObject(answerChoice);
+					questionDao.saveOrUpdateObject(dissatisfiedFeedback);
+				} else if ("2".equals(option.getOption_push())) {
+					// 判断是否有追问
+					// 通过选项id获取选项list
+					serviceDefinition.setJwcpxt_service_definition_id(option.getJwcpxt_option_id());
+					listQuestionDTO = list_questionDTO_byServiceDefinition(serviceDefinition);
+					// 如果有追问
+					if (listQuestionDTO != null && listQuestionDTO.size() > 0) {
+						// 在list中判断追问开放题是否被回答
+						// 遍历
+						for (QuestionDTO questionDTO : listQuestionDTO) {
+							// 所有追问
+							// 判断回答
+							if (questionDTO.getQuestion() != null
+									&& questionDTO.getQuestion().getQuestion_type() != null
+									&& "3".equals(questionDTO.getQuestion().getQuestion_type())) {
+								for (AnswerDTO answerJu : listAnswerDTO) {
+									if ((questionDTO.getQuestion().getJwcpxt_question_id())
+											.equals(answerJu.getQuestion().getJwcpxt_question_id())) {
+										dissatisfiedFeedback.setJwcpxt_dissatisfied_feedback_id(uuidUtil.getUuid());
+										dissatisfiedFeedback.setDissatisfied_feedback_answer_choice(
+												answerChoice.getJwcpxt_answer_choice_id());
+										// dissatisfiedFeedback.setDissatisfied_feedback_time(TimeUtil.getStringSecond());
+										dissatisfiedFeedback.setDissatisfied_feedback_state("1");
+										dissatisfiedFeedback
+												.setDissatisfied_feedback_gmt_create(TimeUtil.getStringSecond());
+										dissatisfiedFeedback.setDissatisfied_feedback_gmt_modified(
+												dissatisfiedFeedback.getDissatisfied_feedback_gmt_create());
+										questionDao.saveOrUpdateObject(dissatisfiedFeedback);
+										break;
+									}
+								}
+								break;
+							}
+						}
+					}
 				}
-				// 此时应该还需要生成通知表，但是通知还没有确定，所有暂时还没有写 7.8 9:23 AM
+				/*
+				 * 此时应该还需要生成通知表，但是通知还没有确定，所有暂时还没有写 7.8 9:23 AM
+				 */
 			} else if ("2".equals(question.getQuestion_type().trim())
 					|| "3".equals(question.getQuestion_type().trim())) {
 				// 如果是开放题
@@ -674,6 +726,104 @@ public class QuestionServiceImpl implements QuestionService {
 				questionDao.saveOrUpdateObject(answerOpen);
 			}
 		}
+		client.setService_client_visit("1");
+		client.setService_client_gmt_modified(TimeUtil.getStringSecond());
+		questionDao.saveOrUpdateObject(client);
+
+		/*
+		 * 最后分配新的实例给测评人员
+		 * 
+		 * 1、查询所有单位关联业务表
+		 * 
+		 * 2、当天业务实例中，属于这个单位的，且属于这个业务定义的数量
+		 * 
+		 * 3、对比数量和单位关联业务表中填写的需求数量，数量大于需求数量的，就移出list
+		 * 
+		 * 4、在剩下的list中随机选取一个单位业务关联DO，通过这个DO，随机取一个抓取实例分配到业务实例中给这个测评员
+		 * 
+		 * 
+		 * 
+		 */
+
+		// 查询所有单位关联业务表
+		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
+		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
+		for (jwcpxt_unit_service unitServiceDO : unitServiceList) {
+
+			// 需求数量
+			int wantNum = unitServiceDO.getEvaluation_count();
+			/*
+			 * 如果这个单位是二级单位，那么就查出他所有子单位已分配的实例数量
+			 * 
+			 * TODO
+			 */
+			int currNum = 0;
+			jwcpxt_unit unit = unitService.get_unitDO_byID(unitServiceDO.getUnit_id());
+			if (unit.getUnit_grade() == 2) {
+				// 二级单位
+				currNum = serviceService.get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(
+						unitServiceDO.getService_definition_id(), unitServiceDO.getUnit_id());
+			} else {
+				// 已分配数量：获取当天该单位该业务的业务实例的数量
+				currNum = serviceService.get_serviceInstanceCount_byServiceDefinitionAndUnit(
+						unitServiceDO.getService_definition_id(), unitServiceDO.getUnit_id());
+			}
+
+			// 分配足够了的就移出列表
+			if (currNum >= wantNum) {
+				unitServiceList.remove(unitServiceDO);
+			}
+		}
+		// 随机取一个单位业务关联DO作为分配，如果这个单位没有数据，那么就换一个单位
+		jwcpxt_grab_instance grabInstance = null;
+		jwcpxt_unit_service thisUnitService = null;
+		jwcpxt_unit unit = null;
+		while (unitServiceList.size() > 0) {
+			int random = (int) (Math.random() * unitServiceList.size());
+			thisUnitService = unitServiceList.get(random);
+			unit = unitService.get_unitDO_byID(thisUnitService.getUnit_id());
+
+			if (unit.getUnit_grade() == 2) {
+				// 二级单位
+				grabInstance = serviceService
+						.get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+								thisUnitService.getService_definition_id(), unit.getUnit_num());
+			} else {
+				// 随机此业务，此单位，未被分配的一个抓取实例
+				grabInstance = serviceService
+						.get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+								thisUnitService.getService_definition_id(), unit.getUnit_num());
+			}
+
+			if (grabInstance != null) {
+				break;
+			} else {
+				unitServiceList.remove(random);
+			}
+		}
+
+		if (grabInstance == null) {
+			return true;
+		}
+		// 分配生成业务实例
+		jwcpxt_service_instance serviceInstance = new jwcpxt_service_instance();
+		serviceInstance.setJwcpxt_service_instance_id(uuidUtil.getUuid());
+		serviceInstance.setService_instance_gmt_create(TimeUtil.getStringSecond());
+		serviceInstance.setService_instance_gmt_modified(serviceInstance.getService_instance_gmt_create());
+		serviceInstance.setService_instance_service_definition(grabInstance.getGrab_instance_service_definition());
+		serviceInstance.setService_instance_belong_unit(thisUnitService.getUnit_id());
+		serviceInstance.setService_instance_judge(user.getJwcpxt_user_id());
+		serviceInstance.setService_instance_nid(grabInstance.getGrab_instance_unique_id());
+		serviceInstance.setService_instance_date(grabInstance.getGrab_instance_service_time());
+		serviceService.saveServiceInstance(serviceInstance);
+		// 并且更新抓取实例的状态
+		grabInstance.setGrab_instance_distribution("1");
+		serviceService.update_grabInstance(grabInstance);
+		//
+
+		/*
+		 * 
+		 */
 		return true;
 	}
 

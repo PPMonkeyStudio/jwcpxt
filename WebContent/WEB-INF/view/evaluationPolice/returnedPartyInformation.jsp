@@ -31,54 +31,38 @@ th {
 		<s:action name="skipSidebar" namespace="/Skip" executeResult="true" />
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbar" namespace="/Skip" executeResult="true" />
-			<div class="content" id="content">
-				<div class="container-fluid">
-					<!-- 主内容 -->
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card" style="padding: 10px;">
-								<div class="header">
-									<h4 class="title">当事人信息</h4>
+			<s:action name="skipNavbarIndex" namespace="/Skip" executeResult="true" />
+			<div class="" id="content"
+				style="width: calc( 100% - 800px )   ;margin: 50px 400px 50px 400px ">
+				<!-- 主内容 -->  
+				<div class="card" style="padding: 20px;">
+					<div class="" style="">
+						<form class="" v-cloak>
+							<div style="">
+								<div class="form-group" style="">
+									<label class="">姓名:</label> <span class="form-control-static">{{returnedParty.serviceClient.service_client_name}}</span>
 								</div>
-								<div class="content table-responsive table-full-width">
-									<form class="form-horizontal" v-cloak>
-										<div class="form-group">
-											<label class="col-sm-2 control-label">姓名</label>
-											<div>
-												<p class="form-control-static">{{returnedParty.serviceClient.service_client_name}}</p>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label">性别</label>
-											<div>
-												<p v-if="returnedParty.serviceClient.service_client_sex"
-													class="form-control-static">{{returnedParty.serviceClient.service_client_sex==1?"男":"女"}}</p>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label">电话</label>
-											<div>
-												<p class="form-control-static">{{returnedParty.serviceClient.service_client_phone}}</p>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label">回访业务</label>
-											<div>
-												<p class="form-control-static">{{returnedParty.serviceDefinition.service_definition_describe}}</p>
-											</div>
-										</div>
-										<button type="button" @click="beginReturned"
-											class="btn btn-primary">开始回访</button>
-									</form>
+								<div class="form-group">
+									<label class="">性别:</label> <span
+										v-if="returnedParty.serviceClient.service_client_sex"
+										class="form-control-static">{{returnedParty.serviceClient.service_client_sex==1?"男":"女"}}</span>
+								</div>
+								<div class="form-group">
+									<label class="">电话:</label> <span class="form-control-static">{{returnedParty.serviceClient.service_client_phone}}</span>
+								</div>
+								<div class="form-group">
+									<label class="">回访业务:</label> <span class="form-control-static">{{returnedParty.serviceDefinition.service_definition_describe}}</span>
 								</div>
 							</div>
-						</div>
+							<div style="">
+								<button style="width: 100%" type="button" @click="beginReturned"
+									class="btn btn-primary">开始回访</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 			<!-- 引入底部 -->
-			<s:action name="skipFooter" namespace="/Skip" executeResult="true" />
 		</div>
 	</div>
 </body>

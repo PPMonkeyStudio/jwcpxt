@@ -11,5 +11,6 @@
 	<import resource="spring/Skip.xml"/>
 	<import resource="spring/QuestionSpring.xml"/>
 	<import resource="spring/DissatisfiedFeedbackSpring.xml"/>
+	<import resource="spring/StatisticsSpring.xml"/>
 	
 </beans>

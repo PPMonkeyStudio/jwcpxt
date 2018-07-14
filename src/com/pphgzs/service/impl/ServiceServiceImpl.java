@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_grab_journal;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
@@ -89,7 +90,6 @@ public class ServiceServiceImpl implements ServiceService {
 		if (user == null) {
 			return null;
 		}
-		System.out.println("fd");
 		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
 		return clientInstanceDTO;
 	}
@@ -196,6 +196,11 @@ public class ServiceServiceImpl implements ServiceService {
 		return unitServi;
 	}
 
+	@Override
+	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance) {
+		return serviceDao.update_grabInstance(grabInstance);
+	}
+
 	/**
 	 * 更改评测数量
 	 */
@@ -297,6 +302,11 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public ServiceDefinitionDTO get_serviceDefinitionDTO_byServiceDefinitionID(String serviceDefinitionID) {
 		return serviceDao.get_serviceDefinitionDTO_byServiceDefinitionID(serviceDefinitionID);
+	}
+
+	@Override
+	public void saveServiceInstance(jwcpxt_service_instance serviceInstance) {
+		serviceDao.saveOrUpdateObject(serviceInstance);
 	}
 
 	/**
@@ -686,6 +696,9 @@ public class ServiceServiceImpl implements ServiceService {
 
 	}
 
+	/**
+	 * 这个方法是废弃的吗？
+	 */
 	@Override
 	public List<jwcpxt_service_instance> grab_serviceInstance_byServiceDefinitionID(String serviceDefinitionID) {
 		/*
@@ -694,6 +707,30 @@ public class ServiceServiceImpl implements ServiceService {
 		return null;
 	}
 
+	@Override
+	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String service_definition_id, String unit_id) {
+		return serviceDao.get_serviceInstanceCount_byServiceDefinitionAndUnit(service_definition_id, unit_id);
+	}
+
+	@Override
+	public int get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(String service_definition_id,
+			String unit_id) {
+		return serviceDao.get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(service_definition_id, unit_id);
+	}
+
+	@Override
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode) {
+		return serviceDao.get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+				serviceDefinitionID, organizationCode);
+	}
+
+	@Override
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode) {
+		return serviceDao.get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+				serviceDefinitionID, organizationCode);
+	}
 	/*
 	 * 
 	 */

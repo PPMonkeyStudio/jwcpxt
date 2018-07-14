@@ -2,6 +2,7 @@ package com.pphgzs.dao;
 
 import java.util.List;
 
+import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_grab_journal;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
@@ -133,5 +134,18 @@ public interface ServiceDao {
 	 * @return
 	 */
 	public jwcpxt_service_client get_serviceClientDo_byId(String trim);
+
+	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance);
+
+	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String service_definition_id, String unit_id);
+
+	public int get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(String service_definition_id,
+			String unit_id);
+
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode);
+
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode);
 
 }

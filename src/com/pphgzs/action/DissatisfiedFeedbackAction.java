@@ -40,8 +40,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	public void checkFeedbackRectification() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
-		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
-		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
+		unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
 		if (dissatisfiedFeedbackService.checkFeedbackRectification(feedbackRectification, unit)) {
 			http_response.getWriter().write("1");
 		} else {
@@ -62,11 +61,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
-		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
-		unit.setJwcpxt_unit_id("80c65edd-a36e-4f29-8417-6461ca769f35");
-		unit.setUnit_grade(2);
-		ActionContext.getContext().getSession().remove("unit");
-		ActionContext.getContext().getSession().put("unit", unit);
+		unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
 		checkFeedbackRectificationVO = dissatisfiedFeedbackService
 				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
 		System.out.println("checkFeedbackRectificationVO:" + checkFeedbackRectificationVO);
@@ -86,8 +81,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
-		// unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
-		unit.setJwcpxt_unit_id("1");
+		unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
 		feedbackRectificationVO = dissatisfiedFeedbackService.get_feedbackRectificationVO(feedbackRectificationVO,
 				unit);
 		http_response.getWriter().write(gson.toJson(feedbackRectificationVO));

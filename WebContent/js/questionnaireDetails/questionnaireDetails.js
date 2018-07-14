@@ -49,10 +49,10 @@ $(function() {
 				}, 'json');
 			},
 			pageInit (response) {
-				this.page.haveNextPage = response.currentPage < response.totalPage;
-				this.page.havePrePage = response.currentPage > 1;
-				this.page.isFirstPage = response.currentPage != 1;
-				this.page.isLastPage = response.currentPage != response.totalPage;
+				myData.page.haveNextPage = response.currentPage < response.totalPage;
+				myData.page.havePrePage = response.currentPage > 1;
+				myData.page.isFirstPage = response.currentPage == 1;
+				myData.page.isLastPage = response.currentPage == response.totalPage;
 			},
 			addQuestion () {
 				if (!myData.addQuestionModalData.question_describe) {
@@ -141,6 +141,10 @@ $(function() {
 					}
 				}, 'text');
 			},
+			preview () {
+				//&serviceClientId=${this.returnedParty.serviceClient.jwcpxt_service_client_id}
+				window.open(`/jwcpxt/Skip/skipPreviewPoliceAssessmentPage?definitionId=${myData.definitionId}`, '_blank');
+			},
 			deleteQuestion (index) {
 				//使用删除接口
 				deleteInterface('/jwcpxt/Question/delete_question', {
@@ -160,7 +164,7 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			prePage () {
-				if (!myData.page.havePrePage) {
+				if (myData.page.havePrePage) {
 					toastr.error("没有上一页了哦~");
 					return;
 				}
@@ -168,7 +172,7 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			nextPage () {
-				if (!myData.page.haveNextPage) {
+				if (myData.page.haveNextPage) {
 					toastr.error("没有下一页了哦~");
 					return;
 				}
@@ -176,7 +180,6 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			lastPage () {
-				console.log(myData.page.isLastPage);
 				if (myData.page.isLastPage) {
 					toastr.error("已经是在尾页了哦~");
 					return;
@@ -225,7 +228,7 @@ $(function() {
 							<th style="width:40px;">追问</th>
 							<th style="width:40px;">序号</th>
 							<th>选项描述</th>
-							<th style="width:40px;">分数</th>
+							<th style="width:40px;">扣分</th>
 							<th style="width:160px;">选项操作</th>
 						</tr>
 					</thead>
@@ -234,7 +237,10 @@ $(function() {
 							<tr style="border-top: 1px solid #ddd;">
 								<td><a data-toggle="collapse" :href="'#collapse'+index" @click="transform"><i class="fa fa-caret-right"></i></a></td>
 								<th>{{optionDTO.option.option_sort}}</th>
-								<td>{{optionDTO.option.option_describe}}</td>
+								<td>
+									<span style="color:red;" v-if="optionDTO.option.option_push==1">{{optionDTO.option.option_describe}}</span>
+									<span style="" v-if="optionDTO.option.option_push==2">{{optionDTO.option.option_describe}}</span>
+								</td>
 								<td>{{optionDTO.option.option_grade}}</td>
 								<td>
 									<i title="修改选项" class="ti-pencil-alt" @click="modifyOption(index)"></i>&nbsp; 
@@ -268,6 +274,7 @@ $(function() {
 																<span v-if="inquiriesOptionDTO.inquiriesQuestion.question_type==4"class="label label-primary">选择题</span> 
 																<span v-else-if="inquiriesOptionDTO.inquiriesQuestion.question_type==3" class="label label-info">主观题</span>
 																<span v-else class="label label-warning">未定义</span>
+															</td>
 															<td>
 																<i class="ti-pencil-alt" @click="modifyInquiries(index,index1)"></i>&nbsp; 
 																<i class="fa fa-arrow-up" @click="moveInquiries(index,index1,1)"></i>&nbsp;
@@ -420,14 +427,21 @@ $(function() {
 			content : `
 			<form novalidate>
 				<div class="form-group">
-					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="addOptionConfirm_describe"></textarea>
+					<label>选项描述</label>
+					<textarea class="form-control" placeholder="请输入选项描述..." id="addOptionConfirm_describe"></textarea>
 				</div>
 				<div class="form-group">
-					<label>问题分数</label>
-					<input type="text" placeholder="请输入问题分数..." class="form-control" id="addOptionConfirm_grade"
+					<label>选项扣分</label>
+					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="addOptionConfirm_grade"
 						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
-						onblur="this.v();">
+						onblur="this.v();" value="0">
+				</div>
+				<div class="form-group">
+					<label>是否推送</label>
+					<select class="form-control" id="addOptionConfirm_push">
+						<option value="2">不推送</option>
+						<option value="1">推送</option>
+					</select>
 				</div>
 			</form>
 			`,
@@ -450,7 +464,8 @@ $(function() {
 						let params = {
 							"option.option_question" : vm.checkQuestionModalData.question.jwcpxt_question_id,
 							"option.option_describe" : describe,
-							"option.option_grade" : grade
+							"option.option_grade" : grade,
+							"option.option_push" : addOptionConfirm.$content.find('#addOptionConfirm_push').val()
 						};
 						$.post('/jwcpxt/Question/save_option', params, response => {
 							if (response == "1") {
@@ -488,14 +503,14 @@ $(function() {
 			content : `
 			<form novalidate>
 				<div class="form-group">
-					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="modifyConfirm_describe">${option.option.option_describe}</textarea>
+					<label>选项描述</label>
+					<textarea class="form-control" placeholder="请输入选项描述..." id="modifyConfirm_describe">${option.option.option_describe}</textarea>
 				</div>
 				<div class="form-group">
-					<label>问题分数</label>
-					<input type="text" placeholder="请输入问题分数..." class="form-control" id="modifyConfirm_grade" value="${option.option.option_grade}"
+					<label>选项扣分</label>
+					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="modifyConfirm_grade" value="${option.option.option_grade}"
 						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
-						onblur="this.v();">
+						onblur="this.v();" value="0">
 				</div>
 			</form>
 			`,
@@ -558,7 +573,7 @@ $(function() {
 				<form novalidate>
 					<div class="form-group">
 						<label>问题描述</label>
-						<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe"></textarea>
+						<textarea class="form-control" placeholder="请输入问题描述..." id="addInquiriesConfirm_describe"></textarea>
 					</div>
 					<div class="form-group">
 					<label>问题类型</label>
@@ -634,7 +649,7 @@ $(function() {
 			<div id="modifyInquiriesDescribe">
 				<div class="form-group">
 					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe">${InquiriesObj.inquiriesQuestion.question_describe}</textarea>
+					<textarea class="form-control" placeholder="请输入问题描述..." id="addInquiriesConfirm_describe">${InquiriesObj.inquiriesQuestion.question_describe}</textarea>
 				</div>
 			</div>
 			`,
@@ -708,6 +723,7 @@ $(function() {
 						<tr style="border-bottom: 2px solid #ddd">
 							<th style="width:40px;">序号</th>
 							<th>选项描述</th>
+							<th>选项扣分</th>
 							<th style="width:160px;">选项操作</th>
 						</tr>
 					</thead>
@@ -716,6 +732,7 @@ $(function() {
 							<tr style="border-top: 1px solid #ddd;">
 								<th>{{option.option_sort}}</th>
 								<td>{{option.option_describe}}</td>
+								<td>{{option.option_grade}}</td>
 								<td>
 									<i title="修改选项" class="ti-pencil-alt" @click="modifyOption(index)"></i>&nbsp;
 									<i title="上移" class="fa fa-arrow-up" @click="moveOption(index,1)"></i>&nbsp;
@@ -785,7 +802,9 @@ $(function() {
 					},
 				});
 			},
-			onDestroy : function() {},
+			onDestroy : function() {
+				modifyInquiriesOptionConfirmVue = null;
+			},
 			buttons : {
 				addOption : {
 					text : '添加选项',
@@ -819,11 +838,15 @@ $(function() {
 			offsetTop : 10, //设置距离浏览器高度
 			title : '修改选项',
 			content : `
-			<div>
-				<div class="form-group">
-					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="modifyInquiriesOption_describe">${option.option_describe}</textarea>
-				</div>
+			<div class="form-group">
+				<label>选项描述</label>
+				<textarea class="form-control" placeholder="请输入选项描述..." id="modifyInquiriesOption_describe">${option.option_describe}</textarea>
+			</div>
+			<div class="form-group">
+				<label>选项扣分</label>
+				<input type="text" placeholder="请输入选项扣分..." class="form-control" id="modifyInquiriesOption_grade"
+						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+						onblur="this.v();" value="${option.option_grade}">
 			</div>
 			`,
 			buttons : {
@@ -836,9 +859,15 @@ $(function() {
 							toastr.error('描述不能为空');
 							return false;
 						}
+						let grade = modifyInquiriesOptionDescribeConfirm.$content.find('#modifyInquiriesOption_grade').val();
+						if (!grade) {
+							toastr.error('分数不能为空');
+							return false;
+						}
 						$.post('/jwcpxt/Question/update_option', {
 							"option.jwcpxt_option_id" : option.jwcpxt_option_id,
-							"option.option_describe" : describe
+							"option.option_describe" : describe,
+							"option.option_grade" : grade
 						}, response => {
 							if (response == "1") {
 								toastr.success("修改成功");
@@ -863,7 +892,7 @@ $(function() {
 		});
 	}
 
-	//添加选择题追问选项
+	//添加选择题的追问的选项
 	function addInquiriesOption(questionId, modifyInquiriesOptionConfirmVue, modifyVm) {
 		let addInquiriesOptionConfirm = $.confirm({
 			smoothContent : false, //关闭动画
@@ -879,7 +908,13 @@ $(function() {
 			<div id="addInquiriesOption">
 				<div class="form-group">
 					<label>选项描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesOptionConfirm_describe"></textarea>
+					<textarea class="form-control" placeholder="请输入选项描述..." id="addInquiriesOptionConfirm_describe"></textarea>
+				</div>
+				<div class="form-group">
+					<label>选项扣分</label>
+					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="addInquiriesOptionConfirm_grade"
+						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+						onblur="this.v();" value="0">
 				</div>
 			</div>
 			`,
@@ -893,9 +928,15 @@ $(function() {
 							toastr.error('描述不能为空');
 							return false;
 						}
+						let grade = addInquiriesOptionConfirm.$content.find('#addInquiriesOptionConfirm_grade').val();
+						if (!grade) {
+							toastr.error('分数不能为空');
+							return false;
+						}
 						$.post('/jwcpxt/Question/save_option', {
 							"option.option_question" : questionId,
-							"option.option_describe" : describe
+							"option.option_describe" : describe,
+							"option.option_grade" : grade
 						}, response => {
 							if (response == "1") {
 								toastr.success("添加成功");

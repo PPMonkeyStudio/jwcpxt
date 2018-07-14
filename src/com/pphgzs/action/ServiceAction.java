@@ -80,12 +80,14 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		Gson gson = gsonBuilder.serializeNulls().create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
+		System.out.println("1" + serviceClient);
 		serviceClient = serviceService.get_serviceClientDo_byId(serviceClient);
+		System.out.println("2" + serviceClient);
 		http_response.getWriter().write(gson.toJson(serviceClient));
 	}
 
 	/**
-	 * 从session中拿到测评人员的信息
+	 * 从session中拿到当前被分配的第一条测评人员的信息
 	 * 
 	 * @throws IOException
 	 */
@@ -97,8 +99,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_user user = new jwcpxt_user();
-		// user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
-		user.setJwcpxt_user_id("1");
+		user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
 		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
 		http_response.getWriter().write(gson.toJson(clientInstanceDTO));
 	}
@@ -117,6 +118,20 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.setContentType("text/html;charset=utf-8");
 		serviceGrab = serviceService.get_serviceGrab(serviceGrab);
 		http_response.getWriter().write(gson.toJson(serviceGrab));
+	}
+
+	/**
+	 * 获取所有的业务
+	 * 
+	 * @throws IOException
+	 */
+	public void list_serviceDefinition_all() throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(serviceService.list_serviceDefinitionDO_all()));
 	}
 
 	/**

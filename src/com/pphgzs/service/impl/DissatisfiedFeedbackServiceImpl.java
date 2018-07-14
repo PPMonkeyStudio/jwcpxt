@@ -7,7 +7,9 @@ import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
@@ -16,6 +18,7 @@ import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UnitService;
+import com.pphgzs.service.UserService;
 import com.pphgzs.util.TimeUtil;
 import com.pphgzs.util.uuidUtil;
 
@@ -24,6 +27,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private ServiceService serviceService;
 	private QuestionService questionService;
 	private UnitService unitService;
+	private UserService userService;
 
 	/**
 	 * 审核操作
@@ -66,13 +70,49 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				checkFeedbackRectification.setFeedback_rectification_audit_state("4");
 				checkFeedbackRectification.setFeedback_rectification_cpzx_opinion(
 						feedbackRectification.getFeedback_rectification_cpzx_opinion());
+				checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+				dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
+				/*
+				 * 测评中心通过之后，生成业务实例
+				 */
+				jwcpxt_service_instance serviceInstance = new jwcpxt_service_instance();
+
+				// 设置业务定义为revisit
+				serviceInstance.setService_instance_service_definition("revisit");
+
+				// 设置所属单位，通过反馈整改和不满意反馈一路查出来
+				serviceInstance.setService_instance_belong_unit(dissatisfiedFeedbackDao
+						.get_unit_byDisFeedbackId(
+								checkFeedbackRectification.getFeedback_rectification_dissatisfied_feedback())
+						.getJwcpxt_unit_id());
+				// 直接随机分配评测员
+				jwcpxt_user user = userService.get_userDO_byRandomAndTypeCP();
+				serviceInstance.setService_instance_judge(user.getJwcpxt_user_id());
+				// 业务唯一识别编号，存反馈整改表的编号
+				serviceInstance.setService_instance_nid(checkFeedbackRectification.getFeedback_rectification_no());
+
+				// 业务办理时间，用反馈最后修改的时间
+				serviceInstance
+						.setService_instance_date(checkFeedbackRectification.getFeedback_rectification_gmt_modified());
+				// 时间和ID
+				serviceInstance.setJwcpxt_service_instance_id(uuidUtil.getUuid());
+				serviceInstance.setService_instance_gmt_create(TimeUtil.getStringSecond());
+				serviceInstance.setService_instance_gmt_modified(serviceInstance.getService_instance_gmt_create());
+
+				// 保存
+				serviceService.saveServiceInstance(serviceInstance);
+				/*
+				 * 
+				 */
+
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("2");
 				checkFeedbackRectification.setFeedback_rectification_sjzgbm_opinion(
 						feedbackRectification.getFeedback_rectification_cpzx_opinion());
+				checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+				dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
 			}
-			checkFeedbackRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
-			dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
+
 			return true;
 		} else if (feedbackRectification.getFeedback_rectification_audit_state() != null
 				&& "3".equals(feedbackRectification.getFeedback_rectification_audit_state())) {
@@ -102,11 +142,12 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			newFeedbackRectification.setFeedback_rectification_content("");
 			newFeedbackRectification.setFeedback_rectification_sjzgbm_opinion("");
 			newFeedbackRectification.setFeedback_rectification_cpzx_opinion("");
-			newFeedbackRectification.setFeedback_rectification_handle_state("1");
+			newFeedbackRectification.setFeedback_rectification_audit_state("1");
 			newFeedbackRectification.setFeedback_rectification_gmt_create(TimeUtil.getStringSecond());
 			newFeedbackRectification.setFeedback_rectification_gmt_modified(
 					newFeedbackRectification.getFeedback_rectification_gmt_create());
 			dissatisfiedFeedbackDao.saveOrUpdateObject(newFeedbackRectification);
+			return true;
 		}
 		return false;
 	}
@@ -347,6 +388,14 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 
 	public void setUnitService(UnitService unitService) {
 		this.unitService = unitService;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 	public DissatisfiedFeedbackDao getDissatisfiedFeedbackDao() {

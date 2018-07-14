@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public jwcpxt_user get_userDO_byRandomAndTypeCP() {
+		return userDao.get_userDO_byRandomAndTypeCP();
+	}
+
+	@Override
 	public UserVO get_userVO() {
 		UserVO userVO = new UserVO();
 		List<jwcpxt_user> userList = userDao.list_user_all();
@@ -80,6 +85,22 @@ public class UserServiceImpl implements UserService {
 
 		user.setUser_password(MD5Util.GetMD5Code(user.getUser_account()));
 		userDao.update_user(user);
+		return true;
+	}
+
+	@Override
+	public boolean update_userPassword(jwcpxt_user newUser) {
+		jwcpxt_user oldUser = userDao.get_userDO_byUserID(newUser.getJwcpxt_user_id());
+		if (oldUser == null) {
+			return false;
+		}
+
+		if (newUser.getUser_password() == null) {
+			return false;
+		}
+		oldUser.setUser_password(MD5Util.GetMD5Code(newUser.getUser_password()));
+
+		userDao.update_user(oldUser);
 		return true;
 	}
 

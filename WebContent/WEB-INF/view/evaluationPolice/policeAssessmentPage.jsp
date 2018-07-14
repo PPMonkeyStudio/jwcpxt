@@ -33,7 +33,7 @@ th {
 		<script src="<%=basePath%>js/icheck.js"></script>
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbar" namespace="/Skip" executeResult="true" />
+			<s:action name="skipNavbarIndex" namespace="/Skip" executeResult="true" />
 			<div class="content" id="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -41,10 +41,10 @@ th {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">问卷测评</h4>
+									<h4 class="title">警务测评</h4>
 								</div>
 								<div class="content table-responsive table-full-width" v-cloak>
-									<div class="panel panel-primary">
+<!-- 									<div class="panel panel-def"> -->
 										<div class="panel-heading">{{serviceDefinition.service_definition_describe}}</div>
 										<div class="panel-body">
 										    <form class="form-inline">
@@ -68,9 +68,12 @@ th {
 											  </div>
 											</form>
 										</div>
-										<ul class="list-group">
+										<div style="padding: 20px">
+										
+										
 										<template v-for="(questionDTO,index) in questionData">
-										<li class="list-group-item">
+										<hr>
+<!-- 										<li class="list-group-item"> -->
 											<!-- 选择题 -->
 											<template v-if="questionDTO.question.question_type==1">
 												 <div class="form-group">
@@ -78,11 +81,16 @@ th {
 													 <!-- 选项循环 -->
 													 <template v-for="(optionDTO,index1) in questionDTO.listOptionDTO">
 													 <div class="form-group">
-													 	 <input type="radio" :name="index" :optionID="optionDTO.option.jwcpxt_option_id" @click="checkOption($event,index)">
-														 <label class="control-label">{{optionDTO.option.option_describe}}</label>
+													 	 <input type="radio" :name="index" :optionIndex="index1" :optionID="optionDTO.option.jwcpxt_option_id">
+														 <template v-if="optionDTO.option.option_push==1">
+														 	<label class="control-label"><span style="color:red;">{{optionDTO.option.option_describe}}</span></label>
+														 </template>
+														 <template v-if="optionDTO.option.option_push==2">
+														 	<label class="control-label">{{optionDTO.option.option_describe}}</label>
+														 </template><small style="color:red;" v-if="optionDTO.listInquiriesOptionDTO.length>0">(追问)</small>
+														 <div style="margin-left: 20px;" class="inquiriesContent"></div>
 													 </div>
 													 </template>
-													 
 												</div>
 											</template>
 											<!-- 主观题 -->
@@ -98,13 +106,14 @@ th {
 													 <textarea class="form-control" rows="3"></textarea>
 												</div>
 											</template>
-										</li>
+											
+<!-- 										</li> -->
 										</template>
-									</ul>
 									</div>
-								</div>
+									</div>
+<!-- 								</div> -->
 							</div>
-							<button type="button" @click="finishReturned" class="btn btn-primary">结束回访</button>
+							<button type="button" @click="finishReturned($event)" class="btn btn-primary">结束回访</button>
 						</div>
 					</div>
 				</div>

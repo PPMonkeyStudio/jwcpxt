@@ -2,6 +2,7 @@ package com.pphgzs.service;
 
 import java.util.List;
 
+import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
@@ -21,6 +22,7 @@ public interface ServiceService {
 	/*
 	 * 
 	 */
+
 	/**
 	 * 获取当事人信息及所涉及的业务
 	 * 
@@ -208,5 +210,20 @@ public interface ServiceService {
 	public jwcpxt_service_definition get_serviceDefinitionDo_byId(jwcpxt_service_definition serviceDefinition);
 
 	public jwcpxt_service_client get_serviceClientDo_byId(jwcpxt_service_client serviceClient);
+
+	public void saveServiceInstance(jwcpxt_service_instance serviceInstance);
+
+	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String service_definition_id, String unit_id);
+
+	public int get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(String service_definition_id,
+			String unit_id);
+
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode);
+
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+			String service_definition_id, String unit_num);
+
+	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance);
 
 }
