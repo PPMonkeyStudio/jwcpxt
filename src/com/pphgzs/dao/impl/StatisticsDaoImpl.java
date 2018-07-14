@@ -1,5 +1,6 @@
 package com.pphgzs.dao.impl;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -55,9 +56,17 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		//
 		query.setParameter("grade", serviceGradeDTO.getGrade());
 		//
-		int count = ((Number) query.uniqueResult()).intValue();
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return 0;
+		} finally {
+			session.clear();
+		}
+
 		//
-		session.clear();
-		return count;
+
 	}
 }
