@@ -46,7 +46,7 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<button type="button" class="btn btn-default"
-										data-toggle="modal" data-target="#statistical">
+										@click="beginStatistical">
 										<i class="ti-plus"></i>开始统计
 									</button>
 									<!-- 
@@ -65,37 +65,6 @@ th {
 							</div>
 						</div>
 					</div>
-
-					<!-- Modal -->
-					<div class="modal fade" id="statistical" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
-						<div class="modal-dialog" role="document" style="width:600px">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title" id="myModalLabel">统计</h4>
-								</div>
-								<div class="modal-body">
-									<div class="form-group" v-show="step==1">
-										<select class="statistical-unit" multiple="multiple" size="10"></select>
-									</div>
-									<div class="form-group" v-show="step==2">
-										<select class="statistical-service" multiple="multiple"
-											size="10"></select>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">取消</button>
-									<button type="button" class="btn btn-primary">{{stemName}}</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</div>
 			<!-- 引入底部 -->

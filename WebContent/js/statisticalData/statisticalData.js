@@ -1,133 +1,184 @@
 $(function() {
-	let myData = {}
+	let myData = {
+		unit : {
+			type : '单位',
+			url : '/jwcpxt/Unit/list_unitDO_byDistributionService',
+			optionText : 'unit_name',
+			optionValue : 'jwcpxt_unit_id',
+			buttonText : '下一步-选择业务',
+			allData : [], //所有已有被分配业务的单位
+		},
+		service : {
+			type : '业务',
+			url : '/jwcpxt/Service/list_serviceDefinition_all',
+			optionText : 'service_definition_describe',
+			optionValue : 'jwcpxt_service_definition_id',
+			buttonText : '下一步-打分',
+			allData : [], //所有业务信息
+		},
+		unitSelect : [],
+		serviceSelect : []
+	}
 
 	let vm = new Vue({
 		el : "#content",
-		data : {
-			step : 1,
-			stemName : '下一步',
+		data : myData,
+		methods : {
+			beginStatistical () {
+				selected(myData.unit);
+			}
 		},
-		methods : {},
 		mounted () {
-			var demo2 = $('.statistical-unit').doublebox({
-				nonSelectedListLabel : '选择单位',
-				selectedListLabel : '统计单位',
-				//preserveSelectionOnMove : 'moved',
-				//moveOnSelect : false,
-				nonSelectedList : [ {
-					"roleId" : "1",
-					"roleName" : "zhangsan"
-				}, {
-					"roleId" : "2",
-					"roleName" : "lisi"
-				}, {
-					"roleId" : "3",
-					"roleName" : "wangwu"
-				} ],
-				selectedList : [ {
-					"roleId" : "4",
-					"roleName" : "zhangsan1"
-				}, {
-					"roleId" : "5",
-					"roleName" : "lisi1"
-				}, {
-					"roleId" : "6",
-					"roleName" : "wangwu1"
-				} ],
-				optionValue : "roleId",
-				optionText : "roleName",
-				doubleMove : false,
-			});
+			//获取所有已有被分配业务的单位
+			$.post(myData.unit.url, {}, response => {
+				myData.unit.allData = response;
+			}, 'json');
+			//获取所有的业务
+			$.post(myData.service.url, {}, response => {
+				myData.service.allData = response;
+			}, 'json');
 		},
 	})
 
 
-	function selectedUnit() {
-		let selectedUnitConfirm = $.confirm({
+	function selected(option) {
+		let selectedConfirm = $.confirm({
 			smoothContent : false, //关闭动画
 			closeIcon : true, //关闭图标
 			closeIconClass : 'fa fa-close', //图标样式
 			type : 'dark', //弹出框类型
-			boxWidth : '40%', //设置宽度
+			boxWidth : '50%', //设置宽度
 			useBootstrap : false, //设置是否使用bootstropt样式
-			title : '添加一个追问',
+			title : '选择' + option.type,
 			content : `
-			<div id="selectedUnit">
+			<div id="selected" style="width:97%;">
 				<div class="form-group">
-					<select class="statistical-unit" multiple="multiple" size="10"></select>
+					<select id="statistical" multiple="multiple" size="10"></select>
 				</div>
 			</div>
 			`,
 			onContentReady : function() {
-				$.post('/jwcpxt/Unit/list_unitDO_byDistributionService', {}, response => {
-				}, 'json');
-				var demo2 = selectedUnitConfirm.$content.find('.statistical-unit').doublebox({
-					nonSelectedListLabel : '选择单位',
-					selectedListLabel : '统计单位',
-					//preserveSelectionOnMove : 'moved',
-					//moveOnSelect : false,
-					nonSelectedList : [ {
-						"roleId" : "1",
-						"roleName" : "zhangsan"
-					}, {
-						"roleId" : "2",
-						"roleName" : "lisi"
-					}, {
-						"roleId" : "3",
-						"roleName" : "wangwu"
-					} ],
-					selectedList : [ {
-						"roleId" : "4",
-						"roleName" : "zhangsan1"
-					}, {
-						"roleId" : "5",
-						"roleName" : "lisi1"
-					}, {
-						"roleId" : "6",
-						"roleName" : "wangwu1"
-					} ],
-					optionValue : "roleId",
-					optionText : "roleName",
-					doubleMove : false,
+				var demo2 = selectedConfirm.$content.find('#statistical').doublebox({
+					nonSelectedListLabel : '选择' + option.type,
+					selectedListLabel : '统计' + option.type,
+					preserveSelectionOnMove : 'moved',
+					moveOnSelect : false,
+					doubleMove : true,
+					optionValue : option.optionValue,
+					optionText : option.optionText,
+					nonSelectedList : option.allData,
+					selectedList : []
 				});
 			},
 			buttons : {
 				confirm : {
-					text : '确认',
-					btnClass : 'btn-info',
-					keys : [ 'enter' ],
+					text : option.buttonText,
+					btnClass : 'btn-blue',
 					action : function() {
-						let describe = addOptionConfirm.$content.find('#addInquiriesConfirm_describe').val();
-						if (!describe) {
-							toastr.error("描述不能为空");
-							return false;
+						let selectedOption = selectedConfirm.$content.find('#statistical').val();
+						if (option.type == '单位') {
+							selectedOption.forEach((select, i) => {
+								myData.unit.allData.forEach((all, j) => {
+									if (all.jwcpxt_service_definition_id == select) {
+										myData.unitSelect.push(all);
+									}
+								})
+							})
+							selected(myData.service);
+						} else if (option.type == '业务') {
+							selectedOption.forEach((select, i) => {
+								myData.service.allData.forEach((all, j) => {
+									if (all.jwcpxt_service_definition_id == select) {
+										myData.serviceSelect.push(all);
+									}
+								})
+							})
+							inputScore();
 						}
-						let type = addOptionConfirm.$content.find('#addInquiriesConfirm_type').val();
-						if (!describe) {
-							toastr.error("描述不能为空");
-							return false;
-						}
-						let params = {
-							"question.question_service_definition" : modifyVm.optionData[index].option.jwcpxt_option_id,
-							"question.question_describe" : describe,
-							"question.question_type" : type
-						};
-						$.post('/jwcpxt/Question/save_question', params, response => {
-							if (response == "1") {
-								toastr.success("添加成功");
-								//更新信息
-								vm.updateOptionInfo(() => {
-									modifyVm.optionData = myData.checkQuestionModalData.listOptionDTO;
-								});
-							} else if (response == "-1") {
-								toastr.error("添加失败");
-							}
-						}, 'text');
 					}
 				},
 				cancel : {
 					text : '取消',
+					btnClass : 'btn-default',
+					keys : [ 'esc' ],
+					action : function() {}
+				}
+			},
+		});
+	}
+
+	//输入分数
+	function inputScore() {
+		let inputScoreConfirmVue;
+		let inputScoreConfirm = $.confirm({
+			smoothContent : false, //关闭动画
+			closeIcon : true, //关闭图标
+			closeIconClass : 'fa fa-close', //图标样式
+			type : 'dark', //弹出框类型
+			boxWidth : '50%', //设置宽度
+			useBootstrap : false, //设置是否使用bootstropt样式
+			title : '填写分数',
+			content : `
+			<div id="inputScoreConfirmSelected" style="width:100%;">
+				<template v-for="(service,index) in serviceData">
+					<div class="form-group">
+						<label>{{service.service_definition_describe}}</label>
+						<input type="text" placeholder="请输入业务分数..." class="form-control inputScore"  style="width:240px;"
+								:index="index" :serviceid="service.jwcpxt_service_definition_id"
+								onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+								onblur="this.v();">
+					</div>
+				</template>
+				<div class="form-group">
+					<label>起始时间</label>
+					<input id="beginTime" placeholder="起始时间" class="mydate form-control" style="display: inline; width: 150px;">
+					<label>结束时间</label>
+					<input id="endTime" placeholder="结束时间" class="mydate form-control" style="display: inline; width: 150px;">
+				</div>
+			</div>
+			`,
+			onContentReady : function() {
+				inputScoreConfirmVue = new Vue({
+					el : '#inputScoreConfirmSelected',
+					data : {
+						serviceData : myData.serviceSelect,
+					},
+				});
+				$.datetimepicker.setLocale('ch');
+				$('.mydate').datetimepicker({
+					yearStart : 1900, // 设置最小年份
+					yearEnd : 2050, // 设置最大年份
+					yearOffset : 0, // 年偏差
+					timepicker : false, // 关闭时间选项
+					format : 'Y-m-d', // 格式化日期年-月-日
+					minDate : '1900/01/01', // 设置最小日期
+					maxDate : '2050/01/01', // 设置最大日期
+				});
+				setTimeout(function() {
+					$('.xdsoft_datetimepicker').css('z-index', 99999999);
+				}, 0);
+			},
+			buttons : {
+				confirm : {
+					text : '统计',
 					btnClass : 'btn-blue',
+					action : function() {
+						let scoreData = [];
+						let time = {
+							beginTime : inputScoreConfirm.$content.find('#beginTime').val(),
+							endTime : inputScoreConfirm.$content.find('#endTime').val()
+						}
+						inputScoreConfirm.$content.find('.inputScore').each((index, element) => {
+							let score_serviceid = {
+								serviceid : $(element).attr('serviceid'),
+								score : $(element).val(),
+							};
+						});
+					}
+				},
+				cancel : {
+					text : '取消',
+					btnClass : 'btn-default',
 					keys : [ 'esc' ],
 					action : function() {}
 				}

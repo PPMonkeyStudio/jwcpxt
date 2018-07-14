@@ -69,6 +69,8 @@ th {
 											</form>
 										</div>
 										<div style="padding: 20px">
+										
+										
 										<template v-for="(questionDTO,index) in questionData">
 										<hr>
 <!-- 										<li class="list-group-item"> -->
