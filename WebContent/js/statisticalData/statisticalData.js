@@ -43,10 +43,6 @@ $(function() {
 
 
 	function selected(option) {
-		//清空上一次已选择的数据
-		myData.unitSelect = [];
-		myData.unitSelectIdArr = [];
-		myData.serviceSelect = [];
 		//--------------------
 		let selectedConfirm = $.confirm({
 			smoothContent : false, //关闭动画
@@ -225,6 +221,11 @@ $(function() {
 								contentType : false,
 								success : response => {
 									console.log(response);
+
+									//清空这次操作的的数据
+									myData.unitSelect = [];
+									myData.unitSelectIdArr = [];
+									myData.serviceSelect = [];
 								}
 							});
 						} else {
