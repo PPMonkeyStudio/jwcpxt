@@ -46,6 +46,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				serviceGradeBelongUnitDTOList.add(serviceGradeBelongUnitDTO);
 			}
 			// 这个单位下所有统计的业务DTO放入到单位列表中
+			unitHaveServiceGradeDTO.setServiceGradeBelongUnitDTOList(serviceGradeBelongUnitDTOList);
 			unitHaveServiceGradeDTOList.add(unitHaveServiceGradeDTO);
 		}
 		// 将统计完的所有单位放到VO中
