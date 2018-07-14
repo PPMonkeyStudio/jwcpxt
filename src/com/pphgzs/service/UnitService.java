@@ -3,6 +3,7 @@ package com.pphgzs.service;
 import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.VO.UnitVO;
 
 public interface UnitService {
@@ -26,5 +27,7 @@ public interface UnitService {
 	public List<jwcpxt_unit> list_unitDO_byFatherUnitID(String jwcpxt_unit_id);
 
 	public List<jwcpxt_unit> list_unitDO_byDistributionService();
+
+	public List<jwcpxt_unit_service> list_unitServiceDO_all();
 
 }

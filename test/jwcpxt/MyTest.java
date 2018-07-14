@@ -70,7 +70,7 @@ public class MyTest {
 	}
 
 	@Test
-	public void ttt() {
+	public void ttttt1() {
 
 		DissatisfiedQuestionVO dissatisfiedQuestionVO = new DissatisfiedQuestionVO();
 		dissatisfiedQuestionVO.setScreenState("1");
@@ -78,12 +78,12 @@ public class MyTest {
 	}
 
 	@Test
-	public void tttt() {
+	public void ttttt2() {
 		System.out.println(TimeUtil.getStringDay().substring(0, 7));
 	}
 
 	@Test
-	public void tttdf() {
+	public void ttttt3() {
 
 		System.out.println(unitService.list_unitDO_byDistributionService());
 	}

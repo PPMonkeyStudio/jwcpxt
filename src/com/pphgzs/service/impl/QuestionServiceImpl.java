@@ -11,6 +11,7 @@ import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.InquiriesOptionDTO;
 import com.pphgzs.domain.DTO.OptionDTO;
@@ -724,12 +725,48 @@ public class QuestionServiceImpl implements QuestionService {
 		client.setService_client_visit("1");
 		client.setService_client_gmt_modified(TimeUtil.getStringSecond());
 		questionDao.saveOrUpdateObject(client);
+
 		/*
 		 * 最后分配新的实例给测评人员
+		 * 
+		 * 1、查询所有单位关联业务表
+		 * 
+		 * 2、当天业务实例中，属于这个单位的，且属于这个业务定义的数量
+		 * 
+		 * 3、对比数量和单位关联业务表中填写的需求数量，数量大于需求数量的，就移出list
+		 * 
+		 * 4、在剩下的list中随机选取一个单位业务关联DO，通过这个DO，随机取一个抓取实例分配到业务实例中给这个测评员
+		 * 
+		 * 
+		 * 
 		 */
+
+		// 查询所有单位关联业务表
+		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
+		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
+		for (jwcpxt_unit_service unitService : unitServiceList) {
+			// 需求数量
+			int wantNum = unitService.getEvaluation_count();
+			// 已分配数量
+			int currNum = 0;
+		}
+		//
 
 		//
 
+		//
+
+		//
+
+		//
+
+		//
+
+		//
+
+		//
+
+		//
 		/*
 		 * 
 		 */
