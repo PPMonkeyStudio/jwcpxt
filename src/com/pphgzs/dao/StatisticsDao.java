@@ -8,4 +8,7 @@ public interface StatisticsDao {
 	int geteStatisticsGrade(ServiceGradeDTO serviceGradeDTO, String unitId, String searchTimeStart,
 			String searchTimeEnd);
 
+	int geteStatisticsGrade_byFatherUnit(ServiceGradeDTO serviceGradeDTO, String fatherUnitId, String searchTimeStart,
+			String searchTimeEnd);
+
 }

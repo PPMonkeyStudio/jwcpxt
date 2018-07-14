@@ -126,12 +126,19 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	 * @throws IOException
 	 */
 	public void list_serviceDefinition_all() throws IOException {
+		List<jwcpxt_service_definition> serviceDefinitionList = serviceService.list_serviceDefinitionDO_all();
+		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
+		//
+		serviceDefinition.setJwcpxt_service_definition_id("revisit");
+		serviceDefinition.setService_definition_describe("整改情况");
+		serviceDefinitionList.add(0, serviceDefinition);
+		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(serviceService.list_serviceDefinitionDO_all()));
+		http_response.getWriter().write(gson.toJson(serviceDefinitionList));
 	}
 
 	/**

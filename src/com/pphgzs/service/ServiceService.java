@@ -215,8 +215,14 @@ public interface ServiceService {
 
 	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String service_definition_id, String unit_id);
 
+	public int get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(String service_definition_id,
+			String unit_id);
+
 	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
 			String serviceDefinitionID, String organizationCode);
+
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+			String service_definition_id, String unit_num);
 
 	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance);
 
