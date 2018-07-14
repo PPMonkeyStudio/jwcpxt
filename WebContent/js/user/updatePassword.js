@@ -103,7 +103,7 @@ function updatePasswordUnit(event) {
 									flag = true;
 								}
 							}
-							if (flag) {
+							if (flag) {	
 								if ($('#one_password').val() == $(
 										'#two_password').val()) {
 
