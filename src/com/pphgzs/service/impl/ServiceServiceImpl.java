@@ -713,12 +713,24 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
+	public int get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(String service_definition_id,
+			String unit_id) {
+		return serviceDao.get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(service_definition_id, unit_id);
+	}
+
+	@Override
 	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
 			String serviceDefinitionID, String organizationCode) {
 		return serviceDao.get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
 				serviceDefinitionID, organizationCode);
 	}
 
+	@Override
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode) {
+		return serviceDao.get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+				serviceDefinitionID, organizationCode);
+	}
 	/*
 	 * 
 	 */
