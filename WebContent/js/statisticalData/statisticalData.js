@@ -17,6 +17,7 @@ $(function() {
 			allData : [], //所有业务信息
 		},
 		unitSelect : [],
+		unitSelectIdArr : [],
 		serviceSelect : []
 	}
 
@@ -42,6 +43,11 @@ $(function() {
 
 
 	function selected(option) {
+		//清空上一次已选择的数据
+		myData.unitSelect = [];
+		myData.unitSelectIdArr = [];
+		myData.serviceSelect = [];
+		//--------------------
 		let selectedConfirm = $.confirm({
 			smoothContent : false, //关闭动画
 			closeIcon : true, //关闭图标
@@ -77,6 +83,7 @@ $(function() {
 					action : function() {
 						let selectedOption = selectedConfirm.$content.find('#statistical').val();
 						if (option.type == '单位') {
+							myData.unitSelectIdArr = selectedOption;
 							selectedOption.forEach((select, i) => {
 								myData.unit.allData.forEach((all, j) => {
 									if (all.jwcpxt_service_definition_id == select) {
@@ -158,12 +165,17 @@ $(function() {
 					$('.xdsoft_datetimepicker').css('z-index', 99999999);
 				}, 0);
 			},
+			onDestroy : function() {
+				inputScoreConfirmVue = null;
+			},
 			buttons : {
 				confirm : {
 					text : '统计',
 					btnClass : 'btn-blue',
 					action : function() {
 						let scoreData = [];
+						let num = 0;
+						let flag = false;
 						let time = {
 							beginTime : inputScoreConfirm.$content.find('#beginTime').val(),
 							endTime : inputScoreConfirm.$content.find('#endTime').val()
@@ -173,7 +185,51 @@ $(function() {
 								serviceid : $(element).attr('serviceid'),
 								score : $(element).val(),
 							};
+							num += Number(score_serviceid.score);
+							scoreData[index] = score_serviceid;
 						});
+						if (num < 100) {
+							toastr.error('总分不足100，请检查');
+							console.log(num);
+						} else if (num > 100) {
+							toastr.error('总分超过100，请检查');
+							console.log(num);
+						} else if (num == 100) {
+							flag = true;
+						}
+						if (flag) {
+							let formData = new FormData();
+							formData.append('searchTimeStart', time.beginTime); //筛选起始时间
+							formData.append('searchTimeEnd', time.endTime); //筛选结束时间
+							/*	let params = {
+									searchTimeStart : time.beginTime,
+									searchTimeEnd : time.endTime,
+							};*/
+							scoreData.forEach(function(element, i) {
+								formData.append('serviceGradeDTOList[' + i + '].service_id', element.serviceid);
+								formData.append('serviceGradeDTOList[' + i + '].grade', element.score);
+							})
+							myData.unitSelectIdArr.forEach(function(element, i) {
+								formData.append('unitIds', element);
+							})
+							/*$.post('/jwcpxt/Statistics/getGradeByCondition', params, response => {
+								console.log(response);
+							}, 'json');*/
+							$.ajax({
+								url : '/jwcpxt/Statistics/getGradeByCondition',
+								type : 'POST',
+								dataType : 'json',
+								cache : false,
+								data : formData,
+								processData : false,
+								contentType : false,
+								success : response => {
+									console.log(response);
+								}
+							});
+						} else {
+							return false;
+						}
 					}
 				},
 				cancel : {
