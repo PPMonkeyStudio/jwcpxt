@@ -11,6 +11,8 @@
 
 	<bean id="statisticsService" class="com.pphgzs.service.impl.StatisticsServiceImpl">
 		<property name="statisticsDao" ref="statisticsDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="serviceDao" ref="serviceDao"></property>
 	</bean>
 
 	<bean id="statisticsDao" class="com.pphgzs.dao.impl.StatisticsDaoImpl">
