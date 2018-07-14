@@ -1,5 +1,7 @@
 package com.pphgzs.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
+import com.google.gson.Gson;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.VO.StatisticsVO;
 import com.pphgzs.service.StatisticsService;
@@ -30,6 +33,23 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	public void getGradeByCondition() {
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
+		Gson gson = new Gson();
+		String result = gson.toJson(statisticsVO);
+		try {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter pw = response.getWriter();
+			pw.write(result);
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void downloadExcel() {
+
 	}
 
 	public String[] getUnitIds() {

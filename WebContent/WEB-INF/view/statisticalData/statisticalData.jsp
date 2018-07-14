@@ -33,7 +33,8 @@ th {
 		<s:action name="skipSidebar" namespace="/Skip" executeResult="true" />
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbarIndex" namespace="/Skip" executeResult="true" />
+			<s:action name="skipNavbarIndex" namespace="/Skip"
+				executeResult="true" />
 			<div class="content" id="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -45,7 +46,7 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<button type="button" class="btn btn-default"
-										data-toggle="modal" data-target="#statistical">
+										@click="beginStatistical">
 										<i class="ti-plus"></i>开始统计
 									</button>
 									<!-- 
@@ -64,37 +65,6 @@ th {
 							</div>
 						</div>
 					</div>
-
-					<!-- Modal -->
-					<div class="modal fade" id="statistical" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title" id="myModalLabel">统计</h4>
-								</div>
-								<div class="modal-body">
-									<div class="form-group">
-										<select multiple="multiple" size="10"></select>
-									</div>
-									<div class="form-group">
-										<select multiple="multiple" size="10"></select>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">Save
-										changes</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</div>
 			<!-- 引入底部 -->
