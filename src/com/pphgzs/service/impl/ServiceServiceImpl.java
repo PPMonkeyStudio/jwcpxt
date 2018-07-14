@@ -701,6 +701,24 @@ public class ServiceServiceImpl implements ServiceService {
 		return null;
 	}
 
+	/**
+	 * 根据单位业务表获取今日已分配个数
+	 */
+	@Override
+	public int currNumUnitService(jwcpxt_unit_service unitServi) {
+		// 获取到单位业务表信息
+		if (unitServi != null && unitServi.getJwcpxt_unit_service_id() != null
+				&& unitServi.getJwcpxt_unit_service_id().trim().length() > 0) {
+			unitServi = serviceDao.get_unitService_byUnitServiceId(unitServi.getJwcpxt_unit_service_id());
+		}
+		if (unitServi == null) {
+			return -1;
+		}
+		//
+
+		return 0;
+	}
+
 	/*
 	 * 
 	 */

@@ -22,6 +22,11 @@ public interface ServiceService {
 	 * 
 	 */
 	/**
+	 * 根据业务单位表获取该单位该业务今日共分配多少个
+	 */
+	public int currNumUnitService(jwcpxt_unit_service unitServi);
+
+	/**
 	 * 获取当事人信息及所涉及的业务
 	 * 
 	 * @param user
