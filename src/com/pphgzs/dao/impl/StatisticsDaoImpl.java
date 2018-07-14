@@ -60,7 +60,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			System.err.println(e);
 			return 0;
 		} finally {
 			session.clear();
