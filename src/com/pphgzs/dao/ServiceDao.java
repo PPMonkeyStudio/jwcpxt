@@ -134,4 +134,6 @@ public interface ServiceDao {
 	 */
 	public jwcpxt_service_client get_serviceClientDo_byId(String trim);
 
+	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String service_definition_id, String unit_id);
+
 }
