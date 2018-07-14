@@ -21,7 +21,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 	public StatisticsVO getGradeByCondition(String[] unitIds, String searchTimeStart, String searchTimeEnd,
 			List<ServiceGradeDTO> serviceGradeDTOList) {
 		// TODO Auto-generated method stub
-
 		StatisticsVO statisticsVO = new StatisticsVO();
 		List<UnitHaveServiceGradeDTO> unitHaveServiceGradeDTOList = new ArrayList<UnitHaveServiceGradeDTO>();
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO;
