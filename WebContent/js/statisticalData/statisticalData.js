@@ -106,7 +106,9 @@ $(function() {
 					text : '取消',
 					btnClass : 'btn-default',
 					keys : [ 'esc' ],
-					action : function() {}
+					action : function() {
+						clean();
+					}
 				}
 			},
 		});
@@ -224,10 +226,7 @@ $(function() {
 								success : response => {
 									myData.statisticalResultsData = response.unitHaveServiceGradeDTOList;
 									myData.ready = true;
-									//清空这次操作的的数据
-									myData.unitSelect = [];
-									myData.unitSelectIdArr = [];
-									myData.serviceSelect = [];
+									clean();
 								}
 							});
 						} else {
@@ -239,9 +238,19 @@ $(function() {
 					text : '取消',
 					btnClass : 'btn-default',
 					keys : [ 'esc' ],
-					action : function() {}
+					action : function() {
+						clean();
+					}
 				}
 			},
 		});
+	}
+
+	//清空数据操作
+	function clean() {
+		//清空这次操作的的数据
+		myData.unitSelect = [];
+		myData.unitSelectIdArr = [];
+		myData.serviceSelect = [];
 	}
 })
