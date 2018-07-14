@@ -36,6 +36,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		Gson gson = new Gson();
 		String result = gson.toJson(statisticsVO);
 		try {
+			response.setContentType("text/html;charset=utf-8");
 			PrintWriter pw = response.getWriter();
 			pw.write(result);
 			pw.flush();
