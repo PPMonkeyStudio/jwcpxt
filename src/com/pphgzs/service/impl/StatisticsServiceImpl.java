@@ -43,7 +43,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				// 统计这个单位下这个业务所得分
 
 				if (unit.getUnit_grade() == 2) {
-					statisticsGrade = statisticsDao.geteStatisticsGradeByBaba(serviceGradeDTO, unitIds[i],
+					statisticsGrade = statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
 							searchTimeStart, searchTimeEnd);
 				} else {
 					statisticsGrade = statisticsDao.geteStatisticsGrade(serviceGradeDTO, unitIds[i], searchTimeStart,
