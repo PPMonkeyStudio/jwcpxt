@@ -7,11 +7,15 @@ import com.pphgzs.dao.QuestionDao;
 import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
+import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.InquiriesOptionDTO;
 import com.pphgzs.domain.DTO.OptionDTO;
@@ -601,7 +605,7 @@ public class QuestionServiceImpl implements QuestionService {
 	 * 保存回答
 	 */
 	@Override
-	public boolean save_answer(List<AnswerDTO> listAnswerDTO, jwcpxt_service_client serviceClient) {
+	public boolean save_answer(List<AnswerDTO> listAnswerDTO, jwcpxt_service_client serviceClient, jwcpxt_user user) {
 		// 定义
 		List<QuestionDTO> listQuestionDTO = new ArrayList<>();
 		AnswerDTO answerD = new AnswerDTO();
@@ -729,8 +733,6 @@ public class QuestionServiceImpl implements QuestionService {
 		/*
 		 * 最后分配新的实例给测评人员
 		 * 
-		 * TODO
-		 * 
 		 * 1、查询所有单位关联业务表
 		 * 
 		 * 2、当天业务实例中，属于这个单位的，且属于这个业务定义的数量
@@ -757,26 +759,44 @@ public class QuestionServiceImpl implements QuestionService {
 				unitServiceList.remove(unitService);
 			}
 		}
-		// 随机取一个单位业务关联DO作为分配
-		int random = (int) (Math.random() * unitServiceList.size());
-		jwcpxt_unit_service thisUnitService = unitServiceList.get(random);
+		// 随机取一个单位业务关联DO作为分配，如果这个单位没有数据，那么就换一个单位
+		jwcpxt_grab_instance grabInstance = null;
+		jwcpxt_unit_service thisUnitService = null;
+		jwcpxt_unit unit = null;
+		while (unitServiceList.size() > 0) {
+			int random = (int) (Math.random() * unitServiceList.size());
+			thisUnitService = unitServiceList.get(random);
+			unit = unitService.get_unitDO_byID(thisUnitService.getUnit_id());
+			// 随机此业务，此单位，未被分配的一个抓取实例
+			grabInstance = serviceService
+					.get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+							thisUnitService.getService_definition_id(), unit.getUnit_num());
+			if (grabInstance != null) {
+				break;
+			} else {
+				unitServiceList.remove(random);
+			}
+		}
+
+		if (grabInstance == null) {
+			return true;
+		}
+		// 分配生成业务实例
+		jwcpxt_service_instance serviceInstance = new jwcpxt_service_instance();
+		serviceInstance.setJwcpxt_service_instance_id(uuidUtil.getUuid());
+		serviceInstance.setService_instance_gmt_create(TimeUtil.getStringSecond());
+		serviceInstance.setService_instance_gmt_modified(serviceInstance.getService_instance_gmt_create());
+		serviceInstance.setService_instance_service_definition(grabInstance.getGrab_instance_service_definition());
+		serviceInstance.setService_instance_belong_unit(thisUnitService.getUnit_id());
+		serviceInstance.setService_instance_judge(user.getJwcpxt_user_id());
+		serviceInstance.setService_instance_nid(grabInstance.getGrab_instance_unique_id());
+		serviceInstance.setService_instance_date(grabInstance.getGrab_instance_service_time());
+		serviceService.saveServiceInstance(serviceInstance);
+		// 并且更新抓取实例的状态
+		grabInstance.setGrab_instance_distribution("1");
+		serviceService.update_grabInstance(grabInstance);
 		//
 
-		//
-
-		//
-
-		//
-
-		//
-
-		//
-
-		//
-
-		//
-
-		//
 		/*
 		 * 
 		 */
