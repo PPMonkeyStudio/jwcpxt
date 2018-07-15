@@ -53,7 +53,7 @@ function updateUnit(event) {
 				useBootstrap : false,
 				content : '<div><form id="updateUnitForm">'
 						+ '<label>单位名称：</label><input id="update_unit_name" name="unit.unit_name" class="form-control unitInput">'
-						+ '<label>机构代码：</label><input id="update_unit_num" name="unit.unit_num" class="form-control unitInput">'
+						+ '<label>机构代码：</label><input readonly="false" id="update_unit_num" name="unit.unit_num" class="form-control unitInput">'
 						+ '<label>单位账号：</label><input readonly="false" id="update_unit_account" name="unit.unit_account" class="form-control unitInput">'
 						+ '<label>联系电话：</label><input id="update_unit_phone" name="unit.unit_phone" class="form-control unitInput">'
 						+ '</form></div>',
@@ -213,7 +213,7 @@ function addUnit(event) {
 				content : '<div><form id="unitForm">'
 						+ '<label>单位名称：</label><input name="unit.unit_name" class="form-control unitInput">'
 						+ '<label>机构代码：</label><input name="unit.unit_num" class="form-control unitInput">'
-						+ '<label>单位账号：</label><input name="unit.unit_account" class="form-control unitInput">'
+						//+ '<label>单位账号：</label><input name="unit.unit_account" class="form-control unitInput">'
 						+ '<label>联系电话：</label><input id="add_unit_phone" name="unit.unit_phone" class="form-control unitInput">'
 						+ '</form></div>',
 				buttons : {
@@ -241,11 +241,10 @@ function addUnit(event) {
 							}
 
 							if (flag) {
-								var formData = new FormData(document
-										.getElementById("unitForm"));
+								var formData = new FormData(document.getElementById("unitForm"));
 								formData.append('unit.unit_father', event.id);
-								formData.append('unit.unit_password', $(
-										'#add_unit_phone').val());
+								formData.append('unit.unit_password', $('#add_unit_phone').val());
+								formData.append('unit.unit_account', formData.get("unit.unit_num"));
 								$.ajax({
 									url : '/jwcpxt/Unit/save_unit',
 									type : 'POST',

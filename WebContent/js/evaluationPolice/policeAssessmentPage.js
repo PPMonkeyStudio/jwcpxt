@@ -120,10 +120,10 @@ $(function() {
 									$.post('/jwcpxt/Question/save_answer', params, response => {
 										if (response == "1") {
 											$($event.target).attr("disabled", "disabled");
-											toastr.success("回访结束,3秒后跳转..");
+											toastr.success("回访结束,1秒后跳转..");
 											setTimeout(function() {
 												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
-											}, 3000);
+											}, 1000);
 										} else if (response == "-1") {
 											toastr.error("结束失败");
 										}
