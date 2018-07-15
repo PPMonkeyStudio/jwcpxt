@@ -101,6 +101,10 @@ public class SkipAction {
 		return "skipPreviewPoliceAssessmentPageJsp";
 	}
 
+	public String skipStatisticalData() {
+		return "skipStatisticalData";
+	}
+
 	public String getDefinitionId() {
 		return definitionId;
 	}

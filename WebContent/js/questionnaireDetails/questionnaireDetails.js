@@ -228,7 +228,7 @@ $(function() {
 							<th style="width:40px;">追问</th>
 							<th style="width:40px;">序号</th>
 							<th>选项描述</th>
-							<th style="width:40px;">分数</th>
+							<th style="width:40px;">扣分</th>
 							<th style="width:160px;">选项操作</th>
 						</tr>
 					</thead>
@@ -274,6 +274,7 @@ $(function() {
 																<span v-if="inquiriesOptionDTO.inquiriesQuestion.question_type==4"class="label label-primary">选择题</span> 
 																<span v-else-if="inquiriesOptionDTO.inquiriesQuestion.question_type==3" class="label label-info">主观题</span>
 																<span v-else class="label label-warning">未定义</span>
+															</td>
 															<td>
 																<i class="ti-pencil-alt" @click="modifyInquiries(index,index1)"></i>&nbsp; 
 																<i class="fa fa-arrow-up" @click="moveInquiries(index,index1,1)"></i>&nbsp;
@@ -426,14 +427,14 @@ $(function() {
 			content : `
 			<form novalidate>
 				<div class="form-group">
-					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="addOptionConfirm_describe"></textarea>
+					<label>选项描述</label>
+					<textarea class="form-control" placeholder="请输入选项描述..." id="addOptionConfirm_describe"></textarea>
 				</div>
 				<div class="form-group">
-					<label>问题分数</label>
-					<input type="text" placeholder="请输入问题分数..." class="form-control" id="addOptionConfirm_grade"
+					<label>选项扣分</label>
+					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="addOptionConfirm_grade"
 						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
-						onblur="this.v();">
+						onblur="this.v();" value="0">
 				</div>
 				<div class="form-group">
 					<label>是否推送</label>
@@ -502,14 +503,14 @@ $(function() {
 			content : `
 			<form novalidate>
 				<div class="form-group">
-					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="modifyConfirm_describe">${option.option.option_describe}</textarea>
+					<label>选项描述</label>
+					<textarea class="form-control" placeholder="请输入选项描述..." id="modifyConfirm_describe">${option.option.option_describe}</textarea>
 				</div>
 				<div class="form-group">
-					<label>问题分数</label>
-					<input type="text" placeholder="请输入问题分数..." class="form-control" id="modifyConfirm_grade" value="${option.option.option_grade}"
+					<label>选项扣分</label>
+					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="modifyConfirm_grade" value="${option.option.option_grade}"
 						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
-						onblur="this.v();">
+						onblur="this.v();" value="0">
 				</div>
 			</form>
 			`,
@@ -572,7 +573,7 @@ $(function() {
 				<form novalidate>
 					<div class="form-group">
 						<label>问题描述</label>
-						<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe"></textarea>
+						<textarea class="form-control" placeholder="请输入问题描述..." id="addInquiriesConfirm_describe"></textarea>
 					</div>
 					<div class="form-group">
 					<label>问题类型</label>
@@ -648,7 +649,7 @@ $(function() {
 			<div id="modifyInquiriesDescribe">
 				<div class="form-group">
 					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesConfirm_describe">${InquiriesObj.inquiriesQuestion.question_describe}</textarea>
+					<textarea class="form-control" placeholder="请输入问题描述..." id="addInquiriesConfirm_describe">${InquiriesObj.inquiriesQuestion.question_describe}</textarea>
 				</div>
 			</div>
 			`,
@@ -722,6 +723,7 @@ $(function() {
 						<tr style="border-bottom: 2px solid #ddd">
 							<th style="width:40px;">序号</th>
 							<th>选项描述</th>
+							<th>选项扣分</th>
 							<th style="width:160px;">选项操作</th>
 						</tr>
 					</thead>
@@ -730,6 +732,7 @@ $(function() {
 							<tr style="border-top: 1px solid #ddd;">
 								<th>{{option.option_sort}}</th>
 								<td>{{option.option_describe}}</td>
+								<td>{{option.option_grade}}</td>
 								<td>
 									<i title="修改选项" class="ti-pencil-alt" @click="modifyOption(index)"></i>&nbsp;
 									<i title="上移" class="fa fa-arrow-up" @click="moveOption(index,1)"></i>&nbsp;
@@ -835,11 +838,15 @@ $(function() {
 			offsetTop : 10, //设置距离浏览器高度
 			title : '修改选项',
 			content : `
-			<div>
-				<div class="form-group">
-					<label>问题描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="modifyInquiriesOption_describe">${option.option_describe}</textarea>
-				</div>
+			<div class="form-group">
+				<label>选项描述</label>
+				<textarea class="form-control" placeholder="请输入选项描述..." id="modifyInquiriesOption_describe">${option.option_describe}</textarea>
+			</div>
+			<div class="form-group">
+				<label>选项扣分</label>
+				<input type="text" placeholder="请输入选项扣分..." class="form-control" id="modifyInquiriesOption_grade"
+						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+						onblur="this.v();" value="${option.option_grade}">
 			</div>
 			`,
 			buttons : {
@@ -852,9 +859,15 @@ $(function() {
 							toastr.error('描述不能为空');
 							return false;
 						}
+						let grade = modifyInquiriesOptionDescribeConfirm.$content.find('#modifyInquiriesOption_grade').val();
+						if (!grade) {
+							toastr.error('分数不能为空');
+							return false;
+						}
 						$.post('/jwcpxt/Question/update_option', {
 							"option.jwcpxt_option_id" : option.jwcpxt_option_id,
-							"option.option_describe" : describe
+							"option.option_describe" : describe,
+							"option.option_grade" : grade
 						}, response => {
 							if (response == "1") {
 								toastr.success("修改成功");
@@ -879,7 +892,7 @@ $(function() {
 		});
 	}
 
-	//添加选择题追问选项
+	//添加选择题的追问的选项
 	function addInquiriesOption(questionId, modifyInquiriesOptionConfirmVue, modifyVm) {
 		let addInquiriesOptionConfirm = $.confirm({
 			smoothContent : false, //关闭动画
@@ -895,7 +908,13 @@ $(function() {
 			<div id="addInquiriesOption">
 				<div class="form-group">
 					<label>选项描述</label>
-					<textarea class="form-control" placeholder="请输入描述..." id="addInquiriesOptionConfirm_describe"></textarea>
+					<textarea class="form-control" placeholder="请输入选项描述..." id="addInquiriesOptionConfirm_describe"></textarea>
+				</div>
+				<div class="form-group">
+					<label>选项扣分</label>
+					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="addInquiriesOptionConfirm_grade"
+						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+						onblur="this.v();" value="0">
 				</div>
 			</div>
 			`,
@@ -909,9 +928,15 @@ $(function() {
 							toastr.error('描述不能为空');
 							return false;
 						}
+						let grade = addInquiriesOptionConfirm.$content.find('#addInquiriesOptionConfirm_grade').val();
+						if (!grade) {
+							toastr.error('分数不能为空');
+							return false;
+						}
 						$.post('/jwcpxt/Question/save_option', {
 							"option.option_question" : questionId,
-							"option.option_describe" : describe
+							"option.option_describe" : describe,
+							"option.option_grade" : grade
 						}, response => {
 							if (response == "1") {
 								toastr.success("添加成功");

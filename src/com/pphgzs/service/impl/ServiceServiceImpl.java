@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pphgzs.dao.ServiceDao;
+import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_grab_journal;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
@@ -193,6 +194,11 @@ public class ServiceServiceImpl implements ServiceService {
 			unitServi = serviceDao.get_unitService_byUnitServiceId(unitServic.getJwcpxt_unit_service_id().trim());
 		}
 		return unitServi;
+	}
+
+	@Override
+	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance) {
+		return serviceDao.update_grabInstance(grabInstance);
 	}
 
 	/**
@@ -701,24 +707,30 @@ public class ServiceServiceImpl implements ServiceService {
 		return null;
 	}
 
-	/**
-	 * 根据单位业务表获取今日已分配个数
-	 */
 	@Override
-	public int currNumUnitService(jwcpxt_unit_service unitServi) {
-		// 获取到单位业务表信息
-		if (unitServi != null && unitServi.getJwcpxt_unit_service_id() != null
-				&& unitServi.getJwcpxt_unit_service_id().trim().length() > 0) {
-			unitServi = serviceDao.get_unitService_byUnitServiceId(unitServi.getJwcpxt_unit_service_id());
-		}
-		if (unitServi == null) {
-			return -1;
-		}
-		//
-
-		return 0;
+	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String service_definition_id, String unit_id) {
+		return serviceDao.get_serviceInstanceCount_byServiceDefinitionAndUnit(service_definition_id, unit_id);
 	}
 
+	@Override
+	public int get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(String service_definition_id,
+			String unit_id) {
+		return serviceDao.get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(service_definition_id, unit_id);
+	}
+
+	@Override
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode) {
+		return serviceDao.get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+				serviceDefinitionID, organizationCode);
+	}
+
+	@Override
+	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+			String serviceDefinitionID, String organizationCode) {
+		return serviceDao.get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+				serviceDefinitionID, organizationCode);
+	}
 	/*
 	 * 
 	 */

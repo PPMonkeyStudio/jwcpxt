@@ -122,7 +122,7 @@ $(function() {
 											$($event.target).attr("disabled", "disabled");
 											toastr.success("回访结束,3秒后跳转..");
 											setTimeout(function() {
-												window.location.href = "/Skip/skipReturnedPartyInformation";
+												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
 											}, 3000);
 										} else if (response == "-1") {
 											toastr.error("结束失败");
@@ -142,20 +142,37 @@ $(function() {
 		},
 		mounted () {
 			this.getInfo();
-			this.$nextTick(function() {
-				setTimeout(function() {
-					$('input').iCheck({
-						checkboxClass : 'icheckbox_square-blue',
-						radioClass : 'iradio_square-blue',
-						increaseArea : '20%' // optional
-					});
-					$('input').on('ifChecked', function(event) {
-						vm.checkOption(event, event.target.name);
-					});
-				}, 1000);
-			})
+			initIcheck();
 		},
 	});
+
+	//初始化icheck
+	function initIcheck() {
+		setTimeout(function() {
+			$('input').iCheck({
+				checkboxClass : 'icheckbox_square-blue',
+				radioClass : 'iradio_square-blue',
+				increaseArea : '20%' // optional
+			});
+		}, 200)
+		setTimeout(function() {
+			$('input').iCheck({
+				checkboxClass : 'icheckbox_square-blue',
+				radioClass : 'iradio_square-blue',
+				increaseArea : '20%' // optional
+			});
+		}, 300)
+		setTimeout(function() {
+			$('input').iCheck({
+				checkboxClass : 'icheckbox_square-blue',
+				radioClass : 'iradio_square-blue',
+				increaseArea : '20%' // optional
+			});
+			$('input').on('ifChecked', function(event) {
+				vm.checkOption(event, event.target.name);
+			});
+		}, 400)
+	}
 
 	//inquiriesOptionDTO 所选的选项的全部追问
 	//optionID   所选的选项的ID
@@ -166,8 +183,8 @@ $(function() {
 		let answerInquiriesConfirmVue;
 		let answerInquiriesConfirm = $.confirm({
 			smoothContent : false, //关闭动画
-			/*	closeIcon : true, //关闭图标
-				closeIconClass : 'fa fa-close', //图标样式*/
+			closeIcon : true, //关闭图标
+			closeIconClass : 'fa fa-close', //图标样式
 			type : 'dark', //弹出框类型
 			typeAnimated : true, //未知。。。。
 			boxWidth : '30%', //设置宽度
@@ -237,7 +254,7 @@ $(function() {
 							answerInquiriesConfirm.$content.find('input').on('ifChecked', function(event) {
 								answerInquiriesConfirmVue.checkOption(event, event.target.attributes.index.value);
 							});
-						});
+						}, 0);
 					}
 				})
 			},
@@ -246,7 +263,7 @@ $(function() {
 					text : '确认',
 					btnClass : 'btn-success',
 					action : function() {
-						let falg = false;
+						/*let falg = false;
 						if (answerData.length > 0) {
 							let length = answerData.length;
 							for (var int = 0; int < length; int++) {
@@ -264,7 +281,11 @@ $(function() {
 							$('input[type="radio"][optionID="' + optionID + '"]').parent().siblings('.inquiriesContent').html(inquiriesStr);
 							toastr.success('追问回访成功');
 						}
-						return falg;
+						return falg;*/
+						if (answerData.length > 0)
+							listAnswerInquiriesDTO[index] = answerData;
+						if (inquiriesStr)
+							$('input[type="radio"][optionID="' + optionID + '"]').parent().siblings('.inquiriesContent').html(inquiriesStr);
 					}
 				},
 			},

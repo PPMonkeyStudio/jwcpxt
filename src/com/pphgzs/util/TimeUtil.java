@@ -2,6 +2,7 @@ package com.pphgzs.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class TimeUtil {
@@ -26,6 +27,25 @@ public class TimeUtil {
 	public static String getStringDay() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date secondDate = new Date();
+		String date = formatter.format(secondDate);
+		try {
+			secondDate = formatter.parse(date);
+			return date;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	// 获得精确到天的时间，提前七天
+	public static String getStringDay_before7() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date secondDate = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(secondDate);
+		calendar.add(Calendar.DAY_OF_MONTH, -7);
+		secondDate = calendar.getTime();
 		String date = formatter.format(secondDate);
 		try {
 			secondDate = formatter.parse(date);
