@@ -53,12 +53,13 @@ th {
 									</button> -->
 
 									<div style="height: 70px; width: 100%; ">
-										<el-steps finish-status="success" :active="3"> <el-step
-											title="步骤 1" description="选择单位"></el-step> <el-step
-											title="步骤 2" description="选择业务"></el-step> <el-step
-											title="步骤 3" description="业务给分"> </el-step> </el-steps>
+										<el-steps simple finish-status="success" :active="4">
+										<el-step title="选择单位" description="选择单位"></el-step> <el-step
+											title="选择业务" description="选择业务"></el-step> <el-step
+											title="业务分数" description="业务分数"> </el-step> <el-step
+											title="时间区间" description="时间区间"> </el-step> </el-steps>
 									</div>
-									<div style="width: 100%; margin-top: 30px;">
+									<div style="width: 100%; margin-top: 50px;">
 										<div style="width: 90%; margin: auto;">
 											<div class="form-group">
 												<h2>选择单位</h2>
@@ -66,14 +67,14 @@ th {
 													multiple="multiple" size="10"></select>
 											</div>
 										</div>
-										<div style="width: 90%; margin: auto; margin-top: 30px;">
+										<div style="width: 90%; margin: auto; margin-top: 50px;">
 											<div class="form-group">
 												<h2>选择业务</h2>
 												<select class="statistical-selected" id="service"
 													multiple="multiple" size="10"></select>
 											</div>
 										</div>
-										<div style="width: 90%; margin: auto; margin-top: 30px;"
+										<div style="width: 90%; margin: auto; margin-top: 50px;"
 											v-cloak>
 											<h2>业务分数</h2>
 											<template v-for="(service,index) in serviceSelect">
@@ -88,6 +89,7 @@ th {
 											</template>
 										</div>
 										<div style="width: 90%; margin: auto; margin-top: 30px;">
+											<h2>时间区间</h2>
 											<div class="form-group" style="margin: auto;">
 												<label>起始时间</label> <input id="beginTime" placeholder="起始时间"
 													class="mydate form-control"
@@ -98,7 +100,7 @@ th {
 											</div>
 										</div>
 										<div
-											style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+											style="width: 90%; margin: auto; margin-top: 100px; text-align: center;">
 											<button type="button" class="btn btn-default"
 												@click="reviewResult" style="margin: auto;">
 												<i class="ti-plus"></i>预览统计结果
@@ -115,7 +117,7 @@ th {
 										2.多选业务
 										每个业务要给分数，所有业务的分数加起来等于100分
 									 -->
-									<table v-if="ready" class="table"
+									<!-- <table v-if="ready" class="table"
 										style="text-align: center; width: 100%;">
 										<thead>
 											<tr>
@@ -144,7 +146,7 @@ th {
 											</tr>
 											</template>
 										</tbody>
-									</table>
+									</table> -->
 								</div>
 							</div>
 						</div>
