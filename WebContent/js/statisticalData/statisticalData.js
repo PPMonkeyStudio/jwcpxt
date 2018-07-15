@@ -1,5 +1,7 @@
 $(function() {
 	let myData = {
+		statisticalResultsData : [],
+		ready : false,
 		unit : {
 			type : '单位',
 			url : '/jwcpxt/Unit/list_unitDO_byDistributionService',
@@ -104,7 +106,9 @@ $(function() {
 					text : '取消',
 					btnClass : 'btn-default',
 					keys : [ 'esc' ],
-					action : function() {}
+					action : function() {
+						clean();
+					}
 				}
 			},
 		});
@@ -220,12 +224,9 @@ $(function() {
 								processData : false,
 								contentType : false,
 								success : response => {
-									console.log(response);
-
-									//清空这次操作的的数据
-									myData.unitSelect = [];
-									myData.unitSelectIdArr = [];
-									myData.serviceSelect = [];
+									myData.statisticalResultsData = response.unitHaveServiceGradeDTOList;
+									myData.ready = true;
+									clean();
 								}
 							});
 						} else {
@@ -237,9 +238,19 @@ $(function() {
 					text : '取消',
 					btnClass : 'btn-default',
 					keys : [ 'esc' ],
-					action : function() {}
+					action : function() {
+						clean();
+					}
 				}
 			},
 		});
+	}
+
+	//清空数据操作
+	function clean() {
+		//清空这次操作的的数据
+		myData.unitSelect = [];
+		myData.unitSelectIdArr = [];
+		myData.serviceSelect = [];
 	}
 })

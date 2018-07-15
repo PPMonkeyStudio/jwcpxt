@@ -79,7 +79,9 @@ public class MyTest {
 
 	@Test
 	public void ttttt2() {
-		System.out.println(TimeUtil.getStringDay().substring(0, 7));
+		String date = TimeUtil.getStringDay_before7();
+		date = date.replaceAll("-", "");
+		System.out.println(date);
 	}
 
 	@Test
