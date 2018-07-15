@@ -94,8 +94,8 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		}
 		Gson gson = new Gson();
 		String result = gson.toJson(statisticsVO);
+		ActionContext.getContext().getValueStack().set("statisticsVO", result);
 
-		ActionContext.getContext().getValueStack().push(result);
 		return "getGradeByCondition_valueStack";
 	}
 
