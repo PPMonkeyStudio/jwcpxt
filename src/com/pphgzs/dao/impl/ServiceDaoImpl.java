@@ -511,6 +511,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				//
 				+ " where "//
 				+ " grabInstance.grab_instance_distribution='2' "//
+				+ " grabInstance.grab_instance_service_time >= :date "//
 				//
 				+ " unit.unit_father=fatherUnit.jwcpxt_unit_id "// 连接二三级单位
 				//
@@ -521,6 +522,10 @@ public class ServiceDaoImpl implements ServiceDao {
 		;
 		Query query = session.createQuery(hql);
 		//
+		String date = TimeUtil.getStringDay_before7();
+		date = date.replaceAll("-", "");
+		//
+		query.setParameter("date", date);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("organizationCode", organizationCode);
 		//
@@ -544,14 +549,20 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " jwcpxt_grab_instance grabInstance "//
 				//
 				+ " where "//
-				+ " grabInstance.grab_instance_distribution='2' "//
+				+ " grabInstance.grab_instance_distribution = '2' "//
+				+ " grabInstance.grab_instance_service_time >= :date "//
 				//
 				+ " grabInstance.grab_instance_organization_code=:organizationCode "//
 				+ " grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
+
 				+ " order by rand() "//
 		;
 		Query query = session.createQuery(hql);
 		//
+		String date = TimeUtil.getStringDay_before7();
+		date = date.replaceAll("-", "");
+		//
+		query.setParameter("date", date);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("organizationCode", organizationCode);
 		//
