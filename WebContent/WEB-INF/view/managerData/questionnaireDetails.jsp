@@ -69,7 +69,7 @@ th {
 													@change="queryQuestion" name="questionVO.screenType">
 														<option value="">全部</option>
 														<option value="1">选择题</option>
-														<option value="2">主观题</option>
+														<option value="2">开放题</option>
 												</select></th>
 												<th style="width: 150px;">操作</th>
 											</tr>
@@ -82,7 +82,7 @@ th {
 												<td><span v-if="question.question_type==1"
 													class="label label-primary">选择题</span> <span
 													v-else-if="question.question_type==2"
-													class="label label-info">主观题</span> <span v-else
+													class="label label-info">开放题</span> <span v-else
 													class="label label-warning">未定义</span></td>
 												<td><i class="ti-pencil-alt"
 													@click="modifyQuestion(index)"></i> &nbsp; <i
@@ -138,7 +138,7 @@ th {
 											v-model="addQuestionModalData.question_type">
 											<option value="">请选择问题类型</option>
 											<option value="1">选择题</option>
-											<option value="2">主观题</option>
+											<option value="2">开放题</option>
 										</select>
 									</div>
 								</div>
@@ -179,7 +179,7 @@ th {
 											v-model="checkQuestionModalData.question.question_type">
 											<option value="">请选择问题类型</option>
 											<option value="1">选择题</option>
-											<option value="2">主观题</option>
+											<option value="2">开放题</option>
 										</select>
 									</div> --%>
 								</div>

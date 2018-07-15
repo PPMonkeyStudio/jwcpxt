@@ -272,7 +272,7 @@ $(function() {
 															<td>{{inquiriesOptionDTO.inquiriesQuestion.question_describe}}</td>
 															<td>
 																<span v-if="inquiriesOptionDTO.inquiriesQuestion.question_type==4"class="label label-primary">选择题</span> 
-																<span v-else-if="inquiriesOptionDTO.inquiriesQuestion.question_type==3" class="label label-info">主观题</span>
+																<span v-else-if="inquiriesOptionDTO.inquiriesQuestion.question_type==3" class="label label-info">开放题</span>
 																<span v-else class="label label-warning">未定义</span>
 															</td>
 															<td>
@@ -579,8 +579,8 @@ $(function() {
 					<label>问题类型</label>
 					<select class="form-control" id="addInquiriesConfirm_type">
 						<option value="">请选择问题类型</option>
-						<option value="1">选择题</option>
-						<option value="2">主观题</option>
+						<option value="4">选择题</option>
+						<option value="3">开放题</option>
 					</select>
 					</div>
 				</form>
@@ -591,14 +591,14 @@ $(function() {
 					btnClass : 'btn-info',
 					keys : [ 'enter' ],
 					action : function() {
-						let describe = addOptionConfirm.$content.find('#addInquiriesConfirm_describe').val();
+						let describe = addInquiriesConfirm.$content.find('#addInquiriesConfirm_describe').val();
 						if (!describe) {
 							toastr.error("描述不能为空");
 							return false;
 						}
-						let type = addOptionConfirm.$content.find('#addInquiriesConfirm_type').val();
-						if (!describe) {
-							toastr.error("描述不能为空");
+						let type = addInquiriesConfirm.$content.find('#addInquiriesConfirm_type').val();
+						if (!type) {
+							toastr.error("类型不能为空");
 							return false;
 						}
 						let params = {
