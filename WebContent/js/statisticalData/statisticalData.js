@@ -187,7 +187,9 @@ $(function() {
 					confirm : {
 						text : '导出',
 						btnClass : 'btn-blue',
-						action : function() {}
+						action : function() {
+							exportStatisticalResult();
+						}
 					},
 					cancel : {
 						text : '取消',

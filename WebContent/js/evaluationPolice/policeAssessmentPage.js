@@ -142,20 +142,37 @@ $(function() {
 		},
 		mounted () {
 			this.getInfo();
-			this.$nextTick(function() {
-				setTimeout(function() {
-					$('input').iCheck({
-						checkboxClass : 'icheckbox_square-blue',
-						radioClass : 'iradio_square-blue',
-						increaseArea : '20%' // optional
-					});
-					$('input').on('ifChecked', function(event) {
-						vm.checkOption(event, event.target.name);
-					});
-				}, 1000);
-			})
+			initIcheck();
 		},
 	});
+
+	//初始化icheck
+	function initIcheck() {
+		setTimeout(function() {
+			$('input').iCheck({
+				checkboxClass : 'icheckbox_square-blue',
+				radioClass : 'iradio_square-blue',
+				increaseArea : '20%' // optional
+			});
+		}, 200)
+		setTimeout(function() {
+			$('input').iCheck({
+				checkboxClass : 'icheckbox_square-blue',
+				radioClass : 'iradio_square-blue',
+				increaseArea : '20%' // optional
+			});
+		}, 300)
+		setTimeout(function() {
+			$('input').iCheck({
+				checkboxClass : 'icheckbox_square-blue',
+				radioClass : 'iradio_square-blue',
+				increaseArea : '20%' // optional
+			});
+			$('input').on('ifChecked', function(event) {
+				vm.checkOption(event, event.target.name);
+			});
+		}, 400)
+	}
 
 	//inquiriesOptionDTO 所选的选项的全部追问
 	//optionID   所选的选项的ID
@@ -237,7 +254,7 @@ $(function() {
 							answerInquiriesConfirm.$content.find('input').on('ifChecked', function(event) {
 								answerInquiriesConfirmVue.checkOption(event, event.target.attributes.index.value);
 							});
-						});
+						}, 0);
 					}
 				})
 			},
