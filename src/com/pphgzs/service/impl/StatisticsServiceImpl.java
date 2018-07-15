@@ -47,6 +47,10 @@ public class StatisticsServiceImpl implements StatisticsService {
 		}
 		cell = row.createCell(sheetHead_num++);
 		cell.setCellValue("总分");
+
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("排名");
+
 		/**
 		 * 写入数据 遍历单位
 		 */
@@ -59,15 +63,18 @@ public class StatisticsServiceImpl implements StatisticsService {
 			/*
 			 * 遍历一个单位的分
 			 */
-
 			sheetHead_num = 0;
 			for (ServiceGradeBelongUnitDTO serviceGradeBelongUnitDTO : unitHaveServiceGradeDTO
 					.getServiceGradeBelongUnitDTOList()) {
 				cell = row.createCell(sheetHead_num++);
 				cell.setCellValue(serviceGradeBelongUnitDTO.getGrade());
 			}
+			// 总分
 			cell = row.createCell(sheetHead_num++);
 			cell.setCellValue(unitHaveServiceGradeDTO.getTotalGrade());
+			// 排名
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(listNum - 1);
 
 		}
 
