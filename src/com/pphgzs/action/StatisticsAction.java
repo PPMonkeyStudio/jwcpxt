@@ -15,6 +15,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.google.gson.Gson;
+import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
 import com.pphgzs.domain.VO.StatisticsVO;
@@ -73,6 +74,29 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 			e.printStackTrace();
 		}
 
+	}
+
+	public String getGradeByCondition_valueStack() {
+		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
+				serviceGradeDTOList);
+		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
+		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
+			for (int j = i + 1; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
+				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(i).getTotalGrade() > statisticsVO
+						.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade()) {
+					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(i);
+					statisticsVO.getUnitHaveServiceGradeDTOList().set(i,
+							statisticsVO.getUnitHaveServiceGradeDTOList().get(j));
+					statisticsVO.getUnitHaveServiceGradeDTOList().set(j,
+							statisticsVO.getUnitHaveServiceGradeDTOList().get(i));
+				}
+			}
+		}
+		Gson gson = new Gson();
+		String result = gson.toJson(statisticsVO);
+
+		ActionContext.getContext().getValueStack().push(result);
+		return "getGradeByCondition_valueStack";
 	}
 
 	public String exportStatisticsExcel() {

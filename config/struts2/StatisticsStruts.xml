@@ -6,6 +6,9 @@
 	<package name="Statistics" namespace="/Statistics" extends="struts-default">
 		<action name="*" class="com.pphgzs.action.StatisticsAction"
 			method="{1}">
+			<result name="getGradeByCondition_valueStack">
+				/WEB-INF/view/statisticalData/previewStatisticsExcel.jsp
+			</result>
 			<!-- 获取数据流 -->
 			<result name="exportStatisticsExcel" type="stream">
 				<!-- 指定下载文件的类型 -->

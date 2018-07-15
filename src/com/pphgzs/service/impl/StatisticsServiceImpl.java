@@ -27,7 +27,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public void writeStatisticsExcel(StatisticsVO statisticsVO, HSSFWorkbook wb) {
 		// 第二步，在webbook中添加一个sheet，对应Excel文件中的 sheet
-
 		HSSFSheet sheet = wb.createSheet("统计数据");
 		// 第三步，在sheet中添加表头第0行，注意老版本poi对Excel的行数列数有限制
 		HSSFRow row = sheet.createRow(0);
@@ -83,7 +82,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public StatisticsVO getGradeByCondition(String[] unitIds, String searchTimeStart, String searchTimeEnd,
 			List<ServiceGradeDTO> serviceGradeDTOList) {
-		// TODO Auto-generated method stub
 		StatisticsVO statisticsVO = new StatisticsVO();
 		List<UnitHaveServiceGradeDTO> unitHaveServiceGradeDTOList = new ArrayList<UnitHaveServiceGradeDTO>();
 
