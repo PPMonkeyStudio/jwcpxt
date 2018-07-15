@@ -87,8 +87,8 @@ function addInterface(event) {
 
 						+ '<tr><td>是否单表</td>'
 						+ '<td><select class="form-control" name="serviceGrab.service_grab_single_table"><option value="1">是</option><option value="2">否</option></select></td>'
-						+ '<td><span style="color:red;">*</span>接口名一</td><td><input type="text" name="serviceGrab.service_grab_interface_one" class="form-control mustWrite"></td>'
-						+ '<td>接口名二</td><td><input type="text" name="serviceGrab.service_grab_interface_two" class="form-control"></td></tr>'
+						+ '<td><span style="color:red;">*</span>表名一</td><td><input type="text" name="serviceGrab.service_grab_interface_one" class="form-control mustWrite"></td>'
+						+ '<td>表名二</td><td><input type="text" name="serviceGrab.service_grab_interface_two" class="form-control"></td></tr>'
 
 						+ '<tr><td><span style="color:red;">*</span>业务唯一识别编号</td><td><input type="text" name="serviceGrab.service_grab_field_name" class="form-control mustWrite"></td>'
 						+ '<td><span style="color:red;">*</span>当事人姓名</td><td><input type="text" name="serviceGrab.service_grab_name_field" class="form-control mustWrite"></td>'
