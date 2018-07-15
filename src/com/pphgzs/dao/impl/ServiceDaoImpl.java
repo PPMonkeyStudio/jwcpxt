@@ -57,11 +57,20 @@ public class ServiceDaoImpl implements ServiceDao {
 	public ClientInstanceDTO get_notServiceClientDTO_byServiceClientId(String userId) {
 		List<ClientInstanceDTO> listClientInstanceDTO = new ArrayList<>();
 		Session session = getSession();
-		String hql = "select new com.pphgzs.domain.DTO.ClientInstanceDTO(serviceInstance,serviceClient,serviceDefinition) from jwcpxt_service_instance serviceInstance,jwcpxt_service_client serviceClient,"
-				+ "jwcpxt_service_definition serviceDefinition where serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance and "
-				+ " serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id and serviceClient.service_client_visit= '2' and "
-				+ " serviceInstance.service_instance_judge = :userId "
-				+ " order by serviceInstance.service_instance_gmt_create asc ";
+		String hql = "select "//
+				+ " new com.pphgzs.domain.DTO.ClientInstanceDTO(serviceInstance,serviceClient,serviceDefinition) "//
+				+ " from "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_definition serviceDefinition "//
+				+ " where "//
+				+ " serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance "//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id "//
+				+ " and serviceClient.service_client_visit= '2' "//
+				+ " and serviceInstance.service_instance_judge = :userId "//
+				+ " order by "//
+				+ " serviceInstance.service_instance_gmt_create "//
+				+ " asc ";
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);
 		query.setMaxResults(1);
@@ -457,8 +466,14 @@ public class ServiceDaoImpl implements ServiceDao {
 	public List<ServiceDefinitionDTO> list_serviceDefinitionDTO_byServiceDefinitionVO(
 			ServiceDefinitionVO serviceDefinitionVO) {
 		Session session = getSession();
-		String hql = "select new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition,unit)  from jwcpxt_service_definition serviceDefinition , jwcpxt_unit unit"
-				+ " where serviceDefinition.service_definition_unit=unit.jwcpxt_unit_id and serviceDefinition.service_definition_describe like :screenSearch and serviceDefinition.service_definition_unit like :screenUnit "
+		String hql = "select "//
+				+ " new com.pphgzs.domain.DTO.ServiceDefinitionDTO(serviceDefinition,unit) "//
+				+ " from "//
+				+ " jwcpxt_service_definition serviceDefinition ,"//
+				+ " jwcpxt_unit unit" + " where "//
+				+ " serviceDefinition.service_definition_unit=unit.jwcpxt_unit_id "//
+				+ " and serviceDefinition.service_definition_describe like :screenSearch "//
+				+ " and serviceDefinition.service_definition_unit like :screenUnit "//
 				+ " order by service_definition_unit";
 		Query query = session.createQuery(hql);
 		//
@@ -506,18 +521,18 @@ public class ServiceDaoImpl implements ServiceDao {
 		String hql = "select grabInstance "//
 				+ " from "//
 				+ " jwcpxt_grab_instance grabInstance , "//
-				+ " jwcpxt_unit unit "//
+				+ " jwcpxt_unit unit , "//
 				+ " jwcpxt_unit fatherUnit "//
 				//
 				+ " where "//
 				+ " grabInstance.grab_instance_distribution='2' "//
-				+ " grabInstance.grab_instance_service_time >= :date "//
+				+ " and grabInstance.grab_instance_service_time >= :date "//
 				//
-				+ " unit.unit_father=fatherUnit.jwcpxt_unit_id "// 连接二三级单位
+				+ " and unit.unit_father=fatherUnit.jwcpxt_unit_id "// 连接二三级单位
 				//
-				+ " fatherUnit.unit_num=:organizationCode "// 查出二级单位
-				+ " grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
-				+ " grabInstance.grab_instance_organization_code=unit.unit_num "// 抓取实例的机构代码=三级单位的机构代码
+				+ " and fatherUnit.unit_num=:organizationCode "// 查出二级单位
+				+ " and grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
+				+ " and grabInstance.grab_instance_organization_code=unit.unit_num "// 抓取实例的机构代码=三级单位的机构代码
 				+ " order by rand() "//
 		;
 		Query query = session.createQuery(hql);
@@ -550,10 +565,10 @@ public class ServiceDaoImpl implements ServiceDao {
 				//
 				+ " where "//
 				+ " grabInstance.grab_instance_distribution = '2' "//
-				+ " grabInstance.grab_instance_service_time >= :date "//
+				+ " and grabInstance.grab_instance_service_time >= :date "//
 				//
-				+ " grabInstance.grab_instance_organization_code=:organizationCode "//
-				+ " grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
+				+ " and grabInstance.grab_instance_organization_code=:organizationCode "//
+				+ " and grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
 
 				+ " order by rand() "//
 		;
