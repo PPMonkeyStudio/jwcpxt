@@ -123,8 +123,8 @@ $(function() {
 							<tr>
 								<template v-if="statisticalResultsData.length>0">
 								<th style="width: 150px;">评测内容单位</th>
-									<template v-for="serviceGradeDTO in statisticalResultsData[0].serviceGradeBelongUnitDTOList">
-										<th>{{serviceGradeDTO.serviceDefinition.service_definition_describe}}</th>
+									<template v-for="name in headName">
+										<th>{{name}}</th>
 									</template>
 								<th style="width: 60px;">测评总分</th>
 								<th style="width: 40px;">排名</th>
@@ -138,7 +138,7 @@ $(function() {
 								<template v-for="serviceGradeDTO in statisticalResultsDTO.serviceGradeBelongUnitDTOList">
 								<td>{{serviceGradeDTO.grade}}</td>
 								</template>
-								<td>{{100}}</td>
+								<td>{{statisticalResultsDTO.totalGrade}}</td>
 								<td>{{index+1}}</td>
 							</tr>
 							</template>
@@ -151,6 +151,7 @@ $(function() {
 						el : '#reviewStatisticalResultConfirm',
 						data : {
 							statisticalResultsData : [],
+							headName : [],
 							ready : false
 						},
 						mounted () {
@@ -174,6 +175,7 @@ $(function() {
 								contentType : false,
 								success : response => {
 									this.statisticalResultsData = response.unitHaveServiceGradeDTOList;
+									this.headName = response.sheetHeadNameList;
 									this.ready = true;
 								}
 							});
