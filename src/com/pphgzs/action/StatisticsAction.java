@@ -49,7 +49,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
-		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
+		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
 			for (int j = i + 1; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
 				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(i).getTotalGrade() > statisticsVO
 						.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade()) {
@@ -80,7 +80,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
-		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
+		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
 			for (int j = i + 1; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
 				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(i).getTotalGrade() > statisticsVO
 						.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade()) {
@@ -103,7 +103,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
-		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
+		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
 			for (int j = i + 1; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
 				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(i).getTotalGrade() > statisticsVO
 						.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade()) {
