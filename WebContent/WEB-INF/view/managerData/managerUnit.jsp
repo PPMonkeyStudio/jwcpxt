@@ -44,6 +44,7 @@ a:hover {
 												<td>单位名称</td>
 												<td>机构代码</td>
 												<td>账号</td>
+												<td>联系人姓名</td>
 												<td>联系号码</td>
 												<td>操作</td>
 												<td>子单位</td>
@@ -55,6 +56,7 @@ a:hover {
 												<td>{{ unit.unit_name }}</td>
 												<td>{{ unit.unit_num }}</td>
 												<td>{{ unit.unit_account }}</td>
+												<td>{{ unit.unit_contacts_name }}</td>
 												<td>{{ unit.unit_phone }}</td>
 												<td><a :id="unit.jwcpxt_unit_id" onclick="updateUnit(this)">修改</a>|<a
 													:id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>
