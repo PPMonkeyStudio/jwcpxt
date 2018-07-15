@@ -40,13 +40,17 @@ public class StatisticsServiceImpl implements StatisticsService {
 		/**
 		 * 设置表头
 		 */
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("单位");
+		//
 		for (String sheetHeadName : statisticsVO.getSheetHeadNameList()) {
 			cell = row.createCell(sheetHead_num++);
 			cell.setCellValue(sheetHeadName);
 		}
+		//
 		cell = row.createCell(sheetHead_num++);
 		cell.setCellValue("总分");
-
+		//
 		cell = row.createCell(sheetHead_num++);
 		cell.setCellValue("排名");
 
@@ -63,6 +67,10 @@ public class StatisticsServiceImpl implements StatisticsService {
 			 * 遍历一个单位的分
 			 */
 			sheetHead_num = 0;
+			// 单位
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(unitHaveServiceGradeDTO.getUnit().getUnit_name());
+			//
 			for (ServiceGradeBelongUnitDTO serviceGradeBelongUnitDTO : unitHaveServiceGradeDTO
 					.getServiceGradeBelongUnitDTOList()) {
 				cell = row.createCell(sheetHead_num++);
