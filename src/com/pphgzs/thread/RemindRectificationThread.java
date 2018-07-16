@@ -5,7 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.pphgzs.service.ServiceService;
 
-public class ServiceGrabDistributionThread {
+public class RemindRectificationThread {
 
 	private final static String RUN = "run";
 
@@ -58,7 +58,7 @@ public class ServiceGrabDistributionThread {
 	}
 
 	public static void setThreadState(String threadState) {
-		ServiceGrabDistributionThread.threadState = threadState;
+		RemindRectificationThread.threadState = threadState;
 	}
 
 	public static String getStop() {

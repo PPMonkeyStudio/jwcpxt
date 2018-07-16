@@ -226,4 +226,6 @@ public interface ServiceService {
 
 	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance);
 
+	public boolean distributionNewServiceInstance_toUser(String userID);
+
 }

@@ -8,7 +8,7 @@ public class AllThread implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		// 业务抓取
 		// 业务分配
-		ServiceGrabDistributionThread.startThread();
+		RemindRectificationThread.startThread();
 	}
 
 	@Override
