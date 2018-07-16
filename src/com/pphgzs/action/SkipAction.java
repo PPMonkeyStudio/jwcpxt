@@ -105,6 +105,10 @@ public class SkipAction {
 		return "skipStatisticalData";
 	}
 
+	public String skipStatisticalChart() {
+		return "skipStatisticalChart";
+	}
+
 	public String getDefinitionId() {
 		return definitionId;
 	}

@@ -68,6 +68,9 @@
 			<result name="skipStatisticalData">
 				/WEB-INF/view/statisticalData/statisticalData.jsp
 			</result>
+			<result name="skipStatisticalChart">
+				/WEB-INF/view/statisticalData/statisticalChart.jsp
+			</result>
 			<result name="login">/login.jsp</result>
 			<interceptor-ref name="mystackHttp" />
 		</action>
