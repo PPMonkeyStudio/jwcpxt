@@ -11,6 +11,7 @@ public class jwcpxt_service_grab {
 	private String service_grab_machine_ip;
 	private int service_grab_single_table = 1;
 	private String service_grab_project_name = "none";
+	private String service_grab_organization_code_field = "none";
 	private String service_grab_interface_one = "none";
 	private String service_grab_interface_two = "none";
 	private String service_grab_field_name = "none";
@@ -25,6 +26,14 @@ public class jwcpxt_service_grab {
 
 	public String getJwcpxt_service_grab_id() {
 		return jwcpxt_service_grab_id;
+	}
+
+	public String getService_grab_organization_code_field() {
+		return service_grab_organization_code_field;
+	}
+
+	public void setService_grab_organization_code_field(String service_grab_organization_code_field) {
+		this.service_grab_organization_code_field = service_grab_organization_code_field;
 	}
 
 	public void setJwcpxt_service_grab_id(String jwcpxt_service_grab_id) {
@@ -191,12 +200,13 @@ public class jwcpxt_service_grab {
 				+ service_grab_interface_identifying + ", service_grab_source_username=" + service_grab_source_username
 				+ ", service_grab_source_password=" + service_grab_source_password + ", service_grab_machine_ip="
 				+ service_grab_machine_ip + ", service_grab_single_table=" + service_grab_single_table
-				+ ", service_grab_project_name=" + service_grab_project_name + ", service_grab_interface_one="
-				+ service_grab_interface_one + ", service_grab_interface_two=" + service_grab_interface_two
-				+ ", service_grab_field_name=" + service_grab_field_name + ", service_grab_name_field="
-				+ service_grab_name_field + ", service_grab_sex_field=" + service_grab_sex_field
-				+ ", service_grab_phone_field=" + service_grab_phone_field + ", service_grab_handle_time_field="
-				+ service_grab_handle_time_field + ", service_grab_connect_one_field=" + service_grab_connect_one_field
+				+ ", service_grab_project_name=" + service_grab_project_name + ", service_grab_organization_code_field="
+				+ service_grab_organization_code_field + ", service_grab_interface_one=" + service_grab_interface_one
+				+ ", service_grab_interface_two=" + service_grab_interface_two + ", service_grab_field_name="
+				+ service_grab_field_name + ", service_grab_name_field=" + service_grab_name_field
+				+ ", service_grab_sex_field=" + service_grab_sex_field + ", service_grab_phone_field="
+				+ service_grab_phone_field + ", service_grab_handle_time_field=" + service_grab_handle_time_field
+				+ ", service_grab_connect_one_field=" + service_grab_connect_one_field
 				+ ", service_grab_connect_two_field=" + service_grab_connect_two_field + ", service_grab_gmt_create="
 				+ service_grab_gmt_create + ", service_grab_gmt_modified=" + service_grab_gmt_modified + "]";
 	}

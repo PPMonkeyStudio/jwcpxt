@@ -111,7 +111,8 @@ public class UnitServiceImpl implements UnitService {
 
 		// 修改名称
 		oldUnit.setUnit_name(newUnit.getUnit_name());
-
+		// 联系人
+		oldUnit.setUnit_contacts_name(newUnit.getJwcpxt_unit_id());
 		// 手机号码
 		oldUnit.setUnit_phone(newUnit.getUnit_phone());
 		oldUnit.setUnit_gmt_modified(TimeUtil.getStringSecond());
