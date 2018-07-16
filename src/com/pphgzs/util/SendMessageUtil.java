@@ -8,12 +8,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
+/**
+ * 
+ * @author JXX
+ * 
+ */
 public class SendMessageUtil {
-	private static final String USER = "test"; // 系统账号
-	private static final String PASSWD = ""; // 系统密码
+	private static final String USER = "pxhzc"; // 系统账号
+	private static final String PASSWD = MD5Util.GetMD5Code("pxhzc!@#$admin"); // 系统密码
 	private static final String URL = "http://10.139.0.167/D001";
 	private String SJH;// 手机号码，多个手机号用,隔开
 	private String DXNR;
@@ -25,10 +28,9 @@ public class SendMessageUtil {
 	}
 
 	public boolean send() throws IOException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String requestTime = sdf.format(new Date());
-		String sendData = "{'user':" + USER + ",'passwd':" + PASSWD + ",'requestTime':" + requestTime + ",'data':"
-				+ "{'SJH':" + SJH + ",'DXNR':" + DXNR + "}}";
+		String requestTime = TimeUtil.getStringSecond();
+		String sendData = "{'user':'" + USER + "','passwd':'" + PASSWD + "','requestTime':'" + requestTime + "','data':"
+				+ "{'SJH':'" + SJH + "','DXNR':'" + DXNR + "'}}";
 		URL url = new URL(URL);// 创建连接
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setDoOutput(true);
@@ -47,6 +49,7 @@ public class SendMessageUtil {
 		InputStream is = connection.getInputStream();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		String returnData = br.readLine();
+		System.out.println("结果:" + returnData);
 		if (returnData.indexOf("0000") != -1) {
 			return true;
 		} else {
