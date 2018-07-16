@@ -1,5 +1,9 @@
 package jwcpxt;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -86,8 +90,18 @@ public class MyTest {
 
 	@Test
 	public void ttttt3() {
-
-		System.out.println(unitService.list_unitDO_byDistributionService());
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// 24小时制
+		long time1 = 0;
+		long time2 = 0;
+		try {
+			time1 = simpleDateFormat.parse("2018-06-28").getTime();
+			time2 = simpleDateFormat.parse("2018-07-16").getTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		for (long time = time1; time <= time2; time = time + 86400000) {
+			System.out.println(simpleDateFormat.format(new Date(time)));
+		}
 	}
 
 }

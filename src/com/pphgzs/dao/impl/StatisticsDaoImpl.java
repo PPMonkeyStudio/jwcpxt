@@ -23,15 +23,34 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	}
 
 	@Override
-	public int get_dayNum_byServiceDefinitionIDAndDate(String serviceDefinitionID, String unitID, String startTime,
-			String endTime) {
+	public int get_dayNum_byServiceDefinitionIDAndDate(String serviceDefinitionID, String unitID, String day) {
 
 		Session session = getSession();
 		String hql = "select "//
-				+ " count()  "//
+				+ " count(answerChoice) "//
 				+ " from "//
-				+ " jwcpxt_user";
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_option option "//
+				//
+				+ " where "//
+				+ " answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
+				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
+				+ " and answerChoice.answer_choice_option=option.jwcpxt_option_id "//
+				//
+				+ " and serviceInstance.service_instance_belong_unit=:unitID "//
+				+ " and serviceInstance.service_instance_service_definition=:serviceDefinitionID "//
+				+ " and serviceInstance.service_instance_date like :day "//
+				//
+				+ " and option.option_push='1' "//
+		;
 		Query query = session.createQuery(hql);
+		//
+		query.setParameter("unitID", unitID);
+		query.setParameter("serviceDefinitionID", serviceDefinitionID);
+		query.setParameter("day", day + "%");
+		//
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;

@@ -1,6 +1,9 @@
 package com.pphgzs.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -29,7 +32,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public StatisticsDissatisfiedDayDataVO get_StatisticsDissatisfiedDayDataVO(
 			StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO) {
-		List<StatisticsDissatisfiedDayDataDTO> statisticsDissatisfiedDayDataDTOList = new ArrayList<StatisticsDissatisfiedDayDataDTO>();
 
 		/*
 		 * 取出此单位所有的业务定义，
@@ -40,30 +42,37 @@ public class StatisticsServiceImpl implements StatisticsService {
 		/*
 		 * 遍历业务定义，以天为单位取得这个单位的这个业务在这一天的错误数量。
 		 */
-		List<Integer> dayNumList = new ArrayList<Integer>();
+		List<StatisticsDissatisfiedDayDataDTO> statisticsDissatisfiedDayDataDTOList = new ArrayList<StatisticsDissatisfiedDayDataDTO>();
 		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
-			int dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate(
-					serviceDefinition.getJwcpxt_service_definition_id(),
-					statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
-					statisticsDissatisfiedDayDataVO.getStartTime(), statisticsDissatisfiedDayDataVO.getEndTime());
+			StatisticsDissatisfiedDayDataDTO statisticsDissatisfiedDayDataDTO = new StatisticsDissatisfiedDayDataDTO();
+			List<Integer> dayNumList = new ArrayList<Integer>();
+
+			String startDate = statisticsDissatisfiedDayDataVO.getStartTime();
+			String endDate = statisticsDissatisfiedDayDataVO.getEndTime();
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");// 24小时制
+			long time1 = 0;
+			long time2 = 0;
+			try {
+				time1 = simpleDateFormat.parse(startDate).getTime();
+				time2 = simpleDateFormat.parse(endDate).getTime();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			// 求每天
+			for (long time = time1; time <= time2; time = time + 86400000) {
+				int dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate(
+						serviceDefinition.getJwcpxt_service_definition_id(),
+						statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
+						simpleDateFormat.format(new Date(time)));
+				dayNumList.add(dayNum);
+			}
+			statisticsDissatisfiedDayDataDTO.setDayNumList(dayNumList);
+
+			statisticsDissatisfiedDayDataDTO.setServiceDefinition(serviceDefinition);
+
+			statisticsDissatisfiedDayDataDTOList.add(statisticsDissatisfiedDayDataDTO);
 		}
-
-		/*
-		 * 
-		 */
-
-		/*
-		 * 
-		 */
-		/*
-		 * 
-		 */
-		/*
-		 * 
-		 */
-		/*
-		 * 
-		 */
+		statisticsDissatisfiedDayDataVO.setStatisticsDissatisfiedDayData(statisticsDissatisfiedDayDataDTOList);
 
 		return statisticsDissatisfiedDayDataVO;
 	}
