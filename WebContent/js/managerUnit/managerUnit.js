@@ -179,7 +179,7 @@ function managerSonUnit(event) {
 					})
 					// 查询所有子单位
 					loadDataSon(event.id);
-					$.ajax({
+					/*$.ajax({
 						url:'/jwcpxt/Unit/get_unitDO_byID?unit.jwcpxt_unit_id='+event.id,
 						type:'GET',
 						success:function(data){
@@ -189,7 +189,7 @@ function managerSonUnit(event) {
 							}else{
 							}
 						}
-					})
+					})*/
 					
 				}
 			})

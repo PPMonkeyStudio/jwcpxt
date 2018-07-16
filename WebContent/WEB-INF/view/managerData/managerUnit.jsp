@@ -48,6 +48,7 @@ a:hover {
 												<td>联系号码</td>
 												<td>操作</td>
 												<td>子单位</td>
+												<td>业务</td>
 											</tr>
 										</thead>
 										<tbody>
@@ -61,6 +62,7 @@ a:hover {
 												<td><a :id="unit.jwcpxt_unit_id" onclick="updateUnit(this)">修改</a>|<a
 													:id="unit.jwcpxt_unit_id" onclick="resetPassword(this)">重置密码</a></td>
 												<td><a :id="unit.jwcpxt_unit_id" onclick="managerSonUnit(this)">管理子单位</a></td>
+												<td><a :id="unit.jwcpxt_unit_id" onclick="managerService(this)">管理业务</a></td>
 											</tr>
 											</template>
 										</tbody>
