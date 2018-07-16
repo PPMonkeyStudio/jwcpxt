@@ -4,8 +4,9 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<package name="Skip" namespace="/Skip" extends="struts-default">
-	<interceptors>
-			<interceptor name="sessionout" class="com.pphgzs.interceptor.loginInterceptor"></interceptor>
+		<interceptors>
+			<interceptor name="sessionout"
+				class="com.pphgzs.interceptor.loginInterceptor"></interceptor>
 			<interceptor-stack name="mystackHttp">
 				<interceptor-ref name="defaultStack" />
 				<!-- 权限拦截 <interceptor-ref name="authority" /> -->
@@ -36,8 +37,10 @@
 			</result>
 			<result name="navbarAbarbeitung">/WEB-INF/view/navbarAbarbeitung.jsp</result>
 			<result name="navbarAppraisal">/WEB-INF/view/navbarAppraisal.jsp</result>
-			<result name="skipAbarbeitungProceed">/WEB-INF/view/abarbeitung/abarbeitungProceed.jsp</result>
-			<result name="skipAbarbeitungCheck">/WEB-INF/view/abarbeitung/abarbeitungCheck.jsp</result>
+			<result name="skipAbarbeitungProceed">/WEB-INF/view/abarbeitung/abarbeitungProceed.jsp
+			</result>
+			<result name="skipAbarbeitungCheck">/WEB-INF/view/abarbeitung/abarbeitungCheck.jsp
+			</result>
 			<result name="skipQuestionnaireDetails" type="redirectAction">
 				skipQuestionnaireDetailsJsp?definitionId=${definitionId}
 			</result>
@@ -61,6 +64,9 @@
 			</result>
 			<result name="skipStatisticalData">
 				/WEB-INF/view/statisticalData/statisticalData.jsp
+			</result>
+			<result name="skipStatisticalChart">
+				/WEB-INF/view/statisticalData/statisticalChart.jsp
 			</result>
 			<result name="login">/login.jsp</result>
 			<interceptor-ref name="mystackHttp" />
