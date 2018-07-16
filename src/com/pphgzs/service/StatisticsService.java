@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
 
@@ -17,5 +18,8 @@ public interface StatisticsService {
 
 	StatisticsDissatisfiedDayDataVO get_StatisticsDissatisfiedDayDataVO(
 			StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO);
+
+	StatisticsDissatisfiedDateCountVO get_StatisticsDissatisfiedDateCountVO(
+			StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO);
 
 }
