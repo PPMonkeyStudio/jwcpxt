@@ -200,6 +200,7 @@ public class ServiceServiceImpl implements ServiceService {
 		newServiceClient.setService_client_visit("2");
 		newServiceClient.setService_client_gmt_create(TimeUtil.getStringSecond());
 		newServiceClient.setService_client_gmt_modified(newServiceClient.getService_client_gmt_create());
+		serviceDao.saveOrUpdateObject(newServiceClient);
 		//
 
 		// 并且更新抓取实例的状态
