@@ -181,7 +181,7 @@ function updateInterface(event) {
 						+ '<td><span style="color:red;">*</span>当事人性别</td><td><input type="text" name="serviceGrab.service_grab_sex_field" class="form-control updateIn mustWrite"></td></tr>'
 
 						+ '<tr><td><span style="color:red;">*</span>当事人电话</td><td><input type="text" name="serviceGrab.service_grab_phone_field" class="form-control updateIn mustWrite"></td>'
-						+ '<td><span style="color:red;">*</span>业务办理时间</td><td><input type="text" name="serviceGrab.service_grab_handle_time_gield" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>业务办理时间</td><td><input type="text" name="serviceGrab.service_grab_handle_time_field" class="form-control updateIn mustWrite"></td>'
 						+ '<td><span style="color:red;">*</span>机构代码</td><td><input type="text" name="serviceGrab.service_grab_organization_code_field" class="form-control updateIn mustWrite"></td></tr>'
 
 						+ '<td>连接1</td><td><input type="text" name="serviceGrab.service_grab_connect_one_field" class="form-control updateIn"></td><td>连接2</td><td><input type="text" name="serviceGrab.service_grab_connect_two_field" class="form-control updateIn"></td></tr>'
