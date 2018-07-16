@@ -269,28 +269,26 @@ public class QuestionServiceImpl implements QuestionService {
 	 * 获取选项列表
 	 */
 	/*
-	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question)
-	 * { // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO>
-	 * listOptionDTO = new ArrayList<>(); List<jwcpxt_option> listOption = new
-	 * ArrayList<>(); List<jwcpxt_option_inquiries> listOptionInquireies = new
-	 * ArrayList<>(); // 1.获取问题对象 if (question != null &&
-	 * question.getJwcpxt_question_id() != null &&
-	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象
-	 * question =
+	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
+	 * // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO> listOptionDTO =
+	 * new ArrayList<>(); List<jwcpxt_option> listOption = new ArrayList<>();
+	 * List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>(); //
+	 * 1.获取问题对象 if (question != null && question.getJwcpxt_question_id() != null &&
+	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象 question =
 	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().
 	 * trim() ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
 	 * ("1".equals(question.getQuestion_type())) { // 获取选项列表 listOption =
 	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim
-	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO =
-	 * new OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表
-	 * if (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null
-	 * && jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
+	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO = new
+	 * OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表 if
+	 * (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null &&
+	 * jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
 	 * listOptionInquireies = questionDao
 	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim
 	 * ()); } optionDTO.setOption(jwcpxt_option);
 	 * optionDTO.setInquiriesList(listOptionInquireies);
-	 * listOptionDTO.add(optionDTO); } } else { return null; } return
-	 * listOptionDTO; }
+	 * listOptionDTO.add(optionDTO); } } else { return null; } return listOptionDTO;
+	 * }
 	 */
 	/**
 	 * 保存选项
@@ -749,7 +747,6 @@ public class QuestionServiceImpl implements QuestionService {
 		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
 		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
 		for (jwcpxt_unit_service unitServiceDO : unitServiceList) {
-
 			// 需求数量
 			int wantNum = unitServiceDO.getEvaluation_count();
 			/*
@@ -767,6 +764,7 @@ public class QuestionServiceImpl implements QuestionService {
 				// 已分配数量：获取当天该单位该业务的业务实例的数量
 				currNum = serviceService.get_serviceInstanceCount_byServiceDefinitionAndUnit(
 						unitServiceDO.getService_definition_id(), unitServiceDO.getUnit_id());
+				System.out.println("三级单位当前业务实例数量：" + currNum);
 			}
 
 			// 分配足够了的就移出列表
@@ -774,6 +772,11 @@ public class QuestionServiceImpl implements QuestionService {
 				unitServiceList.remove(unitServiceDO);
 			}
 		}
+		// 遍历一下这个列表
+		for (jwcpxt_unit_service jwcpxt_unit_service : unitServiceList) {
+			System.out.println("单位业务关联表：" + jwcpxt_unit_service);
+		}
+
 		// 随机取一个单位业务关联DO作为分配，如果这个单位没有数据，那么就换一个单位
 		jwcpxt_grab_instance grabInstance = null;
 		jwcpxt_unit_service thisUnitService = null;
@@ -782,7 +785,6 @@ public class QuestionServiceImpl implements QuestionService {
 			int random = (int) (Math.random() * unitServiceList.size());
 			thisUnitService = unitServiceList.get(random);
 			unit = unitService.get_unitDO_byID(thisUnitService.getUnit_id());
-
 			if (unit.getUnit_grade() == 2) {
 				// 二级单位
 				grabInstance = serviceService
@@ -794,17 +796,17 @@ public class QuestionServiceImpl implements QuestionService {
 						.get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
 								thisUnitService.getService_definition_id(), unit.getUnit_num());
 			}
-
 			if (grabInstance != null) {
 				break;
 			} else {
 				unitServiceList.remove(random);
 			}
 		}
-
+		System.out.println("grabInstance:" + grabInstance);
 		if (grabInstance == null) {
 			return true;
 		}
+		System.out.println("保存了:");
 		// 分配生成业务实例
 		jwcpxt_service_instance serviceInstance = new jwcpxt_service_instance();
 		serviceInstance.setJwcpxt_service_instance_id(uuidUtil.getUuid());
@@ -818,6 +820,7 @@ public class QuestionServiceImpl implements QuestionService {
 		serviceService.saveServiceInstance(serviceInstance);
 		// 并且更新抓取实例的状态
 		grabInstance.setGrab_instance_distribution("1");
+		System.out.println("实例咯");
 		serviceService.update_grabInstance(grabInstance);
 		//
 

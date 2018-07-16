@@ -4,16 +4,19 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<package name="Skip" namespace="/Skip" extends="struts-default">
-	<interceptors>
-			<interceptor name="sessionout" class="com.pphgzs.interceptor.loginInterceptor"></interceptor>
+		<interceptors>
+			<interceptor name="sessionout"
+				class="com.pphgzs.interceptor.loginInterceptor"></interceptor>
 			<interceptor-stack name="mystackHttp">
 				<interceptor-ref name="defaultStack" />
+				<!-- 权限拦截 -->
 				<!-- 权限拦截 <interceptor-ref name="authority" /> -->
 				<!-- session拦截 -->
 				<interceptor-ref name="sessionout" />
 			</interceptor-stack>
 		</interceptors>
-		<action name="*" class="com.pphgzs.action.SkipAction" method="{1}">
+		<action name="*" class="com.pphgzs.action.SkipAction"
+			method="{1}">
 			<result name="skipNavbarIndex">/WEB-INF/view/navbarIndex.jsp</result>
 			<result name="skipSystemIndex">/WEB-INF/view/systemIndex.jsp</result>
 			<result name="skipSidebar">/WEB-INF/view/sidebar.jsp</result>
@@ -36,8 +39,10 @@
 			</result>
 			<result name="navbarAbarbeitung">/WEB-INF/view/navbarAbarbeitung.jsp</result>
 			<result name="navbarAppraisal">/WEB-INF/view/navbarAppraisal.jsp</result>
-			<result name="skipAbarbeitungProceed">/WEB-INF/view/abarbeitung/abarbeitungProceed.jsp</result>
-			<result name="skipAbarbeitungCheck">/WEB-INF/view/abarbeitung/abarbeitungCheck.jsp</result>
+			<result name="skipAbarbeitungProceed">/WEB-INF/view/abarbeitung/abarbeitungProceed.jsp
+			</result>
+			<result name="skipAbarbeitungCheck">/WEB-INF/view/abarbeitung/abarbeitungCheck.jsp
+			</result>
 			<result name="skipQuestionnaireDetails" type="redirectAction">
 				skipQuestionnaireDetailsJsp?definitionId=${definitionId}
 			</result>
@@ -53,7 +58,8 @@
 			<result name="skipPoliceAssessmentPageJsp">
 				/WEB-INF/view/evaluationPolice/policeAssessmentPage.jsp
 			</result>
-			<result name="skipPreviewPoliceAssessmentPage" type="redirectAction">
+			<result name="skipPreviewPoliceAssessmentPage"
+				type="redirectAction">
 				skipPreviewPoliceAssessmentPageJsp?definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
 			</result>
 			<result name="skipPreviewPoliceAssessmentPageJsp">
