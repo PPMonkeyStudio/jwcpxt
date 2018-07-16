@@ -91,7 +91,7 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 			ActionContext.getContext().getSession().remove("loginType");
 			http_response.getWriter().write("1");
 		} else {
-			http_response.getWriter().write("-1");
+			http_response.getWriter().write("1");
 		}
 	}
 
