@@ -113,4 +113,11 @@ public interface DissatisfiedFeedbackDao {
 	 */
 	public List<jwcpxt_feedback_rectification> get_checkFeedbackRectificationVO(
 			CheckFeedbackRectificationVO checkFeedbackRectificationVO, jwcpxt_unit unit);
+
+	/**
+	 * 根据责任单位获取该责任单位的上级单位
+	 * @param jwcpxt_unit_id
+	 * @return
+	 */
+	public jwcpxt_unit get_unitDO_byChildrenUnit(String jwcpxt_unit_id);
 }

@@ -1,5 +1,6 @@
 package com.pphgzs.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.UnitService;
 import com.pphgzs.service.UserService;
+import com.pphgzs.util.SendMessageUtil;
 import com.pphgzs.util.TimeUtil;
 import com.pphgzs.util.uuidUtil;
 
@@ -104,8 +106,9 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				/*
 				 * 
 				 */
-				jwcpxt_service_client oldService_client = dissatisfiedFeedbackDao.get_serviceClient_byDissatisfiedFeedbackId(
-						checkFeedbackRectification.getJwcpxt_feedback_rectification_id());
+				jwcpxt_service_client oldService_client = dissatisfiedFeedbackDao
+						.get_serviceClient_byDissatisfiedFeedbackId(
+								checkFeedbackRectification.getJwcpxt_feedback_rectification_id());
 				// 分配生成当事人
 				jwcpxt_service_client newServiceClient = new jwcpxt_service_client();
 				newServiceClient.setJwcpxt_service_client_id(uuidUtil.getUuid());
@@ -294,6 +297,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		jwcpxt_dissatisfied_feedback disFeedback = new jwcpxt_dissatisfied_feedback();
 		jwcpxt_service_client serviceClient = new jwcpxt_service_client();
 		jwcpxt_unit unit = new jwcpxt_unit();
+		jwcpxt_unit unitFather = new jwcpxt_unit();
 		// 更改不满意反馈表的状态
 		if (dissatisfiedFeedback != null && dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id() != null
 				&& dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id().trim().length() > 0) {
@@ -333,6 +337,29 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		feedbackRectification
 				.setFeedback_rectification_gmt_modified(feedbackRectification.getFeedback_rectification_gmt_create());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(feedbackRectification);
+		try {
+			/**
+			 * 推送的时候需要短信通知
+			 */
+			// 责任单位短信
+			if (unit != null) {
+				String unitDXNR = "单位<" + unit.getUnit_name() + ">接受到一条整改信息,请在5天内队该整改做出反馈。";
+				// 发短信
+				SendMessageUtil sendMessageUtil = new SendMessageUtil(unit.getUnit_phone(), unitDXNR);
+				sendMessageUtil.send();
+			}
+			// 根据责任单位获取该责任单位的上级单位
+			unitFather = dissatisfiedFeedbackDao.get_unitDO_byChildrenUnit(unit.getJwcpxt_unit_id());
+			if (unitFather != null) {
+				// 通知上级单位的短信
+				String fatherUnitDXNR = "您的下属单位<" + unit.getUnit_name() + ">,接收到一条整改要求,请监督下属单位进行整改，并对整改结果进行审核";
+				// 发短信
+				SendMessageUtil sendMessageUtil = new SendMessageUtil(unitFather.getUnit_phone(), fatherUnitDXNR);
+				sendMessageUtil.send();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 
