@@ -91,7 +91,122 @@ public class ServiceServiceImpl implements ServiceService {
 			return null;
 		}
 		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
+		if (clientInstanceDTO == null) {
+			distributionNewServiceInstance_toUser(user.getJwcpxt_user_id());
+			clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
+		}
 		return clientInstanceDTO;
+	}
+
+	@Override
+	public boolean distributionNewServiceInstance_toUser(String userID) {
+		/*
+		 * 最后分配新的实例给测评人员
+		 * 
+		 * 1、查询所有单位关联业务表
+		 * 
+		 * 2、当天的抓取实例中，属于这个单位的，且属于这个业务定义的数量
+		 * 
+		 * 3、对比数量和单位关联业务表中填写的需求数量，数量大于需求数量的，就移出list
+		 * 
+		 * 4、在剩下的list中随机选取一个单位业务关联DO，通过这个DO，随机取一个抓取实例分配到业务实例中给这个测评员
+		 * 
+		 * 
+		 * 
+		 */
+
+		// 查询所有单位关联业务表
+		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
+		System.out.println("查询所有单位关联业务表:" + unitServiceList.size());
+		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
+		for (jwcpxt_unit_service unitServiceDO : unitServiceList) {
+			// 需求数量
+			int wantNum = unitServiceDO.getEvaluation_count();
+			// System.out.println("需求数量：" + wantNum);
+			/*
+			 * 如果这个单位是二级单位，那么就查出他所有子单位已分配的实例数量
+			 * 
+			 */
+			int currNum = 0;
+			jwcpxt_unit unit = unitService.get_unitDO_byID(unitServiceDO.getUnit_id());
+			if (unit.getUnit_grade() == 2) {
+				// 二级单位
+				currNum = get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(
+						unitServiceDO.getService_definition_id(), unitServiceDO.getUnit_id());
+			} else {
+				// 已分配数量：获取当天该单位该业务的业务实例的数量
+				currNum = get_serviceInstanceCount_byServiceDefinitionAndUnit(unitServiceDO.getService_definition_id(),
+						unitServiceDO.getUnit_id());
+				// System.out.println("三级单位当前业务实例数量：" + currNum);
+			}
+
+			// 分配足够了的就移出列表
+			if (currNum >= wantNum) {
+				unitServiceList.remove(unitServiceDO);
+			}
+		}
+		// 遍历一下这个列表
+		// for (jwcpxt_unit_service jwcpxt_unit_service : unitServiceList) {
+		// System.out.println("单位业务关联表：" + jwcpxt_unit_service);
+		// }
+
+		// 随机取一个单位业务关联DO作为分配，如果这个单位没有数据，那么就换一个单位
+		jwcpxt_grab_instance grabInstance = null;
+		jwcpxt_unit_service thisUnitService = null;
+		jwcpxt_unit unit = null;
+		while (unitServiceList.size() > 0) {
+			int random = (int) (Math.random() * unitServiceList.size());
+			thisUnitService = unitServiceList.get(random);
+			unit = unitService.get_unitDO_byID(thisUnitService.getUnit_id());
+			if (unit.getUnit_grade() == 2) {
+				// 二级单位
+				grabInstance = get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
+						thisUnitService.getService_definition_id(), unit.getUnit_num());
+			} else {
+				// 随机此业务，此单位，未被分配的一个抓取实例
+				grabInstance = get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
+						thisUnitService.getService_definition_id(), unit.getUnit_num());
+			}
+			if (grabInstance != null) {
+				break;
+			} else {
+				unitServiceList.remove(random);
+			}
+		}
+		if (grabInstance == null) {
+			/*
+			 * 说明没有东西可以分配，今天就这样不分配了，明天上线再说
+			 */
+			return true;
+		}
+		// 分配生成业务实例
+		jwcpxt_service_instance serviceInstance = new jwcpxt_service_instance();
+		serviceInstance.setJwcpxt_service_instance_id(uuidUtil.getUuid());
+		serviceInstance.setService_instance_gmt_create(TimeUtil.getStringSecond());
+		serviceInstance.setService_instance_gmt_modified(serviceInstance.getService_instance_gmt_create());
+		serviceInstance.setService_instance_service_definition(grabInstance.getGrab_instance_service_definition());
+		serviceInstance.setService_instance_belong_unit(thisUnitService.getUnit_id());
+		serviceInstance.setService_instance_judge(userID);
+		serviceInstance.setService_instance_nid(grabInstance.getGrab_instance_unique_id());
+		serviceInstance.setService_instance_date(grabInstance.getGrab_instance_service_time());
+		saveServiceInstance(serviceInstance);
+		// 分配生成当事人
+		jwcpxt_service_client newServiceClient = new jwcpxt_service_client();
+		newServiceClient.setJwcpxt_service_client_id(uuidUtil.getUuid());
+		newServiceClient.setService_client_service_instance(serviceInstance.getJwcpxt_service_instance_id());
+		newServiceClient.setService_client_name(grabInstance.getGrab_instance_client_name());
+		newServiceClient.setService_client_sex(grabInstance.getGrab_instance_client_sex());
+		newServiceClient.setService_client_phone(grabInstance.getGrab_instance_client_phone());
+		newServiceClient.setService_client_visit("2");
+		newServiceClient.setService_client_gmt_create(TimeUtil.getStringSecond());
+		newServiceClient.setService_client_gmt_modified(newServiceClient.getService_client_gmt_create());
+		//
+
+		// 并且更新抓取实例的状态
+		grabInstance.setGrab_instance_distribution("1");
+		update_grabInstance(grabInstance);
+		//
+		return true;
 	}
 
 	/**

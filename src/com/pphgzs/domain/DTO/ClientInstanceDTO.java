@@ -15,12 +15,10 @@ public class ClientInstanceDTO {
 	private jwcpxt_service_definition serviceDefinition;
 
 	public ClientInstanceDTO() {
-		super();
 	}
 
 	public ClientInstanceDTO(jwcpxt_service_instance serviceInstance, jwcpxt_service_client serviceClient,
 			jwcpxt_service_definition serviceDefinition) {
-		super();
 		this.serviceInstance = serviceInstance;
 		this.serviceClient = serviceClient;
 		this.serviceDefinition = serviceDefinition;
