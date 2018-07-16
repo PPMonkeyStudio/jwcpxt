@@ -53,7 +53,7 @@ th {
 									<button type="button" class="btn btn-default" @click="preview">
 										<i class="fa fa-th-list"></i>预览
 									</button>
-									<input @keyup="queryQuestion" placeholder="请输入搜索内容"
+									<input @keyup="queryQuestion" placeholder="请输入问题描述搜索内容"
 										name="questionVO.screenSearch" class="form-control"
 										style="float: right; width: 250px;">
 									<!-- <div v-if="!ready" id="loadingLayer"
