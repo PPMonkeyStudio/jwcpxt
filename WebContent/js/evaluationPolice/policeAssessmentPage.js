@@ -233,7 +233,7 @@ $(function() {
 							}
 							answerData[index] = answer;
 							let optionIndex = $event.target.attributes.optionIndex.value;
-							inquiriesStr[inedx] = `<br/><small>${this.inquiriesOptionData[index].listInquiriesOption[optionIndex].option_describe}</small>`;
+							inquiriesStr[index] = `<br/><small>${this.inquiriesOptionData[index].listInquiriesOption[optionIndex].option_describe}</small>`;
 						},
 						inputInquiriesTextarea (event, index) {
 							let answer = {
@@ -241,7 +241,7 @@ $(function() {
 								"answerOpen.answer_open_content" : $event.target.value //开放题回答的内容
 							}
 							answerData[index] = answer;
-							inquiriesStr[inedx] = `<br/><small>${answer["answerOpen.answer_open_content"]}</small>`;
+							inquiriesStr[index] = `<br/><small>${answer["answerOpen.answer_open_content"]}</small>`;
 						},
 					},
 					mounted () {
