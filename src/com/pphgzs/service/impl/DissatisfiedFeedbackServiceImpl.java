@@ -344,6 +344,9 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			// 责任单位短信
 			if (unit != null) {
 				String unitDXNR = "单位<" + unit.getUnit_name() + ">接受到一条整改信息,请在5天内队该整改做出反馈。";
+				// 发短信
+				SendMessageUtil sendMessageUtil = new SendMessageUtil(unit.getUnit_phone(), unitDXNR);
+				sendMessageUtil.send();
 			}
 			// 根据责任单位获取该责任单位的上级单位
 			unitFather = dissatisfiedFeedbackDao.get_unitDO_byChildrenUnit(unit.getJwcpxt_unit_id());
