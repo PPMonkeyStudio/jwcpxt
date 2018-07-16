@@ -57,7 +57,7 @@ public interface DissatisfiedFeedbackDao {
 	 * @param jwcpxt_dissatisfied_feedback_id
 	 * @return
 	 */
-	public jwcpxt_service_client get_serviceClient_byDisFeedbackId(String jwcpxt_dissatisfied_feedback_id);
+	public jwcpxt_service_client get_serviceClient_byDissatisfiedFeedbackId(String jwcpxt_dissatisfied_feedback_id);
 
 	/**
 	 * 根据不反馈id获取单位信息

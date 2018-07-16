@@ -226,4 +226,10 @@ public interface ServiceService {
 
 	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance);
 
+	public boolean distributionNewServiceInstance_toUser(String userID);
+
+	public List<jwcpxt_service_definition> list_serviceDefinitionDOList_byUnitID(String jwcpxt_unit_id);
+
+	public void saveServiceClient(jwcpxt_service_client newServiceClient);
+
 }

@@ -148,4 +148,6 @@ public interface ServiceDao {
 	public jwcpxt_grab_instance get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
 			String serviceDefinitionID, String organizationCode);
 
+	public List<jwcpxt_service_definition> list_serviceDefinitionDOList_byUnitID(String unitID);
+
 }
