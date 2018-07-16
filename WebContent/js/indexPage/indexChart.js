@@ -1,7 +1,5 @@
 
 let lineChart = echarts.init(document.getElementById('main'), 'light');
-var paiChart = echarts.init(document.getElementById('main2'), 'light');
-
 
 //给下方法提供使用
 Date.prototype.format = function() {
@@ -77,25 +75,10 @@ function getInfo($params) {
 		$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDayDataVO', $params, response => {
 			randerLineChart(response); //折线图
 		}, 'json')
-		$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDateCountVO', {
-			'statisticsDissatisfiedDateCountVO.startTime' : $params['statisticsDissatisfiedDayDataVO.startTime'],
-			'statisticsDissatisfiedDateCountVO.endTime' : $params['statisticsDissatisfiedDayDataVO.endTime'],
-			'statisticsDissatisfiedDateCountVO.unit.jwcpxt_unit_id' : $params['statisticsDissatisfiedDayDataVO.unit.jwcpxt_unit_id']
-		}, response => {
-			randerPieChart(response); //饼图
-		}, 'json')
 	}
 }
 
 
-function searchUnit(select) {
-	let unit = $(select).val();
-	if (!unit) {
-		return false;
-	}
-	params['statisticsDissatisfiedDayDataVO.unit.jwcpxt_unit_id'] = unit;
-	getInfo(params);
-}
 function searchBeginTime(input) {
 	let begin = $(input).val();
 	if (!begin) {
@@ -165,61 +148,4 @@ function randerLineChart(res) {
 	};
 	// 使用刚指定的配置项和数据显示图表。
 	lineChart.setOption(option1);
-}
-
-
-//绘制饼图
-function randerPieChart(res) {
-	//legendData全部数据
-	//selected 选中数据
-	//seriesData 图表数据
-	let service = [];
-	let chartData = [];
-	res.statisticsDissatisfiedDateCountDTO.forEach(function(elt, i) {
-		//业务名称
-		service.push(elt.serviceDefinition.service_definition_describe.substring(0, 4));
-		//数据
-		chartData.push({
-			name : elt.serviceDefinition.service_definition_describe,
-			value : elt.dayCount
-		});
-	})
-	// 指定图表的配置项和数据
-	let option2 = {
-		title : {
-			text : res.unit.unit_name + '数量统计',
-			subtext : '',
-			x : 'center'
-		},
-		tooltip : {
-			trigger : 'item',
-			formatter : "{a} <br/>{b} : {c} ({d}%)"
-		},
-		legend : {
-			type : 'scroll',
-			orient : 'vertical',
-			right : 10,
-			top : 20,
-			bottom : 20,
-			data : service,
-			selected : service
-		},
-		series : [
-			{
-				name : '业务',
-				type : 'pie',
-				radius : '55%',
-				center : [ '40%', '50%' ],
-				data : chartData,
-				itemStyle : {
-					emphasis : {
-						shadowBlur : 10,
-						shadowOffsetX : 0,
-						shadowColor : 'rgba(0, 0, 0, 0.5)'
-					}
-				}
-			}
-		]
-	};
-	paiChart.setOption(option2);
 }

@@ -155,8 +155,9 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " jwcpxt_service_definition serviceDefinition "//
 				+ " where "//
 				+ " unitService.service_definition_id = serviceDefinition.jwcpxt_service_definition_id"//
-				//
-				+ " unitService.unit_id = :serviceDefinitionId"//
+				+ " and "//
+				//+ " unitService.unit_id = :serviceDefinitionId"//
+				+ " unitService.unit_id = :unitID"//
 		;
 		Query query = session.createQuery(hql);
 		query.setParameter("unitID", unitID);
