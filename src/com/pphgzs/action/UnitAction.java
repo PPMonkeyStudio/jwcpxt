@@ -130,6 +130,17 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 		http_response.getWriter().write(gson.toJson(unitList));
 	}
 
+	public void list_unitDO_all() throws IOException {
+		List<jwcpxt_unit> unitList = unitService.list_unitDO_all();
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(gson.toJson(unitList));
+	}
+
 	/**
 	 * 通过单位id获得一个单位
 	 * 
