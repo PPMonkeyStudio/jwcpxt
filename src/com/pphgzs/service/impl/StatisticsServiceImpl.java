@@ -14,7 +14,9 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.StatisticsService;
@@ -23,6 +25,48 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private StatisticsDao statisticsDao;
 	private UnitDao unitDao;
 	private ServiceService serviceService;
+
+	@Override
+	public StatisticsDissatisfiedDayDataVO get_StatisticsDissatisfiedDayDataVO(
+			StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO) {
+		List<StatisticsDissatisfiedDayDataDTO> statisticsDissatisfiedDayDataDTOList = new ArrayList<StatisticsDissatisfiedDayDataDTO>();
+
+		/*
+		 * 取出此单位所有的业务定义，
+		 */
+		List<jwcpxt_service_definition> serviceDefinitionList = serviceService
+				.list_serviceDefinitionDOList_byUnitID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id());
+
+		/*
+		 * 遍历业务定义，以天为单位取得这个单位的这个业务在这一天的错误数量。
+		 */
+		List<Integer> dayNumList = new ArrayList<Integer>();
+		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
+			int dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate(
+					serviceDefinition.getJwcpxt_service_definition_id(),
+					statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
+					statisticsDissatisfiedDayDataVO.getStartTime(), statisticsDissatisfiedDayDataVO.getEndTime());
+		}
+
+		/*
+		 * 
+		 */
+
+		/*
+		 * 
+		 */
+		/*
+		 * 
+		 */
+		/*
+		 * 
+		 */
+		/*
+		 * 
+		 */
+
+		return statisticsDissatisfiedDayDataVO;
+	}
 
 	@Override
 	public void writeStatisticsExcel(StatisticsVO statisticsVO, HSSFWorkbook wb) {

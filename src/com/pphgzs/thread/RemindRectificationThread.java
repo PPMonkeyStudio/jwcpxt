@@ -32,7 +32,8 @@ public class RemindRectificationThread {
 						// serviceService.grab_serviceInstance_auto();
 						// serviceService.distribution_serviceInstance_auto();
 						// 60分钟——3600秒——3600000毫秒
-						Thread.sleep(3600000);
+						// 4个小时——3600秒——14400000毫秒
+						Thread.sleep(14400000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

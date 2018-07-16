@@ -145,6 +145,27 @@ public class ServiceDaoImpl implements ServiceDao {
 		return list;
 	}
 
+	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinitionDOList_byUnitID(String unitID) {
+		Session session = getSession();
+		String hql = "select "//
+				+ " serviceDefinition "//
+				+ " from "//
+				+ " jwcpxt_unit_service unitService , "//
+				+ " jwcpxt_service_definition serviceDefinition "//
+				+ " where "//
+				+ " unitService.service_definition_id = serviceDefinition.jwcpxt_service_definition_id"//
+				//
+				+ " unitService.unit_id = :serviceDefinitionId"//
+		;
+		Query query = session.createQuery(hql);
+		query.setParameter("unitID", unitID);
+		//
+		List<jwcpxt_service_definition> list = query.list();
+		session.clear();
+		return list;
+	}
+
 	/**
 	 * 删除抓取记录
 	 */

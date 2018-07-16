@@ -58,6 +58,12 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	@Override
+	public void saveServiceClient(jwcpxt_service_client newServiceClient) {
+		serviceDao.saveOrUpdateObject(newServiceClient);
+
+	}
+
+	@Override
 	public jwcpxt_service_definition get_serviceDefinitionDo_byId(jwcpxt_service_definition serviceDefinition) {
 		if (serviceDefinition != null && serviceDefinition.getJwcpxt_service_definition_id() != null
 				&& serviceDefinition.getJwcpxt_service_definition_id().trim().length() > 0) {
@@ -65,6 +71,11 @@ public class ServiceServiceImpl implements ServiceService {
 					.get_serviceDefinition_byServiceDefinitionID(serviceDefinition.getJwcpxt_service_definition_id());
 		}
 		return serviceDefinition;
+	}
+
+	@Override
+	public List<jwcpxt_service_definition> list_serviceDefinitionDOList_byUnitID(String unitID) {
+		return serviceDao.list_serviceDefinitionDOList_byUnitID(unitID);
 	}
 
 	@Override

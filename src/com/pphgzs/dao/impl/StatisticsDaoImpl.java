@@ -23,6 +23,27 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	}
 
 	@Override
+	public int get_dayNum_byServiceDefinitionIDAndDate(String serviceDefinitionID, String unitID, String startTime,
+			String endTime) {
+
+		Session session = getSession();
+		String hql = "select "//
+				+ " count()  "//
+				+ " from "//
+				+ " jwcpxt_user";
+		Query query = session.createQuery(hql);
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			System.err.println(e);
+			return 0;
+		} finally {
+			session.clear();
+		}
+	}
+
+	@Override
 	public int geteStatisticsGrade_byFatherUnit(ServiceGradeDTO serviceGradeDTO, String fatherUnitId,
 			String searchTimeStart, String searchTimeEnd) {
 		Session session = getSession();

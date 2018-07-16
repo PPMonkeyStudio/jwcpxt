@@ -104,6 +104,23 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				/*
 				 * 
 				 */
+				jwcpxt_service_client oldService_client = dissatisfiedFeedbackDao.get_serviceClient_byDissatisfiedFeedbackId(
+						checkFeedbackRectification.getJwcpxt_feedback_rectification_id());
+				// 分配生成当事人
+				jwcpxt_service_client newServiceClient = new jwcpxt_service_client();
+				newServiceClient.setJwcpxt_service_client_id(uuidUtil.getUuid());
+				newServiceClient.setService_client_service_instance(serviceInstance.getJwcpxt_service_instance_id());
+				newServiceClient.setService_client_name(oldService_client.getService_client_name());
+				newServiceClient.setService_client_sex(oldService_client.getService_client_sex());
+				newServiceClient.setService_client_phone(oldService_client.getService_client_phone());
+				newServiceClient.setService_client_visit("2");
+				newServiceClient.setService_client_gmt_create(TimeUtil.getStringSecond());
+				newServiceClient.setService_client_gmt_modified(newServiceClient.getService_client_gmt_create());
+				serviceService.saveServiceClient(newServiceClient);
+
+				/*
+				 * 
+				 */
 
 			} else if (unit.getUnit_grade() == 2) {
 				checkFeedbackRectification.setFeedback_rectification_audit_state("2");
@@ -302,7 +319,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		// 收集时间----不反馈
 		feedbackRectification.setFeedback_rectification_collect_time(disFeedback.getDissatisfied_feedback_gmt_create());
 		serviceClient = dissatisfiedFeedbackDao
-				.get_serviceClient_byDisFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
+				.get_serviceClient_byDissatisfiedFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
 		feedbackRectification.setFeedback_rectification_client_name(serviceClient.getService_client_name());
 		feedbackRectification.setFeedback_rectification_client_phone(serviceClient.getService_client_phone());
 		// 责任单位
