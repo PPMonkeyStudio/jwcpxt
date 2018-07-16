@@ -87,8 +87,8 @@ function addInterface(event) {
 
 						+ '<tr><td>是否单表</td>'
 						+ '<td><select class="form-control" name="serviceGrab.service_grab_single_table"><option value="1">是</option><option value="2">否</option></select></td>'
-						+ '<td><span style="color:red;">*</span>接口名一</td><td><input type="text" name="serviceGrab.service_grab_interface_one" class="form-control mustWrite"></td>'
-						+ '<td>接口名二</td><td><input type="text" name="serviceGrab.service_grab_interface_two" class="form-control"></td></tr>'
+						+ '<td><span style="color:red;">*</span>表名一</td><td><input type="text" name="serviceGrab.service_grab_interface_one" class="form-control mustWrite"></td>'
+						+ '<td>表名二</td><td><input type="text" name="serviceGrab.service_grab_interface_two" class="form-control"></td></tr>'
 
 						+ '<tr><td><span style="color:red;">*</span>业务唯一识别编号</td><td><input type="text" name="serviceGrab.service_grab_field_name" class="form-control mustWrite"></td>'
 						+ '<td><span style="color:red;">*</span>当事人姓名</td><td><input type="text" name="serviceGrab.service_grab_name_field" class="form-control mustWrite"></td>'
@@ -181,7 +181,7 @@ function updateInterface(event) {
 						+ '<td><span style="color:red;">*</span>当事人性别</td><td><input type="text" name="serviceGrab.service_grab_sex_field" class="form-control updateIn mustWrite"></td></tr>'
 
 						+ '<tr><td><span style="color:red;">*</span>当事人电话</td><td><input type="text" name="serviceGrab.service_grab_phone_field" class="form-control updateIn mustWrite"></td>'
-						+ '<td><span style="color:red;">*</span>业务办理时间</td><td><input type="text" name="serviceGrab.service_grab_handle_time_gield" class="form-control updateIn mustWrite"></td>'
+						+ '<td><span style="color:red;">*</span>业务办理时间</td><td><input type="text" name="serviceGrab.service_grab_handle_time_field" class="form-control updateIn mustWrite"></td>'
 						+ '<td><span style="color:red;">*</span>机构代码</td><td><input type="text" name="serviceGrab.service_grab_organization_code_field" class="form-control updateIn mustWrite"></td></tr>'
 
 						+ '<td>连接1</td><td><input type="text" name="serviceGrab.service_grab_connect_one_field" class="form-control updateIn"></td><td>连接2</td><td><input type="text" name="serviceGrab.service_grab_connect_two_field" class="form-control updateIn"></td></tr>'
