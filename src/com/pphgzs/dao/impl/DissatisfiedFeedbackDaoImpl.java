@@ -490,4 +490,18 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		session.clear();
 		return count;
 	}
+
+	/**
+	 * 根据责任单位获取该责任单位的上级单位
+	 */
+	@Override
+	public jwcpxt_unit get_unitDO_byChildrenUnit(String unitChildrenId) {
+		jwcpxt_unit unitFather = new jwcpxt_unit();
+		Session session = getSession();
+		String hql = "from jwcpxt_unit where unit_father = :unitChildrenId";
+		Query query = session.createQuery(hql);
+		query.setParameter("unitChildrenId", unitChildrenId);
+		unitFather = (jwcpxt_unit) query.uniqueResult();
+		return unitFather;
+	}
 }
