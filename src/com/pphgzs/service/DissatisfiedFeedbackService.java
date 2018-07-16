@@ -85,6 +85,6 @@ public interface DissatisfiedFeedbackService {
 	 * @param feedbackRectification
 	 * @return
 	 */
-	public boolean checkFeedbackRectification(jwcpxt_feedback_rectification feedbackRectification,jwcpxt_unit unit);
+	public boolean checkFeedbackRectification(jwcpxt_feedback_rectification feedbackRectification, jwcpxt_unit unit);
 
 }
