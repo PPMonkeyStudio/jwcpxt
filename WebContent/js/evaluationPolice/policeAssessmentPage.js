@@ -179,7 +179,7 @@ $(function() {
 	//answer 追问的答案
 	function answerInquiries(index, inquiriesOptionDTO, optionID) {
 		let answerData = [];
-		let inquiriesStr = '';
+		let inquiriesStr = [];
 		let answerInquiriesConfirmVue;
 		let answerInquiriesConfirm = $.confirm({
 			smoothContent : false, //关闭动画
@@ -233,7 +233,7 @@ $(function() {
 							}
 							answerData[index] = answer;
 							let optionIndex = $event.target.attributes.optionIndex.value;
-							inquiriesStr += `<br/><small>${this.inquiriesOptionData[index].listInquiriesOption[optionIndex].option_describe}</small>`;
+							inquiriesStr[inedx] = `<br/><small>${this.inquiriesOptionData[index].listInquiriesOption[optionIndex].option_describe}</small>`;
 						},
 						inputInquiriesTextarea (event, index) {
 							let answer = {
@@ -241,7 +241,7 @@ $(function() {
 								"answerOpen.answer_open_content" : $event.target.value //开放题回答的内容
 							}
 							answerData[index] = answer;
-							inquiriesStr += `<br/><small>${answer["answerOpen.answer_open_content"]}</small>`;
+							inquiriesStr[inedx] = `<br/><small>${answer["answerOpen.answer_open_content"]}</small>`;
 						},
 					},
 					mounted () {
@@ -285,7 +285,7 @@ $(function() {
 						if (answerData.length > 0)
 							listAnswerInquiriesDTO[index] = answerData;
 						if (inquiriesStr)
-							$('input[type="radio"][optionID="' + optionID + '"]').parent().siblings('.inquiriesContent').html(inquiriesStr);
+							$('input[type="radio"][optionID="' + optionID + '"]').parent().siblings('.inquiriesContent').html(inquiriesStr.join(''));
 					}
 				},
 			},

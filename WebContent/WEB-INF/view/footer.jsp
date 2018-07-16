@@ -18,9 +18,9 @@
 			<nav class="pull-left">
 			<ul>
 	
-				<li><a href="#"> 15079917256 </a></li>
+				<!-- <li><a href="#"> 15079917256 </a></li>
 				<li><a href="#"> 小哥哥 </a></li>
-				<li><a href="#"> 的号码 </a></li>
+				<li><a href="#"> 的号码 </a></li> -->
 			</ul>
 			</nav>
 			<div class="copyright pull-right">
