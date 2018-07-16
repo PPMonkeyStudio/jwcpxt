@@ -19,6 +19,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
 import com.pphgzs.service.StatisticsService;
@@ -40,7 +41,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private String searchTimeEnd;
 
 	private StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO;
-
+	private StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO;
 	/*
 	 * 
 	 */
@@ -49,6 +50,18 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	public void get_StatisticsDissatisfiedDateCountVO() throws IOException {
+		statisticsDissatisfiedDateCountVO = statisticsService
+				.get_StatisticsDissatisfiedDateCountVO(statisticsDissatisfiedDateCountVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(gson.toJson(statisticsDissatisfiedDateCountVO));
+	}
 
 	public void get_StatisticsDissatisfiedDayDataVO() throws IOException {
 		statisticsDissatisfiedDayDataVO = statisticsService
@@ -253,6 +266,15 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public void setStatisticsDissatisfiedDayDataVO(StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO) {
 		this.statisticsDissatisfiedDayDataVO = statisticsDissatisfiedDayDataVO;
+	}
+
+	public StatisticsDissatisfiedDateCountVO getStatisticsDissatisfiedDateCountVO() {
+		return statisticsDissatisfiedDateCountVO;
+	}
+
+	public void setStatisticsDissatisfiedDateCountVO(
+			StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO) {
+		this.statisticsDissatisfiedDateCountVO = statisticsDissatisfiedDateCountVO;
 	}
 
 }
