@@ -155,9 +155,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " jwcpxt_service_definition serviceDefinition "//
 				+ " where "//
 				+ " unitService.service_definition_id = serviceDefinition.jwcpxt_service_definition_id"//
-				+ " and "//
-				//+ " unitService.unit_id = :serviceDefinitionId"//
-				+ " unitService.unit_id = :unitID"//
+				+ " and unitService.unit_id = :unitID"//
 		;
 		Query query = session.createQuery(hql);
 		query.setParameter("unitID", unitID);
@@ -201,7 +199,11 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public jwcpxt_unit_service get_unitService_byUnitServiceId(String unitServiceId) {
 		Session session = getSession();
-		String hql = "from jwcpxt_unit_service where jwcpxt_unit_service_id=:unitServiceId ";
+		String hql = "from "//
+				+ " jwcpxt_unit_service "//
+				+ " where "//
+				+ " jwcpxt_unit_service_id=:unitServiceId "//
+		;
 		//
 		Query query = session.createQuery(hql);
 		//
@@ -215,8 +217,16 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public List<ServiceConnectDTO> list_serviceDefinitionDTO_connectService(String unitId) {
 		Session session = getSession();
-		String hql = "select new com.pphgzs.domain.DTO.ServiceConnectDTO(serviceDefinition,unitSer) from jwcpxt_service_definition serviceDefinition,jwcpxt_unit_service unitSer where "
-				+ "serviceDefinition.jwcpxt_service_definition_id = unitSer.service_definition_id and unitSer.unit_id = :unitID order by serviceDefinition.service_definition_gmt_create ";
+		String hql = "select "//
+				+ " new com.pphgzs.domain.DTO.ServiceConnectDTO(serviceDefinition,unitSer) "//
+				+ " from jwcpxt_service_definition serviceDefinition , "//
+				+ "jwcpxt_unit_service unitSer "//
+				+ " where "//
+				+ "serviceDefinition.jwcpxt_service_definition_id = unitSer.service_definition_id "//
+				+ " and unitSer.unit_id = :unitID "//
+				+ " order by "//
+				+ " serviceDefinition.service_definition_gmt_create desc"//
+		;
 		Query query = session.createQuery(hql);
 		query.setParameter("unitID", unitId);
 		//

@@ -142,7 +142,7 @@ public class UnitAction extends ActionSupport implements ServletResponseAware, S
 	}
 
 	/**
-	 * 通过单位id获得一个单位
+	 * 通过单位id获得一个单位 ·
 	 * 
 	 * @throws IOException
 	 */
