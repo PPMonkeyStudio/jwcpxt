@@ -44,7 +44,7 @@ th {
 									<h4 class="title">警务测评</h4>
 								</div>
 								<div class="content table-responsive table-full-width" v-cloak>
-<!-- 									<div class="panel panel-def"> -->
+										<!-- <div class="panel panel-def"> -->
 										<div class="panel-heading">{{serviceDefinition.service_definition_describe}}</div>
 										<div class="panel-body">
 										    <form class="form-inline">
@@ -81,11 +81,13 @@ th {
 													 <div class="form-group">
 													 	 <input type="radio" :name="index" :optionIndex="index1" :optionID="optionDTO.option.jwcpxt_option_id">
 														 <label class="control-label">{{optionDTO.option.option_describe}}</label>
-														 <!-- 追问 -->
+														 <!-- 追问循环 -->
 														 <template v-for="(listInquiriesOption,inde2) in optionDTO.listInquiriesOptionDTO">
+														 	<!-- 追问选择题 -->
 														 	<template v-if="listInquiriesOption.inquiriesQuestion.question_type==4">
 															 	<div style="margin-left: 30px;" class="form-group">
 															 		<label>{{questionDTO.question.question_sort +'.'+ questionDTO.question.question_describe}}</label>
+															 		<!-- 追问选择题选项循环 -->
 															 		<template v-for="(inquiriesOption,index3) in listInquiriesOption.listInquiriesOption">
 															 			 <div class="form-group">
 																	 	 	<input type="radio" :name="listInquiriesOption.inquiriesQuestion.jwcpxt_question_id" :optionIndex="index3" :optionID="inquiriesOption.jwcpxt_option_id">
@@ -94,9 +96,10 @@ th {
 															 		</template>
 															 	</div>
 														 	</template>
+														 	<!-- 追问主观题 -->
 														 	<template v-if="listInquiriesOption.inquiriesQuestion.question_type==3">
 															 	<div class="form-group">
-															 		<label>{{questionDTO.question.question_sort +'.'+ questionDTO.question.question_describe}}</label>
+															 		<label>{{listInquiriesOption.inquiriesQuestion.question_sort +'.'+ listInquiriesOption.inquiriesQuestion.question_describe}}</label>
 															 		<textarea class="form-control" rows="3"></textarea>
 															 	</div>
 														 	</template>
