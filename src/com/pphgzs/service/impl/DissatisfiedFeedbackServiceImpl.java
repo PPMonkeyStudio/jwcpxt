@@ -349,7 +349,9 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				sendMessageUtil.send();
 			}
 			// 根据责任单位获取该责任单位的上级单位
-			unitFather = dissatisfiedFeedbackDao.get_unitDO_byChildrenUnit(unit.getJwcpxt_unit_id());
+			unitFather = unitService.get_unitDO_byID(unit.getUnit_father());
+			// unitFather =
+			// dissatisfiedFeedbackDao.get_unitDO_byChildrenUnit(unit.getJwcpxt_unit_id());
 			if (unitFather != null) {
 				// 通知上级单位的短信
 				String fatherUnitDXNR = "您的下属单位<" + unit.getUnit_name() + ">,接收到一条整改要求,请监督下属单位进行整改，并对整改结果进行审核";
