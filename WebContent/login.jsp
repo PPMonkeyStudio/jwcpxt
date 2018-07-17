@@ -40,10 +40,6 @@
 </head>
 <body style="background-color: #f3f5f8;">
 
-
-
-
-
 	<div
 		style="margin: calc(( 100VH - 350px)/2) calc(50% - 550px) 0; width: 1100px; float: left; background-size: cover;">
 		<div class="panel"

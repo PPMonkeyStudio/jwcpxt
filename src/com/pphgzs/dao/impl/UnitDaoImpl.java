@@ -38,7 +38,7 @@ public class UnitDaoImpl implements UnitDao {
 	public List<jwcpxt_unit> list_unitDO_byDistributionService() {
 
 		Session session = getSession();
-		String hql = "select unit "//
+		String hql = "select distinct unit "//
 				+ " from "//
 				+ " jwcpxt_unit unit , "//
 				+ " jwcpxt_unit_service unitService "//
