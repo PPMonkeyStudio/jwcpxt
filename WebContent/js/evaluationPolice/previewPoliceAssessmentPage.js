@@ -1,13 +1,17 @@
 $(function() {
+	let definitionId = getUrlParam('definitionId');
+	let serviceClientId = getUrlParam('serviceClientId');
 	let myData = {
-		definitionId : getUrlParam('definitionId'), //业务定义ID
-		serviceClientId : getUrlParam('serviceClientId'), //业务当事人ID
+		definitionId : definitionId, //业务定义ID
+		serviceClientId : serviceClientId, //业务当事人ID
 		serviceClien : {
-			service_client_name : '',
-			service_client_sex : '',
-			service_client_phone : ''
+			service_client_name : '暂无信息',
+			service_client_sex : '暂无信息',
+			service_client_phone : '暂无信息'
 		},
-		serviceDefinition : {},
+		serviceDefinition : {
+			service_definition_describe : '暂无信息'
+		},
 		questionData : [],
 	};
 	let listAnswerDTO = [];
@@ -18,11 +22,13 @@ $(function() {
 		methods : {
 			getInfo () {
 				//获取业务定义
-				$.post('/jwcpxt/Service/get_serviceDefinitionDo_byId', {
-					"serviceDefinition.jwcpxt_service_definition_id" : myData.definitionId
-				}, response => {
-					myData.serviceDefinition = response;
-				}, 'json')
+				if (definitionId != 'revisit') {
+					$.post('/jwcpxt/Service/get_serviceDefinitionDo_byId', {
+						"serviceDefinition.jwcpxt_service_definition_id" : myData.definitionId
+					}, response => {
+						myData.serviceDefinition = response;
+					}, 'json')
+				}
 				//获取当事人ID
 				/*$.post('/jwcpxt/Service/get_serviceClientDo_byId', {
 					"serviceClient.jwcpxt_service_client_id" : myData.serviceClientId
