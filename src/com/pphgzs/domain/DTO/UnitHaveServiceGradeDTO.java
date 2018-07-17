@@ -8,13 +8,13 @@ import com.pphgzs.domain.DO.jwcpxt_unit;
 public class UnitHaveServiceGradeDTO {
 	private jwcpxt_unit unit;
 	private List<ServiceGradeBelongUnitDTO> serviceGradeBelongUnitDTOList;
-	private int totalGrade;
+	private double totalGrade;
 
-	public int getTotalGrade() {
+	public double getTotalGrade() {
 		return totalGrade;
 	}
 
-	public void setTotalGrade(int totalGrade) {
+	public void setTotalGrade(double totalGrade) {
 		this.totalGrade = totalGrade;
 	}
 
