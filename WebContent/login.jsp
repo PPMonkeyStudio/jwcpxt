@@ -40,8 +40,12 @@
 </head>
 <body style="background-color: #f3f5f8;">
 
+
+
+
+
 	<div
-		style="margin: 200px calc(50% - 550px); width: 1100px; float: left; background-size: cover;">
+		style="margin: calc(( 100VH - 350px)/2) calc(50% - 550px) 0; width: 1100px; float: left; background-size: cover;">
 		<div class="panel"
 			style="width: 480px; padding: 20px; float: left; border-radius: 0px;">
 			<div class="panel-heading">
