@@ -46,11 +46,11 @@ th {
 									<div style="width: 100%">
 										<div class="form-group" style="margin: auto; padding-left: 20px;">
 											<label>单位筛选</label>  
-											<select class="selectpicker" onchange="searchUnit(this)" title="选择一个单位..." data-live-search="true" ></select> 
+											<select class="selectpicker" id="SearchUnit" onchange="searchUnit(this)" title="选择一个单位..." data-live-search="true" ></select> 
 											<label>起始时间</label> 
-											<input type="text" id="beginTime" oninput="searchBeginTime(this)" placeholder="起始时间" class="mydate form-control" style="display: inline; width: 150px;"> 
+											<input type="text" id="beginTime" onchange="searchBeginTime(this)" placeholder="起始时间" class="mydate form-control" style="display: inline; width: 150px;"> 
 											<label>结束时间</label>
-											<input type="text" id="endTime" oninput="searchEndTime(this)" placeholder="结束时间" class="mydate form-control" style="display: inline; width: 150px;">
+											<input type="text" id="endTime" onchange="searchEndTime(this)" placeholder="结束时间" class="mydate form-control" style="display: inline; width: 150px;">
 										</div>
 										<div id="main" style="width: 100%;height:400px; margin-top: 50px;"></div>
 										<div id="main2" style="width: 100%;height:400px; margin-top: 50px;"></div>

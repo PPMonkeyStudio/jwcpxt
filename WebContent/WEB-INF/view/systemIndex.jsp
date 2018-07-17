@@ -26,8 +26,19 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card" style="text-align: center; height: 300px; padding-top: 70px;">
-							<h1>警务测评系统</h1>
-							<h3>欢迎来到警务测评系统</h3>
+						 	<h1>警务测评系统</h1>
+						<!--	<h3>欢迎来到警务测评系统</h3> -->
+							<div class="content table-responsive table-full-width">
+									<div style="width: 100%">
+										<div class="form-group" style="margin: auto; padding-left: 20px;">
+											<label>起始时间</label> 
+											<input type="text" id="beginTime" onchange="searchBeginTime(this)" placeholder="起始时间" class="mydate form-control" style="display: inline; width: 150px;"> 
+											<label>结束时间</label>
+											<input type="text" id="endTime" onchange="searchEndTime(this)" placeholder="结束时间" class="mydate form-control" style="display: inline; width: 150px;">
+										</div>
+										<div id="main" style="width: 100%;height:400px; margin-top: 50px;"></div>
+									</div>
+								</div>
 						</div>
 					</div>
 				</div>
@@ -42,4 +53,6 @@
 /* 处理侧边栏选项 */
 $('#sideIndex').attr("class","active");
 </script>
+<script src="<%=basePath%>js/statisticalData/echarts.min.js"></script>
+<script src="<%=basePath%>js/indexPage/indexChart.js"></script>
 </html>

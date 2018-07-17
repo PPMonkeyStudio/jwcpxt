@@ -14,4 +14,13 @@ public interface StatisticsDao {
 
 	int get_dayNum_byServiceDefinitionIDAndDate(String jwcpxt_service_definition_id, String jwcpxt_unit_id, String day);
 
+	int get_dayNum_byServiceDefinitionIDAndDate_byFatherUnit(String jwcpxt_service_definition_id, String jwcpxt_unit_id,
+			String format);
+
+	int get_StatisticsDissatisfiedDateCount(String jwcpxt_service_definition_id, String jwcpxt_unit_id,
+			String startTime, String endTime);
+
+	int get_StatisticsDissatisfiedDateCount_byFatherUnit(String jwcpxt_service_definition_id, String jwcpxt_unit_id,
+			String startTime, String endTime);
+
 }

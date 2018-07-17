@@ -38,30 +38,38 @@
 <!--------------------------------------------------------------------------------->
 <title>警务测评系统</title>
 </head>
-<body>
-	<div class="panel" style="width: 550px; margin: 100px auto;">
-		<div class="panel-heading">
-			<!-- 			<div> -->
-			<%-- 				<img src="<%=basePath%>img/logo.jpg" height="40px"> --%>
-			<!-- 			</div> -->
-			<h2 style="text-align: center;">警务测评系统</h2>
-		</div>
-		<div class="panel-body" style="margin: 0 0 20px 0;">
-			<div class="form-group">
-				<input type="email" class="form-control" id="login_username"
-					placeholder="账号">
-			</div>
-			<div class="form-group">
-				<input type="password" class="form-control" id="login_password"
-					placeholder="密码">
-			</div>
-			<br>
-			<button style="float: right;" id="button_login"
-				class="btn btn-primary" onclick="login('user')">用户登录</button>
+<body style="background-color: #f3f5f8;">
 
-			<button style="float: right; margin-right: 10px;"
-				class="btn btn-primary" onclick="login('unit')">单位登陆</button>
+	<div
+		style="margin: 200px calc(50% - 550px); width: 1100px; float: left; background-size: cover;">
+		<div class="panel"
+			style="width: 480px; padding: 20px; float: left; border-radius: 0px;">
+			<div class="panel-heading">
+				<!-- 			<div> -->
+				<%-- 				<img src="<%=basePath%>img/logo.jpg" height="40px"> --%>
+				<!-- 			</div> -->
+				<h2 style="text-align: center;">萍乡市公安警务测评系统</h2>
+			</div>
+			<div class="panel-body" style="margin: 0 0 20px 0;">
+				<div class="form-group" style="margin: 20px auto 30px;">
+					<!-- 				<label>：</label> -->
+					<input type="email" class="form-control" id="login_username"
+						placeholder="账号">
+				</div>
+				<div class="form-group" style="margin: 30px auto 20px;">
+					<input type="password" class="form-control" id="login_password"
+						placeholder="密码">
+				</div>
+				<br>
+				<button style="float: right; width: 195px" id="button_login"
+					class="btn btn-success" onclick="login('user')">用户登录</button>
+
+				<button style="float: right; width: 195px; margin-right: 18px;"
+					class="btn btn-primary" onclick="login('unit')">单位登录</button>
+			</div>
 		</div>
+		<div
+			style="background-image: url(img/log2.png); background-size: cover; background-size: 100% 100%; width: 620px; height: 368px; float: right;"></div>
 	</div>
 	<script type="text/javascript" src="<%=basePath%>js/user/login.js"></script>
 </body>

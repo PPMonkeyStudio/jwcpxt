@@ -17,8 +17,10 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateCountDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
 import com.pphgzs.service.ServiceService;
@@ -30,15 +32,54 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private ServiceService serviceService;
 
 	@Override
-	public StatisticsDissatisfiedDayDataVO get_StatisticsDissatisfiedDayDataVO(
-			StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO) {
-
+	public StatisticsDissatisfiedDateCountVO get_StatisticsDissatisfiedDateCountVO(
+			StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO) {
 		/*
 		 * 取出此单位所有的业务定义，
 		 */
+		statisticsDissatisfiedDateCountVO
+				.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id()));
+		List<jwcpxt_service_definition> serviceDefinitionList = serviceService
+				.list_serviceDefinitionDOList_byUnitID(statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id());
+		/*
+		 * 遍历业务定义，以天为单位取得这个单位的这个业务在这一天的错误数量。
+		 */
+		List<StatisticsDissatisfiedDateCountDTO> statisticsDissatisfiedDateCountDTOList = new ArrayList<StatisticsDissatisfiedDateCountDTO>();
+		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
+			StatisticsDissatisfiedDateCountDTO statisticsDissatisfiedDateCountDTO = new StatisticsDissatisfiedDateCountDTO();
+			int dayCount = 0;
+			if (statisticsDissatisfiedDateCountVO.getUnit().getUnit_grade() == 2) {
+				dayCount = statisticsDao.get_StatisticsDissatisfiedDateCount_byFatherUnit(
+						serviceDefinition.getJwcpxt_service_definition_id(),
+						statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id(),
+						statisticsDissatisfiedDateCountVO.getStartTime(),
+						statisticsDissatisfiedDateCountVO.getEndTime());
+			} else if (statisticsDissatisfiedDateCountVO.getUnit().getUnit_grade() == 3) {
+				dayCount = statisticsDao.get_StatisticsDissatisfiedDateCount(
+						serviceDefinition.getJwcpxt_service_definition_id(),
+						statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id(),
+						statisticsDissatisfiedDateCountVO.getStartTime(),
+						statisticsDissatisfiedDateCountVO.getEndTime());
+			}
+
+			statisticsDissatisfiedDateCountDTO.setDayCount(dayCount);
+			statisticsDissatisfiedDateCountDTO.setServiceDefinition(serviceDefinition);
+			statisticsDissatisfiedDateCountDTOList.add(statisticsDissatisfiedDateCountDTO);
+		}
+		statisticsDissatisfiedDateCountVO.setStatisticsDissatisfiedDateCountDTO(statisticsDissatisfiedDateCountDTOList);
+		return statisticsDissatisfiedDateCountVO;
+	}
+
+	@Override
+	public StatisticsDissatisfiedDayDataVO get_StatisticsDissatisfiedDayDataVO(
+			StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO) {
+		/*
+		 * 取出此单位所有的业务定义，
+		 */
+		statisticsDissatisfiedDayDataVO
+				.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id()));
 		List<jwcpxt_service_definition> serviceDefinitionList = serviceService
 				.list_serviceDefinitionDOList_byUnitID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id());
-
 		/*
 		 * 遍历业务定义，以天为单位取得这个单位的这个业务在这一天的错误数量。
 		 */
@@ -60,20 +101,27 @@ public class StatisticsServiceImpl implements StatisticsService {
 			}
 			// 求每天
 			for (long time = time1; time <= time2; time = time + 86400000) {
-				int dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate(
-						serviceDefinition.getJwcpxt_service_definition_id(),
-						statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
-						simpleDateFormat.format(new Date(time)));
+
+				int dayNum = 0;
+				if (statisticsDissatisfiedDayDataVO.getUnit().getUnit_grade() == 2) {
+					dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate_byFatherUnit(
+							serviceDefinition.getJwcpxt_service_definition_id(),
+							statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
+							simpleDateFormat.format(new Date(time)));
+				} else if (statisticsDissatisfiedDayDataVO.getUnit().getUnit_grade() == 3) {
+					dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate(
+							serviceDefinition.getJwcpxt_service_definition_id(),
+							statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
+							simpleDateFormat.format(new Date(time)));
+				}
+
 				dayNumList.add(dayNum);
 			}
 			statisticsDissatisfiedDayDataDTO.setDayNumList(dayNumList);
-
 			statisticsDissatisfiedDayDataDTO.setServiceDefinition(serviceDefinition);
-
 			statisticsDissatisfiedDayDataDTOList.add(statisticsDissatisfiedDayDataDTO);
 		}
 		statisticsDissatisfiedDayDataVO.setStatisticsDissatisfiedDayData(statisticsDissatisfiedDayDataDTOList);
-
 		return statisticsDissatisfiedDayDataVO;
 	}
 
