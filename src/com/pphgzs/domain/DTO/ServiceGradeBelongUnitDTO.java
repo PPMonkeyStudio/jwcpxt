@@ -5,7 +5,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 //业务定义与分数
 public class ServiceGradeBelongUnitDTO {
 	private jwcpxt_service_definition serviceDefinition;
-	private int grade;
+	private double grade;
 
 	public jwcpxt_service_definition getServiceDefinition() {
 		return serviceDefinition;
@@ -15,11 +15,11 @@ public class ServiceGradeBelongUnitDTO {
 		this.serviceDefinition = serviceDefinition;
 	}
 
-	public int getGrade() {
+	public double getGrade() {
 		return grade;
 	}
 
-	public void setGrade(int grade) {
+	public void setGrade(double grade) {
 		this.grade = grade;
 	}
 

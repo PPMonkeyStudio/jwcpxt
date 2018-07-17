@@ -166,7 +166,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 			ByteArrayInputStream is = new ByteArrayInputStream(fileContent);
 
 			inputStream = is; // 文件流
-			excelFileName = "exportStatistics_" + TimeUtil.getStringSecond() + ".xls"; // 设置下载的文件名
+			excelFileName = "" + TimeUtil.getStringSecond() + ".xls"; // 设置下载的文件名
 
 		} catch (Exception e) {
 			e.printStackTrace();
