@@ -1,10 +1,5 @@
 package com.pphgzs.thread;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.pphgzs.service.ServiceService;
-
 public class RemindRectificationThread {
 
 	private final static String RUN = "run";
@@ -25,9 +20,13 @@ public class RemindRectificationThread {
 			@Override
 			public void run() {
 				while (threadState.equals(RUN)) {
-					ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml",
-							"spring/ServiceSpring.xml", "spring/UnitSpring.xml", "spring/UserSpring.xml" });
-					ServiceService serviceService = (ServiceService) ctx.getBean("serviceService");
+					// ApplicationContext ctx = new
+					// ClassPathXmlApplicationContext(new String[] {
+					// "applicationContext.xml",
+					// "spring/ServiceSpring.xml", "spring/UnitSpring.xml",
+					// "spring/UserSpring.xml" });
+					// ServiceService serviceService = (ServiceService)
+					// ctx.getBean("serviceService");
 					try {
 						// serviceService.grab_serviceInstance_auto();
 						// serviceService.distribution_serviceInstance_auto();
