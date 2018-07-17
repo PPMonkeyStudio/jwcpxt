@@ -39,6 +39,7 @@
 <title>警务测评系统</title>
 </head>
 <body style="background-color: #f3f5f8;">
+
 	<div
 		style="margin: 200px calc(50% - 550px); width: 1100px; float: left; background-size: cover;">
 		<div class="panel"
