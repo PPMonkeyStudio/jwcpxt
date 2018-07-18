@@ -5,8 +5,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.Test;
+
 public class TimeUtil {
 	static SimpleDateFormat formatter;
+
+	public static String longDateFormatDate(String time) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+		formatter.setLenient(false);
+		Date newDate = formatter.parse(time);
+		formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(newDate);
+	}
 
 	// 获得精确到秒的时间
 	public static String getStringSecond() {

@@ -1,5 +1,6 @@
 package com.pphgzs.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,7 +202,21 @@ public class ServiceServiceImpl implements ServiceService {
 		serviceInstance.setService_instance_belong_unit(thisUnitService.getUnit_id());
 		serviceInstance.setService_instance_judge(userID);
 		serviceInstance.setService_instance_nid(grabInstance.getGrab_instance_unique_id());
-		serviceInstance.setService_instance_date(grabInstance.getGrab_instance_service_time());
+		/*if (grabInstance.getGrab_instance_service_time() == null
+				|| "".equals(grabInstance.getGrab_instance_service_time())) {
+			serviceInstance.setService_instance_date(TimeUtil.getStringDay());
+		}else {
+			serviceInstance.setService_instance_date(
+					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));
+		}*/
+		try {
+			serviceInstance.setService_instance_date(
+					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));
+		} catch (ParseException e) {
+			System.err.println(e);
+			serviceInstance.setService_instance_date(TimeUtil.getStringDay());
+		}
+		// serviceInstance.setService_instance_date(grabInstance.getGrab_instance_service_time());
 		saveServiceInstance(serviceInstance);
 		// 分配生成当事人
 		jwcpxt_service_client newServiceClient = new jwcpxt_service_client();

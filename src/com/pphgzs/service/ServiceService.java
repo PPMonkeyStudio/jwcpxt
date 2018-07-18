@@ -1,5 +1,6 @@
 package com.pphgzs.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_grab_instance;
@@ -226,7 +227,7 @@ public interface ServiceService {
 
 	public boolean update_grabInstance(jwcpxt_grab_instance grabInstance);
 
-	public boolean distributionNewServiceInstance_toUser(String userID);
+	public boolean distributionNewServiceInstance_toUser(String userID) throws ParseException;
 
 	public List<jwcpxt_service_definition> list_serviceDefinitionDOList_byUnitID(String jwcpxt_unit_id);
 
