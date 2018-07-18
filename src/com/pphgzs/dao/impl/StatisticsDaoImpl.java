@@ -195,7 +195,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			String searchTimeStart, String searchTimeEnd) {
 		Session session = getSession();
 		String hql = " select "//
-				+ " ((((count(distinct serviceClient)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient)) / 100)  "//
+				+ " ((count(distinct serviceClient)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient)  "//
 				+ " from "//
 				+ " jwcpxt_unit unit , "//
 				+ " jwcpxt_service_instance serviceInstance , "//
@@ -224,12 +224,15 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		query.setParameter("searchTimeEnd", searchTimeEnd);
 		//
 		//
+		System.out.println("-----------------------");
 		try {
 			double count = ((Number) query.uniqueResult()).intValue();
-			return count * serviceGradeDTO.getGrade();
+			return (count / 100) * serviceGradeDTO.getGrade();
 		} catch (ClassCastException e) {
 			System.err.println(e);
-			return 100;
+			return serviceGradeDTO.getGrade();
+		} catch (NullPointerException e) {
+			return serviceGradeDTO.getGrade();
 		} finally {
 			session.clear();
 		}
@@ -240,7 +243,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			String searchTimeEnd) {
 		Session session = getSession();
 		String hql = " select "//
-				+ " ((((count(distinct serviceClient)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient)) / 100) "//
+				+ " ((count(distinct serviceClient)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient) "//
 				+ " from "//
 				+ " jwcpxt_service_instance serviceInstance , "//
 				+ " jwcpxt_service_client serviceClient , "//
@@ -258,12 +261,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_date >= :searchTimeStart "//
 				+ " and serviceInstance.service_instance_date <= :searchTimeEnd "//
 		;
-		System.out.println("统计：" + hql);
 		Query query = session.createQuery(hql);
-		System.out.println("unitId:" + unitId);
-		System.out.println("searchTimeStart:" + searchTimeStart);
-		System.out.println("searchTimeEnd:" + searchTimeEnd);
-		System.out.println("serviceDefinitionID:" + serviceGradeDTO.getService_id());
 		query.setParameter("unitId", unitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
 		//
@@ -271,14 +269,23 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		query.setParameter("searchTimeEnd", searchTimeEnd);
 		//
 		//
+		System.out.println("hql：" + hql);
+		System.out.println("serviceDefinitionID:" + serviceGradeDTO.getService_id());
+		System.out.println("searchTimeStart:" + searchTimeStart);
+		System.out.println("searchTimeEnd:" + searchTimeEnd);
+
 		try {
+			System.out.println("shuli:" + (query.uniqueResult()));
 			double count = ((Number) query.uniqueResult()).intValue();
-			return count * serviceGradeDTO.getGrade();
+			System.out.println("count:" + count);
+			System.out.println("unitId:" + unitId + ".grade:" + count * serviceGradeDTO.getGrade());
+			return (count / 100) * serviceGradeDTO.getGrade();
 		} catch (ClassCastException e) {
-			System.err.println(e);
-			return 100;
+			System.out.println("Class");
+			return serviceGradeDTO.getGrade();
 		} catch (NullPointerException e) {
-			return 0;
+			System.out.println("Null");
+			return serviceGradeDTO.getGrade();
 		} finally {
 			session.clear();
 		}

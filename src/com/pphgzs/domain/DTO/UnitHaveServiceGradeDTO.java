@@ -9,6 +9,13 @@ public class UnitHaveServiceGradeDTO {
 	private jwcpxt_unit unit;
 	private List<ServiceGradeBelongUnitDTO> serviceGradeBelongUnitDTOList;
 	private double totalGrade;
+	
+	
+	@Override
+	public String toString() {
+		return "UnitHaveServiceGradeDTO [unit=" + unit + ", serviceGradeBelongUnitDTOList="
+				+ serviceGradeBelongUnitDTOList + ", totalGrade=" + totalGrade + "]";
+	}
 
 	public double getTotalGrade() {
 		return totalGrade;

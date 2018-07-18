@@ -196,15 +196,18 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO;
 		for (int i = 0; i < unitIds.length; i++) {
+			System.out.println("________________________________");
 			double totalGrade = 0;
 			// 创建一个单位
 			unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
 			jwcpxt_unit unit = unitDao.get_unitDO_byID(unitIds[i]);
+			System.out.println("unitName:"+unit.getUnit_name());
 			unitHaveServiceGradeDTO.setUnit(unit);
 			// 创建一个业务分数list
 			List<ServiceGradeBelongUnitDTO> serviceGradeBelongUnitDTOList = new ArrayList<ServiceGradeBelongUnitDTO>();
 			// 遍历需要统计的业务，查询这项业务分数
 			for (ServiceGradeDTO serviceGradeDTO : serviceGradeDTOList) {
+				System.out.println("++++++++++++++++++++++++++++++++++++++");
 				double statisticsGrade;
 
 				// 创建一个业务分数DTO
@@ -215,24 +218,31 @@ public class StatisticsServiceImpl implements StatisticsService {
 				// 统计这个单位下这个业务所得分
 
 				if (unit.getUnit_grade() == 2) {
+					System.out.println("22222222222222222");
 					statisticsGrade = statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
 							searchTimeStart, searchTimeEnd);
 				} else {
+					System.out.println("33333333333333333");
 					statisticsGrade = statisticsDao.geteStatisticsGrade(serviceGradeDTO, unitIds[i], searchTimeStart,
 							searchTimeEnd);
 				}
+				System.out.println("statisticsGrade:" + statisticsGrade);
 				totalGrade = totalGrade + statisticsGrade;
 				// 将所得分放入到DTO中
 				serviceGradeBelongUnitDTO.setGrade(statisticsGrade);
 				// 将一个业务及他的分数的DTO放入到DTO列表中
 				serviceGradeBelongUnitDTOList.add(serviceGradeBelongUnitDTO);
 			}
+			System.out.println("totalGrade:"+totalGrade);
 			// 把所有业务的分数放入到单位中
 			unitHaveServiceGradeDTO.setServiceGradeBelongUnitDTOList(serviceGradeBelongUnitDTOList);
 			unitHaveServiceGradeDTO.setTotalGrade(totalGrade);
 			// 这个单位DTO放入到单位列表中
 			unitHaveServiceGradeDTOList.add(unitHaveServiceGradeDTO);
 
+		}
+		for (UnitHaveServiceGradeDTO unitGradeDTO : unitHaveServiceGradeDTOList) {
+			System.out.println("unitGradeDTO:"+unitGradeDTO);
 		}
 		// 将统计完的所有单位放到VO中
 		statisticsVO.setUnitHaveServiceGradeDTOList(unitHaveServiceGradeDTOList);
@@ -257,6 +267,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 		/*
 		 * 
 		 */
+		for (UnitHaveServiceGradeDTO unitGradeDTO : statisticsVO.getUnitHaveServiceGradeDTOList()) {
+			System.out.println("unitGradeDTOList:"+unitGradeDTO);
+		}
 		return statisticsVO;
 	}
 
