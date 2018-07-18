@@ -80,9 +80,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		Gson gson = gsonBuilder.serializeNulls().create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
-		System.out.println("1" + serviceClient);
 		serviceClient = serviceService.get_serviceClientDo_byId(serviceClient);
-		System.out.println("2" + serviceClient);
 		http_response.getWriter().write(gson.toJson(serviceClient));
 	}
 

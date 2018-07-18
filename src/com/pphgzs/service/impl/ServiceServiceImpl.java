@@ -157,9 +157,10 @@ public class ServiceServiceImpl implements ServiceService {
 			}
 		}
 		// 遍历一下这个列表
-		// for (jwcpxt_unit_service jwcpxt_unit_service : unitServiceList) {
-		// System.out.println("单位业务关联表：" + jwcpxt_unit_service);
-		// }
+		/*
+		 * for (jwcpxt_unit_service jwcpxt_unit_service : unitServiceList) {
+		 * System.out.println("单位业务关联表：" + jwcpxt_unit_service); }
+		 */
 
 		// 随机取一个单位业务关联DO作为分配，如果这个单位没有数据，那么就换一个单位
 		jwcpxt_grab_instance grabInstance = null;
@@ -172,11 +173,11 @@ public class ServiceServiceImpl implements ServiceService {
 			if (unit.getUnit_grade() == 2) {
 				// 二级单位
 				grabInstance = get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
-						thisUnitService.getService_definition_id(), unit.getUnit_num());
+						thisUnitService.getService_definition_id(), unit.getUnit_account());
 			} else {
 				// 随机此业务，此单位，未被分配的一个抓取实例
 				grabInstance = get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
-						thisUnitService.getService_definition_id(), unit.getUnit_num());
+						thisUnitService.getService_definition_id(), unit.getUnit_account());
 			}
 			if (grabInstance != null) {
 				break;
