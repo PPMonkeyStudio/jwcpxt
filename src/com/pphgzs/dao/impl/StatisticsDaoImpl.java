@@ -258,8 +258,12 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_date >= :searchTimeStart "//
 				+ " and serviceInstance.service_instance_date <= :searchTimeEnd "//
 		;
-		System.out.println(hql);
+		System.out.println("统计：" + hql);
 		Query query = session.createQuery(hql);
+		System.out.println("unitId:" + unitId);
+		System.out.println("searchTimeStart:" + searchTimeStart);
+		System.out.println("searchTimeEnd:" + searchTimeEnd);
+		System.out.println("serviceDefinitionID:" + serviceGradeDTO.getService_id());
 		query.setParameter("unitId", unitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
 		//
@@ -273,6 +277,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		} catch (ClassCastException e) {
 			System.err.println(e);
 			return 100;
+		} catch (NullPointerException e) {
+			return 0;
 		} finally {
 			session.clear();
 		}

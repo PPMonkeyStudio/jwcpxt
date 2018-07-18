@@ -253,6 +253,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
 				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime ";
 		Query query = session.createQuery(hql);
+
 		// 办结情况
 		if (feedbackRectificationVO.getScreenHandleState().equals("-1")) {
 			query.setParameter("screenHandleState", "%%");
@@ -268,7 +269,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		// 搜索
 		query.setParameter("screenSearch", "%" + feedbackRectificationVO.getScreenSearch() + "%");
 		// 单位
-		if (unit == null || unit.getJwcpxt_unit_id().equals("")) {
+		if (unit == null || ("").equals(unit.getJwcpxt_unit_id())) {
 			query.setParameter("unitID", "%%");
 		} else {
 			query.setParameter("unitID", unit.getJwcpxt_unit_id());
