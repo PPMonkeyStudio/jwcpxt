@@ -32,6 +32,9 @@
 				<li><a href="<%=basePath%>Skip/skipManagerUnit">
 						<p>单位</p>
 				</a></li>
+				<li><a href="<%=basePath%>Skip/skipStatisticalChart">
+						<p>图表</p>
+				</a></li>
 			</ul>
 		</div>
 		<div class="collapse navbar-collapse">

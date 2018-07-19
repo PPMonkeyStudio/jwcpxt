@@ -117,6 +117,7 @@ function searchEndTime(input) {
 function randerLineChart(res) {
 	//时间周期内每日
 	let dayArr = TimeUtil.getDayAll(res.startTime, res.endTime);
+	console.log(dayArr)
 	let service = [];
 	let chartData = [];
 	res.statisticsDissatisfiedDayData.forEach(function(elt, i) {
