@@ -34,6 +34,10 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public StatisticsDissatisfiedDateCountVO get_StatisticsDissatisfiedDateCountVO(
 			StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO) {
+		/**
+		 * 取出单位信息
+		 */
+		statisticsDissatisfiedDateCountVO.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id()));
 		/*
 		 * 取出此单位所有的业务定义，
 		 */
@@ -73,6 +77,10 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public StatisticsDissatisfiedDayDataVO get_StatisticsDissatisfiedDayDataVO(
 			StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO) {
+		/**
+		 * 取出单位信息
+		 */
+		statisticsDissatisfiedDayDataVO.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id()));
 		/*
 		 * 取出此单位所有的业务定义，
 		 */
