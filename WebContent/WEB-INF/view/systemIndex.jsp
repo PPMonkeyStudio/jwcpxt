@@ -25,10 +25,11 @@
 				<!-- 主内容 -->
 				<div class="row">
 					<div class="col-md-12">
-						<div class="card" style="text-align: center; height: 300px; padding-top: 70px;">
+						<div class="card" style="text-align: center; padding-top: 10px;">
 						 	<h1>警务测评系统</h1>
 							<h3>欢迎来到警务测评系统</h3>
 								<div class="content table-responsive table-full-width">
+									<img alt="" src="<%=basePath%>img/process.png">
 									<!-- <div style="width: 100%">
 										<div class="form-group" style="margin: auto; padding-left: 20px;">
 											<label>起始时间</label> 
