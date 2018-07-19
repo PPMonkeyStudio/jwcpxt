@@ -329,7 +329,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		// 责任单位
 		unit = dissatisfiedFeedbackDao.get_unit_byDisFeedbackId(disFeedback.getJwcpxt_dissatisfied_feedback_id());
 		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_name());
-		feedbackRectification.setFeedback_rectification_unit_name(unit.getUnit_contacts_name());
+		feedbackRectification.setFeedback_rectification_unit_people(unit.getUnit_contacts_name());
 		feedbackRectification.setFeedback_rectification_unit_people_phone(unit.getUnit_phone());
 		feedbackRectification.setFeedback_rectification_handle_state("1");
 		feedbackRectification.setFeedback_rectification_audit_state("1");
@@ -343,7 +343,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			 */
 			// 责任单位短信
 			if (unit != null) {
-				String unitDXNR = "单位<" + unit.getUnit_name() + ">接受到一条整改信息,请在5天内队该整改做出反馈。";
+				String unitDXNR = "单位<" + unit.getUnit_name() + ">接受到一条整改信息,请在5天内对该整改做出反馈。";
 				// 发短信
 				SendMessageUtil sendMessageUtil = new SendMessageUtil(unit.getUnit_phone(), unitDXNR);
 				sendMessageUtil.send();
