@@ -59,7 +59,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
 		} catch (ClassCastException e) {
-			System.err.println(e);
 			return 0;
 		} finally {
 			session.clear();
@@ -101,7 +100,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
 		} catch (ClassCastException e) {
-			System.err.println(e);
 			return 0;
 		} finally {
 			session.clear();
@@ -143,7 +141,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
 		} catch (ClassCastException e) {
-			System.err.println(e);
 			return 0;
 		} finally {
 			session.clear();
@@ -183,7 +180,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
 		} catch (ClassCastException e) {
-			System.err.println(e);
 			return 0;
 		} finally {
 			session.clear();
@@ -224,12 +220,10 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		query.setParameter("searchTimeEnd", searchTimeEnd);
 		//
 		//
-		System.out.println("-----------------------");
 		try {
 			double count = ((Number) query.uniqueResult()).intValue();
 			return (count / 100) * serviceGradeDTO.getGrade();
 		} catch (ClassCastException e) {
-			System.err.println(e);
 			return serviceGradeDTO.getGrade();
 		} catch (NullPointerException e) {
 			return serviceGradeDTO.getGrade();
@@ -269,22 +263,23 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		query.setParameter("searchTimeEnd", searchTimeEnd);
 		//
 		//
-		System.out.println("hql：" + hql);
-		System.out.println("serviceDefinitionID:" + serviceGradeDTO.getService_id());
-		System.out.println("searchTimeStart:" + searchTimeStart);
-		System.out.println("searchTimeEnd:" + searchTimeEnd);
+		// System.out.println("hql：" + hql);
+		// System.out.println("serviceDefinitionID:" + serviceGradeDTO.getService_id());
+		// System.out.println("searchTimeStart:" + searchTimeStart);
+		// System.out.println("searchTimeEnd:" + searchTimeEnd);
 
 		try {
-			System.out.println("shuli:" + (query.uniqueResult()));
+			// System.out.println("shuli:" + (query.uniqueResult()));
 			double count = ((Number) query.uniqueResult()).intValue();
-			System.out.println("count:" + count);
-			System.out.println("unitId:" + unitId + ".grade:" + count * serviceGradeDTO.getGrade());
+			// System.out.println("count:" + count);
+			// System.out.println("unitId:" + unitId + ".grade:" + count *
+			// serviceGradeDTO.getGrade());
 			return (count / 100) * serviceGradeDTO.getGrade();
 		} catch (ClassCastException e) {
-			System.out.println("Class");
+			// System.out.println("Class");
 			return serviceGradeDTO.getGrade();
 		} catch (NullPointerException e) {
-			System.out.println("Null");
+			// System.out.println("Null");
 			return serviceGradeDTO.getGrade();
 		} finally {
 			session.clear();
