@@ -111,14 +111,13 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
 		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
-			for (int j = i + 1; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
-				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(i).getTotalGrade() > statisticsVO
-						.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade()) {
-					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(i);
-					statisticsVO.getUnitHaveServiceGradeDTOList().set(i,
-							statisticsVO.getUnitHaveServiceGradeDTOList().get(j));
+			for (int j = 0; j < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1 - i; j++) {
+				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade() < statisticsVO
+						.getUnitHaveServiceGradeDTOList().get(j+1).getTotalGrade()) {
+					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(j);
 					statisticsVO.getUnitHaveServiceGradeDTOList().set(j,
-							statisticsVO.getUnitHaveServiceGradeDTOList().get(i));
+							statisticsVO.getUnitHaveServiceGradeDTOList().get(j+1));
+					statisticsVO.getUnitHaveServiceGradeDTOList().set(j+1, unitHaveServiceGradeDTO);
 				}
 			}
 		}
@@ -134,14 +133,13 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
 		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
-			for (int j = i + 1; i < statisticsVO.getUnitHaveServiceGradeDTOList().size(); i++) {
-				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(i).getTotalGrade() > statisticsVO
-						.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade()) {
-					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(i);
-					statisticsVO.getUnitHaveServiceGradeDTOList().set(i,
-							statisticsVO.getUnitHaveServiceGradeDTOList().get(j));
+			for (int j = 0; j < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1 - i; j++) {
+				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade() < statisticsVO
+						.getUnitHaveServiceGradeDTOList().get(j+1).getTotalGrade()) {
+					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(j);
 					statisticsVO.getUnitHaveServiceGradeDTOList().set(j,
-							statisticsVO.getUnitHaveServiceGradeDTOList().get(i));
+							statisticsVO.getUnitHaveServiceGradeDTOList().get(j+1));
+					statisticsVO.getUnitHaveServiceGradeDTOList().set(j+1, unitHaveServiceGradeDTO);
 				}
 			}
 		}
@@ -155,7 +153,11 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 			/**
 			 * 写
 			 */
+			
+			
 			statisticsService.writeStatisticsExcel(statisticsVO, wb);
+			
+			
 			/**
 			 * 写完毕
 			 */
