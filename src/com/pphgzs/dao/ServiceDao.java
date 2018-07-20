@@ -9,6 +9,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInfoDTO;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
@@ -167,5 +168,12 @@ public interface ServiceDao {
 	 * @return
 	 */
 	public int get_clientInfoVOCount_byUserId(ClientInfoVO clientInfoVO);
+
+	/**
+	 * 测评员列表
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_user> list_userDO();
 
 }

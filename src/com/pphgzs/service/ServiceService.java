@@ -250,4 +250,11 @@ public interface ServiceService {
 	 */
 	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO);
 
+	/**
+	 * 测评人员列表
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_user> list_userDO();
+
 }

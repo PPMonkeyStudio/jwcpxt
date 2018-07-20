@@ -15,6 +15,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInfoDTO;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
@@ -33,6 +34,20 @@ public class ServiceDaoImpl implements ServiceDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 测评员列表
+	 */
+	@Override
+	public List<jwcpxt_user> list_userDO() {
+		Session session = getSession();
+		String hql = "from jwcpxt_user where user_type = 1 and user_state = 1";
+		Query query = session.createQuery(hql);
+		//
+		List<jwcpxt_user> list = query.list();
+		session.clear();
+		return list;
 	}
 
 	/**

@@ -61,6 +61,16 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	/**
+	 * 测评员列表
+	 */
+	@Override
+	public List<jwcpxt_user> list_userDO() {
+		List<jwcpxt_user> lisetUser = new ArrayList<>();
+		lisetUser = serviceDao.list_userDO();
+		return null;
+	}
+
+	/**
 	 * 根据VO获取当事人VO
 	 */
 	@Override

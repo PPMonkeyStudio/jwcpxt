@@ -1,6 +1,7 @@
 package com.pphgzs.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,23 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private List<jwcpxt_service_grab> listServiceGrab;
 	private ClientInstanceDTO clientInstanceDTO;
 	private ClientInfoVO clientInfoVO;
+
+	/**
+	 * 用户列表
+	 * 
+	 * @throws IOException
+	 */
+	public void list_userDO() throws IOException {
+		List<jwcpxt_user> listUser = new ArrayList<>();
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		listUser = serviceService.list_userDO();
+		http_response.getWriter().write(gson.toJson(listUser));
+	}
 
 	/**
 	 * 根据测评员id获取当事人信息，可以没有测评员id
