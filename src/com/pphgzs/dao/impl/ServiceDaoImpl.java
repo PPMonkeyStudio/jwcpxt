@@ -42,9 +42,9 @@ public class ServiceDaoImpl implements ServiceDao {
 	public int get_clientInfoVOCount_byUserId(ClientInfoVO clientInfoVO) {
 		int count = 0;
 		Session session = getSession();
-		String hql = "select count(*) from "
-				+ "jwcpxt_service_instance serviceInstance," + "jwcpxt_service_client serviceClient,"
-				+ "jwcpxt_service_definition serviceDefinition," + "jwcpxt_unit unit," + "jwcpxt_user _user where "
+		String hql = "select count(*) from " + "jwcpxt_service_instance serviceInstance,"
+				+ "jwcpxt_service_client serviceClient," + "jwcpxt_service_definition serviceDefinition,"
+				+ "jwcpxt_unit unit," + "jwcpxt_user _user where "
 				+ "serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id and "
 				+ "serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id and "
 				+ "serviceInstance.service_instance_judge = _user.jwcpxt_user_id and "
@@ -146,6 +146,24 @@ public class ServiceDaoImpl implements ServiceDao {
 		listClientInfo = query.list();
 		//
 		session.clear();
+		for (ClientInfoDTO clientInfoDTO : listClientInfo) {
+			if (!clientInfoVO.getSearch().equals("")) {
+				// 当事人姓名
+				clientInfoDTO.getServiceClient()
+						.setService_client_name(clientInfoDTO.getServiceClient().getService_client_name().replaceAll(
+								clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+				// 性别
+				clientInfoDTO.getServiceClient()
+						.setService_client_phone(clientInfoDTO.getServiceClient().getService_client_phone().replaceAll(
+								clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+				// 单位名称
+				clientInfoDTO.getUnit()
+						.setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+			}
+		}
 		return listClientInfo;
 	}
 

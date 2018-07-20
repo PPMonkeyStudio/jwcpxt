@@ -75,6 +75,14 @@ public class QuestionDaoImpl implements QuestionDao {
 		listQuestion = query.list();
 		//
 		session.clear();
+		//
+		for (jwcpxt_question jwcpxt_question : listQuestion) {
+			if (!questionVO.getScreenSearch().equals("")) {
+				jwcpxt_question.setQuestion_describe(
+						jwcpxt_question.getQuestion_describe().replaceAll(questionVO.getScreenSearch(),
+								"<span style='color: #ff5063;'>" + questionVO.getScreenSearch() + "</span>"));
+			}
+		}
 		return listQuestion;
 	}
 
