@@ -35,6 +35,9 @@
 				<li><a href="<%=basePath%>Skip/skipStatisticalChart">
 						<p>图表</p>
 				</a></li>
+				<li><a href="<%=basePath%>Skip/skipClientInformation">
+						<p>当事人</p>
+				</a></li>
 			</ul>
 		</div>
 		<div class="collapse navbar-collapse">

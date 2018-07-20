@@ -5,6 +5,24 @@ $(function() {
 		serviceClien : {},
 		serviceDefinition : {},
 		questionData : [],
+		returnedParty : { //数据只作为初始化用
+			returnedParty : {
+				serviceInstance : {
+					service_client_name : '',
+					service_instance_date : ''
+				},
+				serviceClient : {
+					service_client_sex : '',
+					service_client_phone : ''
+				},
+				serviceDefinition : {
+					service_definition_describe : ''
+				},
+				unit : {
+					unit_name : ''
+				}
+			}
+		}
 	};
 	let listAnswerDTO = [];
 	let listAnswerInquiriesDTO = [];
@@ -18,6 +36,10 @@ $(function() {
 					"serviceDefinition.jwcpxt_service_definition_id" : myData.definitionId
 				}, response => {
 					myData.serviceDefinition = response;
+				}, 'json')
+				//获取session中的回访信息
+				$.post('/jwcpxt/Service/get_notServiceClient_byServiceClientId', '', response => {
+					this.returnedParty = response;
 				}, 'json')
 				//获取当事人ID
 				$.post('/jwcpxt/Service/get_serviceClientDo_byId', {
@@ -120,10 +142,10 @@ $(function() {
 									$.post('/jwcpxt/Question/save_answer', params, response => {
 										if (response == "1") {
 											$($event.target).attr("disabled", "disabled");
-											toastr.success("回访结束,1秒后跳转..");
+											toastr.success("回访结束");
 											setTimeout(function() {
 												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
-											}, 1000);
+											}, 0);
 										} else if (response == "-1") {
 											toastr.error("结束失败");
 										}
@@ -138,6 +160,47 @@ $(function() {
 							}
 						}
 					});
+			},
+			terminationReturned (event) {
+				$.confirm({
+					title : "确定终止?",
+					icon : 'fa fa-warning',
+					type : "red",
+					autoClose : 'close|10000',
+					smoothContent : false,
+					content : false,
+					buttons : {
+						tryAgain : {
+							text : '确认',
+							btnClass : 'btn-red',
+							action : function() {
+								/* 数据格式转换,方便存入到后台的DTO中*/
+								let params = {
+									"serviceClient.jwcpxt_service_client_id" : myData.serviceClientId,
+									"serviceClient.service_client_visit" : $(event.target).attr("terminationNum")
+								};
+								//
+								$.post('/jwcpxt/Service/update_serviceClient_byId', params, response => {
+									if (response == "1") {
+										$($event.target).attr("disabled", "disabled");
+										toastr.success("回访被终止");
+										setTimeout(function() {
+											window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
+										}, 0);
+									} else if (response == "-1") {
+										toastr.error("回访终止失败");
+									}
+								}, 'text');
+							}
+						},
+						close : {
+							text : '取消',
+							btnClass : 'btn-default',
+							keys : [ 'esc' ],
+							action : function() {}
+						}
+					}
+				});
 			}
 		},
 		mounted () {

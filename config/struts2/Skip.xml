@@ -71,6 +71,9 @@
 			<result name="skipStatisticalChart">
 				/WEB-INF/view/statisticalData/statisticalChart.jsp
 			</result>
+			<result name="skipClientInformation">
+				/WEB-INF/view/evaluationPolice/clientInformation.jsp
+			</result>
 			<result name="login">/login.jsp</result>
 			<interceptor-ref name="mystackHttp" />
 		</action>

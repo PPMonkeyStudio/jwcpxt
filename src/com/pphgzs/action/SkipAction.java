@@ -109,6 +109,10 @@ public class SkipAction {
 		return "skipStatisticalChart";
 	}
 
+	public String skipClientInformation() {
+		return "skipClientInformation";
+	}
+
 	public String getDefinitionId() {
 		return definitionId;
 	}

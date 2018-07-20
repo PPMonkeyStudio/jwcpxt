@@ -51,6 +51,7 @@ function changeQuery() {
 	queryTemp.screenEndTime = $('#searchTimeEnd').val();
 	queryTemp.screenSearch = $('#searchTitle').val();
 	queryTemp.screenCheckState = $('#searchAuditState').val();
+	console.log(queryTemp);
 	loadData();
 }
 
