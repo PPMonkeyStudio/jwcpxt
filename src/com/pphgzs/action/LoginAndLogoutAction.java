@@ -48,7 +48,6 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 			jwcpxt_user user = loginAndLogoutService.userLogin(account, password);
 			if (user == null) {
 				http_response.getWriter().write("-1");
-
 			} else {
 				ActionContext.getContext().getSession().remove("user");
 				ActionContext.getContext().getSession().put("user", user);

@@ -107,7 +107,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	public List<DissatisfiedQuestionDTO> get_dataDissatisfiedQuestionVO(DissatisfiedQuestionVO dissatisfiedQuestionVO) {
 		Session session = getSession();
 		String hql = "select "//
-				+ " new com.pphgzs.domain.DTO.DissatisfiedQuestionDTO(dessatisfiedFeedback,question) "//
+				+ " new com.pphgzs.domain.DTO.DissatisfiedQuestionDTO(dessatisfiedFeedback,question,serviceClient,serviceInstance,serviceDefinition,unit,_user) "//
 				+ " from "//
 				+ " jwcpxt_dissatisfied_feedback dessatisfiedFeedback , "//
 				+ " jwcpxt_answer_choice choice , "//
@@ -120,8 +120,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " where "//
 				+ " dessatisfiedFeedback.dissatisfied_feedback_answer_choice = choice.jwcpxt_answer_choice_id "//
 				+ " and choice.answer_choice_question = question.jwcpxt_question_id "//
-				+ " and choice.jwcpxt_service_client = serviceClient.jwcpxt_service_client_id "//
+				+ " and choice.answer_choice_client = serviceClient.jwcpxt_service_client_id "//
 				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id "//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
+				+ " and serviceInstance.service_instance_judge = _user.jwcpxt_user_id "//
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_state  like :screenState " //
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create >= :screenStartTime "//
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create <= :screenEndTime "//
