@@ -192,14 +192,16 @@ public class ServiceDaoImpl implements ServiceDao {
 		List<ClientInstanceDTO> listClientInstanceDTO = new ArrayList<>();
 		Session session = getSession();
 		String hql = "select "//
-				+ " new com.pphgzs.domain.DTO.ClientInstanceDTO(serviceInstance,serviceClient,serviceDefinition) "//
+				+ " new com.pphgzs.domain.DTO.ClientInstanceDTO(serviceInstance,serviceClient,serviceDefinition,unit) "//
 				+ " from "//
 				+ " jwcpxt_service_instance serviceInstance , "//
 				+ " jwcpxt_service_client serviceClient , "//
-				+ " jwcpxt_service_definition serviceDefinition "//
+				+ " jwcpxt_service_definition serviceDefinition , "//
+				+ " jwcpxt_unit unit"//
 				+ " where "//
 				+ " serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance "//
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id "//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ " and serviceClient.service_client_visit= '2' "//
 				+ " and serviceInstance.service_instance_judge = :userId "//
 				+ " order by "//
