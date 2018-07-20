@@ -69,7 +69,7 @@
 						</p> <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<s:if test="#session.loginType == 'user'">
+					 	<s:if test="#session.loginType == 'user'">
 							<li><a
 								id='<s:property value="#session.user.jwcpxt_user_id" />'
 								href="#" onclick="updatePasswordUser(this)">修改密码</a></li>
