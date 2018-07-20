@@ -159,6 +159,8 @@ public class ServiceDaoImpl implements ServiceDao {
 		;
 		Query query = session.createQuery(hql);
 		query.setParameter("unitID", unitID);
+		System.out.println("hql:" + hql);
+		System.out.println("unitID：" + unitID);
 		//
 		List<jwcpxt_service_definition> list = query.list();
 		session.clear();

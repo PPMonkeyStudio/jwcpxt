@@ -40,7 +40,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
 				+ " and answerChoice.answer_choice_option=option.jwcpxt_option_id "//
 				//
-				+ " and unit.unit_father=:unitID "//
+				+ " and (unit.unit_father=:unitID or unit.jwcpxt_unit_id = :unitID) "//
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				+ " and serviceInstance.service_instance_service_definition=:serviceDefinitionID "//
 				+ " and serviceInstance.service_instance_date >= :startTime "//
@@ -116,26 +116,27 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " jwcpxt_answer_choice answerChoice , "//
 				+ " jwcpxt_service_client serviceClient , "//
 				+ " jwcpxt_service_instance serviceInstance , "//
-				+ " jwcpxt_option option "//
+				+ " jwcpxt_option _option, "//
 				+ " jwcpxt_unit unit "//
 				//
 				+ " where "//
 				+ " answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
 				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
-				+ " and answerChoice.answer_choice_option=option.jwcpxt_option_id "//
+				+ " and answerChoice.answer_choice_option=_option.jwcpxt_option_id "//
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				//
-				+ " and unit.unit_father=:unitID "//
+				+ " and (unit.unit_father=:unitID or unit.jwcpxt_unit_id=:unitID) "//
 				+ " and serviceInstance.service_instance_service_definition=:serviceDefinitionID "//
 				+ " and serviceInstance.service_instance_date like :day "//
 				//
-				+ " and option.option_push='1' "//
+				+ " and _option.option_push='1' "//
 		;
 		Query query = session.createQuery(hql);
 		//
 		query.setParameter("unitID", unitID);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("day", day + "%");
+
 		//
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
@@ -157,18 +158,18 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " jwcpxt_answer_choice answerChoice , "//
 				+ " jwcpxt_service_client serviceClient , "//
 				+ " jwcpxt_service_instance serviceInstance , "//
-				+ " jwcpxt_option option "//
+				+ " jwcpxt_option _option "//
 				//
 				+ " where "//
 				+ " answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
 				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
-				+ " and answerChoice.answer_choice_option=option.jwcpxt_option_id "//
+				+ " and answerChoice.answer_choice_option=_option.jwcpxt_option_id "//
 				//
 				+ " and serviceInstance.service_instance_belong_unit=:unitID "//
 				+ " and serviceInstance.service_instance_service_definition=:serviceDefinitionID "//
 				+ " and serviceInstance.service_instance_date like :day "//
 				//
-				+ " and option.option_push='1' "//
+				+ " and _option.option_push='1' "//
 		;
 		Query query = session.createQuery(hql);
 		//
@@ -205,13 +206,12 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and answerChoice.answer_choice_option=_option.jwcpxt_option_id"//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "// 业务实例关联到三级单位
 				//
-				+ " and (unit.unit_father = :fatherUnitId or unit.jwcpxt_unit_id = :fatherUnitId)"// 二级单位ID等于传过来的单位ID
+				+ " and (unit.unit_father = :fatherUnitId or unit.jwcpxt_unit_id= :fatherUnitId)" // 二级单位ID等于传过来的单位ID
 				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
 				//
 				+ " and serviceInstance.service_instance_date >= :searchTimeStart "//
 				+ " and serviceInstance.service_instance_date <= :searchTimeEnd "//
 		;
-		System.out.println(hql);
 		Query query = session.createQuery(hql);
 		query.setParameter("fatherUnitId", fatherUnitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
@@ -263,10 +263,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		query.setParameter("searchTimeEnd", searchTimeEnd);
 		//
 		//
-		// System.out.println("hql：" + hql);
-		// System.out.println("serviceDefinitionID:" + serviceGradeDTO.getService_id());
-		// System.out.println("searchTimeStart:" + searchTimeStart);
-		// System.out.println("searchTimeEnd:" + searchTimeEnd);
 
 		try {
 			// System.out.println("shuli:" + (query.uniqueResult()));

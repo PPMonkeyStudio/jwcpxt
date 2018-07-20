@@ -37,7 +37,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 		/**
 		 * 取出单位信息
 		 */
-		statisticsDissatisfiedDateCountVO.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id()));
+		statisticsDissatisfiedDateCountVO
+				.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id()));
 		/*
 		 * 取出此单位所有的业务定义，
 		 */
@@ -80,16 +81,17 @@ public class StatisticsServiceImpl implements StatisticsService {
 		/**
 		 * 取出单位信息
 		 */
-		statisticsDissatisfiedDayDataVO.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id()));
+		statisticsDissatisfiedDayDataVO
+				.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id()));
 		/*
-		 * 取出此单位所有的业务定义
+		 * 取出此单位所有的业务定义，
 		 */
 		statisticsDissatisfiedDayDataVO
 				.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id()));
 		List<jwcpxt_service_definition> serviceDefinitionList = serviceService
 				.list_serviceDefinitionDOList_byUnitID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id());
 		/*
-		 * 遍历业务定义，以天为单位取得这个单位的这个业务在这一天的错误数量
+		 * 遍历业务定义，以天为单位取得这个单位的这个业务在这一天的错误数量。
 		 */
 		List<StatisticsDissatisfiedDayDataDTO> statisticsDissatisfiedDayDataDTOList = new ArrayList<StatisticsDissatisfiedDayDataDTO>();
 		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
@@ -112,11 +114,13 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 				int dayNum = 0;
 				if (statisticsDissatisfiedDayDataVO.getUnit().getUnit_grade() == 2) {
+					System.out.println("222222222222222222222222");
 					dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate_byFatherUnit(
 							serviceDefinition.getJwcpxt_service_definition_id(),
 							statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
 							simpleDateFormat.format(new Date(time)));
 				} else if (statisticsDissatisfiedDayDataVO.getUnit().getUnit_grade() == 3) {
+					System.out.println("333333333333333333333333333");
 					dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate(
 							serviceDefinition.getJwcpxt_service_definition_id(),
 							statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
@@ -193,7 +197,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 			cell.setCellValue(listNum - 1);
 
 		}
-
 	}
 
 	@Override
