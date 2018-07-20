@@ -99,12 +99,17 @@ public class LoginAndLogoutAction extends ActionSupport implements ServletRespon
 	 * 获取当前session信息的currentUser
 	 */
 	public void getCurrentUser() throws IOException {
-		Map session = (Map) ActionContext.getContext().getSession();
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
 		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(session));
+		if (http_request.getSession().getAttribute("user") != null
+				&& http_request.getSession().getAttribute("user") != "") {
+			http_response.getWriter().write(gson.toJson(http_request.getSession().getAttribute("user")));
+		} else if (http_request.getSession().getAttribute("unit") != null
+				&& http_request.getSession().getAttribute("unit") != "") {
+			http_response.getWriter().write(gson.toJson(http_request.getSession().getAttribute("unit")));
+		}
 	}
 
 	/*
