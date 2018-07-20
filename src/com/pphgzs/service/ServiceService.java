@@ -15,6 +15,7 @@ import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
@@ -240,5 +241,13 @@ public interface ServiceService {
 	 * @return
 	 */
 	public boolean update_serviceClient_byId(jwcpxt_service_client serviceClient);
+
+	/**
+	 * 当事人VO
+	 * 
+	 * @param clientInfoVO
+	 * @return
+	 */
+	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO);
 
 }

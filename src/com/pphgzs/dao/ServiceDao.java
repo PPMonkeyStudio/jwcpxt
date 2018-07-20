@@ -9,9 +9,11 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
+import com.pphgzs.domain.DTO.ClientInfoDTO;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
+import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
@@ -149,5 +151,21 @@ public interface ServiceDao {
 			String serviceDefinitionID, String organizationCode);
 
 	public List<jwcpxt_service_definition> list_serviceDefinitionDOList_byUnitID(String unitID);
+
+	/**
+	 * 根据VO获取当事人列表
+	 * 
+	 * @param clientInfoVO
+	 * @return
+	 */
+	public List<ClientInfoDTO> get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO);
+
+	/**
+	 * 根据VO获取数量
+	 * 
+	 * @param clientInfoVO
+	 * @return
+	 */
+	public int get_clientInfoVOCount_byUserId(ClientInfoVO clientInfoVO);
 
 }

@@ -23,6 +23,7 @@ import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
@@ -51,10 +52,28 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private jwcpxt_unit_service unitServic;
 	private List<jwcpxt_service_grab> listServiceGrab;
 	private ClientInstanceDTO clientInstanceDTO;
+	private ClientInfoVO clientInfoVO;
+
+	/**
+	 * 根据测评员id获取当事人信息，可以没有测评员id
+	 * 
+	 * @throws IOException
+	 */
+	public void get_clientInfoVO_byUserId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		clientInfoVO = serviceService.get_clientInfoVO_byUserId(clientInfoVO);
+		http_response.getWriter().write(gson.toJson(clientInfoVO));
+	}
 
 	/**
 	 * 根据id更改当事人信息
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void update_serviceClient_byId() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
@@ -534,6 +553,14 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public void setServiceService(ServiceService serviceService) {
 		this.serviceService = serviceService;
+	}
+
+	public ClientInfoVO getClientInfoVO() {
+		return clientInfoVO;
+	}
+
+	public void setClientInfoVO(ClientInfoVO clientInfoVO) {
+		this.clientInfoVO = clientInfoVO;
 	}
 
 	public jwcpxt_service_client getServiceClient() {

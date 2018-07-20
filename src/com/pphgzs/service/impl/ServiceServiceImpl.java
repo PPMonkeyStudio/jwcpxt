@@ -14,10 +14,12 @@ import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInfoDTO;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
@@ -56,6 +58,21 @@ public class ServiceServiceImpl implements ServiceService {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	/**
+	 * 根据VO获取当事人VO
+	 */
+	@Override
+	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO) {
+		List<ClientInfoDTO> listClientInfo = new ArrayList<>();
+		listClientInfo = serviceDao.get_clientInfoVO_byUserId(clientInfoVO);
+		int totalRecords = serviceDao.get_clientInfoVOCount_byUserId(clientInfoVO);
+		int totalPages = ((totalRecords - 1) / clientInfoVO.getPageSize()) + 1;
+		clientInfoVO.setListClientInfoDTO(listClientInfo);
+		clientInfoVO.setTotalCount(totalRecords);
+		clientInfoVO.setTotalPage(totalPages);
+		return clientInfoVO;
 	}
 
 	@Override
