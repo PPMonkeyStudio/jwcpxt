@@ -42,14 +42,14 @@ public class ServiceDaoImpl implements ServiceDao {
 	public int get_clientInfoVOCount_byUserId(ClientInfoVO clientInfoVO) {
 		int count = 0;
 		Session session = getSession();
-		String hql = "select new com.pphgzs.domain.DTO.ClientInfoDTO(serviceClient,serviceInstance,serviceDefinition,_user,unit) from "
+		String hql = "select count(*) from "
 				+ "jwcpxt_service_instance serviceInstance," + "jwcpxt_service_client serviceClient,"
 				+ "jwcpxt_service_definition serviceDefinition," + "jwcpxt_unit unit," + "jwcpxt_user _user where "
 				+ "serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id and "
 				+ "serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id and "
 				+ "serviceInstance.service_instance_judge = _user.jwcpxt_user_id and "
 				+ "serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id and serviceInstance.service_instance_date >= :startTime and "
-				+ "serviceInstance.service_instance_date <= endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
+				+ "serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
 				+ "serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "
 				+ "serviceClient.service_client_name like :search and serviceClient.service_client_phone like :search and "
 				+ "unit.unit_name like :search order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
@@ -106,7 +106,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ "serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id and "
 				+ "serviceInstance.service_instance_judge = _user.jwcpxt_user_id and "
 				+ "serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id and serviceInstance.service_instance_date >= :startTime and "
-				+ "serviceInstance.service_instance_date <= endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
+				+ "serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
 				+ "serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "
 				+ "serviceClient.service_client_name like :search and serviceClient.service_client_phone like :search and "
 				+ "unit.unit_name like :search order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";

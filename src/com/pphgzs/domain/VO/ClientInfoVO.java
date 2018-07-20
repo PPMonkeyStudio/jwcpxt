@@ -22,7 +22,7 @@ public class ClientInfoVO {
 	// 测评员筛选
 	private String screenUser = "";
 	// 搜索当事人姓名、电话号码、单位
-	private String search;
+	private String search="";
 
 	// 当前页
 	private int currPage = 1;

@@ -14,6 +14,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
+import com.pphgzs.domain.VO.ClientInfoVO;
 //import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 //import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 //import com.pphgzs.domain.VO.QuestionVO;
@@ -34,6 +35,15 @@ public class QuestionTest {
 	@Resource
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 
+	/**
+	 * 
+	 */
+	@Test
+	public void get_clientVO() {
+		ClientInfoVO clientInfoVO = new ClientInfoVO();
+		System.out.println(serviceService.get_clientInfoVO_byUserId(clientInfoVO));
+	}
+	
 	/**
 	 * 
 	 */
