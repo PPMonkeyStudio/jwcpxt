@@ -64,7 +64,6 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
 		checkFeedbackRectificationVO = dissatisfiedFeedbackService
 				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
-		System.out.println("checkFeedbackRectificationVO:" + checkFeedbackRectificationVO);
 		http_response.getWriter().write(gson.toJson(checkFeedbackRectificationVO));
 	}
 
