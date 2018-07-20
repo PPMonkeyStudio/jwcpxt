@@ -59,7 +59,7 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width" v-cloak>
 <!-- 									<div class="panel panel-def"> -->
-										<div class="panel-heading">{{serviceDefinition.service_definition_describe}}</div>
+										<div class="panel-heading">业务名称:{{serviceDefinition.service_definition_describe}}</div>
 										<div class="panel-body">
 										    <form class="form-inline">
 											  <div class="form-group">
@@ -80,6 +80,18 @@ th {
 											      <p class="form-control-static">{{serviceClien.service_client_phone}}</p>
 											    </div>
 											  </div>
+											  <div class="form-group">
+												<label class="">办理时间</label> 
+												<div class="col-sm-10">
+													<p class="form-control-static">{{returnedParty.serviceInstance.service_instance_date}}</p>
+											  	</div>
+											  </div>
+											  <div class="form-group">
+												<label class="">办理单位</label> 
+												<div class="col-sm-10">
+													<p class="form-control-static">{{returnedParty.unit.unit_name}}</p>
+												</div>
+											</div>
 											</form>
 										</div>
 										<div style="padding: 20px">

@@ -7,7 +7,9 @@ $(function() {
 		serviceClien : {
 			service_client_name : '暂无信息',
 			service_client_sex : '暂无信息',
-			service_client_phone : '暂无信息'
+			service_client_phone : '暂无信息',
+			unit_name : '暂无信息',
+			service_instance_date : '暂无信息'
 		},
 		serviceDefinition : {
 			service_definition_describe : '暂无信息'

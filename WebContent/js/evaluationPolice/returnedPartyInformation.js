@@ -2,7 +2,8 @@ $(function() {
 	let myData = {
 		returnedParty : {
 			serviceInstance : {
-				service_client_name : ''
+				service_client_name : '',
+				service_instance_date : ''
 			},
 			serviceClient : {
 				service_client_sex : '',
@@ -10,8 +11,11 @@ $(function() {
 			},
 			serviceDefinition : {
 				service_definition_describe : ''
+			},
+			unit : {
+				unit_name : ''
 			}
-		},
+		}
 	};
 
 	let vm = new Vue({

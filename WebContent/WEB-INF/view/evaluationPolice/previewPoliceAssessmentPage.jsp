@@ -66,6 +66,18 @@ th {
 											      <p class="form-control-static">{{serviceClien.service_client_phone}}</p>
 											    </div>
 											  </div>
+											  <div class="form-group">
+											    <label for="phone">办理单位</label>
+											    <div class="col-sm-10">
+											      <p class="form-control-static">{{serviceClien.unit_name}}</p>
+											    </div>
+											  </div>
+											  <div class="form-group">
+											    <label for="phone">时间</label>
+											    <div class="col-sm-10">
+											      <p class="form-control-static">{{serviceClien.service_instance_date}}</p>
+											    </div>
+											  </div>
 											</form>
 										</div>
 										<div style="padding: 20px">

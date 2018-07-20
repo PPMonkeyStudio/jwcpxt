@@ -56,6 +56,14 @@ th {
 									<label class="">回访业务:</label> 
 									<span class="form-control-static">{{returnedParty.serviceDefinition.service_definition_describe}}</span>
 								</div>
+								<div class="form-group">
+									<label class="">办理时间</label> 
+									<span class="form-control-static">{{returnedParty.serviceInstance.service_instance_date}}</span>
+								</div>
+								<div class="form-group">
+									<label class="">办理单位</label> 
+									<span class="form-control-static">{{returnedParty.unit.unit_name}}</span>
+								</div>
 							</div>
 							<div style="" v-else>
 								<div class="form-group" style="">

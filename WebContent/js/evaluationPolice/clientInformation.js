@@ -1,7 +1,7 @@
 $(function() {
 	let myData = {
 		ready : false,
-		questionVO : {},
+		clientInfoVO : [],
 		page : {
 			currPage : 1,
 			totalPage : 1,
@@ -10,35 +10,42 @@ $(function() {
 			haveNextPage : false,
 			havePrePage : false,
 			isFirstPage : false,
-			isLastPage : false,
+			isLastPage : false
 		},
-		addQuestionModalData : {
-			question_describe : "",
-			question_type : "",
-		},
-		checkQuestionModalData : {
-			question : {
-				jwcpxt_question_id : '',
-				question_describe : "",
-				question_type : ""
-			}
-		}
+		isUnit : false,
+		allAppraisal : []
 	};
 
 	let queryData = {
-		"questionVO.currPage" : 1,
-		"questionVO.serviceDefinitionDTO.serviceDefinition.jwcpxt_service_definition_id" : myData.definitionId,
-		"questionVO.screenType" : '',
-		"questionVO.screenSearch" : '',
+		"clientInfoVO.currPage" : 1,
+		"clientInfoVO.startTime" : '',
+		"clientInfoVO.endTime" : '',
+		"clientInfoVO.screenService" : '',
+		"clientInfoVO.screenVisit" : '',
+		"clientInfoVO.screenUser" : '',
+		"clientInfoVO.search" : ''
 	}
 
 	let vm = new Vue({
 		el : "#content",
 		data : myData,
 		methods : {
+			before () {
+				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
+					if (response.jwcpxt_unit_id) {
+						myData.isUnit = true;
+						$.post('/jwcpxt/Service/list_userDO', {}, response => {
+							myData.allAppraisal = response;
+						}, 'json')
+					} else if (response.jwcpxt_user_id) {
+						queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
+						this.getInfo(queryData);
+					}
+				}, 'json');
+			},
 			getInfo (pramas) {
-				$.post('/jwcpxt/Question/get_questionVO', pramas, response => {
-					myData.questionVO = response;
+				$.post('/jwcpxt/Service/get_clientInfoVO_byUserId', pramas, response => {
+					myData.clientInfoVO = response.listClientInfoDTO;
 					myData.page.currPage = response.currPage;
 					myData.page.totalPage = response.totalPage;
 					myData.page.totalCount = response.totalCount;
@@ -57,12 +64,15 @@ $(function() {
 				queryData[$event.target.name] = $event.target.value;
 				this.getInfo(queryData);
 			},
+			pageTo (definition_id, client_id) {
+				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?definitionId=${definition_id}&serviceClientId=${client_id}`;
+			},
 			firstPage () {
 				if (myData.page.isFirstPage) {
 					toastr.error("已经是在首页了哦~");
 					return;
 				}
-				queryData["questionVO.currPage"] = 1;
+				queryData["clientInfoVO.currPage"] = 1;
 				this.getInfo(queryData)
 			},
 			prePage () {
@@ -70,7 +80,7 @@ $(function() {
 					toastr.error("没有上一页了哦~");
 					return;
 				}
-				queryData["questionVO.currPage"] -= 1;
+				queryData["clientInfoVO.currPage"] -= 1;
 				this.getInfo(queryData)
 			},
 			nextPage () {
@@ -78,7 +88,7 @@ $(function() {
 					toastr.error("没有下一页了哦~");
 					return;
 				}
-				queryData["questionVO.currPage"] += 1;
+				queryData["clientInfoVO.currPage"] += 1;
 				this.getInfo(queryData)
 			},
 			lastPage () {
@@ -86,7 +96,7 @@ $(function() {
 					toastr.error("已经是在尾页了哦~");
 					return;
 				}
-				queryData["questionVO.currPage"] = myData.page.totalPage;
+				queryData["clientInfoVO.currPage"] = myData.page.totalPage;
 				this.getInfo(queryData)
 			},
 			toPage () {
@@ -95,12 +105,12 @@ $(function() {
 					toastr.error("输入的数字不在页数范围内,请检查页码");
 					return;
 				}
-				queryData["questionVO.currPage"] = pageIndex;
+				queryData["clientInfoVO.currPage"] = pageIndex;
 				this.getInfo(queryData)
 			},
 		},
 		mounted () {
-			/*this.getInfo(queryData);*/
+			this.before();
 		},
 	})
 

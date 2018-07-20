@@ -42,22 +42,23 @@ th {
 									<h4 class="title">问卷管理</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
-									<select style="width:120px; float: left;" class="form-control"
-										id="allAppraisal" @change="queryClient">
-										<option></option>
+									<select v-if="isUnit" style="width:120px; float: left;"
+										class="selectpicker" name="clientInfoVO.screenUser"
+										@change="queryClient" title="请选择单位。。">
+										<option v-for="Appraisal in allAppraisal" vlaue="Appraisal.jwcpxt_user_id">{{Appraisal.user_name}}</option>
 									</select>
 									<div style="width: 500px; float: left; margin-left: 10px;">
 										<div class="form-group" style="margin: auto;">
-											<input id="beginTime" placeholder="起始时间"
-												@change="queryClient" class="mydate form-control"
-												style="display: inline; width: 150px;">--<input
-												@change="queryClient" id="endTime" placeholder="结束时间"
-												class="mydate form-control"
+											<input name="clientInfoVO.startTime" @change="queryClient"
+												class="mydate form-control" id="beginTime"
+												placeholder="起始时间" style="display: inline; width: 150px;">到<input
+												name="clientInfoVO.endTime" @change="queryClient"
+												id="endTime" placeholder="结束时间" class="mydate form-control"
 												style="display: inline; width: 150px;">
 										</div>
 									</div>
-									<input @keyup="queryClient" placeholder="请输入搜索内容"
-										name="questionVO.screenSearch" class="form-control"
+									<input @change="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
+										name="clientInfoVO.search" class="form-control"
 										style="float: right; width: 250px;">
 									<table class="table" style="text-align: center; width: 100%;">
 										<thead>
@@ -66,7 +67,7 @@ th {
 												<th style="width: 60px;">性别</th>
 												<th style="width: 60px;">电话</th>
 												<th style="width: 60px;"><select class="form-control"
-													@change="queryClient" name="questionVO.screenType">
+													@change="queryClient" name="clientInfoVO.screenVisit">
 														<option value="">全部</option>
 														<option value="1">成功</option>
 														<option value="2">未回访</option>
@@ -78,25 +79,41 @@ th {
 														<option value="8">其他</option>
 												</select></th>
 												<th style="width: 60px;">所属业务</th>
-												<th style="width: 60px;">办理单位</th>
-												<th style="width: 150px;">操作</th>
+												<th style="width: 150px;">办理单位</th>
+												<th style="width: 60px;">办理时间</th>
+												<th style="width: 60px;">操作</th>
 											</tr>
 										</thead>
 										<tbody v-cloak>
-											<template v-for="(question,index) in questionVO.questionList">
+											<template v-for="(ClientInfoDTO,index) in clientInfoVO">
 											<tr style="border-top: 1px solid #ddd;">
-												<th>{{question.question_sort}}</th>
-												<td>{{question.question_describe}}</td>
-												<td><span v-if="question.question_type==1"
-													class="label label-primary">选择题</span> <span
-													v-else-if="question.question_type==2"
-													class="label label-info">开放题</span> <span v-else
+												<th>{{ClientInfoDTO.serviceClient.service_client_name}}</th>
+												<td>{{ClientInfoDTO.serviceClient.service_client_sex}}</td>
+												<td>{{ClientInfoDTO.serviceClient.service_client_phone}}</td>
+												<td><span
+													v-if="ClientInfoDTO.serviceClient.service_client_visit==1"
+													class="label label-primary">成功</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==2"
+													class="label label-info">未回访</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==3"
+													class="label label-warning">空号</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==4"
+													class="label label-warning">无人接听</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==5"
+													class="label label-warning">占线</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==6"
+													class="label label-warning">停机</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==7"
+													class="label label-warning">拒访</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==8"
+													class="label label-warning">其他</span> <span v-else
 													class="label label-warning">未定义</span></td>
-												<td><i class="ti-pencil-alt"
-													@click="modifyQuestion(index)"></i> &nbsp; <i
-													class="fa fa-arrow-up" @click="moveQuestion(index,1)"></i>&nbsp;
-													<i class="fa fa-arrow-down" @click="moveQuestion(index,2)"></i>&nbsp;
-													<i class="ti-trash" @click="deleteQuestion(index)"></i></td>
+												<td>{{ClientInfoDTO.serviceDefinition.service_definition_describe}}</td>
+												<td>{{ClientInfoDTO.unit.unit_name}}</td>
+												<td>{{ClientInfoDTO.serviceInstance.service_instance_date}}</td>
+												<td><a href="javascript:;"
+													@click="pageTo(ClientInfoDTO.serviceDefinition.jwcpxt_service_definition_id,ClientInfoDTO.serviceClient.jwcpxt_service_client_id)">业务回访</a>
+												</td>
 											</tr>
 											</template>
 										</tbody>

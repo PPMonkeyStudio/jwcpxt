@@ -5,6 +5,24 @@ $(function() {
 		serviceClien : {},
 		serviceDefinition : {},
 		questionData : [],
+		returnedParty : { //数据只作为初始化用
+			returnedParty : {
+				serviceInstance : {
+					service_client_name : '',
+					service_instance_date : ''
+				},
+				serviceClient : {
+					service_client_sex : '',
+					service_client_phone : ''
+				},
+				serviceDefinition : {
+					service_definition_describe : ''
+				},
+				unit : {
+					unit_name : ''
+				}
+			}
+		}
 	};
 	let listAnswerDTO = [];
 	let listAnswerInquiriesDTO = [];
@@ -18,6 +36,10 @@ $(function() {
 					"serviceDefinition.jwcpxt_service_definition_id" : myData.definitionId
 				}, response => {
 					myData.serviceDefinition = response;
+				}, 'json')
+				//获取session中的回访信息
+				$.post('/jwcpxt/Service/get_notServiceClient_byServiceClientId', '', response => {
+					this.returnedParty = response;
 				}, 'json')
 				//获取当事人ID
 				$.post('/jwcpxt/Service/get_serviceClientDo_byId', {
