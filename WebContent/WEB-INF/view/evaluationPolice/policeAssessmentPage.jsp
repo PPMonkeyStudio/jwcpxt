@@ -42,6 +42,20 @@ th {
 							<div class="card" style="padding: 10px;">
 								<div class="header">
 									<h4 class="title">警务测评</h4>
+									<div class="dropdown" style="float:right;">
+									  <button style="background-color: #d9534f;" class="btn btn-danger dropdown-toggle" type="button" id="termination" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									    终止回访
+									    <span class="caret"></span>
+									  </button>
+									  <ul class="dropdown-menu" aria-labelledby="termination">
+									    <li><a @click="terminationReturned($event)" terminationNum="3" href="javascript:;">空号</a></li>
+									    <li><a @click="terminationReturned($event)" terminationNum="4" href="javascript:;">无人接听</a></li>
+									    <li><a @click="terminationReturned($event)" terminationNum="5" href="javascript:;">占线</a></li>
+									    <li><a @click="terminationReturned($event)" terminationNum="6" href="javascript:;">停机</a></li>
+									    <li><a @click="terminationReturned($event)" terminationNum="7" href="javascript:;">拒访</a></li>
+									    <li><a @click="terminationReturned($event)" terminationNum="8" href="javascript:;">其他</a></li>
+									  </ul>
+									</div>
 								</div>
 								<div class="content table-responsive table-full-width" v-cloak>
 <!-- 									<div class="panel panel-def"> -->
@@ -113,7 +127,7 @@ th {
 									</div>
 <!-- 								</div> -->
 							</div>
-							<button type="button" @click="finishReturned($event)" class="btn btn-primary">结束回访</button>
+							<button type="button" @click="finishReturned($event)"  style="float: left;" class="btn btn-primary">结束回访</button>
 						</div>
 					</div>
 				</div>

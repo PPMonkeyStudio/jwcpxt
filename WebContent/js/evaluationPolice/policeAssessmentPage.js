@@ -120,10 +120,10 @@ $(function() {
 									$.post('/jwcpxt/Question/save_answer', params, response => {
 										if (response == "1") {
 											$($event.target).attr("disabled", "disabled");
-											toastr.success("回访结束,1秒后跳转..");
+											toastr.success("回访结束");
 											setTimeout(function() {
 												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
-											}, 1000);
+											}, 0);
 										} else if (response == "-1") {
 											toastr.error("结束失败");
 										}
@@ -138,6 +138,47 @@ $(function() {
 							}
 						}
 					});
+			},
+			terminationReturned (event) {
+				$.confirm({
+					title : "确定终止?",
+					icon : 'fa fa-warning',
+					type : "red",
+					autoClose : 'close|10000',
+					smoothContent : false,
+					content : false,
+					buttons : {
+						tryAgain : {
+							text : '确认',
+							btnClass : 'btn-red',
+							action : function() {
+								/* 数据格式转换,方便存入到后台的DTO中*/
+								let params = {
+									"serviceClient.jwcpxt_service_client_id" : myData.serviceClientId,
+									"serviceClient.service_client_visit" : $(event.target).attr("terminationNum")
+								};
+								//
+								$.post('/jwcpxt/Service/update_serviceClient_byId', params, response => {
+									if (response == "1") {
+										$($event.target).attr("disabled", "disabled");
+										toastr.success("回访被终止");
+										setTimeout(function() {
+											window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
+										}, 0);
+									} else if (response == "-1") {
+										toastr.error("回访终止失败");
+									}
+								}, 'text');
+							}
+						},
+						close : {
+							text : '取消',
+							btnClass : 'btn-default',
+							keys : [ 'esc' ],
+							action : function() {}
+						}
+					}
+				});
 			}
 		},
 		mounted () {
