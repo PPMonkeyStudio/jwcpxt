@@ -111,10 +111,17 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " from "//
 				+ " jwcpxt_dissatisfied_feedback dessatisfiedFeedback , "//
 				+ " jwcpxt_answer_choice choice , "//
-				+ " jwcpxt_question question "//
+				+ " jwcpxt_question question ,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_user _user"//
 				+ " where "//
 				+ " dessatisfiedFeedback.dissatisfied_feedback_answer_choice = choice.jwcpxt_answer_choice_id "//
 				+ " and choice.answer_choice_question = question.jwcpxt_question_id "//
+				+ " and choice.jwcpxt_service_client = serviceClient.jwcpxt_service_client_id "//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_state  like :screenState " //
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create >= :screenStartTime "//
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create <= :screenEndTime "//
