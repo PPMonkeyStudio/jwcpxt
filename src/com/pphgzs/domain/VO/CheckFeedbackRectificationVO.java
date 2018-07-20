@@ -3,6 +3,7 @@ package com.pphgzs.domain.VO;
 import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
 
 /**
  * 审核所需的整改
@@ -12,7 +13,7 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
  */
 public class CheckFeedbackRectificationVO {
 
-	private List<jwcpxt_feedback_rectification> listCheckFeedbackRectification;
+	private List<FeedbackRectificationDTO> listFeedbackRectificationDTO;
 	private String screenCheckState = "-1";
 	private String screenSearch = "";
 	private String screenStartTime = "0000-00-00";
@@ -26,12 +27,12 @@ public class CheckFeedbackRectificationVO {
 	// 每页记录数
 	private int pageSize = 10;
 
-	public List<jwcpxt_feedback_rectification> getListCheckFeedbackRectification() {
-		return listCheckFeedbackRectification;
+	public List<FeedbackRectificationDTO> getListFeedbackRectificationDTO() {
+		return listFeedbackRectificationDTO;
 	}
 
-	public void setListCheckFeedbackRectification(List<jwcpxt_feedback_rectification> listCheckFeedbackRectification) {
-		this.listCheckFeedbackRectification = listCheckFeedbackRectification;
+	public void setListFeedbackRectificationDTO(List<FeedbackRectificationDTO> listFeedbackRectificationDTO) {
+		this.listFeedbackRectificationDTO = listFeedbackRectificationDTO;
 	}
 
 	public String getScreenCheckState() {
@@ -100,7 +101,7 @@ public class CheckFeedbackRectificationVO {
 
 	@Override
 	public String toString() {
-		return "CheckFeedbackRectificationVO [listCheckFeedbackRectification=" + listCheckFeedbackRectification
+		return "CheckFeedbackRectificationVO [listFeedbackRectificationDTO=" + listFeedbackRectificationDTO
 				+ ", screenCheckState=" + screenCheckState + ", screenSearch=" + screenSearch + ", screenStartTime="
 				+ screenStartTime + ", screenEndTime=" + screenEndTime + ", currPage=" + currPage + ", totalPage="
 				+ totalPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize + "]";

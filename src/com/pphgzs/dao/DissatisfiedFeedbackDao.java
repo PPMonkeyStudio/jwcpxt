@@ -112,7 +112,7 @@ public interface DissatisfiedFeedbackDao {
 	 * @param unit
 	 * @return
 	 */
-	public List<jwcpxt_feedback_rectification> get_checkFeedbackRectificationVO(
+	public List<FeedbackRectificationDTO> get_checkFeedbackRectificationVO(
 			CheckFeedbackRectificationVO checkFeedbackRectificationVO, jwcpxt_unit unit);
 
 	/**
