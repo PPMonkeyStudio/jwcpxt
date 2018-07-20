@@ -205,7 +205,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and answerChoice.answer_choice_option=_option.jwcpxt_option_id"//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "// 业务实例关联到三级单位
 				//
-				+ " and unit.unit_father = :fatherUnitId "// 二级单位ID等于传过来的单位ID
+				+ " and (unit.unit_father = :fatherUnitId or unit.jwcpxt_unit_id = :fatherUnitId)"// 二级单位ID等于传过来的单位ID
 				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
 				//
 				+ " and serviceInstance.service_instance_date >= :searchTimeStart "//

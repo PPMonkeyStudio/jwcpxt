@@ -82,14 +82,14 @@ public class StatisticsServiceImpl implements StatisticsService {
 		 */
 		statisticsDissatisfiedDayDataVO.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id()));
 		/*
-		 * 取出此单位所有的业务定义，
+		 * 取出此单位所有的业务定义
 		 */
 		statisticsDissatisfiedDayDataVO
 				.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id()));
 		List<jwcpxt_service_definition> serviceDefinitionList = serviceService
 				.list_serviceDefinitionDOList_byUnitID(statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id());
 		/*
-		 * 遍历业务定义，以天为单位取得这个单位的这个业务在这一天的错误数量。
+		 * 遍历业务定义，以天为单位取得这个单位的这个业务在这一天的错误数量
 		 */
 		List<StatisticsDissatisfiedDayDataDTO> statisticsDissatisfiedDayDataDTOList = new ArrayList<StatisticsDissatisfiedDayDataDTO>();
 		for (jwcpxt_service_definition serviceDefinition : serviceDefinitionList) {
@@ -98,7 +98,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 			String startDate = statisticsDissatisfiedDayDataVO.getStartTime();
 			String endDate = statisticsDissatisfiedDayDataVO.getEndTime();
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");// 24小时制
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// 24小时制
 			long time1 = 0;
 			long time2 = 0;
 			try {

@@ -122,7 +122,7 @@ function randerLineChart(res) {
 	let chartData = [];
 	res.statisticsDissatisfiedDayData.forEach(function(elt, i) {
 		//业务名称
-		service.push(elt.serviceDefinition.service_definition_describe.substring(0, 4));
+		service.push(elt.serviceDefinition.service_definition_describe);
 		//数据
 		chartData.push({
 			name : elt.serviceDefinition.service_definition_describe,
@@ -134,7 +134,7 @@ function randerLineChart(res) {
 	// 基于准备好的dom，初始化echarts实例
 	let option1 = {
 		title : {
-			text : res.unit.unit_name + '折线图堆叠'
+			text : res.unit.unit_name + '不满意数量折线图堆叠'
 		},
 		tooltip : {
 			enterable : true,
@@ -178,7 +178,7 @@ function randerPieChart(res) {
 	let chartData = [];
 	res.statisticsDissatisfiedDateCountDTO.forEach(function(elt, i) {
 		//业务名称
-		service.push(elt.serviceDefinition.service_definition_describe.substring(0, 4));
+		service.push(elt.serviceDefinition.service_definition_describe);
 		//数据
 		chartData.push({
 			name : elt.serviceDefinition.service_definition_describe,
@@ -188,7 +188,7 @@ function randerPieChart(res) {
 	// 指定图表的配置项和数据
 	let option2 = {
 		title : {
-			text : res.unit.unit_name + '数量统计',
+			text : res.unit.unit_name + '不满意数量统计',
 			subtext : '',
 			x : 'center'
 		},
