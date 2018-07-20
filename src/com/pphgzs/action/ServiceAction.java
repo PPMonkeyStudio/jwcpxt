@@ -53,6 +53,19 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private ClientInstanceDTO clientInstanceDTO;
 
 	/**
+	 * 根据id更改当事人信息
+	 * @throws IOException 
+	 */
+	public void update_serviceClient_byId() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceService.update_serviceClient_byId(serviceClient)) {
+			http_response.getWriter().write("1");
+		} else {
+			http_response.getWriter().write("-1");
+		}
+	}
+
+	/**
 	 * 根据业务定义id获取业务定义信息
 	 * 
 	 * @throws IOException

@@ -89,6 +89,24 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	/**
+	 * 更改当事人状态
+	 */
+	@Override
+	public boolean update_serviceClient_byId(jwcpxt_service_client serviceClient) {
+		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
+				&& !"".equals(serviceClient.getJwcpxt_service_client_id())) {
+			serviceClient = serviceDao.get_serviceClientDo_byId(serviceClient.getJwcpxt_service_client_id().trim());
+		}
+		if (serviceClient == null) {
+			return false;
+		}
+		serviceClient.setService_client_visit(serviceClient.getService_client_visit());
+		serviceClient.setService_client_gmt_modified(TimeUtil.getStringSecond());
+		serviceDao.saveOrUpdateObject(serviceClient);
+		return true;
+	}
+
+	/**
 	 * 获取当事人信息及所涉及的业务
 	 */
 	@Override
@@ -202,13 +220,13 @@ public class ServiceServiceImpl implements ServiceService {
 		serviceInstance.setService_instance_belong_unit(thisUnitService.getUnit_id());
 		serviceInstance.setService_instance_judge(userID);
 		serviceInstance.setService_instance_nid(grabInstance.getGrab_instance_unique_id());
-		/*if (grabInstance.getGrab_instance_service_time() == null
-				|| "".equals(grabInstance.getGrab_instance_service_time())) {
-			serviceInstance.setService_instance_date(TimeUtil.getStringDay());
-		}else {
-			serviceInstance.setService_instance_date(
-					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));
-		}*/
+		/*
+		 * if (grabInstance.getGrab_instance_service_time() == null ||
+		 * "".equals(grabInstance.getGrab_instance_service_time())) {
+		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay()); }else {
+		 * serviceInstance.setService_instance_date(
+		 * TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time())); }
+		 */
 		try {
 			serviceInstance.setService_instance_date(
 					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));

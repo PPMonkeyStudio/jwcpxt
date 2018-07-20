@@ -233,4 +233,12 @@ public interface ServiceService {
 
 	public void saveServiceClient(jwcpxt_service_client newServiceClient);
 
+	/**
+	 * 更改当事人状态
+	 * 
+	 * @param serviceClient
+	 * @return
+	 */
+	public boolean update_serviceClient_byId(jwcpxt_service_client serviceClient);
+
 }
