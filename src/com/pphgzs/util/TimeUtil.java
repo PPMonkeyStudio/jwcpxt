@@ -11,7 +11,7 @@ public class TimeUtil {
 	static SimpleDateFormat formatter;
 
 	public static String longDateFormatDate(String time) throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		formatter.setLenient(false);
 		Date newDate = formatter.parse(time);
 		formatter = new SimpleDateFormat("yyyy-MM-dd");

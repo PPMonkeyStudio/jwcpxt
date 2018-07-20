@@ -14,10 +14,12 @@ import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
+import com.pphgzs.domain.DTO.ClientInfoDTO;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
@@ -58,6 +60,31 @@ public class ServiceServiceImpl implements ServiceService {
 		this.userService = userService;
 	}
 
+	/**
+	 * 测评员列表
+	 */
+	@Override
+	public List<jwcpxt_user> list_userDO() {
+		List<jwcpxt_user> lisetUser = new ArrayList<>();
+		lisetUser = serviceDao.list_userDO();
+		return null;
+	}
+
+	/**
+	 * 根据VO获取当事人VO
+	 */
+	@Override
+	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO) {
+		List<ClientInfoDTO> listClientInfo = new ArrayList<>();
+		listClientInfo = serviceDao.get_clientInfoVO_byUserId(clientInfoVO);
+		int totalRecords = serviceDao.get_clientInfoVOCount_byUserId(clientInfoVO);
+		int totalPages = ((totalRecords - 1) / clientInfoVO.getPageSize()) + 1;
+		clientInfoVO.setListClientInfoDTO(listClientInfo);
+		clientInfoVO.setTotalCount(totalRecords);
+		clientInfoVO.setTotalPage(totalPages);
+		return clientInfoVO;
+	}
+
 	@Override
 	public void saveServiceClient(jwcpxt_service_client newServiceClient) {
 		serviceDao.saveOrUpdateObject(newServiceClient);
@@ -89,6 +116,24 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	/**
+	 * 更改当事人状态
+	 */
+	@Override
+	public boolean update_serviceClient_byId(jwcpxt_service_client serviceClient) {
+		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
+				&& !"".equals(serviceClient.getJwcpxt_service_client_id())) {
+			serviceClient = serviceDao.get_serviceClientDo_byId(serviceClient.getJwcpxt_service_client_id().trim());
+		}
+		if (serviceClient == null) {
+			return false;
+		}
+		serviceClient.setService_client_visit(serviceClient.getService_client_visit());
+		serviceClient.setService_client_gmt_modified(TimeUtil.getStringSecond());
+		serviceDao.saveOrUpdateObject(serviceClient);
+		return true;
+	}
+
+	/**
 	 * 获取当事人信息及所涉及的业务
 	 */
 	@Override
@@ -104,7 +149,6 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
 		if (clientInstanceDTO == null) {
-			System.out.println("fempei");
 			distributionNewServiceInstance_toUser(user.getJwcpxt_user_id());
 			clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
 		}
@@ -202,13 +246,13 @@ public class ServiceServiceImpl implements ServiceService {
 		serviceInstance.setService_instance_belong_unit(thisUnitService.getUnit_id());
 		serviceInstance.setService_instance_judge(userID);
 		serviceInstance.setService_instance_nid(grabInstance.getGrab_instance_unique_id());
-		/*if (grabInstance.getGrab_instance_service_time() == null
-				|| "".equals(grabInstance.getGrab_instance_service_time())) {
-			serviceInstance.setService_instance_date(TimeUtil.getStringDay());
-		}else {
-			serviceInstance.setService_instance_date(
-					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));
-		}*/
+		/*
+		 * if (grabInstance.getGrab_instance_service_time() == null ||
+		 * "".equals(grabInstance.getGrab_instance_service_time())) {
+		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay()); }else {
+		 * serviceInstance.setService_instance_date(
+		 * TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time())); }
+		 */
 		try {
 			serviceInstance.setService_instance_date(
 					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));

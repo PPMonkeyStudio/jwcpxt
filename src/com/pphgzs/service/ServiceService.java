@@ -15,6 +15,7 @@ import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
@@ -232,5 +233,28 @@ public interface ServiceService {
 	public List<jwcpxt_service_definition> list_serviceDefinitionDOList_byUnitID(String jwcpxt_unit_id);
 
 	public void saveServiceClient(jwcpxt_service_client newServiceClient);
+
+	/**
+	 * 更改当事人状态
+	 * 
+	 * @param serviceClient
+	 * @return
+	 */
+	public boolean update_serviceClient_byId(jwcpxt_service_client serviceClient);
+
+	/**
+	 * 当事人VO
+	 * 
+	 * @param clientInfoVO
+	 * @return
+	 */
+	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO);
+
+	/**
+	 * 测评人员列表
+	 * 
+	 * @return
+	 */
+	public List<jwcpxt_user> list_userDO();
 
 }
