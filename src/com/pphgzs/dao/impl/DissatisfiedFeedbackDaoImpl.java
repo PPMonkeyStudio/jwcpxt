@@ -12,6 +12,7 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
+import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
@@ -245,6 +246,8 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " jwcpxt_feedback_rectification feedbackRectification , "//
 				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
 				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_question question , "//
+				+ " jwcpxt_service_definition serviceDefinition,"//
 				+ " jwcpxt_service_client serviceClient , "//
 				+ " jwcpxt_service_instance serviceInstance , "//
 				+ " jwcpxt_unit unit "//
@@ -257,8 +260,10 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
 				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
 				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
+				+ " and answerChoice.answer_choice_question = question.jwcpxt_question_id"//
 				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				//
 				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
 				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime ";
@@ -295,6 +300,9 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		} else {
 			query.setParameter("screenEndTime", feedbackRectificationVO.getScreenEndTime());
 		}
+		if (query.uniqueResult() == null) {
+			return 0;
+		}
 		//
 		int count = ((Number) query.uniqueResult()).intValue();
 		session.clear();
@@ -302,14 +310,17 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	}
 
 	@Override
-	public List<jwcpxt_feedback_rectification> get_feedbackRectificationVO(
-			FeedbackRectificationVO feedbackRectificationVO, jwcpxt_unit unit) {
+	public List<FeedbackRectificationDTO> get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
+			jwcpxt_unit unit) {
 		Session session = getSession();
-		String hql = "select feedbackRectification "//
+		String hql = "select new com.pphgzs.domain.DTO.FeedbackRectificationDTO(feedbackRectification,dissatisfiedFeedback,question,serviceClient"
+				+ ",serviceInstance,serviceDefinition,unit) "//
 				+ " from "//
 				+ " jwcpxt_feedback_rectification feedbackRectification , "//
 				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
 				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_question question , "//
+				+ " jwcpxt_service_definition serviceDefinition,"//
 				+ " jwcpxt_service_client serviceClient , "//
 				+ " jwcpxt_service_instance serviceInstance , "//
 				+ " jwcpxt_unit unit "//
@@ -322,8 +333,10 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
 				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
 				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
+				+ " and answerChoice.answer_choice_question = question.jwcpxt_question_id"//
 				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				//
 				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
 				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime "//
@@ -363,7 +376,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			query.setParameter("screenEndTime", feedbackRectificationVO.getScreenEndTime());
 		}
 		//
-		List<jwcpxt_feedback_rectification> list = query.list();
+		List<FeedbackRectificationDTO> list = query.list();
 		session.clear();
 		return list;
 	}

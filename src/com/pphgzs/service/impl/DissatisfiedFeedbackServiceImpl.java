@@ -12,6 +12,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
+import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
@@ -217,17 +218,17 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		if (unit == null) {
 			return null;
 		}
-		List<jwcpxt_feedback_rectification> listFeedbackRectification = new ArrayList<>();
+		List<FeedbackRectificationDTO> listFeedbackRectificationDTO = new ArrayList<>();
 		// 获取总记录数
 		int totalRecords = dissatisfiedFeedbackDao.get_countFeedbackRectificationVO(feedbackRectificationVO, unit);
 		// 总页数
 		int totalPages = ((totalRecords - 1) / feedbackRectificationVO.getPageSize()) + 1;
 		// 获取数据
-		listFeedbackRectification = dissatisfiedFeedbackDao.get_feedbackRectificationVO(feedbackRectificationVO, unit);
+		listFeedbackRectificationDTO = dissatisfiedFeedbackDao.get_feedbackRectificationVO(feedbackRectificationVO, unit);
 		// set
 		feedbackRectificationVO.setTotalCount(totalRecords);
 		feedbackRectificationVO.setTotalPage(totalPages);
-		feedbackRectificationVO.setListFeedbackRectification(listFeedbackRectification);
+		feedbackRectificationVO.setListFeedbackRectificationDTO(listFeedbackRectificationDTO);
 		return feedbackRectificationVO;
 	}
 

@@ -7,6 +7,7 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
+import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
@@ -91,7 +92,7 @@ public interface DissatisfiedFeedbackDao {
 	 * @param unit
 	 * @return
 	 */
-	public List<jwcpxt_feedback_rectification> get_feedbackRectificationVO(
+	public List<FeedbackRectificationDTO> get_feedbackRectificationVO(
 			FeedbackRectificationVO feedbackRectificationVO, jwcpxt_unit unit);
 
 	/**

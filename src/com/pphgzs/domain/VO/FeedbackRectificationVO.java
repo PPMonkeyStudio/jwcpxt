@@ -2,7 +2,7 @@ package com.pphgzs.domain.VO;
 
 import java.util.List;
 
-import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
 
 /**
  * 整改反馈VO
@@ -11,7 +11,7 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
  *
  */
 public class FeedbackRectificationVO {
-	private List<jwcpxt_feedback_rectification> listFeedbackRectification;
+	private List<FeedbackRectificationDTO> listFeedbackRectificationDTO;
 
 	// 筛选
 	private String screenStartTime = "0000-00-00";
@@ -27,14 +27,6 @@ public class FeedbackRectificationVO {
 	private int totalCount = 0;
 	// 每页记录数
 	private int pageSize = 10;
-
-	public List<jwcpxt_feedback_rectification> getListFeedbackRectification() {
-		return listFeedbackRectification;
-	}
-
-	public void setListFeedbackRectification(List<jwcpxt_feedback_rectification> listFeedbackRectification) {
-		this.listFeedbackRectification = listFeedbackRectification;
-	}
 
 	public String getScreenStartTime() {
 		return screenStartTime;
@@ -108,12 +100,21 @@ public class FeedbackRectificationVO {
 		this.pageSize = pageSize;
 	}
 
+	public List<FeedbackRectificationDTO> getListFeedbackRectificationDTO() {
+		return listFeedbackRectificationDTO;
+	}
+
+	public void setListFeedbackRectificationDTO(List<FeedbackRectificationDTO> listFeedbackRectificationDTO) {
+		this.listFeedbackRectificationDTO = listFeedbackRectificationDTO;
+	}
+
 	@Override
 	public String toString() {
-		return "FeedbackRectificationVO [listFeedbackRectification=" + listFeedbackRectification + ", screenStartTime="
-				+ screenStartTime + ", screenEndTime=" + screenEndTime + ", screenHandleState=" + screenHandleState
-				+ ", screenSearch=" + screenSearch + ", screenAuditState=" + screenAuditState + ", currPage=" + currPage
-				+ ", totalPage=" + totalPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize + "]";
+		return "FeedbackRectificationVO [listFeedbackRectificationDTO=" + listFeedbackRectificationDTO
+				+ ", screenStartTime=" + screenStartTime + ", screenEndTime=" + screenEndTime + ", screenHandleState="
+				+ screenHandleState + ", screenSearch=" + screenSearch + ", screenAuditState=" + screenAuditState
+				+ ", currPage=" + currPage + ", totalPage=" + totalPage + ", totalCount=" + totalCount + ", pageSize="
+				+ pageSize + "]";
 	}
 
 }
