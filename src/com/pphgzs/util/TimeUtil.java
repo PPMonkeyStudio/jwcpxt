@@ -69,20 +69,20 @@ public class TimeUtil {
 
 	}
 
-	// @Test
-	// public void ttt() {
-	// String start = "2012-02-01";
-	// String end = "2012-03-02";
-	// List<String> lDate = null;
-	// try {
-	// lDate = findDates(start, end);
-	// } catch (ParseException e) {
-	// e.printStackTrace();
-	// }
-	// for (String date : lDate) {
-	// System.out.println(date);
-	// }
-	// }
+	@Test
+	public void ttt() {
+		String start = "2012-02-01";
+		String end = "2012-02-01";
+		List<String> lDate = null;
+		try {
+			lDate = findDates(start, end);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		for (String date : lDate) {
+			System.out.println(date);
+		}
+	}
 
 	public static List<String> findDates(String dBegin, String dEnd) throws ParseException {
 		Date begin = null;
@@ -101,6 +101,10 @@ public class TimeUtil {
 		// 测试此日期是否在指定日期之后
 		while (end.after(calBegin.getTime())) {
 			// 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+			calBegin.add(Calendar.DAY_OF_MONTH, 1);
+			lDate.add(sdf.format(calBegin.getTime()));
+		}
+		if (lDate.size() == 1) {
 			calBegin.add(Calendar.DAY_OF_MONTH, 1);
 			lDate.add(sdf.format(calBegin.getTime()));
 		}

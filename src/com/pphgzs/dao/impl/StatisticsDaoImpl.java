@@ -41,7 +41,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "jwcpxt_service_instance serviceInstance,"//
 				+ "jwcpxt_unit unit "//
 				+ "where "//
-				+ "dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.answer_choice_option "//
+				+ "dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id "//
 				+ "and answerChoice.answer_choice_option = _option.jwcpxt_option_id "//
 				+ "and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id "//
 				+ "and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
@@ -86,7 +86,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "jwcpxt_service_instance serviceInstance,"//
 				+ "jwcpxt_unit unit "//
 				+ "where "//
-				+ "dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.answer_choice_option "//
+				+ "dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id "//
 				+ "and answerChoice.answer_choice_option = _option.jwcpxt_option_id "//
 				+ "and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id "//
 				+ "and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
@@ -96,6 +96,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "and serviceInstance.service_instance_date >= :startTime "//
 				+ "and serviceInstance.service_instance_date < :endTime ";
 		System.out.println("hql:" + hql);
+		System.out.println("startTime" + startTime);
+		System.out.println("endTime" + endTime);
 		Query query = session.createQuery(hql);
 		if (statisDissatiDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");

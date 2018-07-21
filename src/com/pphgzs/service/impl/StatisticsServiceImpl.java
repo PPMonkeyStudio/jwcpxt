@@ -13,7 +13,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.pphgzs.dao.StatisticsDao;
 import com.pphgzs.dao.UnitDao;
-import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
@@ -30,6 +29,7 @@ import com.pphgzs.domain.VO.StatisticsVO;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.StatisticsService;
 import com.pphgzs.util.TimeUtil;
+import com.pphgzs.util.WeekDayUtil;
 
 public class StatisticsServiceImpl implements StatisticsService {
 	private StatisticsDao statisticsDao;
@@ -52,29 +52,55 @@ public class StatisticsServiceImpl implements StatisticsService {
 		StatisticsDissatisfiedOptionDTO statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();
 		List<StatisticsDissatisfiedOptionDTO> listDissaOptionDTO = new ArrayList<>();
 		List<String> listOption = new ArrayList<>();
+
 		//
 		if (!"".equals(statisDissatiDateVO.getStartTime()) && !"".equals(statisDissatiDateVO.getEndTime())) {
-			// 按照天划分
-			try {
-				listDate = TimeUtil.findDates(statisDissatiDateVO.getStartTime(), statisDissatiDateVO.getEndTime());
-			} catch (ParseException e) {
-				System.err.println(e);
+			if (!"".equals(statisDissatiDateVO.getTimeType())) {
+				switch (statisDissatiDateVO.getTimeType()) {
+				case "1":
+					// 按天
+					try {
+						listDate = TimeUtil.findDates(statisDissatiDateVO.getStartTime(),
+								statisDissatiDateVO.getEndTime());
+					} catch (ParseException e) {
+						System.err.println(e);
+					}
+					break;
+				case "2":
+					// 按周
+					listDate = WeekDayUtil.getDates(statisDissatiDateVO.getStartTime(),
+							statisDissatiDateVO.getEndTime(), "星期日");
+					break;
+				case "3":
+					// 按月
+					try {
+						listDate = WeekDayUtil.getMonthBetween(statisDissatiDateVO.getStartTime(),
+								statisDissatiDateVO.getEndTime());
+						System.out.println("fd:" + listDate.size());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				}
 			}
+		}
+		if (listDate.size() == 0) {
+			return statisDissatiDateVO;
 		}
 		// 遍历时间
 		for (int i = 1; i < listDate.size(); i++) {
 			//
-
 			statisticsDissatisfiedDateDTO = new StatisticsDissatisfiedDateDTO();
 			listDissaOptionDTO = new ArrayList<>();
 			listOption = new ArrayList<>();
 			//
 			// 获取对应时间段>=startTime、<=endTime里面的所有推送选项(不重复)
 			listOption = statisticsDao.get_pushOption_byTime(statisDissatiDateVO, listDate.get(i - 1), listDate.get(i));
-			System.out.println("listOption:" + listOption.size());
+			System.out.println(listOption.size());
 			// 获取对应的数量
 			for (String option : listOption) {
 				statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();
+
 				int count = statisticsDao.get_countOption_byTime(statisDissatiDateVO, listDate.get(i - 1),
 						listDate.get(i), option);
 				statisticsDissatisfiedOptionDTO.setCount(count);
