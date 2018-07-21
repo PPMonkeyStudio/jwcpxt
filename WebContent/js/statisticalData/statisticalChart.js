@@ -1,6 +1,9 @@
 
-let lineChart = echarts.init(document.getElementById('main'), 'light');
-var paiChart = echarts.init(document.getElementById('main2'), 'light');
+//let lineChart = echarts.init(document.getElementById('main'), 'light');
+//var paiChart = echarts.init(document.getElementById('main2'), 'light');
+var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'light');
+var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light');
+var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light');
 
 
 //给下方法提供使用
@@ -34,23 +37,28 @@ var TimeUtil = {
 let params = {
 	'statisticsDissatisfiedDayDataVO.unit.jwcpxt_unit_id' : '',
 	'statisticsDissatisfiedDayDataVO.startTime' : '',
-	'statisticsDissatisfiedDayDataVO.endTime' : ''
+	'statisticsDissatisfiedDayDataVO.endTime' : '',
+	'statisDissatiDateVO.stimeType' : ''
 }
 
-randerTimeUtil();
-function randerTimeUtil() {
-	$.datetimepicker.setLocale('ch');
-	$('.mydate').datetimepicker({
-		pickerPosition : "top-right",
-		yearStart : 1900, // 设置最小年份
-		yearEnd : 2050, // 设置最大年份
-		yearOffset : 0, // 年偏差
-		timepicker : false, // 关闭时间选项
-		format : 'Y-m-d', // 格式化日期年-月-日
-		minDate : '1900/01/01', // 设置最小日期
-		maxDate : '2050/01/01', // 设置最大日期
-	});
-}
+$.post('/jwcpxt/Statistics/get_statisDissatiDateVO', {
+	'statisDissatiDateVO.screenUnit' : '',
+	'statisDissatiDateVO.startTime' : '2018-07-10',
+	'statisDissatiDateVO.endTime' : '2018-07-22',
+	'statisDissatiDateVO.timeType' : '1'
+}, response => {
+	randerDissatisfactionChart(response); //所有不满意图表
+}, 'json')
+
+$.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
+	'statisDissaServiceDateVO.screenUnit' : '',
+	'statisDissaServiceDateVO.startTime' : '2018-07-10',
+	'statisDissaServiceDateVO.endTime' : '2018-07-22',
+	'statisDissaServiceDateVO.timeType' : '1'
+}, response => {
+	randerDissatisfiedServiceChart(response); //所有不满意图表
+}, 'json')
+
 
 //获取所有的单位
 getAllUnit();
@@ -75,15 +83,18 @@ function getInfo($params) {
 	}
 	if (flag) {
 		$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDayDataVO', $params, response => {
-			randerLineChart(response); //折线图
+			randerDissatisfactionChart(response); //所有不满意图表
 		}, 'json')
-		$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDateCountVO', {
-			'statisticsDissatisfiedDateCountVO.startTime' : $params['statisticsDissatisfiedDayDataVO.startTime'],
-			'statisticsDissatisfiedDateCountVO.endTime' : $params['statisticsDissatisfiedDayDataVO.endTime'],
-			'statisticsDissatisfiedDateCountVO.unit.jwcpxt_unit_id' : $params['statisticsDissatisfiedDayDataVO.unit.jwcpxt_unit_id']
-		}, response => {
-			randerPieChart(response); //饼图
-		}, 'json')
+	/*$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDayDataVO', $params, response => {
+		randerLineChart(response); //折线图
+	}, 'json')
+	$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDateCountVO', {
+		'statisticsDissatisfiedDateCountVO.startTime' : $params['statisticsDissatisfiedDayDataVO.startTime'],
+		'statisticsDissatisfiedDateCountVO.endTime' : $params['statisticsDissatisfiedDayDataVO.endTime'],
+		'statisticsDissatisfiedDateCountVO.unit.jwcpxt_unit_id' : $params['statisticsDissatisfiedDayDataVO.unit.jwcpxt_unit_id']
+	}, response => {
+		randerPieChart(response); //饼图
+	}, 'json')*/
 	}
 }
 
@@ -112,6 +123,228 @@ function searchEndTime(input) {
 	params['statisticsDissatisfiedDayDataVO.endTime'] = end;
 	getInfo(params);
 }
+
+/*[
+[ 'product', '2012', '2013', '2014', '2015', '2016', '2017' ],
+[ 'Matcha Latte', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7 ],
+[ 'Milk Tea', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1 ],
+[ 'Cheese Cocoa', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5 ],
+[ 'Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1 ]
+]*/
+//绘制总体不满意分布
+function randerDissatisfactionChart(res) {
+	let _source = [ [ 'time' ], ];
+	res.listStaDisDateDTO.forEach(function(elt, i) {
+		_source[0].push(elt.dateScale);
+		elt.listDissaOptionDTO.forEach(function(elt1, j) {
+			if (!_source[j + 1])
+				_source[j + 1] = [];
+			_source[j + 1][0] = elt1.option;
+			_source[j + 1].push(elt1.count);
+		})
+	})
+	let _series = [];
+	let length = _source.length - 1;
+	for (var i = 0; i < length; i++) {
+		_series.push({
+			type : 'line',
+			smooth : true,
+			seriesLayoutBy : 'row'
+		});
+	}
+	_series.push({
+		type : 'pie',
+		id : 'pie',
+		radius : '30%',
+		center : [ '50%', '25%' ],
+		label : {
+			formatter : '{b}: {@2012} ({d}%)'
+		},
+		encode : {
+			itemName : 'time',
+			value : '2012',
+			tooltip : '2012'
+		}
+	});
+	//数据
+	let option = {
+		legend : {},
+		tooltip : {
+			trigger : 'axis',
+			axisPointer : {
+				type : 'cross',
+				crossStyle : {
+					color : '#999'
+				}
+			}
+		},
+		dataset : {
+			source : _source
+		},
+		xAxis : {
+			type : 'category'
+		},
+		yAxis : {
+			gridIndex : 0
+		},
+		grid : {
+			top : '55%'
+		},
+		series : _series
+	};
+	dissatisfactionChart.on('updateAxisPointer', function(event) {
+		var xAxisInfo = event.axesInfo[0];
+		if (xAxisInfo) {
+			var dimension = xAxisInfo.value + 1;
+			dissatisfactionChart.setOption({
+				series : {
+					id : 'pie',
+					label : {
+						formatter : '{b}: {@[' + dimension + ']} ({d}%)'
+					},
+					encode : {
+						value : dimension,
+						tooltip : dimension
+					}
+				}
+			});
+		}
+	});
+	dissatisfactionChart.setOption(option);
+}
+
+/*[
+[ 'product', '2012', '2013', '2014', '2015', '2016', '2017' ],
+[ 'Matcha Latte', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7 ],
+[ 'Milk Tea', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1 ],
+[ 'Cheese Cocoa', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5 ],
+[ 'Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1 ]
+]*/
+//绘制不满意和业务关联的图
+function randerDissatisfiedServiceChart(res) {
+	let _source = [ [ 'time' ], ];
+	res.listStaDisDateDTO.forEach(function(elt, i) {
+		_source[0].push(elt.dateScale);
+		elt.listDissaOptionDTO.forEach(function(elt1, j) {
+			if (!_source[j + 1])
+				_source[j + 1] = [];
+			_source[j + 1][0] = elt1.option;
+			_source[j + 1].push(elt1.count);
+		})
+	})
+	let _series = [];
+	let length = _source.length - 1;
+	for (var i = 0; i < length; i++) {
+		_series.push({
+			type : 'line',
+			smooth : true,
+			seriesLayoutBy : 'row'
+		});
+	}
+	_series.push({
+		type : 'pie',
+		id : 'pie',
+		radius : '30%',
+		center : [ '50%', '25%' ],
+		label : {
+			formatter : '{b}: {@2012} ({d}%)'
+		},
+		encode : {
+			itemName : 'time',
+			value : '2012',
+			tooltip : '2012'
+		}
+	});
+	//数据
+	let option = {
+		legend : {},
+		tooltip : {
+			trigger : 'axis',
+			axisPointer : {
+				type : 'cross',
+				crossStyle : {
+					color : '#999'
+				}
+			}
+		},
+		dataset : {
+			source : _source
+		},
+		xAxis : {
+			type : 'category'
+		},
+		yAxis : {
+			gridIndex : 0
+		},
+		grid : {
+			top : '55%'
+		},
+		series : _series
+	};
+	dissatisfiedServiceChart.on('updateAxisPointer', function(event) {
+		var xAxisInfo = event.axesInfo[0];
+		if (xAxisInfo) {
+			var dimension = xAxisInfo.value + 1;
+			dissatisfactionChart.setOption({
+				series : {
+					id : 'pie',
+					label : {
+						formatter : '{b}: {@[' + dimension + ']} ({d}%)'
+					},
+					encode : {
+						value : dimension,
+						tooltip : dimension
+					}
+				}
+			});
+		}
+	});
+	dissatisfiedServiceChart.setOption(option);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //绘制折线图
 function randerLineChart(res) {
@@ -223,4 +456,19 @@ function randerPieChart(res) {
 		]
 	};
 	paiChart.setOption(option2);
+}
+
+randerTimeUtil();
+function randerTimeUtil() {
+	$.datetimepicker.setLocale('ch');
+	$('.mydate').datetimepicker({
+		pickerPosition : "top-right",
+		yearStart : 1900, // 设置最小年份
+		yearEnd : 2050, // 设置最大年份
+		yearOffset : 0, // 年偏差
+		timepicker : false, // 关闭时间选项
+		format : 'yyyy-MM-dd', // 格式化日期年-月-日
+		minDate : '1900/01/01', // 设置最小日期
+		maxDate : '2050/01/01', // 设置最大日期
+	});
 }
