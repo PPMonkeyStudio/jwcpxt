@@ -56,7 +56,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
-
+	
 	/**
 	 * 问题分布
 	 * 
