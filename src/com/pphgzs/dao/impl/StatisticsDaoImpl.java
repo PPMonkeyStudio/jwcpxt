@@ -63,7 +63,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_date < :endTime "
 				+ " and question.jwcpxt_question_id like :questionId"//
 				+ " and _option.jwcpxt_option_id like :optionId";//
-		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		if (statisDissaQuestionDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -112,7 +111,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " "//
 				+ " and unit.jwcpxt_unit_id like :unitId"//
 				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId";//
-		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		if (statisDissaQuestionDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -157,7 +155,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_date >= :startTime "//
 				+ " and serviceInstance.service_instance_date < :endTime "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionId";
-		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -200,7 +197,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ ""//
 				+ " and unit.jwcpxt_unit_id like :unitId ";//
-		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -238,7 +234,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "and serviceInstance.service_instance_date >= :startTime "//
 				+ "and serviceInstance.service_instance_date < :endTime "//
 				+ "and _option.option_describe like :option";
-		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		if (statisDissatiDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -279,7 +274,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
 				+ ""//
 				+ "and unit.jwcpxt_unit_id like :unitId ";
-		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		if (statisDissatiDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -535,17 +529,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		//
 
 		try {
-			// System.out.println("shuli:" + (query.uniqueResult()));
 			double count = ((Number) query.uniqueResult()).intValue();
-			// System.out.println("count:" + count);
-			// System.out.println("unitId:" + unitId + ".grade:" + count *
-			// serviceGradeDTO.getGrade());
 			return (count / 100) * serviceGradeDTO.getGrade();
 		} catch (ClassCastException e) {
-			// System.out.println("Class");
 			return serviceGradeDTO.getGrade();
 		} catch (NullPointerException e) {
-			// System.out.println("Null");
 			return serviceGradeDTO.getGrade();
 		} finally {
 			session.clear();

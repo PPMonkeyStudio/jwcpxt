@@ -80,7 +80,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 					try {
 						listDate = WeekDayUtil.getMonthBetween(statisDissaQuestionDateVO.getStartTime(),
 								statisDissaQuestionDateVO.getEndTime());
-						System.out.println("fd:" + listDate.size());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -93,29 +92,25 @@ public class StatisticsServiceImpl implements StatisticsService {
 		}
 		// 获取该业务的所有推送的问题以及选项
 		listQuestionOption = statisticsDao.get_pushQuestionOption(statisDissaQuestionDateVO);
-		System.out.println(listQuestionOption.size());
 		// 去重
 		for (QuestionOptionAnswerDTO questionOptionAnswerDTO : listQuestionOption) {
+			int flag = 0;
 			if (listOldQuestionOption.size() == 0) {
 				listOldQuestionOption.add(questionOptionAnswerDTO);
 			} else {
 				for (QuestionOptionAnswerDTO oldQuestion : listOldQuestionOption) {
-					if (!(questionOptionAnswerDTO.getQuestion().getJwcpxt_question_id()
-							.equals(oldQuestion.getQuestion().getJwcpxt_question_id())
-							&& questionOptionAnswerDTO.getOption().getJwcpxt_option_id()
-									.equals(oldQuestion.getOption().getJwcpxt_option_id()))) {
-						listOldQuestionOption.add(questionOptionAnswerDTO);
-						break;
+					if (questionOptionAnswerDTO.getQuestion().getQuestion_describe()
+							.equals(oldQuestion.getQuestion().getQuestion_describe())
+							&& questionOptionAnswerDTO.getOption().getOption_describe()
+									.equals(oldQuestion.getOption().getOption_describe())) {
+						flag++;
 					}
 				}
+				if (flag == 0) {
+					listOldQuestionOption.add(questionOptionAnswerDTO);
+				}
 			}
-
-			/*
-			 * if (!listOldQuestionOption.contains(questionOptionAnswerDTO)) {
-			 * listOldQuestionOption.add(questionOptionAnswerDTO); }
-			 */
 		}
-		System.out.println("size:" + listOldQuestionOption.size());
 		// 遍历时间
 		for (int i = 1; i < listDate.size(); i++) {
 			statisDissaQuestionDateDTO = new StatisDissaQuestionDateDTO();
@@ -124,7 +119,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 				statisQuestionDTO = new StatisQuestionDTO();
 				int count = statisticsDao.get_countStatisDateDTO(statisDissaQuestionDateVO, listDate.get(i - 1),
 						listDate.get(i), oldQuest);
-				System.out.println("count:" + count);
 				statisQuestionDTO.setCount(count);
 				statisQuestionDTO.setQuestionOptionAnswerDTO(oldQuest);
 				listStatisQuestionDTO.add(statisQuestionDTO);
@@ -134,19 +128,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 			listStatisQuestionDateDTO.add(statisDissaQuestionDateDTO);
 		}
 		statisDissaQuestionDateVO.setListStatisQuestionDTO(listStatisQuestionDateDTO);
-		/*
-		 * statisDissaQuestionDateVO.setListQuestionOptionDTO(listOldQuestionOption); //
-		 * 遍历时间 for (int i = 1; i < listDate.size(); i++) { listStatisQuestionDateDTO =
-		 * new ArrayList<>(); // 遍历相对应的数量 for (QuestionOptionAnswerDTO
-		 * questionOptionAnswerDTO : listQuestionOption) { statisDissaQuestionDateDTO =
-		 * new StatisDissaQuestionDateDTO(); int count =
-		 * statisticsDao.get_countStatisDateDTO(statisDissaQuestionDateVO,
-		 * listDate.get(i - 1), listDate.get(i), questionOptionAnswerDTO);
-		 * System.out.println("count：" + count);
-		 * statisDissaQuestionDateDTO.setDateScale(listDate.get(i));
-		 * listStatisQuestionDateDTO.add(statisDissaQuestionDateDTO); } }
-		 * statisDissaQuestionDateVO.setListStatisDissaDTO(listStatisQuestionDateDTO);
-		 */
 		return statisDissaQuestionDateVO;
 	}
 
@@ -188,7 +169,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 					try {
 						listDate = WeekDayUtil.getMonthBetween(statisDissaServiceDateVO.getStartTime(),
 								statisDissaServiceDateVO.getEndTime());
-						System.out.println("fd:" + listDate.size());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -201,16 +181,10 @@ public class StatisticsServiceImpl implements StatisticsService {
 		}
 		// 获取对应时间段里面的业务数量
 		listServiceDefinition = statisticsDao.get_pushService_byTime(statisDissaServiceDateVO);
-		System.out.println(listServiceDefinition.size());
 		// 遍历时间
 		for (int i = 1; i < listDate.size(); i++) {
 			statisDIssaServiceDateDTO = new StatisDIssaServiceDateDTO();
 			listStatisDissaServiceDTO = new ArrayList<>();
-			/*
-			 * // 获取对应时间段里面的业务数量 listServiceDefinition =
-			 * statisticsDao.get_pushService_byTime(statisDissaServiceDateVO, listDate.get(i
-			 * - 1), listDate.get(i)); System.out.println(listServiceDefinition.size());
-			 */
 			// 获取对应的数量
 			for (jwcpxt_service_definition serviceDefinition : listServiceDefinition) {
 				//
@@ -218,7 +192,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 				//
 				int count = statisticsDao.statisticsDaoget_countService_byTime(statisDissaServiceDateVO,
 						listDate.get(i - 1), listDate.get(i), serviceDefinition);
-				System.out.println("count:" + count);
 				statisDIssaServiceDTO.setCount(count);
 				statisDIssaServiceDTO.setServiceDefinition(serviceDefinition);
 				listStatisDissaServiceDTO.add(statisDIssaServiceDTO);
@@ -266,7 +239,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 					try {
 						listDate = WeekDayUtil.getMonthBetween(statisDissatiDateVO.getStartTime(),
 								statisDissatiDateVO.getEndTime());
-						System.out.println("fd:" + listDate.size());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -386,13 +358,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 				int dayNum = 0;
 				if (statisticsDissatisfiedDayDataVO.getUnit().getUnit_grade() == 2) {
-					System.out.println("222222222222222222222222");
 					dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate_byFatherUnit(
 							serviceDefinition.getJwcpxt_service_definition_id(),
 							statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
 							simpleDateFormat.format(new Date(time)));
 				} else if (statisticsDissatisfiedDayDataVO.getUnit().getUnit_grade() == 3) {
-					System.out.println("333333333333333333333333333");
 					dayNum = statisticsDao.get_dayNum_byServiceDefinitionIDAndDate(
 							serviceDefinition.getJwcpxt_service_definition_id(),
 							statisticsDissatisfiedDayDataVO.getUnit().getJwcpxt_unit_id(),
