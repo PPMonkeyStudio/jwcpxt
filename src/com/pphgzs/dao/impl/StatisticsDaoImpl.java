@@ -8,7 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.StatisticsDao;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 
 public class StatisticsDaoImpl implements StatisticsDao {
@@ -24,6 +26,49 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	/**
+	 * 获取当前时间段里面所有的业务
+	 */
+	@Override
+	public List<jwcpxt_service_definition> get_pushService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO,
+			String startTime, String endTime) {
+		Session session = getSession();
+		String hql = "select distinct(serviceDefinition)"//
+				+ " from "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_unit unit"//
+				+ " where"//
+				+ ""//
+				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id"//
+				+ " and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ ""//
+				+ "and unit.jwcpxt_unit_id like :unitId "//
+				+ "and serviceInstance.service_instance_date >= :startTime "//
+				+ "and serviceInstance.service_instance_date < :endTime ";
+		System.out.println("hql:" + hql);
+		System.out.println("startTime" + startTime);
+		System.out.println("endTime" + endTime);
+		Query query = session.createQuery(hql);
+		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
+			query.setParameter("unitId", "%%");
+		} else {
+			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
+		}
+		query.setParameter("startTime", startTime);
+		query.setParameter("endTime", endTime);
+		List<jwcpxt_service_definition> list = new ArrayList<>();
+		list = query.list();
+		session.clear();
+		return list;
 	}
 
 	/**

@@ -3,8 +3,10 @@ package com.pphgzs.dao;
 import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_option;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
+import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 
 public interface StatisticsDao {
@@ -32,5 +34,16 @@ public interface StatisticsDao {
 
 	public int get_countOption_byTime(StatisDissatiDateVO statisDissatiDateVO, String string, String string2,
 			String option);
+
+	/**
+	 * 获取对应时间段里面的业务
+	 * 
+	 * @param statisDissaServiceDateVO
+	 * @param string
+	 * @param string2
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> get_pushService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO,
+			String string, String string2);
 
 }
