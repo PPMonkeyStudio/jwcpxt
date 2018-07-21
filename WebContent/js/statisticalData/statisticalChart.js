@@ -1,66 +1,3 @@
-
-//let lineChart = echarts.init(document.getElementById('main'), 'light');
-//var paiChart = echarts.init(document.getElementById('main2'), 'light');
-var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'light');
-var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light');
-var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light');
-var definitionId = '';
-var date7 = new Date(new Date().getTime() - (6 * 24 * 60 * 60 * 1000));
-
-//给下方法提供使用
-Date.prototype.format = function() {
-	var s = '';
-	s += this.getFullYear() + '-'; // 获取年份。
-	s += (this.getMonth() + 1) + "-"; // 获取月份。
-	s += this.getDate(); // 获取日。
-	return (s); // 返回日期。
-};
-var TimeUtil = {
-	//按日查询
-	getDayAll : function(begin, end) {
-		var dateAllArr = new Array();
-		var ab = begin.split("-");
-		var ae = end.split("-");
-		var db = new Date();
-		db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
-		var de = new Date();
-		de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
-		var unixDb = db.getTime();
-		var unixDe = de.getTime();
-		for (var k = unixDb; k <= unixDe;) {
-			dateAllArr.push((new Date(parseInt(k))).format().toString());
-			k = k + 24 * 60 * 60 * 1000;
-		}
-		return dateAllArr;
-	}
-}
-
-let params = {
-	'statisticsDissatisfiedDayDataVO.unit.jwcpxt_unit_id' : '',
-	'statisticsDissatisfiedDayDataVO.startTime' : '',
-	'statisticsDissatisfiedDayDataVO.endTime' : '',
-	'statisDissatiDateVO.stimeType' : ''
-}
-
-$.post('/jwcpxt/Statistics/get_statisDissatiDateVO', {
-	'statisDissatiDateVO.screenUnit' : '',
-	'statisDissatiDateVO.startTime' : '2018-07-16',
-	'statisDissatiDateVO.endTime' : '2018-07-22',
-	'statisDissatiDateVO.timeType' : '1'
-}, response => {
-	randerDissatisfactionChart(response); //所有不满意图表
-}, 'json')
-
-$.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
-	'statisDissaServiceDateVO.screenUnit' : '',
-	'statisDissaServiceDateVO.startTime' : '2018-07-16',
-	'statisDissaServiceDateVO.endTime' : '2018-07-22',
-	'statisDissaServiceDateVO.timeType' : '1'
-}, response => {
-	randerDissatisfiedServiceChart(response); //所有不满意图表
-}, 'json')
-
-
 //获取所有的单位
 getAllUnit();
 function getAllUnit() {
@@ -69,22 +6,72 @@ function getAllUnit() {
 		response.forEach(function(elt, i) {
 			option_str += `<option value="${elt.jwcpxt_unit_id}">${elt.unit_name}</option>`;
 		})
-		$('#SearchUnit').html(option_str).selectpicker('refresh');
+		$('#jwcpxt_unit_id').html(option_str).selectpicker('refresh');
 	}, 'json')
 }
 
+//let lineChart = echarts.init(document.getElementById('main'), 'light');
+//var paiChart = echarts.init(document.getElementById('main2'), 'light');
+var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'light');
+var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light');
+var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light');
+var definitionId = '';
+function getDate() {
+	let dateTime = new Date();
+	let year = dateTime.getFullYear();
+	let mounth = (dateTime.getMonth() + 1).toString().length > 1 ? (dateTime.getMonth() + 1) : "0" + (dateTime.getMonth() + 1);
+	let day = (dateTime.getDate()).toString().length > 1 ? (dateTime.getDate()) : "0" + (dateTime.getDate());
+	return year + "-" + mounth + "-" + day;
+}
+function getDate7() {
+	let date7Time = new Date(new Date().getTime() - (6 * 24 * 60 * 60 * 1000));
+	let year = date7Time.getFullYear();
+	let mounth = (date7Time.getMonth() + 1).toString().length > 1 ? (date7Time.getMonth() + 1) : "0" + (date7Time.getMonth() + 1);
+	let day = (date7Time.getDate()).toString().length > 1 ? (date7Time.getDate()) : "0" + (date7Time.getDate());
+	return year + "-" + mounth + "-" + day;
+}
+
+let params = {
+	'jwcpxt_unit_id' : '',
+	'startTime' : getDate7(),
+	'endTime' : getDate(),
+	'timeType' : 1
+}
+
+//到页面时默认执行一次方法
+pageInit();
+function pageInit() {
+	getChart(params);
+	$('#startTime').val(params.startTime);
+	$('#endTime').val(params.endTime);
+}
 //获取统计后的信息，渲染出统计图表
-function getInfo($params) {
+function getChart($params) {
 	let flag = true;
 	for (let item in params) {
-		if (!params[item]) {
+		if (!params[item] && item != 'jwcpxt_unit_id') {
 			flag = false;
 			return false;
 		}
 	}
 	if (flag) {
-		$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDayDataVO', $params, response => {
+		//不满意分布
+		$.post('/jwcpxt/Statistics/get_statisDissatiDateVO', {
+			'statisDissatiDateVO.screenUnit' : params.jwcpxt_unit_id,
+			'statisDissatiDateVO.startTime' : params.startTime,
+			'statisDissatiDateVO.endTime' : params.endTime,
+			'statisDissatiDateVO.timeType' : params.timeType
+		}, response => {
 			randerDissatisfactionChart(response); //所有不满意图表
+		}, 'json')
+		//业务分类
+		$.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
+			'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
+			'statisDissaServiceDateVO.startTime' : params.startTime,
+			'statisDissaServiceDateVO.endTime' : params.endTime,
+			'statisDissaServiceDateVO.timeType' : params.timeType
+		}, response => {
+			randerDissatisfiedServiceChart(response); //所有不满意图表
 		}, 'json')
 	/*$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDayDataVO', $params, response => {
 		randerLineChart(response); //折线图
@@ -99,30 +86,20 @@ function getInfo($params) {
 	}
 }
 
-
-function searchUnit(select) {
-	let unit = $(select).val();
-	if (!unit) {
+//查询
+function search(select) {
+	let value = $(select).val();
+	if (!value) {
 		return false;
 	}
-	params['statisticsDissatisfiedDayDataVO.unit.jwcpxt_unit_id'] = unit;
-	getInfo(params);
+	params[$(this).attr('name')] = value;
+	getChart(params);
 }
-function searchBeginTime(input) {
-	let begin = $(input).val();
-	if (!begin) {
-		return false;
-	}
-	params['statisticsDissatisfiedDayDataVO.startTime'] = begin;
-	getInfo(params);
-}
-function searchEndTime(input) {
-	let end = $(input).val();
-	if (!end) {
-		return false;
-	}
-	params['statisticsDissatisfiedDayDataVO.endTime'] = end;
-	getInfo(params);
+function checkTimeType(btn) {
+	$('.timeType').removeAttr('disabled');
+	$(btn).attr('disabled', 'disabled');
+	params["timeType"] = $(btn).attr('time-type');
+	getChart(params);
 }
 
 /*[
@@ -159,59 +136,66 @@ function randerDissatisfactionChart(res) {
 		radius : '30%',
 		center : [ '50%', '25%' ],
 		label : {
-			formatter : '{b}: {@2012} ({d}%)'
+			formatter : `{b}: {@${_source[0][1]}} ({d}%)`
 		},
 		encode : {
 			itemName : 'time',
-			value : '2012',
-			tooltip : '2012'
+			value : _source[0][1],
+			tooltip : _source[0][1]
 		}
 	});
 	//数据
-	let option = {
-		legend : {},
-		tooltip : {
-			trigger : 'axis',
-			axisPointer : {
-				type : 'cross',
-				crossStyle : {
-					color : '#999'
-				}
-			}
-		},
-		dataset : {
-			source : _source
-		},
-		xAxis : {
-			type : 'category'
-		},
-		yAxis : {
-			gridIndex : 0
-		},
-		grid : {
-			top : '55%'
-		},
-		series : _series
-	};
-	dissatisfactionChart.on('updateAxisPointer', function(event) {
-		let xAxisInfo = event.axesInfo[0];
-		if (xAxisInfo) {
-			let dimension = xAxisInfo.value + 1;
-			dissatisfactionChart.setOption({
-				series : {
-					id : 'pie',
-					label : {
-						formatter : '{b}: {@[' + dimension + ']} ({d}%)'
-					},
-					encode : {
-						value : dimension,
-						tooltip : dimension
+	setTimeout(function() {
+		let option = {
+			title : {
+				text : '汇总统计各情况图',
+				subtext : ''
+			},
+			legend : {},
+			tooltip : {
+				trigger : 'axis',
+				axisPointer : {
+					type : 'cross',
+					crossStyle : {
+						color : '#999'
 					}
 				}
-			});
-		}
+			},
+			dataset : {
+				source : _source
+			},
+			xAxis : {
+				type : 'category'
+			},
+			yAxis : {
+				gridIndex : 0
+			},
+			grid : {
+				top : '55%'
+			},
+			series : _series
+		};
+		dissatisfactionChart.on('updateAxisPointer', function(event) {
+			let xAxisInfo = event.axesInfo[0];
+			if (xAxisInfo) {
+				let dimension = xAxisInfo.value + 1;
+				dissatisfactionChart.setOption({
+					series : {
+						id : 'pie',
+						label : {
+							formatter : '{b}: {@[' + dimension + ']} ({d}%)'
+						},
+						encode : {
+							value : dimension,
+							tooltip : dimension
+						}
+					}
+				});
+			}
+		});
+		dissatisfactionChart.clear();
+		dissatisfactionChart.setOption(option);
 	});
-	dissatisfactionChart.setOption(option);
 }
 
 /*[
@@ -248,105 +232,104 @@ function randerDissatisfiedServiceChart(res) {
 		radius : '30%',
 		center : [ '50%', '25%' ],
 		label : {
-			formatter : '{b}: {@2012} ({d}%)'
+			formatter : `{b}: {@${_source[0][1]}} ({d}%)`
 		},
 		encode : {
 			itemName : 'time',
-			value : '2012',
-			tooltip : '2012'
+			value : _source[0][1],
+			tooltip : _source[0][1]
 		}
 	});
 	//数据
-	let option = {
-		legend : {},
-		tooltip : {
-			trigger : 'axis',
-			axisPointer : {
-				type : 'cross',
-				crossStyle : {
-					color : '#999'
-				}
-			}
-		},
-		dataset : {
-			source : _source
-		},
-		xAxis : {
-			type : 'category'
-		},
-		yAxis : {
-			gridIndex : 0
-		},
-		grid : {
-			top : '55%'
-		},
-		series : _series
-	};
-	dissatisfiedServiceChart.on('updateAxisPointer', function(event) {
-		let xAxisInfo = event.axesInfo[0];
-		if (xAxisInfo) {
-			let dimension = xAxisInfo.value + 1;
-			dissatisfiedServiceChart.setOption({
-				series : {
-					id : 'pie',
-					label : {
-						formatter : '{b}: {@[' + dimension + ']} ({d}%)'
-					},
-					encode : {
-						value : dimension,
-						tooltip : dimension
+	setTimeout(function() {
+		let option = {
+			legend : {},
+			tooltip : {
+				trigger : 'axis',
+				axisPointer : {
+					type : 'cross',
+					crossStyle : {
+						color : '#999'
 					}
 				}
-			});
-		}
-	});
-	dissatisfiedServiceChart.setOption(option);
-	dissatisfiedServiceChart.on("click", function(param) {
-		let index = param.dataIndex;
-		let describe = option.dataset.source[index + 1][0];
-		try {
-			res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.forEach(function(elt, i) {
-				if (elt.serviceDefinition.service_definition_describe == describe) {
-					definitionId = elt.serviceDefinition.jwcpxt_service_definition_id;
-					console.log(definitionId);
-					dissatisfactionProblemSendData();
-					throw 'Jump';
+			},
+			dataset : {
+				source : _source
+			},
+			xAxis : {
+				type : 'category'
+			},
+			yAxis : {
+				gridIndex : 0
+			},
+			grid : {
+				top : '55%'
+			},
+			series : _series
+		};
+		dissatisfiedServiceChart.on('updateAxisPointer', function(event) {
+			let xAxisInfo = event.axesInfo[0];
+			if (xAxisInfo) {
+				let dimension = xAxisInfo.value + 1;
+				dissatisfiedServiceChart.setOption({
+					series : {
+						id : 'pie',
+						label : {
+							formatter : '{b}: {@[' + dimension + ']} ({d}%)'
+						},
+						encode : {
+							value : dimension,
+							tooltip : dimension
+						}
+					}
+				});
+			}
+		});
+		dissatisfiedServiceChart.clear();
+		dissatisfiedServiceChart.setOption(option);
+		dissatisfiedServiceChart.on("click", function(param) {
+			if (param.componentSubType == "pie") {
+				let index = param.dataIndex;
+				let describe = option.dataset.source[index + 1][0];
+				try {
+					res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.forEach(function(elt, i) {
+						if (elt.serviceDefinition.service_definition_describe == describe) {
+							definitionId = elt.serviceDefinition.jwcpxt_service_definition_id;
+							console.log(definitionId);
+							dissatisfactionProblemSendData();
+							throw 'Jump';
+						}
+					})
+				} catch (e) {
+					console.log(e);
 				}
-			})
-		} catch (e) {
-			console.log(e);
-		}
+			}
+		});
 	});
 }
 
-
 function dissatisfactionProblemSendData() {
 	$.post('/jwcpxt/Statistics/get_statisDissaQuestionDateVO', {
-		'statisDissaQuestionDateVO.screenUnit' : '',
-		'statisDissaQuestionDateVO.startTime' : '2018-07-16',
-		'statisDissaQuestionDateVO.endTime' : '2018-07-22',
-		'statisDissaQuestionDateVO.timeType' : '1',
+		'statisDissaQuestionDateVO.screenUnit' : params.jwcpxt_unit_id,
+		'statisDissaQuestionDateVO.startTime' : params.startTime,
+		'statisDissaQuestionDateVO.endTime' : params.endTime,
+		'statisDissaQuestionDateVO.timeType' : params.timeType,
 		'statisDissaQuestionDateVO.screenService' : definitionId
 	}, response => {
 		randerDissatisfactionProblem(response); //所有不满意问题
 	}, 'json')
 }
 function randerDissatisfactionProblem(res) {
-	let _source = [ [ 'time2' ], ];
-	res.listStatisDissaDTO.forEach(function(elt, i) {
+	let _source = [ [ 'time' ], ];
+	res.listStatisQuestionDTO.forEach(function(elt, i) {
 		_source[0].push(elt.dateScale);
-		if (!_source[i])
-			_source[i] = [];
-		_source[i][0] = res.listQuestionOptionDTO[i].question.question_describe + '--' + res.listQuestionOptionDTO[i].option.option_describe;
-		_source[i].push(res.listStatisDissaDTO[i].count);
-		res.listQuestionOptionDTO[i]
-	})
-	res.listStatisDIssaServiceDateDTO.forEach(function(elt, i) {
-		_source[0].push(elt.dateScale);
-		elt.listStatisDIssaServiceDTO.forEach(function(elt1, j) {
+		elt.listStatisQuestionDTO.forEach(function(elt1, j) {
 			if (!_source[j + 1])
 				_source[j + 1] = [];
-			_source[j + 1][0] = elt1.serviceDefinition.service_definition_describe;
+			
+			
+			
+			_source[j + 1][0] = elt1.questionOptionAnswerDTO.question.question_describe + "--" + elt1.questionOptionAnswerDTO.option.option_describe;
 			_source[j + 1].push(elt1.count);
 		})
 	})
@@ -365,12 +348,12 @@ function randerDissatisfactionProblem(res) {
 		radius : '30%',
 		center : [ '50%', '25%' ],
 		label : {
-			formatter : '{b}: {@2012} ({d}%)'
+			formatter : `{b}: {@${_source[0][1]}} ({d}%)`
 		},
 		encode : {
-			itemName : 'time2',
-			value : '2012',
-			tooltip : '2012'
+			itemName : 'time',
+			value : _source[0][1],
+			tooltip : _source[0][1]
 		}
 	});
 	//数据
@@ -417,6 +400,8 @@ function randerDissatisfactionProblem(res) {
 			});
 		}
 	});
+	console.log(option);
+	dissatisfactionProblemChart.clear();
 	dissatisfactionProblemChart.setOption(option);
 }
 
@@ -455,13 +440,34 @@ function randerDissatisfactionProblem(res) {
 
 
 
-
-
-
-
-
-
-
+/*
+//给下方法提供使用
+Date.prototype.format = function() {
+	var s = '';
+	s += this.getFullYear() + '-'; // 获取年份。
+	s += (this.getMonth() + 1) + "-"; // 获取月份。
+	s += this.getDate(); // 获取日。
+	return (s); // 返回日期。
+};
+var TimeUtil = {
+	//按日查询
+	getDayAll : function(begin, end) {
+		var dateAllArr = new Array();
+		var ab = begin.split("-");
+		var ae = end.split("-");
+		var db = new Date();
+		db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+		var de = new Date();
+		de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+		var unixDb = db.getTime();
+		var unixDe = de.getTime();
+		for (var k = unixDb; k <= unixDe;) {
+			dateAllArr.push((new Date(parseInt(k))).format().toString());
+			k = k + 24 * 60 * 60 * 1000;
+		}
+		return dateAllArr;
+	}
+}
 
 //绘制折线图
 function randerLineChart(res) {
@@ -573,19 +579,4 @@ function randerPieChart(res) {
 		]
 	};
 	paiChart.setOption(option2);
-}
-
-randerTimeUtil();
-function randerTimeUtil() {
-	$.datetimepicker.setLocale('ch');
-	$('.mydate').datetimepicker({
-		pickerPosition : "top-right",
-		yearStart : 1900, // 设置最小年份
-		yearEnd : 2050, // 设置最大年份
-		yearOffset : 0, // 年偏差
-		timepicker : false, // 关闭时间选项
-		format : 'Y-m-d', // 格式化日期年-月-日
-		minDate : '1900/01/01', // 设置最小日期
-		maxDate : '2050/01/01', // 设置最大日期
-	});
-}
+}*/
