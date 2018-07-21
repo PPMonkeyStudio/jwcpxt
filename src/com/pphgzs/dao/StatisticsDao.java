@@ -79,4 +79,12 @@ public interface StatisticsDao {
 	public int get_countStatisDateDTO(StatisDissaQuestionDateVO statisDissaQuestionDateVO, String string,
 			String string2, QuestionOptionAnswerDTO questionOptionAnswerDTO);
 
+	/**
+	 * 根据VO获取当天的总数
+	 * 
+	 * @param statisDissatiDateVO
+	 * @return
+	 */
+	public int get_totaolCount(StatisDissatiDateVO statisDissatiDateVO, String startTime, String endTime);
+
 }

@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.StatisticsDao;
-import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
@@ -207,6 +206,44 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		list = query.list();
 		session.clear();
 		return list;
+	}
+
+	/**
+	 * 获取时间段的总数量
+	 */
+	@Override
+	public int get_totaolCount(StatisDissatiDateVO statisDissatiDateVO, String startTime, String endTime) {
+		Session session = getSession();
+		String hql = "select count(*) "//
+				+ " from"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_unit unit"//
+				+ " where"//
+				+ " answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ ""//
+				+ " and unit.jwcpxt_unit_id like :unitId"//
+				+ " and serviceInstance.service_instance_date >= :startTime"//
+				+ " and serviceInstance.service_instance_date < :endTime ";//
+		Query query = session.createQuery(hql);
+		if (statisDissatiDateVO.getScreenUnit().equals("")) {
+			query.setParameter("unitId", "%%");
+		} else {
+			query.setParameter("unitId", statisDissatiDateVO.getScreenUnit());
+		}
+		query.setParameter("startTime", startTime);
+		query.setParameter("endTime", endTime);
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			return 0;
+		} finally {
+			session.clear();
+		}
 	}
 
 	/**

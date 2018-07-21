@@ -254,19 +254,27 @@ public class StatisticsServiceImpl implements StatisticsService {
 		// 遍历时间
 		for (int i = 1; i < listDate.size(); i++) {
 			//
+			statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();
 			statisticsDissatisfiedDateDTO = new StatisticsDissatisfiedDateDTO();
 			listDissaOptionDTO = new ArrayList<>();
-			//
+			// 获取当天业务回答的总数
+			int totalAnswer = statisticsDao.get_totaolCount(statisDissatiDateVO, listDate.get(i - 1), listDate.get(i));
+			int disCount = 0;
+			System.out.println("totalAnswer:" + totalAnswer);
 			// 获取对应的数量
 			for (String option : listOption) {
 				statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();
-
 				int count = statisticsDao.get_countOption_byTime(statisDissatiDateVO, listDate.get(i - 1),
 						listDate.get(i), option);
+				disCount = disCount + count;
 				statisticsDissatisfiedOptionDTO.setCount(count);
 				statisticsDissatisfiedOptionDTO.setOption(option);
 				listDissaOptionDTO.add(statisticsDissatisfiedOptionDTO);
 			}
+			System.out.println("qita:" + (totalAnswer - disCount));
+			statisticsDissatisfiedOptionDTO.setCount(totalAnswer - disCount);
+			statisticsDissatisfiedOptionDTO.setOption("满意");
+			listDissaOptionDTO.add(statisticsDissatisfiedOptionDTO);
 			statisticsDissatisfiedDateDTO.setDateScale(listDate.get(i));
 			statisticsDissatisfiedDateDTO.setListDissaOptionDTO(listDissaOptionDTO);
 			listStatDissDateDTO.add(statisticsDissatisfiedDateDTO);
