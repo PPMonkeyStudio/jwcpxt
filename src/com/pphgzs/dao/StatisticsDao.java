@@ -43,7 +43,17 @@ public interface StatisticsDao {
 	 * @param string2
 	 * @return
 	 */
-	public List<jwcpxt_service_definition> get_pushService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO,
-			String string, String string2);
+	public List<jwcpxt_service_definition> get_pushService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO);
+
+	/**
+	 * 获取对应时间段里面的业务量
+	 * 
+	 * @param statisDissaServiceDateVO
+	 * @param string
+	 * @param string2
+	 * @return
+	 */
+	public int statisticsDaoget_countService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO, String startTime,
+			String endTime, jwcpxt_service_definition serviceDefinition);
 
 }
