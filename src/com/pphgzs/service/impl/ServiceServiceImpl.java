@@ -120,16 +120,17 @@ public class ServiceServiceImpl implements ServiceService {
 	 */
 	@Override
 	public boolean update_serviceClient_byId(jwcpxt_service_client serviceClient) {
+		jwcpxt_service_client oldClient = new jwcpxt_service_client();
 		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
 				&& !"".equals(serviceClient.getJwcpxt_service_client_id())) {
-			serviceClient = serviceDao.get_serviceClientDo_byId(serviceClient.getJwcpxt_service_client_id().trim());
+			oldClient = serviceDao.get_serviceClientDo_byId(serviceClient.getJwcpxt_service_client_id().trim());
 		}
-		if (serviceClient == null) {
+		if (oldClient == null) {
 			return false;
 		}
-		serviceClient.setService_client_visit(serviceClient.getService_client_visit());
-		serviceClient.setService_client_gmt_modified(TimeUtil.getStringSecond());
-		serviceDao.saveOrUpdateObject(serviceClient);
+		oldClient.setService_client_visit(serviceClient.getService_client_visit());
+		oldClient.setService_client_gmt_modified(TimeUtil.getStringSecond());
+		serviceDao.saveOrUpdateObject(oldClient);
 		return true;
 	}
 
