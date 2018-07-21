@@ -99,7 +99,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 			System.out.println(listServiceDefinition.size());
 			// 获取对应的数量
 			for (jwcpxt_service_definition jwcpxt_service_definition : listServiceDefinition) {
-				
+
 			}
 		}
 		return null;
@@ -151,16 +151,14 @@ public class StatisticsServiceImpl implements StatisticsService {
 		if (listDate.size() == 0) {
 			return statisDissatiDateVO;
 		}
+		// 获取所有的不满意推送选项----单位筛选
+		listOption = statisticsDao.get_pushOption_byTime(statisDissatiDateVO);
 		// 遍历时间
 		for (int i = 1; i < listDate.size(); i++) {
 			//
 			statisticsDissatisfiedDateDTO = new StatisticsDissatisfiedDateDTO();
 			listDissaOptionDTO = new ArrayList<>();
-			listOption = new ArrayList<>();
 			//
-			// 获取对应时间段>=startTime、<=endTime里面的所有推送选项(不重复)
-			listOption = statisticsDao.get_pushOption_byTime(statisDissatiDateVO, listDate.get(i - 1), listDate.get(i));
-			System.out.println(listOption.size());
 			// 获取对应的数量
 			for (String option : listOption) {
 				statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();

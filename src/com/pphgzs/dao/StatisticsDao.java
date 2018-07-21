@@ -30,7 +30,7 @@ public interface StatisticsDao {
 	int get_StatisticsDissatisfiedDateCount_byFatherUnit(String jwcpxt_service_definition_id, String jwcpxt_unit_id,
 			String startTime, String endTime);
 
-	public List<String> get_pushOption_byTime(StatisDissatiDateVO statisDissatiDateVO, String string, String string2);
+	public List<String> get_pushOption_byTime(StatisDissatiDateVO statisDissatiDateVO);
 
 	public int get_countOption_byTime(StatisDissatiDateVO statisDissatiDateVO, String string, String string2,
 			String option);
