@@ -8,8 +8,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.StatisticsDao;
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 
@@ -26,6 +29,105 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	/**
+	 * 根据VO获取改业务的所有不满意问题数量
+	 */
+	@Override
+	public int get_countStatisDateDTO(StatisDissaQuestionDateVO statisDissaQuestionDateVO, String startTime,
+			String endTime, QuestionOptionAnswerDTO questionOptionAnswerDTO) {
+		Session session = getSession();
+		String hql = "select count(*) from"//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ "	jwcpxt_option _option,"//
+				+ "	jwcpxt_question question,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_service_definition serviceDefinition"//
+				+ " where"//
+				+ " "//
+				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id"//
+				+ " and answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
+				+ "	and answerChoice.answer_choice_question = question.jwcpxt_question_id"//
+				+ " and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ "	and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " "//
+				+ " and unit.jwcpxt_unit_id like :unitId"//
+				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId"//
+				+ " and serviceInstance.service_instance_date >= :startTime "//
+				+ " and serviceInstance.service_instance_date < :endTime "
+				+ " and question.jwcpxt_question_id like :questionId"//
+				+ " and _option.jwcpxt_option_id like :optionId";//
+		System.out.println("hql:" + hql);
+		Query query = session.createQuery(hql);
+		if (statisDissaQuestionDateVO.getScreenUnit().equals("")) {
+			query.setParameter("unitId", "%%");
+		} else {
+			query.setParameter("unitId", statisDissaQuestionDateVO.getScreenUnit());
+		}
+		query.setParameter("startTime", startTime);
+		query.setParameter("endTime", endTime);
+		query.setParameter("serviceDefinitionId", statisDissaQuestionDateVO.getScreenService());
+		query.setParameter("questionId", questionOptionAnswerDTO.getQuestion().getJwcpxt_question_id());
+		query.setParameter("optionId", questionOptionAnswerDTO.getOption().getJwcpxt_option_id());
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			return 0;
+		} finally {
+			session.clear();
+		}
+	}
+
+	/**
+	 * 根据VO获取该业务的所有问题以及选项
+	 */
+	@Override
+	public List<QuestionOptionAnswerDTO> get_pushQuestionOption(StatisDissaQuestionDateVO statisDissaQuestionDateVO) {
+		Session session = getSession();
+		String hql = "select new com.pphgzs.domain.DTO.QuestionOptionAnswerDTO(question,_option) from"//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ "	jwcpxt_option _option,"//
+				+ "	jwcpxt_question question,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_service_definition serviceDefinition"//
+				+ " where"//
+				+ " "//
+				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id"//
+				+ " and answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
+				+ "	and answerChoice.answer_choice_question = question.jwcpxt_question_id"//
+				+ " and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ "	and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " "//
+				+ " and unit.jwcpxt_unit_id like :unitId"//
+				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId";//
+		System.out.println("hql:" + hql);
+		Query query = session.createQuery(hql);
+		if (statisDissaQuestionDateVO.getScreenUnit().equals("")) {
+			query.setParameter("unitId", "%%");
+		} else {
+			query.setParameter("unitId", statisDissaQuestionDateVO.getScreenUnit());
+		}
+		if (statisDissaQuestionDateVO.getScreenService().equals("")) {
+			query.setParameter("serviceDefinitionId", "%%");
+		} else {
+			query.setParameter("serviceDefinitionId", statisDissaQuestionDateVO.getScreenService());
+		}
+		List<QuestionOptionAnswerDTO> list = new ArrayList<>();
+		list = query.list();
+		session.clear();
+		return list;
 	}
 
 	/**

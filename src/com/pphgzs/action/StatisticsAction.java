@@ -19,6 +19,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
@@ -46,6 +47,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO;
 	private StatisDissatiDateVO statisDissatiDateVO;
 	private StatisDissaServiceDateVO statisDissaServiceDateVO;
+	private StatisDissaQuestionDateVO statisDissaQuestionDateVO;
 	/*
 	 * 
 	 */
@@ -54,6 +56,22 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	/**
+	 * 问题分布
+	 * 
+	 * @throws IOException
+	 */
+	public void get_statisDissaQuestionDateVO() throws IOException {
+		statisDissaQuestionDateVO = statisticsService.get_statisDissaQuestionDateVO(statisDissaQuestionDateVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(gson.toJson(statisDissaQuestionDateVO));
+	}
 
 	/**
 	 * 获取业务不满意分配
@@ -220,6 +238,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public StatisDissatiDateVO getStatisDissatiDateVO() {
 		return statisDissatiDateVO;
+	}
+
+	public StatisDissaQuestionDateVO getStatisDissaQuestionDateVO() {
+		return statisDissaQuestionDateVO;
+	}
+
+	public void setStatisDissaQuestionDateVO(StatisDissaQuestionDateVO statisDissaQuestionDateVO) {
+		this.statisDissaQuestionDateVO = statisDissaQuestionDateVO;
 	}
 
 	public void setStatisDissatiDateVO(StatisDissatiDateVO statisDissatiDateVO) {
