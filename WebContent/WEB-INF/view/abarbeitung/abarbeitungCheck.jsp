@@ -11,6 +11,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
+[v-cloak] {
+	display: none;
+}
+
 a:hover {
 	cursor: pointer;
 }
@@ -45,15 +49,15 @@ a:hover {
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
 										<label style="color: black;">整改时间</label> <input
-											onchange="changeQuery()" id="searchTimeStart"
+											onchange="changeQuery(this)" id="searchTimeStart"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"><label
 											style="color: black;">&nbsp;至&nbsp;</label><input
-											onchange="changeQuery()" id="searchTimeEnd"
+											onchange="changeQuery(this)" id="searchTimeEnd"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"> <input
 											id="searchTitle" style="display: inline; width: 250px;"
-											oninput="changeQuery()" class="form-control"
+											oninput="changeQuery(this)" class="form-control"
 											placeholder="请输入搜索内容">
 
 									</div>
@@ -66,7 +70,7 @@ a:hover {
 													<td>单位</td>
 													<td>当事人</td>
 													<td style="width:180px;"><select id="searchAuditState"
-														onchange="changeQuery()" class="form-control">
+														onchange="changeQuery(this)" class="form-control">
 															<option value="-1">审核状态</option>
 															<option value="1">未审核</option>
 															<option value="2">主管部门审核通过</option>
