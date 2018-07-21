@@ -120,8 +120,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	 * 获取对应的所有推送选项
 	 */
 	@Override
-	public List<String> get_pushOption_byTime(StatisDissatiDateVO statisDissatiDateVO, String startTime,
-			String endTime) {
+	public List<String> get_pushOption_byTime(StatisDissatiDateVO statisDissatiDateVO) {
 		Session session = getSession();
 		String hql = "select distinct(_option.option_describe) from "//
 				+ "jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
@@ -137,20 +136,14 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
 				+ "and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
 				+ ""//
-				+ "and unit.jwcpxt_unit_id like :unitId "//
-				+ "and serviceInstance.service_instance_date >= :startTime "//
-				+ "and serviceInstance.service_instance_date < :endTime ";
+				+ "and unit.jwcpxt_unit_id like :unitId ";
 		System.out.println("hql:" + hql);
-		System.out.println("startTime" + startTime);
-		System.out.println("endTime" + endTime);
 		Query query = session.createQuery(hql);
 		if (statisDissatiDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
 		} else {
 			query.setParameter("unitId", statisDissatiDateVO.getScreenUnit());
 		}
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
 		List<String> list = new ArrayList<>();
 		list = query.list();
 		session.clear();
