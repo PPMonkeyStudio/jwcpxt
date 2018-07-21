@@ -93,9 +93,26 @@ public class StatisticsServiceImpl implements StatisticsService {
 		System.out.println(listQuestionOption.size());
 		// 去重
 		for (QuestionOptionAnswerDTO questionOptionAnswerDTO : listQuestionOption) {
-			if (!listOldQuestionOption.contains(questionOptionAnswerDTO)) {
+			if (listOldQuestionOption.size() == 0) {
 				listOldQuestionOption.add(questionOptionAnswerDTO);
+			} else {
+				for (QuestionOptionAnswerDTO oldQuestion : listOldQuestionOption) {
+					if (!(questionOptionAnswerDTO.getQuestion().getJwcpxt_question_id()
+							.equals(oldQuestion.getQuestion().getJwcpxt_question_id())
+							&& questionOptionAnswerDTO.getOption().getJwcpxt_option_id()
+									.equals(oldQuestion.getOption().getJwcpxt_option_id()))) {
+						continue;
+					} else {
+						listOldQuestionOption.add(questionOptionAnswerDTO);
+						break;
+					}
+				}
 			}
+
+			/*
+			 * if (!listOldQuestionOption.contains(questionOptionAnswerDTO)) {
+			 * listOldQuestionOption.add(questionOptionAnswerDTO); }
+			 */
 		}
 		statisDissaQuestionDateVO.setListQuestionOptionDTO(listOldQuestionOption);
 		// 遍历时间
