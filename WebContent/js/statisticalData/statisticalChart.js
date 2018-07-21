@@ -4,7 +4,8 @@
 var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'light');
 var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light');
 var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light');
-
+var definitionId = '';
+var date7 = new Date(new Date().getTime() - (6 * 24 * 60 * 60 * 1000));
 
 //给下方法提供使用
 Date.prototype.format = function() {
@@ -43,7 +44,7 @@ let params = {
 
 $.post('/jwcpxt/Statistics/get_statisDissatiDateVO', {
 	'statisDissatiDateVO.screenUnit' : '',
-	'statisDissatiDateVO.startTime' : '2018-07-10',
+	'statisDissatiDateVO.startTime' : '2018-07-16',
 	'statisDissatiDateVO.endTime' : '2018-07-22',
 	'statisDissatiDateVO.timeType' : '1'
 }, response => {
@@ -52,7 +53,7 @@ $.post('/jwcpxt/Statistics/get_statisDissatiDateVO', {
 
 $.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
 	'statisDissaServiceDateVO.screenUnit' : '',
-	'statisDissaServiceDateVO.startTime' : '2018-07-10',
+	'statisDissaServiceDateVO.startTime' : '2018-07-16',
 	'statisDissaServiceDateVO.endTime' : '2018-07-22',
 	'statisDissaServiceDateVO.timeType' : '1'
 }, response => {
@@ -193,9 +194,9 @@ function randerDissatisfactionChart(res) {
 		series : _series
 	};
 	dissatisfactionChart.on('updateAxisPointer', function(event) {
-		var xAxisInfo = event.axesInfo[0];
+		let xAxisInfo = event.axesInfo[0];
 		if (xAxisInfo) {
-			var dimension = xAxisInfo.value + 1;
+			let dimension = xAxisInfo.value + 1;
 			dissatisfactionChart.setOption({
 				series : {
 					id : 'pie',
@@ -223,12 +224,12 @@ function randerDissatisfactionChart(res) {
 //绘制不满意和业务关联的图
 function randerDissatisfiedServiceChart(res) {
 	let _source = [ [ 'time' ], ];
-	res.listStaDisDateDTO.forEach(function(elt, i) {
+	res.listStatisDIssaServiceDateDTO.forEach(function(elt, i) {
 		_source[0].push(elt.dateScale);
-		elt.listDissaOptionDTO.forEach(function(elt1, j) {
+		elt.listStatisDIssaServiceDTO.forEach(function(elt1, j) {
 			if (!_source[j + 1])
 				_source[j + 1] = [];
-			_source[j + 1][0] = elt1.option;
+			_source[j + 1][0] = elt1.serviceDefinition.service_definition_describe;
 			_source[j + 1].push(elt1.count);
 		})
 	})
@@ -282,10 +283,10 @@ function randerDissatisfiedServiceChart(res) {
 		series : _series
 	};
 	dissatisfiedServiceChart.on('updateAxisPointer', function(event) {
-		var xAxisInfo = event.axesInfo[0];
+		let xAxisInfo = event.axesInfo[0];
 		if (xAxisInfo) {
-			var dimension = xAxisInfo.value + 1;
-			dissatisfactionChart.setOption({
+			let dimension = xAxisInfo.value + 1;
+			dissatisfiedServiceChart.setOption({
 				series : {
 					id : 'pie',
 					label : {
@@ -300,8 +301,124 @@ function randerDissatisfiedServiceChart(res) {
 		}
 	});
 	dissatisfiedServiceChart.setOption(option);
+	dissatisfiedServiceChart.on("click", function(param) {
+		let index = param.dataIndex;
+		let describe = option.dataset.source[index + 1][0];
+		try {
+			res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.forEach(function(elt, i) {
+				if (elt.serviceDefinition.service_definition_describe == describe) {
+					definitionId = elt.serviceDefinition.jwcpxt_service_definition_id;
+					console.log(definitionId);
+					dissatisfactionProblemSendData();
+					throw 'Jump';
+				}
+			})
+		} catch (e) {
+			console.log(e);
+		}
+	});
 }
 
+
+function dissatisfactionProblemSendData() {
+	$.post('/jwcpxt/Statistics/get_statisDissaQuestionDateVO', {
+		'statisDissaQuestionDateVO.screenUnit' : '',
+		'statisDissaQuestionDateVO.startTime' : '2018-07-16',
+		'statisDissaQuestionDateVO.endTime' : '2018-07-22',
+		'statisDissaQuestionDateVO.timeType' : '1',
+		'statisDissaQuestionDateVO.screenService' : definitionId
+	}, response => {
+		randerDissatisfactionProblem(response); //所有不满意问题
+	}, 'json')
+}
+function randerDissatisfactionProblem(res) {
+	let _source = [ [ 'time2' ], ];
+	res.listStatisDissaDTO.forEach(function(elt, i) {
+		_source[0].push(elt.dateScale);
+		if (!_source[i])
+			_source[i] = [];
+		_source[i][0] = res.listQuestionOptionDTO[i].question.question_describe + '--' + res.listQuestionOptionDTO[i].option.option_describe;
+		_source[i].push(res.listStatisDissaDTO[i].count);
+		res.listQuestionOptionDTO[i]
+	})
+	res.listStatisDIssaServiceDateDTO.forEach(function(elt, i) {
+		_source[0].push(elt.dateScale);
+		elt.listStatisDIssaServiceDTO.forEach(function(elt1, j) {
+			if (!_source[j + 1])
+				_source[j + 1] = [];
+			_source[j + 1][0] = elt1.serviceDefinition.service_definition_describe;
+			_source[j + 1].push(elt1.count);
+		})
+	})
+	let _series = [];
+	let length = _source.length - 1;
+	for (var i = 0; i < length; i++) {
+		_series.push({
+			type : 'line',
+			smooth : true,
+			seriesLayoutBy : 'row'
+		});
+	}
+	_series.push({
+		type : 'pie',
+		id : 'pie',
+		radius : '30%',
+		center : [ '50%', '25%' ],
+		label : {
+			formatter : '{b}: {@2012} ({d}%)'
+		},
+		encode : {
+			itemName : 'time2',
+			value : '2012',
+			tooltip : '2012'
+		}
+	});
+	//数据
+	let option = {
+		legend : {},
+		tooltip : {
+			trigger : 'axis',
+			axisPointer : {
+				type : 'cross',
+				crossStyle : {
+					color : '#999'
+				}
+			}
+		},
+		dataset : {
+			source : _source
+		},
+		xAxis : {
+			type : 'category'
+		},
+		yAxis : {
+			gridIndex : 0
+		},
+		grid : {
+			top : '55%'
+		},
+		series : _series
+	};
+	dissatisfactionProblemChart.on('updateAxisPointer', function(event) {
+		let xAxisInfo = event.axesInfo[0];
+		if (xAxisInfo) {
+			let dimension = xAxisInfo.value + 1;
+			dissatisfactionProblemChart.setOption({
+				series : {
+					id : 'pie',
+					label : {
+						formatter : '{b}: {@[' + dimension + ']} ({d}%)'
+					},
+					encode : {
+						value : dimension,
+						tooltip : dimension
+					}
+				}
+			});
+		}
+	});
+	dissatisfactionProblemChart.setOption(option);
+}
 
 
 
@@ -467,7 +584,7 @@ function randerTimeUtil() {
 		yearEnd : 2050, // 设置最大年份
 		yearOffset : 0, // 年偏差
 		timepicker : false, // 关闭时间选项
-		format : 'yyyy-MM-dd', // 格式化日期年-月-日
+		format : 'Y-m-d', // 格式化日期年-月-日
 		minDate : '1900/01/01', // 设置最小日期
 		maxDate : '2050/01/01', // 设置最大日期
 	});
