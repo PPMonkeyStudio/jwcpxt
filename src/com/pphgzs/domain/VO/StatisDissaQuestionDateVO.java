@@ -2,15 +2,15 @@ package com.pphgzs.domain.VO;
 
 import java.util.List;
 
-import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.StatisDissaQuestionDateDTO;
 
 /*
  * 
  */
 public class StatisDissaQuestionDateVO {
-	private List<StatisDissaQuestionDateDTO> listStatisDissaDTO;
-	private List<QuestionOptionAnswerDTO> listQuestionOptionDTO;
+	// private List<StatisDissaQuestionDateDTO> listStatisDissaDTO;
+	// private List<QuestionOptionAnswerDTO> listQuestionOptionDTO;
+	private List<StatisDissaQuestionDateDTO> listStatisQuestionDTO;
 	// 单位
 	private String screenUnit = "";
 	private String screenService = "";
@@ -20,21 +20,6 @@ public class StatisDissaQuestionDateVO {
 	private String timeType = "1";
 
 	//
-	public List<StatisDissaQuestionDateDTO> getListStatisDissaDTO() {
-		return listStatisDissaDTO;
-	}
-
-	public void setListStatisDissaDTO(List<StatisDissaQuestionDateDTO> listStatisDissaDTO) {
-		this.listStatisDissaDTO = listStatisDissaDTO;
-	}
-
-	public List<QuestionOptionAnswerDTO> getListQuestionOptionDTO() {
-		return listQuestionOptionDTO;
-	}
-
-	public void setListQuestionOptionDTO(List<QuestionOptionAnswerDTO> listQuestionOptionDTO) {
-		this.listQuestionOptionDTO = listQuestionOptionDTO;
-	}
 
 	public String getScreenUnit() {
 		return screenUnit;
@@ -78,22 +63,17 @@ public class StatisDissaQuestionDateVO {
 
 	@Override
 	public String toString() {
-		return "StatisDissaQuestionDateVO [listStatisDissaDTO=" + listStatisDissaDTO + ", listQuestionOptionDTO="
-				+ listQuestionOptionDTO + ", screenUnit=" + screenUnit + ", screenService=" + screenService
-				+ ", startTime=" + startTime + ", endTime=" + endTime + ", timeType=" + timeType + "]";
+		return "StatisDissaQuestionDateVO [listStatisQuestionDTO=" + listStatisQuestionDTO + ", screenUnit="
+				+ screenUnit + ", screenService=" + screenService + ", startTime=" + startTime + ", endTime=" + endTime
+				+ ", timeType=" + timeType + "]";
 	}
 
-	public StatisDissaQuestionDateVO(List<StatisDissaQuestionDateDTO> listStatisDissaDTO,
-			List<QuestionOptionAnswerDTO> listQuestionOptionDTO, String screenUnit, String screenService,
-			String startTime, String endTime, String timeType) {
-		super();
-		this.listStatisDissaDTO = listStatisDissaDTO;
-		this.listQuestionOptionDTO = listQuestionOptionDTO;
-		this.screenUnit = screenUnit;
-		this.screenService = screenService;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.timeType = timeType;
+	public List<StatisDissaQuestionDateDTO> getListStatisQuestionDTO() {
+		return listStatisQuestionDTO;
+	}
+
+	public void setListStatisQuestionDTO(List<StatisDissaQuestionDateDTO> listStatisQuestionDTO) {
+		this.listStatisQuestionDTO = listStatisQuestionDTO;
 	}
 
 	public StatisDissaQuestionDateVO() {
