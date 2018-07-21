@@ -124,8 +124,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 				statisQuestionDTO = new StatisQuestionDTO();
 				int count = statisticsDao.get_countStatisDateDTO(statisDissaQuestionDateVO, listDate.get(i - 1),
 						listDate.get(i), oldQuest);
-				statisQuestionDTO.setQuestionOptionAnswerDTO(oldQuest);
+				System.out.println("count:" + count);
 				statisQuestionDTO.setCount(count);
+				statisQuestionDTO.setQuestionOptionAnswerDTO(oldQuest);
 				listStatisQuestionDTO.add(statisQuestionDTO);
 			}
 			statisDissaQuestionDateDTO.setListStatisQuestionDTO(listStatisQuestionDTO);
