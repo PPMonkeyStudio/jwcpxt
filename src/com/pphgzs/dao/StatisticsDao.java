@@ -1,6 +1,11 @@
 package com.pphgzs.dao;
 
+import java.util.List;
+
+import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
+import com.pphgzs.domain.VO.StatisDissatiDateVO;
 
 public interface StatisticsDao {
 
@@ -22,5 +27,10 @@ public interface StatisticsDao {
 
 	int get_StatisticsDissatisfiedDateCount_byFatherUnit(String jwcpxt_service_definition_id, String jwcpxt_unit_id,
 			String startTime, String endTime);
+
+	public List<String> get_pushOption_byTime(StatisDissatiDateVO statisDissatiDateVO, String string, String string2);
+
+	public int get_countOption_byTime(StatisDissatiDateVO statisDissatiDateVO, String string, String string2,
+			String option);
 
 }

@@ -5,7 +5,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 public class StatisticsDissatisfiedDateCountDTO {
 	private jwcpxt_service_definition serviceDefinition;
 
-	// 存日期对应的数量
+	// 存日期对应的数量 
 	private int dayCount;
 
 	@Override

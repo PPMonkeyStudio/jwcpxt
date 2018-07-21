@@ -2,8 +2,10 @@ package com.pphgzs.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -67,4 +69,41 @@ public class TimeUtil {
 
 	}
 
+	// @Test
+	// public void ttt() {
+	// String start = "2012-02-01";
+	// String end = "2012-03-02";
+	// List<String> lDate = null;
+	// try {
+	// lDate = findDates(start, end);
+	// } catch (ParseException e) {
+	// e.printStackTrace();
+	// }
+	// for (String date : lDate) {
+	// System.out.println(date);
+	// }
+	// }
+
+	public static List<String> findDates(String dBegin, String dEnd) throws ParseException {
+		Date begin = null;
+		Date end = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		begin = sdf.parse(dBegin);
+		end = sdf.parse(dEnd);
+		List<String> lDate = new ArrayList<>();
+		lDate.add(dBegin);
+		Calendar calBegin = Calendar.getInstance();
+		// 使用给定的 Date 设置此 Calendar 的时间
+		calBegin.setTime(begin);
+		Calendar calEnd = Calendar.getInstance();
+		// 使用给定的 Date 设置此 Calendar 的时间
+		calEnd.setTime(end);
+		// 测试此日期是否在指定日期之后
+		while (end.after(calBegin.getTime())) {
+			// 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+			calBegin.add(Calendar.DAY_OF_MONTH, 1);
+			lDate.add(sdf.format(calBegin.getTime()));
+		}
+		return lDate;
+	}
 }

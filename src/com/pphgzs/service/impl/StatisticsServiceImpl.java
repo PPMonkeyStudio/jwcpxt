@@ -13,23 +13,81 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.pphgzs.dao.StatisticsDao;
 import com.pphgzs.dao.UnitDao;
+import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateCountDTO;
+import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
+import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisDissatiDateVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.StatisticsService;
+import com.pphgzs.util.TimeUtil;
 
 public class StatisticsServiceImpl implements StatisticsService {
 	private StatisticsDao statisticsDao;
 	private UnitDao unitDao;
 	private ServiceService serviceService;
+
+	/**
+	 * 获取时间结点里所有推送的选项描述，及其数量
+	 */
+	@Override
+	public StatisDissatiDateVO get_statisDissatiDateVO(StatisDissatiDateVO statisDissatiDateVO) {
+		// 1. 判断是否传了时间跨度
+		// 2. 如果有，则根据类型划分时间刻度
+		// 3. 如果没有，则获取
+		// 4. 先只有按天，晚点再加
+		// 定义
+		List<String> listDate = new ArrayList<>();
+		List<StatisticsDissatisfiedDateDTO> listStatDissDateDTO = new ArrayList<>();
+		StatisticsDissatisfiedDateDTO statisticsDissatisfiedDateDTO = new StatisticsDissatisfiedDateDTO();
+		StatisticsDissatisfiedOptionDTO statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();
+		List<StatisticsDissatisfiedOptionDTO> listDissaOptionDTO = new ArrayList<>();
+		List<String> listOption = new ArrayList<>();
+		//
+		if (!"".equals(statisDissatiDateVO.getStartTime()) && !"".equals(statisDissatiDateVO.getEndTime())) {
+			// 按照天划分
+			try {
+				listDate = TimeUtil.findDates(statisDissatiDateVO.getStartTime(), statisDissatiDateVO.getEndTime());
+			} catch (ParseException e) {
+				System.err.println(e);
+			}
+		}
+		// 遍历时间
+		for (int i = 1; i < listDate.size(); i++) {
+			//
+
+			statisticsDissatisfiedDateDTO = new StatisticsDissatisfiedDateDTO();
+			listDissaOptionDTO = new ArrayList<>();
+			listOption = new ArrayList<>();
+			//
+			// 获取对应时间段>=startTime、<=endTime里面的所有推送选项(不重复)
+			listOption = statisticsDao.get_pushOption_byTime(statisDissatiDateVO, listDate.get(i - 1), listDate.get(i));
+			System.out.println("listOption:" + listOption.size());
+			// 获取对应的数量
+			for (String option : listOption) {
+				statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();
+				int count = statisticsDao.get_countOption_byTime(statisDissatiDateVO, listDate.get(i - 1),
+						listDate.get(i), option);
+				statisticsDissatisfiedOptionDTO.setCount(count);
+				statisticsDissatisfiedOptionDTO.setOption(option);
+				listDissaOptionDTO.add(statisticsDissatisfiedOptionDTO);
+			}
+			statisticsDissatisfiedDateDTO.setDateScale(listDate.get(i));
+			statisticsDissatisfiedDateDTO.setListDissaOptionDTO(listDissaOptionDTO);
+			listStatDissDateDTO.add(statisticsDissatisfiedDateDTO);
+		}
+		statisDissatiDateVO.setListStaDisDateDTO(listStatDissDateDTO);
+		return statisDissatiDateVO;
+	}
 
 	@Override
 	public StatisticsDissatisfiedDateCountVO get_StatisticsDissatisfiedDateCountVO(
@@ -40,7 +98,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		statisticsDissatisfiedDateCountVO
 				.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id()));
 		/*
-		 * 取出此单位所有的业务定义，
+		 * 取出此单位所有的业务定义
 		 */
 		statisticsDissatisfiedDateCountVO
 				.setUnit(unitDao.get_unitDO_byID(statisticsDissatisfiedDateCountVO.getUnit().getJwcpxt_unit_id()));

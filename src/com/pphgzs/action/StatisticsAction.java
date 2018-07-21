@@ -19,6 +19,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisDissatiDateVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
@@ -42,6 +43,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	private StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO;
 	private StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO;
+	private StatisDissatiDateVO statisDissatiDateVO;
 	/*
 	 * 
 	 */
@@ -50,6 +52,22 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	/**
+	 * 获取时间结点里所有推送的选项描述，及其数量
+	 * 
+	 * @throws IOException
+	 */
+	public void get_statisDissatiDateVO() throws IOException {
+		statisDissatiDateVO = statisticsService.get_statisDissatiDateVO(statisDissatiDateVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(gson.toJson(statisDissatiDateVO));
+	}
 
 	public void get_StatisticsDissatisfiedDateCountVO() throws IOException {
 		statisticsDissatisfiedDateCountVO = statisticsService
@@ -83,11 +101,11 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
 			for (int j = 0; j < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1 - i; j++) {
 				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade() < statisticsVO
-						.getUnitHaveServiceGradeDTOList().get(j+1).getTotalGrade()) {
+						.getUnitHaveServiceGradeDTOList().get(j + 1).getTotalGrade()) {
 					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(j);
 					statisticsVO.getUnitHaveServiceGradeDTOList().set(j,
-							statisticsVO.getUnitHaveServiceGradeDTOList().get(j+1));
-					statisticsVO.getUnitHaveServiceGradeDTOList().set(j+1, unitHaveServiceGradeDTO);
+							statisticsVO.getUnitHaveServiceGradeDTOList().get(j + 1));
+					statisticsVO.getUnitHaveServiceGradeDTOList().set(j + 1, unitHaveServiceGradeDTO);
 				}
 			}
 		}
@@ -113,11 +131,11 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
 			for (int j = 0; j < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1 - i; j++) {
 				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade() < statisticsVO
-						.getUnitHaveServiceGradeDTOList().get(j+1).getTotalGrade()) {
+						.getUnitHaveServiceGradeDTOList().get(j + 1).getTotalGrade()) {
 					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(j);
 					statisticsVO.getUnitHaveServiceGradeDTOList().set(j,
-							statisticsVO.getUnitHaveServiceGradeDTOList().get(j+1));
-					statisticsVO.getUnitHaveServiceGradeDTOList().set(j+1, unitHaveServiceGradeDTO);
+							statisticsVO.getUnitHaveServiceGradeDTOList().get(j + 1));
+					statisticsVO.getUnitHaveServiceGradeDTOList().set(j + 1, unitHaveServiceGradeDTO);
 				}
 			}
 		}
@@ -135,11 +153,11 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
 			for (int j = 0; j < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1 - i; j++) {
 				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade() < statisticsVO
-						.getUnitHaveServiceGradeDTOList().get(j+1).getTotalGrade()) {
+						.getUnitHaveServiceGradeDTOList().get(j + 1).getTotalGrade()) {
 					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(j);
 					statisticsVO.getUnitHaveServiceGradeDTOList().set(j,
-							statisticsVO.getUnitHaveServiceGradeDTOList().get(j+1));
-					statisticsVO.getUnitHaveServiceGradeDTOList().set(j+1, unitHaveServiceGradeDTO);
+							statisticsVO.getUnitHaveServiceGradeDTOList().get(j + 1));
+					statisticsVO.getUnitHaveServiceGradeDTOList().set(j + 1, unitHaveServiceGradeDTO);
 				}
 			}
 		}
@@ -153,11 +171,9 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 			/**
 			 * 写
 			 */
-			
-			
+
 			statisticsService.writeStatisticsExcel(statisticsVO, wb);
-			
-			
+
 			/**
 			 * 写完毕
 			 */
@@ -182,6 +198,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public String[] getUnitIds() {
 		return unitIds;
+	}
+
+	public StatisDissatiDateVO getStatisDissatiDateVO() {
+		return statisDissatiDateVO;
+	}
+
+	public void setStatisDissatiDateVO(StatisDissatiDateVO statisDissatiDateVO) {
+		this.statisDissatiDateVO = statisDissatiDateVO;
 	}
 
 	public InputStream getInputStream() {
