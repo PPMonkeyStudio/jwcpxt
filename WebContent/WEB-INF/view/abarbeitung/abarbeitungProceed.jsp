@@ -55,6 +55,8 @@ a:hover {
 											<thead>
 												<tr>
 													<td>问题描述</td>
+													<td>单位</td>
+													<td>当事人</td>
 													<td><select id="searchState" onchange="changeQuery()"
 														class="form-control">
 															<option value="-1">审核状态</option>
@@ -71,8 +73,9 @@ a:hover {
 												<template
 													v-for="dissatisfiedQuestionDTO in discontentVO.listDissatisfiedQuestionDTO">
 												<tr>
-													<td>{{
-														dissatisfiedQuestionDTO.question.question_describe }}</td>
+													<td>{{ dissatisfiedQuestionDTO.question.question_describe }}</td>
+													<td>{{ dissatisfiedQuestionDTO.unit.unit_name.replace("江西省萍乡市公安局","") }}</td>
+													<td>{{ dissatisfiedQuestionDTO.serviceClient.service_client_name }}</td>
 													<td><template
 															v-if="dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_state == 1">
 														<span class="label label-primary">未审核</span> </template> <template
@@ -92,7 +95,7 @@ a:hover {
 															:id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id">推送</a>|<a
 															onclick="refuseDiscontent(this)"
 															:id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id">驳回</a>
-														</template> <template v-else> 无操作 </template></td>
+														</template> <template v-else> 暂无操作 </template></td>
 												</tr>
 												</template>
 											</tbody>

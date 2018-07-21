@@ -52,8 +52,13 @@ th {
 											<label>结束时间</label>
 											<input type="text" id="endTime" onchange="searchEndTime(this)" placeholder="结束时间" class="mydate form-control" style="display: inline; width: 150px;">
 										</div>
-										<div id="main" style="width: 100%;height:400px; margin-top: 50px;"></div>
-										<div id="main2" style="width: 100%;height:400px; margin-top: 50px;"></div>
+										<div id="allDissatisfaction" style="width: 100%;height:600px; margin-top: 50px;"></div>
+										<div style="width: 100%; height:650px; margin-top: 50px;">
+											<div id="dissatisfiedService" style="width: 50%;height:600px;"></div>
+											<div id="dissatisfactionProblem" style="width: 50%;height:600px;"></div>
+										</div>
+										<!-- <div id="main" style="width: 100%;height:400px; margin-top: 50px;"></div> -->
+										<!-- <div id="main2" style="width: 100%;height:400px; margin-top: 50px;"></div> -->
 									</div>
 								</div>
 							</div>
