@@ -19,6 +19,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
@@ -44,6 +45,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO;
 	private StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO;
 	private StatisDissatiDateVO statisDissatiDateVO;
+	private StatisDissaServiceDateVO statisDissaServiceDateVO;
 	/*
 	 * 
 	 */
@@ -52,6 +54,22 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	/**
+	 * 获取业务不满意分配
+	 * 
+	 * @throws IOException
+	 */
+	public void get_statisDissaServiceDateVO() throws IOException {
+		statisDissaServiceDateVO = statisticsService.get_statisDissaServiceDateVO(statisDissaServiceDateVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(gson.toJson(statisDissaServiceDateVO));
+	}
 
 	/**
 	 * 获取时间结点里所有推送的选项描述，及其数量
@@ -242,6 +260,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public void setSearchTimeEnd(String searchTimeEnd) {
 		this.searchTimeEnd = searchTimeEnd;
+	}
+
+	public StatisDissaServiceDateVO getStatisDissaServiceDateVO() {
+		return statisDissaServiceDateVO;
+	}
+
+	public void setStatisDissaServiceDateVO(StatisDissaServiceDateVO statisDissaServiceDateVO) {
+		this.statisDissaServiceDateVO = statisDissaServiceDateVO;
 	}
 
 	public List<ServiceGradeDTO> getServiceGradeDTOList() {

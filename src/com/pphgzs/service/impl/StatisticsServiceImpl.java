@@ -17,11 +17,14 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.DTO.StatisDIssaServiceDTO;
+import com.pphgzs.domain.DTO.StatisDIssaServiceDateDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateCountDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
@@ -37,14 +40,76 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private ServiceService serviceService;
 
 	/**
+	 * 获得业务的不满意反馈分布
+	 * 
+	 * @param statisDissaServiceDateVO
+	 * @return
+	 */
+	@Override
+	public StatisDissaServiceDateVO get_statisDissaServiceDateVO(StatisDissaServiceDateVO statisDissaServiceDateVO) {
+		// 定义
+		List<String> listDate = new ArrayList<>();
+		List<StatisDIssaServiceDateDTO> listStatisDIssaServiceDateDTO = new ArrayList<>();
+		StatisDIssaServiceDateDTO statisDIssaServiceDateDTO = null;
+		List<StatisDIssaServiceDTO> listStatisDissaServiceDTO = new ArrayList<>();
+		StatisDIssaServiceDTO statisDIssaServiceDTO = new StatisDIssaServiceDTO();
+		List<jwcpxt_service_definition> listServiceDefinition = new ArrayList<>();
+		//
+		if (!"".equals(statisDissaServiceDateVO.getStartTime()) && !"".equals(statisDissaServiceDateVO.getEndTime())) {
+			if (!"".equals(statisDissaServiceDateVO.getTimeType())) {
+				switch (statisDissaServiceDateVO.getTimeType()) {
+				case "1":
+					// 按天
+					try {
+						listDate = TimeUtil.findDates(statisDissaServiceDateVO.getStartTime(),
+								statisDissaServiceDateVO.getEndTime());
+					} catch (ParseException e) {
+						System.err.println(e);
+					}
+					break;
+				case "2":
+					// 按周
+					listDate = WeekDayUtil.getDates(statisDissaServiceDateVO.getStartTime(),
+							statisDissaServiceDateVO.getEndTime(), "星期日");
+					break;
+				case "3":
+					// 按月
+					try {
+						listDate = WeekDayUtil.getMonthBetween(statisDissaServiceDateVO.getStartTime(),
+								statisDissaServiceDateVO.getEndTime());
+						System.out.println("fd:" + listDate.size());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				}
+			}
+		}
+		if (listDate.size() == 0) {
+			return statisDissaServiceDateVO;
+		}
+		// 遍历时间
+		for (int i = 1; i < listDate.size(); i++) {
+			listStatisDissaServiceDTO = new ArrayList<>();
+			statisDIssaServiceDTO = new StatisDIssaServiceDTO();
+			listServiceDefinition = new ArrayList<>();
+			// 获取对应时间段里面的业务数量
+			listServiceDefinition = statisticsDao.get_pushService_byTime(statisDissaServiceDateVO, listDate.get(i - 1),
+					listDate.get(i));
+			System.out.println(listServiceDefinition.size());
+			// 获取对应的数量
+			for (jwcpxt_service_definition jwcpxt_service_definition : listServiceDefinition) {
+				
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * 获取时间结点里所有推送的选项描述，及其数量
 	 */
 	@Override
 	public StatisDissatiDateVO get_statisDissatiDateVO(StatisDissatiDateVO statisDissatiDateVO) {
-		// 1. 判断是否传了时间跨度
-		// 2. 如果有，则根据类型划分时间刻度
-		// 3. 如果没有，则获取
-		// 4. 先只有按天，晚点再加
 		// 定义
 		List<String> listDate = new ArrayList<>();
 		List<StatisticsDissatisfiedDateDTO> listStatDissDateDTO = new ArrayList<>();
@@ -52,7 +117,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 		StatisticsDissatisfiedOptionDTO statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();
 		List<StatisticsDissatisfiedOptionDTO> listDissaOptionDTO = new ArrayList<>();
 		List<String> listOption = new ArrayList<>();
-
 		//
 		if (!"".equals(statisDissatiDateVO.getStartTime()) && !"".equals(statisDissatiDateVO.getEndTime())) {
 			if (!"".equals(statisDissatiDateVO.getTimeType())) {

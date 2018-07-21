@@ -47,7 +47,7 @@ public class QuestionTest {
 		StatisDissatiDateVO statisDissatiDateVO = new StatisDissatiDateVO();
 		statisDissatiDateVO.setStartTime("2018-07-10");
 		statisDissatiDateVO.setEndTime("2018-07-21");
-		statisDissatiDateVO.setTimeType("3");
+//		statisDissatiDateVO.setTimeType("3");
 		System.out.println(statisticsService.get_statisDissatiDateVO(statisDissatiDateVO));
 	}
 
