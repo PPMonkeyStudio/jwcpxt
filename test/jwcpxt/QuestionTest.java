@@ -42,6 +42,14 @@ public class QuestionTest {
 	private StatisticsService statisticsService;
 
 	@Test
+	public void get_statisQuestionDataVOTest() {
+		StatisDissaServiceDateVO statisDissaServiceDateVO = new StatisDissaServiceDateVO();
+		statisDissaServiceDateVO.setStartTime("2018-07-10");
+		statisDissaServiceDateVO.setEndTime("2018-07-21");
+		System.out.println(statisticsService.get_statisQuestionDataVO(statisDissaServiceDateVO));
+	}
+
+	@Test
 	public void get_statisDissaQuestionDateVOTest() {
 		StatisDissaQuestionDateVO statisDissaQuestionDateVO = new StatisDissaQuestionDateVO();
 		statisDissaQuestionDateVO.setStartTime("2018-07-10");

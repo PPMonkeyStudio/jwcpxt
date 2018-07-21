@@ -31,6 +31,74 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	}
 
 	/**
+	 * 总数量
+	 */
+	@Override
+	public int get_totalCountService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO, String startTime,
+			String endTime, jwcpxt_service_definition serviceDefinition) {
+		Session session = getSession();
+		String hql = "select count(*)"//
+				+ " from"//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance"//
+				+ " where"//
+				+ " answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ " and unit.jwcpxt_unit_id like :unitId"//
+				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId"//
+				+ " and serviceInstance.service_instance_date >= :startTime "//
+				+ " and serviceInstance.service_instance_date < :endTime ";
+		Query query = session.createQuery(hql);
+		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
+			query.setParameter("unitId", "%%");
+		} else {
+			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
+		}
+		query.setParameter("startTime", startTime);
+		query.setParameter("endTime", endTime);
+		query.setParameter("serviceDefinitionId", serviceDefinition.getJwcpxt_service_definition_id());
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			return 0;
+		} finally {
+			session.clear();
+		}
+	}
+
+	/**
+	 * 获取该单位所有的业务
+	 */
+	@Override
+	public List<jwcpxt_service_definition> get_statisService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO) {
+		Session session = getSession();
+		String hql = "select distinct(serviceDefinition)"//
+				+ " from"//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_unit_service unitService"//
+				+ " where unitService.unit_id = unit.jwcpxt_unit_id"//
+				+ " and unitService.service_definition_id = serviceDefinition.jwcpxt_service_definition_id"
+				+ " and unit.jwcpxt_unit_id like :unitId";//
+		Query query = session.createQuery(hql);
+		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
+			query.setParameter("unitId", "%%");
+		} else {
+			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
+		}
+		List<jwcpxt_service_definition> list = new ArrayList<>();
+		list = query.list();
+		session.clear();
+		return list;
+	}
+
+	/**
 	 * 根据VO获取改业务的所有不满意问题数量
 	 */
 	@Override

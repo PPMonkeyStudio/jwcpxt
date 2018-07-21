@@ -87,4 +87,24 @@ public interface StatisticsDao {
 	 */
 	public int get_totaolCount(StatisDissatiDateVO statisDissatiDateVO, String startTime, String endTime);
 
+	/**
+	 * 某单位所有业务定义
+	 * 
+	 * @param statisDissaServiceDateVO
+	 * @return
+	 */
+	public List<jwcpxt_service_definition> get_statisService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO);
+
+	/**
+	 * 总数量
+	 * 
+	 * @param statisDissaServiceDateVO
+	 * @param string
+	 * @param string2
+	 * @param serviceDefinition
+	 * @return
+	 */
+	public int get_totalCountService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO, String string,
+			String string2, jwcpxt_service_definition serviceDefinition);
+
 }

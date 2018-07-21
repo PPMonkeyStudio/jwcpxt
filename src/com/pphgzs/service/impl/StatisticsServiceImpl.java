@@ -44,6 +44,80 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private ServiceService serviceService;
 
 	/**
+	 * 满意业务分布
+	 */
+	@Override
+	public StatisDissaServiceDateVO get_statisQuestionDataVO(StatisDissaServiceDateVO statisDissaServiceDateVO) {
+		// 定义
+		List<String> listDate = new ArrayList<>();
+		List<StatisDIssaServiceDateDTO> listStatisDIssaServiceDateDTO = new ArrayList<>();
+		StatisDIssaServiceDateDTO statisDIssaServiceDateDTO = null;
+		List<StatisDIssaServiceDTO> listStatisDissaServiceDTO = new ArrayList<>();
+		StatisDIssaServiceDTO statisDIssaServiceDTO = new StatisDIssaServiceDTO();
+		List<jwcpxt_service_definition> listServiceDefinition = new ArrayList<>();
+		//
+		if (!"".equals(statisDissaServiceDateVO.getStartTime()) && !"".equals(statisDissaServiceDateVO.getEndTime())) {
+			if (!"".equals(statisDissaServiceDateVO.getTimeType())) {
+				switch (statisDissaServiceDateVO.getTimeType()) {
+				case "1":
+					// 按天
+					try {
+						listDate = TimeUtil.findDates(statisDissaServiceDateVO.getStartTime(),
+								statisDissaServiceDateVO.getEndTime());
+					} catch (ParseException e) {
+						System.err.println(e);
+					}
+					break;
+				case "2":
+					// 按周
+					listDate = WeekDayUtil.getDates(statisDissaServiceDateVO.getStartTime(),
+							statisDissaServiceDateVO.getEndTime(), "星期日");
+					break;
+				case "3":
+					// 按月
+					try {
+						listDate = WeekDayUtil.getMonthBetween(statisDissaServiceDateVO.getStartTime(),
+								statisDissaServiceDateVO.getEndTime());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				}
+			}
+		}
+		if (listDate.size() == 0) {
+			return statisDissaServiceDateVO;
+		}
+		// 该时间段所有的业务
+		listServiceDefinition = statisticsDao.get_statisService_byTime(statisDissaServiceDateVO);
+		// 遍历时间
+		for (int i = 1; i < listDate.size(); i++) {
+			statisDIssaServiceDateDTO = new StatisDIssaServiceDateDTO();
+			listStatisDissaServiceDTO = new ArrayList<>();
+			// 获取对应的数量
+			for (jwcpxt_service_definition serviceDefinition : listServiceDefinition) {
+				//
+				statisDIssaServiceDTO = new StatisDIssaServiceDTO();
+				// 不满意数量
+				int disCount = statisticsDao.statisticsDaoget_countService_byTime(statisDissaServiceDateVO,
+						listDate.get(i - 1), listDate.get(i), serviceDefinition);
+				// 总数量
+				int totalCount = statisticsDao.get_totalCountService_byTime(statisDissaServiceDateVO,
+						listDate.get(i - 1), listDate.get(i), serviceDefinition);
+				int staisCount = totalCount - disCount;
+				statisDIssaServiceDTO.setCount(staisCount);
+				statisDIssaServiceDTO.setServiceDefinition(serviceDefinition);
+				listStatisDissaServiceDTO.add(statisDIssaServiceDTO);
+			}
+			statisDIssaServiceDateDTO.setDateScale(listDate.get(i));
+			statisDIssaServiceDateDTO.setListStatisDIssaServiceDTO(listStatisDissaServiceDTO);
+			listStatisDIssaServiceDateDTO.add(statisDIssaServiceDateDTO);
+		}
+		statisDissaServiceDateVO.setListStatisDIssaServiceDateDTO(listStatisDIssaServiceDateDTO);
+		return statisDissaServiceDateVO;
+	}
+
+	/**
 	 * 某业务不满意问题分布情况
 	 */
 	@Override

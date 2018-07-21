@@ -49,4 +49,12 @@ public interface StatisticsService {
 	 */
 	public StatisDissaQuestionDateVO get_statisDissaQuestionDateVO(StatisDissaQuestionDateVO statisDissaQuestionDateVO);
 
+	/**
+	 * 满意业务分布情况
+	 * 
+	 * @param statisDissaServiceDateVO
+	 * @return
+	 */
+	public StatisDissaServiceDateVO get_statisQuestionDataVO(StatisDissaServiceDateVO statisDissaServiceDateVO);
+
 }

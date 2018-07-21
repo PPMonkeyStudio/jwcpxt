@@ -56,7 +56,22 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
-	
+
+	/**
+	 * @throws IOException
+	 * 
+	 */
+	public void get_statisQuestionDataVO() throws IOException {
+		statisDissaServiceDateVO = statisticsService.get_statisQuestionDataVO(statisDissaServiceDateVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(gson.toJson(statisDissaServiceDateVO));
+	}
+
 	/**
 	 * 问题分布
 	 * 
