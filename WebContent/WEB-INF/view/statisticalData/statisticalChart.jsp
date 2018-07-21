@@ -45,17 +45,25 @@ th {
 								<div class="content table-responsive table-full-width">
 									<div style="width: 100%">
 										<div class="form-group" style="margin: auto; padding-left: 20px;">
-											<label>单位筛选</label>  
-											<select class="selectpicker" id="SearchUnit" onchange="searchUnit(this)" title="选择一个单位..." data-live-search="true" ></select> 
-											<label>起始时间</label> 
-											<input type="text" id="beginTime" onchange="searchBeginTime(this)" placeholder="起始时间" class="mydate form-control" style="display: inline; width: 150px;"> 
-											<label>结束时间</label>
-											<input type="text" id="endTime" onchange="searchEndTime(this)" placeholder="结束时间" class="mydate form-control" style="display: inline; width: 150px;">
+											<label>单位筛选</label>
+											<select class="selectpicker" id="jwcpxt_unit_id" onchange="search(this)" title="选择一个单位..." data-live-search="true" ></select> 
+											<label style="margin-left: 10px;">时间区间从</label>
+											<input type="text" id="startTime" onchange="search(this)" placeholder="起始时间" class="mydate form-control" style="display: inline; width: 150px;"> 
+											<label>到</label>
+											<input type="text" id="endTime" onchange="search(this)" placeholder="结束时间" class="mydate form-control" style="display: inline; width: 150px;">
+										</div>
+										<div class="form-group" style="margin: auto; padding-left: 20px; margin-top: 10px;">
+											<p>
+												<label>按照时间区间类型：</label>
+												<button type="button" onclick="checkTimeType(this)" time-type="1" class="btn btn-primary btn-xs timeType" disabled="disabled">按日</button>
+												<button type="button" onclick="checkTimeType(this)" time-type="2" class="btn btn-success btn-xs timeType">按周</button>
+												<button type="button" onclick="checkTimeType(this)" time-type="3" class="btn btn-info btn-xs timeType">按月</button>
+											</p>
 										</div>
 										<div id="allDissatisfaction" style="width: 100%;height:600px; margin-top: 50px;"></div>
 										<div style="width: 100%; height:650px; margin-top: 50px;">
-											<div id="dissatisfiedService" style="width: 50%;height:600px;"></div>
-											<div id="dissatisfactionProblem" style="width: 50%;height:600px;"></div>
+											<div id="dissatisfiedService" style="width: 50%;height:600px; float: left;"></div>
+											<div id="dissatisfactionProblem" style="width: 50%;height:600px; float: right;"></div>
 										</div>
 										<!-- <div id="main" style="width: 100%;height:400px; margin-top: 50px;"></div> -->
 										<!-- <div id="main2" style="width: 100%;height:400px; margin-top: 50px;"></div> -->
@@ -74,6 +82,17 @@ th {
 <script type="text/javascript">
 	/* 处理侧边栏选项 */
 	$('#sideManager').attr("class", "active");
+	$.datetimepicker.setLocale('ch');
+	$('.mydate').datetimepicker({
+		pickerPosition : "top-right",
+		yearStart : 1900, // 设置最小年份
+		yearEnd : 2050, // 设置最大年份
+		yearOffset : 0, // 年偏差
+		timepicker : false, // 关闭时间选项
+		format : 'Y-m-d', // 格式化日期年-月-日
+		minDate : '1900/01/01', // 设置最小日期
+		maxDate : '2050/01/01', // 设置最大日期
+	});
 </script>
 <script src="<%=basePath%>js/statisticalData/echarts.min.js"></script>
 <script src="<%=basePath%>js/statisticalData/statisticalChart.js"></script>

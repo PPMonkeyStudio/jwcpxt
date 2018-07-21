@@ -182,7 +182,7 @@ $(function() {
 								//
 								$.post('/jwcpxt/Service/update_serviceClient_byId', params, response => {
 									if (response == "1") {
-										$($event.target).attr("disabled", "disabled");
+										$(event.target).attr("disabled", "disabled");
 										toastr.success("回访被终止");
 										setTimeout(function() {
 											window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
