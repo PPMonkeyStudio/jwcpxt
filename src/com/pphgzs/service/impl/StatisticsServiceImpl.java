@@ -15,15 +15,18 @@ import com.pphgzs.dao.StatisticsDao;
 import com.pphgzs.dao.UnitDao;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisDIssaServiceDTO;
 import com.pphgzs.domain.DTO.StatisDIssaServiceDateDTO;
+import com.pphgzs.domain.DTO.StatisDissaQuestionDateDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateCountDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
@@ -38,6 +41,80 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private StatisticsDao statisticsDao;
 	private UnitDao unitDao;
 	private ServiceService serviceService;
+
+	/**
+	 * 某业务不满意问题分布情况
+	 */
+	@Override
+	public StatisDissaQuestionDateVO get_statisDissaQuestionDateVO(
+			StatisDissaQuestionDateVO statisDissaQuestionDateVO) {
+		// 定义
+		List<String> listDate = new ArrayList<>();
+		List<QuestionOptionAnswerDTO> listQuestionOption = new ArrayList<>();
+		List<QuestionOptionAnswerDTO> listOldQuestionOption = new ArrayList<>();
+		List<StatisDissaQuestionDateDTO> listStatisQuestionDateDTO = new ArrayList<>();
+		StatisDissaQuestionDateDTO statisDissaQuestionDateDTO = new StatisDissaQuestionDateDTO();
+		//
+		if (!"".equals(statisDissaQuestionDateVO.getStartTime()) && !"".equals(statisDissaQuestionDateVO)) {
+			if (!"".equals(statisDissaQuestionDateVO.getTimeType())) {
+				switch (statisDissaQuestionDateVO.getTimeType()) {
+				case "1":
+					// 按天
+					try {
+						listDate = TimeUtil.findDates(statisDissaQuestionDateVO.getStartTime(),
+								statisDissaQuestionDateVO.getEndTime());
+					} catch (ParseException e) {
+						System.err.println(e);
+					}
+					break;
+				case "2":
+					// 按周
+					listDate = WeekDayUtil.getDates(statisDissaQuestionDateVO.getStartTime(),
+							statisDissaQuestionDateVO.getEndTime(), "星期日");
+					break;
+				case "3":
+					// 按月
+					try {
+						listDate = WeekDayUtil.getMonthBetween(statisDissaQuestionDateVO.getStartTime(),
+								statisDissaQuestionDateVO.getEndTime());
+						System.out.println("fd:" + listDate.size());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				}
+			}
+		}
+		if (listDate.size() == 0) {
+			return statisDissaQuestionDateVO;
+		}
+		// 获取该业务的所有推送的问题以及选项
+		listQuestionOption = statisticsDao.get_pushQuestionOption(statisDissaQuestionDateVO);
+		System.out.println(listQuestionOption.size());
+		// 去重
+		for (QuestionOptionAnswerDTO questionOptionAnswerDTO : listQuestionOption) {
+			if (!listOldQuestionOption.contains(questionOptionAnswerDTO)) {
+				listOldQuestionOption.add(questionOptionAnswerDTO);
+			}
+		}
+		statisDissaQuestionDateVO.setListQuestionOptionDTO(listOldQuestionOption);
+		// 遍历时间
+		for (int i = 1; i < listDate.size(); i++) {
+			listStatisQuestionDateDTO = new ArrayList<>();
+			// 遍历相对应的数量
+			for (QuestionOptionAnswerDTO questionOptionAnswerDTO : listQuestionOption) {
+				statisDissaQuestionDateDTO = new StatisDissaQuestionDateDTO();
+				int count = statisticsDao.get_countStatisDateDTO(statisDissaQuestionDateVO, listDate.get(i - 1),
+						listDate.get(i), questionOptionAnswerDTO);
+				System.out.println("count：" + count);
+				statisDissaQuestionDateDTO.setCount(count);
+				statisDissaQuestionDateDTO.setDateScale(listDate.get(i));
+				listStatisQuestionDateDTO.add(statisDissaQuestionDateDTO);
+			}
+		}
+		statisDissaQuestionDateVO.setListStatisDissaDTO(listStatisQuestionDateDTO);
+		return statisDissaQuestionDateVO;
+	}
 
 	/**
 	 * 获得业务的不满意反馈分布

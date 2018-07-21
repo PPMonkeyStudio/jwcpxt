@@ -3,9 +3,12 @@ package com.pphgzs.dao;
 import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_option;
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
+import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 
@@ -55,5 +58,25 @@ public interface StatisticsDao {
 	 */
 	public int statisticsDaoget_countService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO, String startTime,
 			String endTime, jwcpxt_service_definition serviceDefinition);
+
+	/**
+	 * 根据VO获取该业务的所有问题以及选项
+	 * 
+	 * @param statisDissaQuestionDateVO
+	 * @return
+	 */
+	public List<QuestionOptionAnswerDTO> get_pushQuestionOption(StatisDissaQuestionDateVO statisDissaQuestionDateVO);
+
+	/**
+	 * 根据VO获取改业务的所有不满意问题数量
+	 * 
+	 * @param statisDissaQuestionDateVO
+	 * @param string
+	 * @param string2
+	 * @param question
+	 * @return
+	 */
+	public int get_countStatisDateDTO(StatisDissaQuestionDateVO statisDissaQuestionDateVO, String string,
+			String string2, QuestionOptionAnswerDTO questionOptionAnswerDTO);
 
 }
