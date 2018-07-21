@@ -15,6 +15,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 //import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 //import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
@@ -39,6 +40,15 @@ public class QuestionTest {
 	@Resource
 	private StatisticsService statisticsService;
 
+	@Test
+	public void get_statisDissaServiceDateVOTest() {
+		StatisDissaServiceDateVO statisDissaServiceDateVO = new StatisDissaServiceDateVO();
+		statisDissaServiceDateVO.setStartTime("2018-07-10");
+		statisDissaServiceDateVO.setEndTime("2018-07-21");
+		statisDissaServiceDateVO.setTimeType("2");
+		System.out.println(statisticsService.get_statisDissaServiceDateVO(statisDissaServiceDateVO));
+	}
+
 	/**
 	 * 
 	 */
@@ -47,7 +57,7 @@ public class QuestionTest {
 		StatisDissatiDateVO statisDissatiDateVO = new StatisDissatiDateVO();
 		statisDissatiDateVO.setStartTime("2018-07-10");
 		statisDissatiDateVO.setEndTime("2018-07-21");
-//		statisDissatiDateVO.setTimeType("3");
+		// statisDissatiDateVO.setTimeType("3");
 		System.out.println(statisticsService.get_statisDissatiDateVO(statisDissatiDateVO));
 	}
 

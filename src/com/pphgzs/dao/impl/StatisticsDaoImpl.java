@@ -29,11 +29,57 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	public int statisticsDaoget_countService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO, String startTime,
+			String endTime, jwcpxt_service_definition serviceDefinition) {
+		Session session = getSession();
+		String hql = "select count(*)"//
+				+ " from "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_unit unit"//
+				+ " where"//
+				+ ""//
+				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id"//
+				+ " and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ ""//
+				+ " and unit.jwcpxt_unit_id like :unitId "//
+				+ " and serviceInstance.service_instance_date >= :startTime "//
+				+ " and serviceInstance.service_instance_date < :endTime "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionId";
+		System.out.println("hql:" + hql);
+		Query query = session.createQuery(hql);
+		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
+			query.setParameter("unitId", "%%");
+		} else {
+			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
+		}
+		query.setParameter("startTime", startTime);
+		query.setParameter("endTime", endTime);
+		query.setParameter("serviceDefinitionId", serviceDefinition.getJwcpxt_service_definition_id());
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			return 0;
+		} finally {
+			session.clear();
+		}
+	}
+
+	/**
 	 * 获取当前时间段里面所有的业务
 	 */
 	@Override
-	public List<jwcpxt_service_definition> get_pushService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO,
-			String startTime, String endTime) {
+	public List<jwcpxt_service_definition> get_pushService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO) {
 		Session session = getSession();
 		String hql = "select distinct(serviceDefinition)"//
 				+ " from "//
@@ -51,20 +97,14 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ ""//
-				+ "and unit.jwcpxt_unit_id like :unitId "//
-				+ "and serviceInstance.service_instance_date >= :startTime "//
-				+ "and serviceInstance.service_instance_date < :endTime ";
+				+ " and unit.jwcpxt_unit_id like :unitId ";//
 		System.out.println("hql:" + hql);
-		System.out.println("startTime" + startTime);
-		System.out.println("endTime" + endTime);
 		Query query = session.createQuery(hql);
 		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
 		} else {
 			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
 		}
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
 		List<jwcpxt_service_definition> list = new ArrayList<>();
 		list = query.list();
 		session.clear();

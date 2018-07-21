@@ -88,21 +88,36 @@ public class StatisticsServiceImpl implements StatisticsService {
 		if (listDate.size() == 0) {
 			return statisDissaServiceDateVO;
 		}
+		// 获取对应时间段里面的业务数量
+		listServiceDefinition = statisticsDao.get_pushService_byTime(statisDissaServiceDateVO);
+		System.out.println(listServiceDefinition.size());
 		// 遍历时间
 		for (int i = 1; i < listDate.size(); i++) {
+			statisDIssaServiceDateDTO = new StatisDIssaServiceDateDTO();
 			listStatisDissaServiceDTO = new ArrayList<>();
-			statisDIssaServiceDTO = new StatisDIssaServiceDTO();
-			listServiceDefinition = new ArrayList<>();
-			// 获取对应时间段里面的业务数量
-			listServiceDefinition = statisticsDao.get_pushService_byTime(statisDissaServiceDateVO, listDate.get(i - 1),
-					listDate.get(i));
-			System.out.println(listServiceDefinition.size());
+			/*
+			 * // 获取对应时间段里面的业务数量 listServiceDefinition =
+			 * statisticsDao.get_pushService_byTime(statisDissaServiceDateVO, listDate.get(i
+			 * - 1), listDate.get(i)); System.out.println(listServiceDefinition.size());
+			 */
 			// 获取对应的数量
-			for (jwcpxt_service_definition jwcpxt_service_definition : listServiceDefinition) {
-
+			for (jwcpxt_service_definition serviceDefinition : listServiceDefinition) {
+				//
+				statisDIssaServiceDTO = new StatisDIssaServiceDTO();
+				//
+				int count = statisticsDao.statisticsDaoget_countService_byTime(statisDissaServiceDateVO,
+						listDate.get(i - 1), listDate.get(i), serviceDefinition);
+				System.out.println("count:" + count);
+				statisDIssaServiceDTO.setCount(count);
+				statisDIssaServiceDTO.setServiceDefinition(serviceDefinition);
+				listStatisDissaServiceDTO.add(statisDIssaServiceDTO);
 			}
+			statisDIssaServiceDateDTO.setDateScale(listDate.get(i));
+			statisDIssaServiceDateDTO.setListStatisDIssaServiceDTO(listStatisDissaServiceDTO);
+			listStatisDIssaServiceDateDTO.add(statisDIssaServiceDateDTO);
 		}
-		return null;
+		statisDissaServiceDateVO.setListStatisDIssaServiceDateDTO(listStatisDIssaServiceDateDTO);
+		return statisDissaServiceDateVO;
 	}
 
 	/**
