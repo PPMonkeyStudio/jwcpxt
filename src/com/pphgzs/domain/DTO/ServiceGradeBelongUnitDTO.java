@@ -7,6 +7,11 @@ public class ServiceGradeBelongUnitDTO {
 	private jwcpxt_service_definition serviceDefinition;
 	private double grade;
 
+	@Override
+	public String toString() {
+		return "ServiceGradeBelongUnitDTO [serviceDefinition=" + serviceDefinition + ", grade=" + grade + "]";
+	}
+
 	public jwcpxt_service_definition getServiceDefinition() {
 		return serviceDefinition;
 	}
