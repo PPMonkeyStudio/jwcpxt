@@ -15,12 +15,14 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.StatisDissatiDateVO;
 //import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 //import com.pphgzs.domain.VO.DissatisfiedFeedbackVO;
 //import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
+import com.pphgzs.service.StatisticsService;
 import com.pphgzs.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,6 +36,20 @@ public class QuestionTest {
 	private QuestionService questionService;
 	@Resource
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+	@Resource
+	private StatisticsService statisticsService;
+
+	/**
+	 * 
+	 */
+	@Test
+	public void get_statisDissatiDateVOTest() {
+		StatisDissatiDateVO statisDissatiDateVO = new StatisDissatiDateVO();
+		statisDissatiDateVO.setStartTime("2018-07-10");
+		statisDissatiDateVO.setEndTime("2018-07-21");
+		statisDissatiDateVO.setTimeType("3");
+		System.out.println(statisticsService.get_statisDissatiDateVO(statisDissatiDateVO));
+	}
 
 	/**
 	 * 
@@ -43,7 +59,7 @@ public class QuestionTest {
 		ClientInfoVO clientInfoVO = new ClientInfoVO();
 		System.out.println(serviceService.get_clientInfoVO_byUserId(clientInfoVO));
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -241,6 +257,14 @@ public class QuestionTest {
 
 	public ServiceService getServiceService() {
 		return serviceService;
+	}
+
+	public StatisticsService getStatisticsService() {
+		return statisticsService;
+	}
+
+	public void setStatisticsService(StatisticsService statisticsService) {
+		this.statisticsService = statisticsService;
 	}
 
 	public void setServiceService(ServiceService serviceService) {
