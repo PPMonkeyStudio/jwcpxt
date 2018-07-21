@@ -21,6 +21,7 @@ import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisDIssaServiceDTO;
 import com.pphgzs.domain.DTO.StatisDIssaServiceDateDTO;
 import com.pphgzs.domain.DTO.StatisDissaQuestionDateDTO;
+import com.pphgzs.domain.DTO.StatisQuestionDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateCountDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
@@ -54,6 +55,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 		List<QuestionOptionAnswerDTO> listOldQuestionOption = new ArrayList<>();
 		List<StatisDissaQuestionDateDTO> listStatisQuestionDateDTO = new ArrayList<>();
 		StatisDissaQuestionDateDTO statisDissaQuestionDateDTO = new StatisDissaQuestionDateDTO();
+		List<StatisQuestionDTO> listStatisQuestionDTO = new ArrayList<>();
+		StatisQuestionDTO statisQuestionDTO = new StatisQuestionDTO();
 		//
 		if (!"".equals(statisDissaQuestionDateVO.getStartTime()) && !"".equals(statisDissaQuestionDateVO)) {
 			if (!"".equals(statisDissaQuestionDateVO.getTimeType())) {
@@ -101,8 +104,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 							.equals(oldQuestion.getQuestion().getJwcpxt_question_id())
 							&& questionOptionAnswerDTO.getOption().getJwcpxt_option_id()
 									.equals(oldQuestion.getOption().getJwcpxt_option_id()))) {
-						continue;
-					} else {
 						listOldQuestionOption.add(questionOptionAnswerDTO);
 						break;
 					}
@@ -114,22 +115,37 @@ public class StatisticsServiceImpl implements StatisticsService {
 			 * listOldQuestionOption.add(questionOptionAnswerDTO); }
 			 */
 		}
-		statisDissaQuestionDateVO.setListQuestionOptionDTO(listOldQuestionOption);
+		System.out.println("size:" + listOldQuestionOption.size());
 		// 遍历时间
 		for (int i = 1; i < listDate.size(); i++) {
-			listStatisQuestionDateDTO = new ArrayList<>();
-			// 遍历相对应的数量
-			for (QuestionOptionAnswerDTO questionOptionAnswerDTO : listQuestionOption) {
-				statisDissaQuestionDateDTO = new StatisDissaQuestionDateDTO();
+			statisDissaQuestionDateDTO = new StatisDissaQuestionDateDTO();
+			listStatisQuestionDTO = new ArrayList<>();
+			for (QuestionOptionAnswerDTO oldQuest : listOldQuestionOption) {
+				statisQuestionDTO = new StatisQuestionDTO();
 				int count = statisticsDao.get_countStatisDateDTO(statisDissaQuestionDateVO, listDate.get(i - 1),
-						listDate.get(i), questionOptionAnswerDTO);
-				System.out.println("count：" + count);
-				statisDissaQuestionDateDTO.setCount(count);
-				statisDissaQuestionDateDTO.setDateScale(listDate.get(i));
-				listStatisQuestionDateDTO.add(statisDissaQuestionDateDTO);
+						listDate.get(i), oldQuest);
+				statisQuestionDTO.setQuestionOptionAnswerDTO(oldQuest);
+				statisQuestionDTO.setCount(count);
+				listStatisQuestionDTO.add(statisQuestionDTO);
 			}
+			statisDissaQuestionDateDTO.setListStatisQuestionDTO(listStatisQuestionDTO);
+			statisDissaQuestionDateDTO.setDateScale(listDate.get(i));
+			listStatisQuestionDateDTO.add(statisDissaQuestionDateDTO);
 		}
-		statisDissaQuestionDateVO.setListStatisDissaDTO(listStatisQuestionDateDTO);
+		statisDissaQuestionDateVO.setListStatisQuestionDTO(listStatisQuestionDateDTO);
+		/*
+		 * statisDissaQuestionDateVO.setListQuestionOptionDTO(listOldQuestionOption); //
+		 * 遍历时间 for (int i = 1; i < listDate.size(); i++) { listStatisQuestionDateDTO =
+		 * new ArrayList<>(); // 遍历相对应的数量 for (QuestionOptionAnswerDTO
+		 * questionOptionAnswerDTO : listQuestionOption) { statisDissaQuestionDateDTO =
+		 * new StatisDissaQuestionDateDTO(); int count =
+		 * statisticsDao.get_countStatisDateDTO(statisDissaQuestionDateVO,
+		 * listDate.get(i - 1), listDate.get(i), questionOptionAnswerDTO);
+		 * System.out.println("count：" + count);
+		 * statisDissaQuestionDateDTO.setDateScale(listDate.get(i));
+		 * listStatisQuestionDateDTO.add(statisDissaQuestionDateDTO); } }
+		 * statisDissaQuestionDateVO.setListStatisDissaDTO(listStatisQuestionDateDTO);
+		 */
 		return statisDissaQuestionDateVO;
 	}
 

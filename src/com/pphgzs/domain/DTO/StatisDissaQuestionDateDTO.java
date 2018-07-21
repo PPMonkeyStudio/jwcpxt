@@ -1,5 +1,7 @@
 package com.pphgzs.domain.DTO;
 
+import java.util.List;
+
 /**
  * 
  * @author JXX
@@ -7,33 +9,28 @@ package com.pphgzs.domain.DTO;
  */
 public class StatisDissaQuestionDateDTO {
 	private String dateScale;
-	private int count;
+	private List<StatisQuestionDTO> listStatisQuestionDTO;
+
+	public List<StatisQuestionDTO> getListStatisQuestionDTO() {
+		return listStatisQuestionDTO;
+	}
+
+	public void setListStatisQuestionDTO(List<StatisQuestionDTO> listStatisQuestionDTO) {
+		this.listStatisQuestionDTO = listStatisQuestionDTO;
+	}
 
 	public String getDateScale() {
 		return dateScale;
 	}
 
-	public void setDateScale(String dateScale) {
-		this.dateScale = dateScale;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
 	@Override
 	public String toString() {
-		return "StatisDissaQuestionDateDTO [dateScale=" + dateScale + ", count=" + count + "]";
+		return "StatisDissaQuestionDateDTO [dateScale=" + dateScale + ", listStatisQuestionDTO=" + listStatisQuestionDTO
+				+ "]";
 	}
 
-	public StatisDissaQuestionDateDTO(String dateScale, int count) {
-		super();
+	public void setDateScale(String dateScale) {
 		this.dateScale = dateScale;
-		this.count = count;
 	}
 
 	public StatisDissaQuestionDateDTO() {
