@@ -195,6 +195,44 @@ function randerDissatisfactionChart(res) {
 		});
 		dissatisfactionChart.clear();
 		dissatisfactionChart.setOption(option);
+		dissatisfactionChart.on("click", function(param) {
+			if (param.componentSubType == "pie") {
+				let index = param.dataIndex;
+				let describe = option.dataset.source[index + 1][0];
+				try {
+					if (describe == "满意") {
+						//业务分类
+						$.post('/jwcpxt/Statistics/get_statisQuestionDataVO', {
+							'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
+							'statisDissaServiceDateVO.startTime' : params.startTime,
+							'statisDissaServiceDateVO.endTime' : params.endTime,
+							'statisDissaServiceDateVO.timeType' : params.timeType
+						}, response => {
+							randerDissatisfiedServiceChart(response); //所有不满意图表
+						}, 'json')
+					} else if (describe == "不满意") {
+						//业务分类
+						$.post('/jwcpxt/Statistics/get_statisDissatiDateVO', {
+							'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
+							'statisDissaServiceDateVO.startTime' : params.startTime,
+							'statisDissaServiceDateVO.endTime' : params.endTime,
+							'statisDissaServiceDateVO.timeType' : params.timeType
+						}, response => {
+							randerDissatisfiedServiceChart(response); //所有不满意图表
+						}, 'json')
+					}
+				/*res.listStaDisDateDTO[0].listDissaOptionDTO.forEach(function(elt, i) {
+					if (elt.option == describe) {
+						console.log(definitionId);
+						dissatisfactionProblemSendData();
+						throw 'Jump';
+					}
+				})*/
+				} catch (e) {
+					console.log(e);
+				}
+			}
+		});
 	});
 }
 
@@ -326,10 +364,17 @@ function randerDissatisfactionProblem(res) {
 		elt.listStatisQuestionDTO.forEach(function(elt1, j) {
 			if (!_source[j + 1])
 				_source[j + 1] = [];
-			
-			
-			
-			_source[j + 1][0] = elt1.questionOptionAnswerDTO.question.question_describe + "--" + elt1.questionOptionAnswerDTO.option.option_describe;
+			//(请问)?(您对)[\u4e00-\u9fa5]+(满意吗)[?|？]
+			//(请问)[\u4e00-\u9fa5]+(有没有向您)[、\u4e00-\u9fa5]+[?|？]
+			let question = elt1.questionOptionAnswerDTO.question.question_describe;
+			let answer = elt1.questionOptionAnswerDTO.option.option_describe;
+			let replaceQuestion;
+			if (/(请问)?(您对)[\u4e00-\u9fa5]+(满意吗)[?|？]/.test(question)) {
+				replaceQuestion = question.replace("请问", "").replace("您对", "对").replace("满意吗", answer).replace("？", "");
+			} else if (/(请问)[\u4e00-\u9fa5]+(有没有向您)[、\u4e00-\u9fa5]+[?|？]/.test(question)) {
+				replaceQuestion = question.replace("请问", "").replace("有没有向您", answer).replace("？", "");
+			}
+			_source[j + 1][0] = replaceQuestion;
 			_source[j + 1].push(elt1.count);
 		})
 	})

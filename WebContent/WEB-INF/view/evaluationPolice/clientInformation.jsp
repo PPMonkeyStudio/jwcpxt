@@ -39,7 +39,7 @@ th {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">问卷管理</h4>
+									<h4 class="title">当事人查看</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
 									<select v-if="isUnit" style="width:120px; float: left;"
@@ -81,7 +81,9 @@ th {
 												<th style="width: 60px;">所属业务</th>
 												<th style="width: 150px;">办理单位</th>
 												<th style="width: 60px;">办理时间</th>
-												<th style="width: 60px;">操作</th>
+												<s:if test="#session.user.user_type==1">
+													<th style="width: 60px;">操作</th>
+												</s:if>
 											</tr>
 										</thead>
 										<tbody v-cloak>
@@ -111,9 +113,11 @@ th {
 												<td>{{ClientInfoDTO.serviceDefinition.service_definition_describe}}</td>
 												<td>{{ClientInfoDTO.unit.unit_name}}</td>
 												<td>{{ClientInfoDTO.serviceInstance.service_instance_date}}</td>
-												<td><a href="javascript:;"
-													@click="pageTo(ClientInfoDTO.serviceDefinition.jwcpxt_service_definition_id,ClientInfoDTO.serviceClient.jwcpxt_service_client_id)">业务回访</a>
-												</td>
+												<s:if test="#session.user.user_type==1">
+													<td><a href="javascript:;"
+														@click="pageTo(ClientInfoDTO.serviceDefinition.jwcpxt_service_definition_id,ClientInfoDTO.serviceClient.jwcpxt_service_client_id)">业务回访</a>
+													</td>
+												</s:if>
 											</tr>
 											</template>
 										</tbody>
