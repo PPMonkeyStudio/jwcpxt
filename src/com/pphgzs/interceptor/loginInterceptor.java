@@ -1,29 +1,26 @@
 package com.pphgzs.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.struts2.StrutsStatics;
-
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
+@SuppressWarnings("serial")
 public class loginInterceptor extends AbstractInterceptor {
-
 	@Override
-	public String intercept(ActionInvocation arg0) throws Exception {
-		// TODO Auto-generated method stub
-		ActionContext actionContext = arg0.getInvocationContext();
-		HttpServletRequest request = (HttpServletRequest) actionContext.get(StrutsStatics.HTTP_REQUEST);
-		HttpSession session = request.getSession();
-		String loginType = (String) session.getAttribute("loginType");
-		if (loginType == null) {
-			return "login";
-		} else {
-			return arg0.invoke();
+	public String intercept(ActionInvocation invocation) throws Exception {
+		// 得到拦截到的action的名称,看是否是login,当是login的时候,不用进行下面的检测了,直接执行下一个拦截器
+		String actionName = invocation.getProxy().getActionName();
+		System.out.println("actionName:" + actionName);
+		if ("skipSystemIndex".equals(actionName) || "skipSidebar".equals(actionName)
+				|| "skipNavbarIndex".equals(actionName) || "skipFooter".equals(actionName)) {
+			return invocation.invoke();
 		}
-
+		// 如果不是login.则判断是否已登录,及检测session中key为user的值是否存在,如果不存在,跳回到登录页面
+		String loginType = (String) invocation.getInvocationContext().getSession().get("loginType");
+		if (loginType == null) {
+			System.out.println("未登录");
+			return "login";
+		}
+		// 进行到这里.说明用户已登录,则跳转到下一个拦截器
+		return invocation.invoke();
 	}
-
 }

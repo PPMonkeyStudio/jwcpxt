@@ -95,6 +95,10 @@ public class SkipAction {
 		return "skipPoliceAssessmentPageJsp";
 	}
 
+	public String login() {
+		return "login";
+	}
+
 	public String skipPreviewPoliceAssessmentPage() {
 		return "skipPreviewPoliceAssessmentPage";
 	}
@@ -114,7 +118,7 @@ public class SkipAction {
 	public String skipClientInformationPage() {
 		return "skipClientInformationPage";
 	}
-	
+
 	public String skipClientInformation() {
 		return "skipClientInformation";
 	}
