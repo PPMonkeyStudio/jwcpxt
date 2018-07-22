@@ -17,6 +17,7 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 
@@ -31,6 +32,33 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private jwcpxt_dissatisfied_feedback dissatisfiedFeedback;
 	private FeedbackRectificationVO feedbackRectificationVO;
 	private CheckFeedbackRectificationVO checkFeedbackRectificationVO;
+	private FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO;
+
+	/**
+	 * @throws IOException
+	 * 
+	 */
+	public void get_feedbackRectificationExceedTimeVO() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		feedbackRectificationExceedTimeVO = dissatisfiedFeedbackService
+				.get_checkFeedbackRectificationVO(feedbackRectificationExceedTimeVO);
+		http_response.getWriter().write(gson.toJson(checkFeedbackRectificationVO));
+	}
+
+	/**
+	 * 得到超过五天仍然未进行整改的数量
+	 * 
+	 * @throws IOException
+	 */
+	public void get_countExceedTimeFive() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(dissatisfiedFeedbackService.get_countExceedTimeFive() + "");
+	}
 
 	/**
 	 * 审核操作
@@ -183,6 +211,15 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 
 	public void setDissatisfiedFeedback(jwcpxt_dissatisfied_feedback dissatisfiedFeedback) {
 		this.dissatisfiedFeedback = dissatisfiedFeedback;
+	}
+
+	public FeedbackRectificationExceedTimeVO getFeedbackRectificationExceedTimeVO() {
+		return feedbackRectificationExceedTimeVO;
+	}
+
+	public void setFeedbackRectificationExceedTimeVO(
+			FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO) {
+		this.feedbackRectificationExceedTimeVO = feedbackRectificationExceedTimeVO;
 	}
 
 	public CheckFeedbackRectificationVO getCheckFeedbackRectificationVO() {

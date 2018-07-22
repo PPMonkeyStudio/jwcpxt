@@ -5,6 +5,7 @@ import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
 
 public interface DissatisfiedFeedbackService {
@@ -86,5 +87,21 @@ public interface DissatisfiedFeedbackService {
 	 * @return
 	 */
 	public boolean checkFeedbackRectification(jwcpxt_feedback_rectification feedbackRectification, jwcpxt_unit unit);
+
+	/**
+	 * 获取超过五天期限仍然未进行整改的数量
+	 * 
+	 * @return
+	 */
+	public int get_countExceedTimeFive();
+
+	/**
+	 * 获取超过五天期限仍然未进行整改整改反馈DTO
+	 * 
+	 * @param feedbackRectificationExceedTimeVO
+	 * @return
+	 */
+	public FeedbackRectificationExceedTimeVO get_checkFeedbackRectificationVO(
+			FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO);
 
 }

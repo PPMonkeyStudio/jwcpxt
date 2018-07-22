@@ -15,6 +15,7 @@ import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
@@ -31,6 +32,30 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private QuestionService questionService;
 	private UnitService unitService;
 	private UserService userService;
+
+	/**
+	 * 
+	 */
+	@Override
+	public FeedbackRectificationExceedTimeVO get_checkFeedbackRectificationVO(
+			FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO) {
+		List<FeedbackRectificationDTO> listFeedbackRectificationDTO = new ArrayList<>();
+		int totalRecords = get_countExceedTimeFive();
+		int totalPages = ((totalRecords - 1) / feedbackRectificationExceedTimeVO.getPageSize()) + 1;
+		listFeedbackRectificationDTO = dissatisfiedFeedbackDao.get_checkFeedbackRectificationVO();
+		feedbackRectificationExceedTimeVO.setListFeedbackRectificationDTO(listFeedbackRectificationDTO);
+		feedbackRectificationExceedTimeVO.setTotalCount(totalRecords);
+		feedbackRectificationExceedTimeVO.setTotalPage(totalPages);
+		return feedbackRectificationExceedTimeVO;
+	}
+
+	/**
+	 * 得到超过5天的期限的数量
+	 */
+	@Override
+	public int get_countExceedTimeFive() {
+		return dissatisfiedFeedbackDao.get_countExceedTimeFive();
+	}
 
 	/**
 	 * 审核操作

@@ -1,5 +1,7 @@
 package com.pphgzs.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -27,6 +29,81 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 反馈整改表
+	 */
+	@Override
+	public List<FeedbackRectificationDTO> get_checkFeedbackRectificationVO() {
+		Session session = getSession();
+		String hql = "select new com.pphgzs.domain.DTO.FeedbackRectificationDTO(feedbackRectification,dissatisfiedFeedback,question,serviceClient"//
+				+ " ,serviceInstance,serviceDefinition,unit)"//
+				+ " from "//
+				+ " jwcpxt_feedback_rectification feedbackRectification , "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_question question , "//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_unit unit "//
+				+ " where "//
+				+ " feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
+				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
+				+ " and answerChoice.answer_choice_question = question.jwcpxt_question_id"//
+				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
+				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " and feedbackRectification.feedback_rectification_handle_state = 1"//
+				+ " and feedbackRectification.feedback_rectification_gmt_create < :beforeDate"//
+				+ " order by feedback_rectification_gmt_create asc";//
+		Query query = session.createQuery(hql);
+		// 获取五天前
+		query.setParameter("beforeDate", TimeUtil.getDateBefore(new Date(), 5));
+		List<FeedbackRectificationDTO> list = new ArrayList<>();
+		list = query.list();
+		session.clear();
+		return list;
+	}
+
+	/**
+	 * 获取超过五天的总记录数
+	 */
+	@Override
+	public int get_countExceedTimeFive() {
+		Session session = getSession();
+		String hql = "select count(*)"//
+				+ " from "//
+				+ " jwcpxt_feedback_rectification feedbackRectification , "//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback , "//
+				+ " jwcpxt_answer_choice answerChoice , "//
+				+ " jwcpxt_question question , "//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_unit unit "//
+				+ " where "//
+				+ " feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
+				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
+				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
+				+ " and answerChoice.answer_choice_question = question.jwcpxt_question_id"//
+				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
+				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " and feedbackRectification.feedback_rectification_handle_state = 1"//
+				+ " and feedbackRectification.feedback_rectification_gmt_create < DATE_SUB(DATE_FORMAT(CURRENT_TIME(),'%Y-%m-%d %T'),INTERVAL 5 day)";//
+		//
+		Query query = session.createSQLQuery(hql);
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			return 0;
+		} finally {
+			session.clear();
+		}
 	}
 
 	/**
@@ -535,4 +612,5 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		unitFather = (jwcpxt_unit) query.uniqueResult();
 		return unitFather;
 	}
+
 }
