@@ -169,7 +169,6 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 			pw.flush();
 			pw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -198,9 +197,11 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	}
 
 	public String exportStatisticsExcel() {
+		System.out.println(unitIds + "---------" + serviceGradeDTOList);
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
+
 		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
 			for (int j = 0; j < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1 - i; j++) {
 				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade() < statisticsVO
@@ -212,7 +213,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 				}
 			}
 		}
-
+		System.out.println("statisticsVO:" + statisticsVO);
 		/**
 		 * 写入文件
 		 */
