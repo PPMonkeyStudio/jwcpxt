@@ -122,9 +122,15 @@ th {
 												<td v-html="ClientInfoDTO.unit.unit_name.replace('江西省萍乡市公安局','')"></td>
 												<td>{{ClientInfoDTO.serviceInstance.service_instance_date}}</td>
 												<s:if test="#session.user.user_type==1">
-													<td><a href="javascript:;"
-														@click="pageTo(ClientInfoDTO.serviceDefinition.jwcpxt_service_definition_id,ClientInfoDTO.serviceClient.jwcpxt_service_client_id)">业务回访</a>
-													</td>
+													<template v-if="ClientInfoDTO.serviceClient.service_client_visit!=1">
+														<td><a href="javascript:;"
+															@click="pageTo(ClientInfoDTO.serviceDefinition.jwcpxt_service_definition_id,ClientInfoDTO.serviceClient.jwcpxt_service_client_id)">业务回访</a>
+														</td>
+													</template>
+													<template v-else>
+														<td><a href="javascript:;">暂无操作</a>
+														</td>
+													</template>
 												</s:if>
 											</tr>
 											</template>
