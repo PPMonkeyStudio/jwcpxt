@@ -47,7 +47,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		http_response.setContentType("text/html;charset=utf-8");
 		feedbackRectificationExceedTimeVO = dissatisfiedFeedbackService
 				.get_checkFeedbackRectificationVO(feedbackRectificationExceedTimeVO);
-		http_response.getWriter().write(gson.toJson(checkFeedbackRectificationVO));
+		http_response.getWriter().write(gson.toJson(feedbackRectificationExceedTimeVO));
 	}
 
 	/**
