@@ -145,6 +145,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	}
 
 	public void getGradeByCondition() {
+		System.out.println("+++++++++++++++++++++");
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
@@ -201,11 +202,11 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
-
 		for (int i = 0; i < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1; i++) {
 			for (int j = 0; j < statisticsVO.getUnitHaveServiceGradeDTOList().size() - 1 - i; j++) {
 				if (statisticsVO.getUnitHaveServiceGradeDTOList().get(j).getTotalGrade() < statisticsVO
 						.getUnitHaveServiceGradeDTOList().get(j + 1).getTotalGrade()) {
+					unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
 					unitHaveServiceGradeDTO = statisticsVO.getUnitHaveServiceGradeDTOList().get(j);
 					statisticsVO.getUnitHaveServiceGradeDTOList().set(j,
 							statisticsVO.getUnitHaveServiceGradeDTOList().get(j + 1));
