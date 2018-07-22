@@ -21,16 +21,9 @@
 						<p>首页</p>
 				</a></li>
 				<s:if test="#session.loginType=='user'">
-					<s:if test="#session.user.user_type=='1'">
-						<li><a href="<%=basePath%>Skip/skipClientInformationPage?appraisalId=<s:property value="#session.user.jwcpxt_user_id"/>">
-								<p>当事人</p>
-						</a></li>
-					</s:if>
-					<s:if test="#session.user.user_type=='2'">
 						<li><a href="<%=basePath%>Skip/skipClientInformationPage">
 								<p>当事人</p>
 						</a></li>
-					</s:if>
 				</s:if>
 			</ul>
 		</div>
