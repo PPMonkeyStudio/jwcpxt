@@ -219,7 +219,8 @@ $(function() {
 			form.append($(`<input type="hidden" name="searchTimeStart" value="${beginTime}">`));
 			let endTime = $("#endTime").val();
 			form.append($(`<input type="hidden" name="searchTimeEnd" value="${endTime}">`));
-			form.submit(); //自动提交
+			console.log($("#exportForm").serializeArray());
+			//form.submit(); //自动提交
 		}
 	}
 

@@ -44,7 +44,14 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="width: 100%">
+										<div style="width: 100%; height:650px; margin-top: 20px;">
+											<!-- 群众关注 -->
+											<div id="crowdFocus" style="width: 50%;height:600px; float: left;"></div>
+											<div id="crowdNotSatisfied" style="width: 50%;height:600px; float: left;"></div>
+										</div>
+										
 										<div class="form-group" style="margin: auto; padding-left: 20px;">
+											<p><h3>图表</h3></p>
 											<label>单位筛选</label>
 											<select class="selectpicker" id="jwcpxt_unit_id" onchange="search(this)" title="选择一个单位..." data-live-search="true" ></select> 
 											<label style="margin-left: 10px;">时间区间从</label>
@@ -60,13 +67,8 @@ th {
 												<button type="button" onclick="checkTimeType(this)" time-type="3" class="btn btn-info btn-xs timeType">按月</button>
 											</p>
 										</div>
-										<div style="width: 100%; height:650px; margin-top: 20px;">
-											<!-- 群众关注 -->
-											<div id="crowdFocus" style="width: 50%;height:600px; float: left;"></div>
-											<div id="crowdNotSatisfied" style="width: 50%;height:600px; float: left;"></div>
-										</div>
 										
-										<div id="allDissatisfaction" style="width: 100%;height:600px; margin-top: 50px;"></div>
+										<div id="allDissatisfaction" style="width: 100%;height:600px; margin-top: 20px;"></div>
 										<div style="width: 100%; height:650px; margin-top: 50px;">
 											<div id="dissatisfiedService" style="width: 50%;height:600px; float: left;"></div>
 											<div id="dissatisfactionProblem" style="width: 50%;height:600px; float: right;"></div>

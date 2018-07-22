@@ -106,24 +106,23 @@ function checkTimeType(btn) {
 	getChart(params);
 }
 
+function createRandomItemStyle() {
+	return {
+		normal : {
+			color : 'rgb(' + [
+					Math.round(Math.random() * 160),
+					Math.round(Math.random() * 160),
+					Math.round(Math.random() * 160)
+				].join(',') + ')'
+		}
+	};
+}
 randerCrowdFocusChart('');
 function randerCrowdFocusChart(res) {
-	function createRandomItemStyle() {
-		return {
-			normal : {
-				color : 'rgb(' + [
-						Math.round(Math.random() * 160),
-						Math.round(Math.random() * 160),
-						Math.round(Math.random() * 160)
-					].join(',') + ')'
-			}
-		};
-	}
-
 	let option = {
 		title : {
 			text : '群众关注',
-			//link : 'http://www.google.com/trends/hottrends'
+		//link : 'http://www.google.com/trends/hottrends'
 		},
 		tooltip : {
 			show : true
@@ -131,7 +130,7 @@ function randerCrowdFocusChart(res) {
 		series : [ {
 			name : '群众关注',
 			type : 'wordCloud',
-			size : [ '80%', '80%' ],
+			size : [ '100%', '100%' ],
 			textRotation : [ 0, 45, 90, -45 ],
 			textPadding : 0,
 			autoSize : {
@@ -140,7 +139,7 @@ function randerCrowdFocusChart(res) {
 			},
 			data : [
 				{
-					name : "Sam S Club",
+					name : "就业",
 					value : 10000,
 					itemStyle : {
 						normal : {
@@ -149,97 +148,97 @@ function randerCrowdFocusChart(res) {
 					}
 				},
 				{
-					name : "Macys",
+					name : "社会保障",
 					value : 6181,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Amy Schumer",
+					name : "居民生活",
 					value : 4386,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Jurassic World",
+					name : "社会治安",
 					value : 4055,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Charter Communications",
+					name : "公共安全",
 					value : 2467,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Chick Fil A",
+					name : "公共交通",
 					value : 2244,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Planet Fitness",
+					name : "医疗卫生",
 					value : 1898,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Pitch Perfect",
+					name : "公共教育",
 					value : 1484,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Express",
+					name : "文化发展",
 					value : 1112,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Home",
+					name : "社会道德",
 					value : 965,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Johnny Depp",
+					name : "外来人口",
 					value : 847,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Lena Dunham",
+					name : "环境保护",
 					value : 582,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Lewis Hamilton",
+					name : "征地拆迁",
 					value : 555,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "KXAN",
+					name : "城市建设及管理",
 					value : 550,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Mary Ellen Mark",
+					name : "新农村建设",
 					value : 462,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Farrah Abraham",
+					name : "民营企业及非公经济发展",
 					value : 366,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Rita Ora",
+					name : "民主法制建设",
 					value : 360,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Serena Williams",
+					name : "农村基层组织建设",
 					value : 282,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "NCAA baseball tournament",
+					name : "公务员队伍建设",
 					value : 273,
 					itemStyle : createRandomItemStyle()
 				},
 				{
-					name : "Point Break",
+					name : "党风廉政建设",
 					value : 265,
 					itemStyle : createRandomItemStyle()
 				}
@@ -248,6 +247,138 @@ function randerCrowdFocusChart(res) {
 	};
 	crowdFocusChart.setOption(option);
 }
+
+renderCrowdNotSatisfiedChart('');
+function renderCrowdNotSatisfiedChart(res) {
+	let option = {
+		title : {
+			text : '群众不满意',
+		//link : 'http://www.google.com/trends/hottrends'
+		},
+		tooltip : {
+			show : true
+		},
+		series : [ {
+			name : '群众不满意',
+			type : 'wordCloud',
+			size : [ '100%', '100%' ],
+			textRotation : [ 0, 45, 90, -45 ],
+			textPadding : 0,
+			autoSize : {
+				enable : true,
+				minSize : 14
+			},
+			data : [
+				{
+					name : "农村垃圾收运不及时，堆积如山、臭气熏天",
+					value : 10000,
+					itemStyle : {
+						normal : {
+							color : 'black'
+						}
+					}
+				},
+				{
+					name : "场镇管网滞后，污水横流",
+					value : 6181,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "乡镇场镇公共厕所少",
+					value : 4386,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "旧城改造推进缓慢，拆迁安置问题多",
+					value : 4055,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "小区物业管理不到位，公共服务质量差",
+					value : 2467,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "校园周边食品安全、交通安全隐患大",
+					value : 2244,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "乡镇便民服务中心不便民",
+					value : 1898,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "农村广播配置不齐，缺少维护、效果不好",
+					value : 1484,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "村级权利过多过滥，‘小微权力’任性",
+					value : 1112,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "村务不公开不透明，群众知情难",
+					value : 965,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "外来人口",
+					value : 847,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "环境保护",
+					value : 582,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "征地拆迁",
+					value : 555,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "城市建设及管理",
+					value : 550,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "新农村建设",
+					value : 462,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "民营企业及非公经济发展",
+					value : 366,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "民主法制建设",
+					value : 360,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "农村基层组织建设",
+					value : 282,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "公务员队伍建设",
+					value : 273,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "党风廉政建设",
+					value : 265,
+					itemStyle : createRandomItemStyle()
+				}
+			]
+		} ]
+	};
+	crowdNotSatisfiedChart.setOption(option);
+}
+
 
 /*[
 [ 'product', '2012', '2013', '2014', '2015', '2016', '2017' ],
