@@ -145,14 +145,6 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	}
 
 	public void getGradeByCondition() {
-		System.out.println("+++++++++++++++++++++");
-		System.out.println("unitIds:" + unitIds);
-		for (String fd : unitIds) {
-			System.out.println("fd:" + fd);
-		}
-		System.out.println("searchTimeStart:" + searchTimeStart);
-		System.out.println("searchTimeEnd:" + searchTimeEnd);
-		System.out.println("serviceGradeDTOList:" + serviceGradeDTOList);
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
 
@@ -206,13 +198,6 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	}
 
 	public String exportStatisticsExcel() {
-		System.out.println("-------------------");
-		for (String fd : unitIds) {
-			System.out.println("fd:" + fd);
-		}
-		System.out.println("searchTimeStart:" + searchTimeStart);
-		System.out.println("searchTimeEnd:" + searchTimeEnd);
-		System.out.println("serviceGradeDTOList:" + serviceGradeDTOList);
 		StatisticsVO statisticsVO = statisticsService.getGradeByCondition(unitIds, searchTimeStart, searchTimeEnd,
 				serviceGradeDTOList);
 		UnitHaveServiceGradeDTO unitHaveServiceGradeDTO = new UnitHaveServiceGradeDTO();
@@ -228,7 +213,6 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 				}
 			}
 		}
-		System.out.println("statisticsVO:" + statisticsVO);
 		/**
 		 * 写入文件
 		 */
