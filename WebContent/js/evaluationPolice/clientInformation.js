@@ -39,8 +39,8 @@ $(function() {
 						}, 'json')
 					} else if (response.jwcpxt_user_id) {
 						queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
-						this.getInfo(queryData);
 					}
+					this.getInfo(queryData);
 				}, 'json');
 			},
 			getInfo (pramas) {
@@ -127,5 +127,13 @@ $(function() {
 			minDate : '1900/01/01', // 设置最小日期
 			maxDate : '2050/01/01', // 设置最大日期
 		});
+	}
+
+
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return unescape(r[2]);
+		return null;
 	}
 })

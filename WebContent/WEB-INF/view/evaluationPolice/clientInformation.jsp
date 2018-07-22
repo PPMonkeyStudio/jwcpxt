@@ -43,16 +43,19 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<select v-if="isUnit" style="width:120px; float: left;"
-										class="selectpicker" name="clientInfoVO.screenUser"
-										@change="queryClient" title="请选择单位。。">
-										<option v-for="Appraisal in allAppraisal" vlaue="Appraisal.jwcpxt_user_id">{{Appraisal.user_name}}</option>
+										class="form-control" name="clientInfoVO.screenUser"
+										@change="queryClient">
+										<option value="">选择测评员</option>
+										<option v-for="appraisal in allAppraisal" vlaue="appraisal.jwcpxt_user_id">{{appraisal.user_name}}</option>
 									</select>
 									<div style="width: 500px; float: left; margin-left: 10px;">
 										<div class="form-group" style="margin: auto;">
+											<label>办理时间</label>
 											<input name="clientInfoVO.startTime" @change="queryClient"
 												class="mydate form-control" id="beginTime"
-												placeholder="起始时间" style="display: inline; width: 150px;">到<input
-												name="clientInfoVO.endTime" @change="queryClient"
+												placeholder="起始时间" style="display: inline; width: 150px;">
+											<label>到</label>
+											<input name="clientInfoVO.endTime" @change="queryClient"
 												id="endTime" placeholder="结束时间" class="mydate form-control"
 												style="display: inline; width: 150px;">
 										</div>

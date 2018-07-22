@@ -70,7 +70,7 @@
 				/WEB-INF/view/statisticalData/statisticalChart.jsp
 			</result>
 			<result name="skipClientInformationPage" type="redirectAction">
-				skipClientInformation?definitionId=${definitionId}&amp;unitId=${unitId}
+				skipClientInformation?definitionId=${definitionId}&amp;unitId=${unitId}&amp;appraisalId=${appraisalId}
 			</result>
 			<result name="skipClientInformation">
 				/WEB-INF/view/evaluationPolice/clientInformation.jsp
