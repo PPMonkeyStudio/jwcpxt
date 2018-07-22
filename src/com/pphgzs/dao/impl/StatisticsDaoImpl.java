@@ -585,8 +585,17 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		query.setParameter("fatherUnitId", fatherUnitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
 		//
-		query.setParameter("searchTimeStart", searchTimeStart);
-		query.setParameter("searchTimeEnd", searchTimeEnd);
+		if (searchTimeStart.equals("")) {
+			query.setParameter("searchTimeStart", "0000-00-00");
+		} else {
+			query.setParameter("searchTimeStart", searchTimeStart);
+		}
+		if (searchTimeEnd.equals("")) {
+			query.setParameter("searchTimeEnd", "9999-99-99");
+		} else {
+			query.setParameter("searchTimeEnd", searchTimeEnd);
+		}
+
 		//
 		//
 		try {
