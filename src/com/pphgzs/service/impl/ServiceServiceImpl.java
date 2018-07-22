@@ -76,7 +76,9 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO) {
 		List<ClientInfoDTO> listClientInfo = new ArrayList<>();
+		System.out.println("df:" + clientInfoVO);
 		listClientInfo = serviceDao.get_clientInfoVO_byUserId(clientInfoVO);
+		System.out.println("size:" + listClientInfo.size());
 		int totalRecords = serviceDao.get_clientInfoVOCount_byUserId(clientInfoVO);
 		int totalPages = ((totalRecords - 1) / clientInfoVO.getPageSize()) + 1;
 		clientInfoVO.setListClientInfoDTO(listClientInfo);

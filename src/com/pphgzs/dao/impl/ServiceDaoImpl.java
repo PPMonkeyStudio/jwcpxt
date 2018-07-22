@@ -123,16 +123,22 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ "serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id and serviceInstance.service_instance_date >= :startTime and "
 				+ "serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
 				+ "serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "
-				+ "serviceClient.service_client_name like :search and serviceClient.service_client_phone like :search and "
-				+ "unit.unit_name like :search order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
+				+ "(serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "
+				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
 		Query query = session.createQuery(hql);
+		System.out.println("startTime" + clientInfoVO.getStartTime());
+		System.out.println("endTime" + clientInfoVO.getEndTime());
+		System.out.println("screenService" + clientInfoVO.getScreenService());
+		System.out.println("screenVisit" + clientInfoVO.getScreenVisit());
+		System.out.println("screenUser" + clientInfoVO.getScreenUser());
+		System.out.println("search" + clientInfoVO.getSearch());
 		if (clientInfoVO.getStartTime().equals("")) {
-			query.setParameter("startTime", "%%");
+			query.setParameter("startTime", "0000-00-00");
 		} else {
 			query.setParameter("startTime", clientInfoVO.getStartTime());
 		}
 		if (clientInfoVO.getEndTime().equals("")) {
-			query.setParameter("endTime", "%%");
+			query.setParameter("endTime", "9999-99-99");
 		} else {
 			query.setParameter("endTime", clientInfoVO.getEndTime());
 		}
@@ -156,6 +162,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("search", clientInfoVO.getSearch());
 		}
+		System.out.println(hql);
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());
 		query.setMaxResults(clientInfoVO.getPageSize());
 		listClientInfo = query.list();
