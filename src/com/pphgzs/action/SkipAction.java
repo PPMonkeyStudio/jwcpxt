@@ -3,6 +3,7 @@ package com.pphgzs.action;
 public class SkipAction {
 	private String definitionId;
 	private String serviceClientId;
+	private String unitId;
 
 	public String skipSidebar() {
 		return "skipSidebar";
@@ -127,6 +128,14 @@ public class SkipAction {
 
 	public void setServiceClientId(String serviceClientId) {
 		this.serviceClientId = serviceClientId;
+	}
+
+	public String getUnitId() {
+		return unitId;
+	}
+
+	public void setUnitId(String unitId) {
+		this.unitId = unitId;
 	}
 
 }

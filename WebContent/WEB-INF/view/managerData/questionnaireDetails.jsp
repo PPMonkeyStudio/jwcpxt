@@ -78,7 +78,7 @@ th {
 											<template v-for="(question,index) in questionVO.questionList">
 											<tr style="border-top: 1px solid #ddd;">
 												<th>{{question.question_sort}}</th>
-												<td>{{question.question_describe}}</td>
+												<td v-html="question.question_describe"></td>
 												<td><span v-if="question.question_type==1"
 													class="label label-primary">选择题</span> <span
 													v-else-if="question.question_type==2"

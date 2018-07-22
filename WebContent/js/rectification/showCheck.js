@@ -46,15 +46,12 @@ function loadData() {
 	})
 }
 
-function changeQuery(elt) {
-	if ($(elt).val()) {
-		queryTemp.screenStartTime = $('#searchTimeStart').val();
-		queryTemp.screenEndTime = $('#searchTimeEnd').val();
-		queryTemp.screenSearch = $('#searchTitle').val();
-		queryTemp.screenCheckState = $('#searchAuditState').val();
-		console.log(queryTemp);
-		loadData();
-	}
+function changeQuery() {
+	queryTemp.screenStartTime = $('#searchTimeStart').val();
+	queryTemp.screenEndTime = $('#searchTimeEnd').val();
+	queryTemp.screenSearch = $('#searchTitle').val();
+	queryTemp.screenCheckState = $('#searchAuditState').val();
+	loadData();
 }
 
 // 首页

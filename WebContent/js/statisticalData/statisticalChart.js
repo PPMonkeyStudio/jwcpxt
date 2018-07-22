@@ -212,7 +212,7 @@ function randerDissatisfactionChart(res) {
 						}, 'json')
 					} else if (describe == "不满意") {
 						//业务分类
-						$.post('/jwcpxt/Statistics/get_statisDissatiDateVO', {
+						$.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
 							'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
 							'statisDissaServiceDateVO.startTime' : params.startTime,
 							'statisDissaServiceDateVO.endTime' : params.endTime,
@@ -369,11 +369,13 @@ function randerDissatisfactionProblem(res) {
 			let question = elt1.questionOptionAnswerDTO.question.question_describe;
 			let answer = elt1.questionOptionAnswerDTO.option.option_describe;
 			let replaceQuestion;
+
 			if (/(请问)?(您对)[\u4e00-\u9fa5]+(满意吗)[?|？]/.test(question)) {
 				replaceQuestion = question.replace("请问", "").replace("您对", "对").replace("满意吗", answer).replace("？", "");
 			} else if (/(请问)[\u4e00-\u9fa5]+(有没有向您)[、\u4e00-\u9fa5]+[?|？]/.test(question)) {
 				replaceQuestion = question.replace("请问", "").replace("有没有向您", answer).replace("？", "");
 			}
+
 			_source[j + 1][0] = replaceQuestion;
 			_source[j + 1].push(elt1.count);
 		})
@@ -445,9 +447,32 @@ function randerDissatisfactionProblem(res) {
 			});
 		}
 	});
-	console.log(option);
 	dissatisfactionProblemChart.clear();
 	dissatisfactionProblemChart.setOption(option);
+	dissatisfactionProblemChart.on("click", function(param) {
+		if (param.componentSubType == "pie") {
+			let index = param.dataIndex;
+			//let describe = option.dataset.source[index + 1][0];
+			let definitionId = res.listStatisQuestionDTO[0].listStatisQuestionDTO[index].questionOptionAnswerDTO.question.question_service_definition;
+			let optiontext = $('#jwcpxt_unit_id option:selected').text();
+			if (optiontext == '选择一个单位...')
+				optiontext = '';
+			//console.log('/Skip/skipClientInformationPage?definitionId=' + definitionId + '&unitId=' + optiontext);
+			window.open('/jwcpxt/Skip/skipClientInformationPage?definitionId=' + definitionId + '&unitId=' + optiontext);
+		/*try {
+			res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.forEach(function(elt, i) {
+				if (elt.serviceDefinition.service_definition_describe == describe) {
+					definitionId = elt.serviceDefinition.jwcpxt_service_definition_id;
+					console.log(definitionId);
+					dissatisfactionProblemSendData();
+					throw 'Jump';
+				}
+			})
+		} catch (e) {
+			console.log(e);
+		}*/
+		}
+	});
 }
 
 
