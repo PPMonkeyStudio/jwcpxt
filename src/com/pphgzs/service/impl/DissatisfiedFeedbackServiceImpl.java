@@ -109,7 +109,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				 */
 				jwcpxt_service_client oldService_client = dissatisfiedFeedbackDao
 						.get_serviceClient_byDissatisfiedFeedbackId(
-								checkFeedbackRectification.getJwcpxt_feedback_rectification_id());
+								checkFeedbackRectification.getFeedback_rectification_dissatisfied_feedback());
 				// 分配生成当事人
 				jwcpxt_service_client newServiceClient = new jwcpxt_service_client();
 				newServiceClient.setJwcpxt_service_client_id(uuidUtil.getUuid());

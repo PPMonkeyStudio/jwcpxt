@@ -67,7 +67,7 @@ public class ServiceServiceImpl implements ServiceService {
 	public List<jwcpxt_user> list_userDO() {
 		List<jwcpxt_user> lisetUser = new ArrayList<>();
 		lisetUser = serviceDao.list_userDO();
-		return null;
+		return lisetUser;
 	}
 
 	/**
