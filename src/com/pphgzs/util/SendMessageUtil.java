@@ -27,33 +27,41 @@ public class SendMessageUtil {
 		DXNR = dXNR;
 	}
 
-	public boolean send() throws IOException {
-		String requestTime = TimeUtil.getStringSecond();
-		String sendData = "{'user':'" + USER + "','passwd':'" + PASSWD + "','requestTime':'" + requestTime + "','data':"
-				+ "{'SJH':'" + SJH + "','DXNR':'" + DXNR + "'}}";
-		URL url = new URL(URL);// 创建连接
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.setUseCaches(false);
-		connection.setInstanceFollowRedirects(true);
-		connection.setRequestMethod("POST"); // 设置请求方式
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); // 设置发送数据的格式
-		connection.setRequestProperty("Content-Lenth", String.valueOf(sendData.length()));
-		connection.connect();
-		OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8"); // utf-8编码
-		BufferedWriter bw = new BufferedWriter(out);
-		bw.write(sendData);
-		bw.flush();
-		bw.close();
-		InputStream is = connection.getInputStream();
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		String returnData = br.readLine();
-		System.out.println("结果:" + returnData);
-		if (returnData.indexOf("0000") != -1) {
-			return true;
-		} else {
-			return false;
-		}
+	public void send() throws IOException {
+		Thread thread = new Thread() {
+			public void run() {
+				try {
+					String requestTime = TimeUtil.getStringSecond();
+					String sendData = "{'user':'" + USER + "','passwd':'" + PASSWD + "','requestTime':'" + requestTime
+							+ "','data':" + "{'SJH':'" + SJH + "','DXNR':'" + DXNR + "'}}";
+					URL url = new URL(URL);// 创建连接
+					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+					connection.setDoOutput(true);
+					connection.setDoInput(true);
+					connection.setUseCaches(false);
+					connection.setInstanceFollowRedirects(true);
+					connection.setRequestMethod("POST"); // 设置请求方式
+					connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); // 设置发送数据的格式
+					connection.setRequestProperty("Content-Lenth", String.valueOf(sendData.length()));
+					connection.connect();
+					OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8"); // utf-8编码
+					BufferedWriter bw = new BufferedWriter(out);
+					bw.write(sendData);
+					bw.flush();
+					bw.close();
+					InputStream is = connection.getInputStream();
+					BufferedReader br = new BufferedReader(new InputStreamReader(is));
+					String returnData = br.readLine();
+					System.out.println("结果:" + returnData);
+					/*
+					 * if (returnData.indexOf("0000") != -1) { return true; }
+					 * else { return false; }
+					 */
+				} catch (IOException io) {
+					io.printStackTrace();
+				}
+			};
+		};
+		thread.start();
 	}
 }

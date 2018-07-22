@@ -215,6 +215,10 @@ $(function() {
 			myData.unitSelectIdArr.forEach(function(element, i) {
 				form.append($(`<input type="hidden" name="unitIds" value="${element}">`));
 			})
+			let beginTime = $("#beginTime").val();
+			form.append($(`<input type="hidden" name="searchTimeStart" value="${beginTime}">`));
+			let endTime = $("#endTime").val();
+			form.append($(`<input type="hidden" name="searchTimeEnd" value="${endTime}">`));
 			form.submit(); //自动提交
 		}
 	}

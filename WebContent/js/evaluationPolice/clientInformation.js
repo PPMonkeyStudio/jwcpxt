@@ -13,7 +13,8 @@ $(function() {
 			isLastPage : false
 		},
 		isUnit : false,
-		allAppraisal : []
+		allAppraisal : [],
+		allService : []
 	};
 
 	let queryData = {
@@ -31,9 +32,16 @@ $(function() {
 		data : myData,
 		methods : {
 			before () {
+				//业务id
+				let definitionId = getUrlParam('definitionId');
+				if (definitionId) {
+					//选中传过来的业务ID
+					$('input[name="clientInfoVO.screenService"]').val();
+				}
 				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
+						//获取所有测评员
 						$.post('/jwcpxt/Service/list_userDO', {}, response => {
 							myData.allAppraisal = response;
 						}, 'json')
@@ -42,6 +50,11 @@ $(function() {
 					}
 					this.getInfo(queryData);
 				}, 'json');
+				//获取所有的业务
+				$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
+					myData.allService = response;
+				}, 'json');
+
 			},
 			getInfo (pramas) {
 				$.post('/jwcpxt/Service/get_clientInfoVO_byUserId', pramas, response => {
@@ -61,7 +74,7 @@ $(function() {
 				myData.page.isLastPage = response.currentPage == response.totalPage;
 			},
 			queryClient ($event) {
-				queryData[$event.target.name] = $event.target.value;
+				queryData[$event.target.name] = $($event.target).val();
 				this.getInfo(queryData);
 			},
 			pageTo (definition_id, client_id) {
@@ -128,7 +141,6 @@ $(function() {
 			maxDate : '2050/01/01', // 设置最大日期
 		});
 	}
-
 
 	function getUrlParam(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
