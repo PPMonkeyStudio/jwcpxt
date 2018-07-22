@@ -12,9 +12,11 @@ function getAllUnit() {
 
 //let lineChart = echarts.init(document.getElementById('main'), 'light');
 //var paiChart = echarts.init(document.getElementById('main2'), 'light');
-var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'light');
-var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light');
-var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light');
+var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'light'); //所有不满意
+var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light'); //不满意或满意业务
+var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light'); //问题
+var crowdFocusChart = echarts.init(document.getElementById('crowdFocus'), 'light'); //群众关注
+var crowdNotSatisfiedChart = echarts.init(document.getElementById('crowdNotSatisfied'), 'light'); //群众不满意
 var definitionId = '';
 function getDate() {
 	let dateTime = new Date();
@@ -55,6 +57,8 @@ function getChart($params) {
 		}
 	}
 	if (flag) {
+		//群众关注
+
 		//不满意分布
 		$.post('/jwcpxt/Statistics/get_statisDissatiDateVO', {
 			'statisDissatiDateVO.screenUnit' : params.jwcpxt_unit_id,
@@ -100,6 +104,149 @@ function checkTimeType(btn) {
 	$(btn).attr('disabled', 'disabled');
 	params["timeType"] = $(btn).attr('time-type');
 	getChart(params);
+}
+
+randerCrowdFocusChart('');
+function randerCrowdFocusChart(res) {
+	function createRandomItemStyle() {
+		return {
+			normal : {
+				color : 'rgb(' + [
+						Math.round(Math.random() * 160),
+						Math.round(Math.random() * 160),
+						Math.round(Math.random() * 160)
+					].join(',') + ')'
+			}
+		};
+	}
+
+	let option = {
+		title : {
+			text : '群众关注',
+			//link : 'http://www.google.com/trends/hottrends'
+		},
+		tooltip : {
+			show : true
+		},
+		series : [ {
+			name : '群众关注',
+			type : 'wordCloud',
+			size : [ '80%', '80%' ],
+			textRotation : [ 0, 45, 90, -45 ],
+			textPadding : 0,
+			autoSize : {
+				enable : true,
+				minSize : 14
+			},
+			data : [
+				{
+					name : "Sam S Club",
+					value : 10000,
+					itemStyle : {
+						normal : {
+							color : 'black'
+						}
+					}
+				},
+				{
+					name : "Macys",
+					value : 6181,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Amy Schumer",
+					value : 4386,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Jurassic World",
+					value : 4055,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Charter Communications",
+					value : 2467,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Chick Fil A",
+					value : 2244,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Planet Fitness",
+					value : 1898,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Pitch Perfect",
+					value : 1484,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Express",
+					value : 1112,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Home",
+					value : 965,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Johnny Depp",
+					value : 847,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Lena Dunham",
+					value : 582,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Lewis Hamilton",
+					value : 555,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "KXAN",
+					value : 550,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Mary Ellen Mark",
+					value : 462,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Farrah Abraham",
+					value : 366,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Rita Ora",
+					value : 360,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Serena Williams",
+					value : 282,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "NCAA baseball tournament",
+					value : 273,
+					itemStyle : createRandomItemStyle()
+				},
+				{
+					name : "Point Break",
+					value : 265,
+					itemStyle : createRandomItemStyle()
+				}
+			]
+		} ]
+	};
+	crowdFocusChart.setOption(option);
 }
 
 /*[
