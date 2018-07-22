@@ -160,7 +160,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		if (clientInfoVO.getSearch().equals("")) {
 			query.setParameter("search", "%%");
 		} else {
-			query.setParameter("search", clientInfoVO.getSearch());
+			query.setParameter("search", "%" + clientInfoVO.getSearch() + "%");
 		}
 		System.out.println(hql);
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());

@@ -85,6 +85,7 @@ public class QuestionTest {
 	@Test
 	public void get_clientVO() {
 		ClientInfoVO clientInfoVO = new ClientInfoVO();
+		clientInfoVO.setSearch("15279909732");
 		System.out.println(serviceService.get_clientInfoVO_byUserId(clientInfoVO));
 	}
 
