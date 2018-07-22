@@ -220,7 +220,7 @@ $(function() {
 			let endTime = $("#endTime").val();
 			form.append($(`<input type="hidden" name="searchTimeEnd" value="${endTime}">`));
 			console.log($("#exportForm").serializeArray());
-			//form.submit(); //自动提交
+			form.submit(); //自动提交
 		}
 	}
 
