@@ -486,7 +486,7 @@ function randerDissatisfactionChart(res) {
 							'statisDissaServiceDateVO.endTime' : params.endTime,
 							'statisDissaServiceDateVO.timeType' : params.timeType
 						}, response => {
-							randerDissatisfiedServiceChart(response); //所有不满意图表
+							randerDissatisfiedServiceChart(response, describe); //所有不满意图表
 						}, 'json')
 					} else if (describe == "不满意") {
 						//业务分类
@@ -496,7 +496,7 @@ function randerDissatisfactionChart(res) {
 							'statisDissaServiceDateVO.endTime' : params.endTime,
 							'statisDissaServiceDateVO.timeType' : params.timeType
 						}, response => {
-							randerDissatisfiedServiceChart(response); //所有不满意图表
+							randerDissatisfiedServiceChart(response, describe); //所有不满意图表
 						}, 'json')
 					}
 				/*res.listStaDisDateDTO[0].listDissaOptionDTO.forEach(function(elt, i) {
@@ -522,7 +522,7 @@ function randerDissatisfactionChart(res) {
 [ 'Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1 ]
 ]*/
 //绘制不满意和业务关联的图
-function randerDissatisfiedServiceChart(res) {
+function randerDissatisfiedServiceChart(res, title) {
 	let _source = [ [ 'time' ], ];
 	res.listStatisDIssaServiceDateDTO.forEach(function(elt, i) {
 		_source[0].push(elt.dateScale);
@@ -559,6 +559,10 @@ function randerDissatisfiedServiceChart(res) {
 	//数据
 	setTimeout(function() {
 		let option = {
+			title : {
+				text : title ? title + "业务分布图" : "不满意业务分布图",
+				subtext : ''
+			},
 			legend : {},
 			tooltip : {
 				trigger : 'axis',
@@ -611,8 +615,7 @@ function randerDissatisfiedServiceChart(res) {
 					res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.forEach(function(elt, i) {
 						if (elt.serviceDefinition.service_definition_describe == describe) {
 							definitionId = elt.serviceDefinition.jwcpxt_service_definition_id;
-							console.log(definitionId);
-							dissatisfactionProblemSendData();
+							dissatisfactionProblemSendData(describe);
 							throw 'Jump';
 						}
 					})
@@ -621,10 +624,13 @@ function randerDissatisfiedServiceChart(res) {
 				}
 			}
 		});
+		//默认将右边图画出
+		definitionId = res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO[0].serviceDefinition.jwcpxt_service_definition_id
+		dissatisfactionProblemSendData(option.dataset.source[1][0]);
 	});
 }
 
-function dissatisfactionProblemSendData() {
+function dissatisfactionProblemSendData(describe) {
 	$.post('/jwcpxt/Statistics/get_statisDissaQuestionDateVO', {
 		'statisDissaQuestionDateVO.screenUnit' : params.jwcpxt_unit_id,
 		'statisDissaQuestionDateVO.startTime' : params.startTime,
@@ -632,10 +638,10 @@ function dissatisfactionProblemSendData() {
 		'statisDissaQuestionDateVO.timeType' : params.timeType,
 		'statisDissaQuestionDateVO.screenService' : definitionId
 	}, response => {
-		randerDissatisfactionProblem(response); //所有不满意问题
+		randerDissatisfactionProblem(response, describe); //所有不满意问题
 	}, 'json')
 }
-function randerDissatisfactionProblem(res) {
+function randerDissatisfactionProblem(res, title) {
 	let _source = [ [ 'time' ], ];
 	res.listStatisQuestionDTO.forEach(function(elt, i) {
 		_source[0].push(elt.dateScale);
@@ -683,6 +689,11 @@ function randerDissatisfactionProblem(res) {
 	});
 	//数据
 	let option = {
+		/*title : {
+			text : title ? title + "业务问题不满意分布图" : "不满意问题分布图",
+			subtext : '',
+			top : -20
+		},*/
 		legend : {},
 		tooltip : {
 			trigger : 'axis',

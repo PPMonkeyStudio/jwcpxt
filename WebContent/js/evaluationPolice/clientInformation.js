@@ -89,7 +89,7 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			prePage () {
-				if (myData.page.havePrePage) {
+				if (!myData.page.havePrePage) {
 					toastr.error("没有上一页了哦~");
 					return;
 				}
@@ -97,7 +97,7 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			nextPage () {
-				if (myData.page.haveNextPage) {
+				if (!myData.page.haveNextPage) {
 					toastr.error("没有下一页了哦~");
 					return;
 				}
