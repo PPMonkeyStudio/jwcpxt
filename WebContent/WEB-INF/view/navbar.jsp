@@ -23,18 +23,22 @@
 				<!-- 			<li><a href="#"> 
 						<p>问卷</p>
 				</a></li> -->
-				<li><a href="<%=basePath%>Skip/skipManagerService">
-						<p>业务</p>
-				</a></li>
-				<li><a href="<%=basePath%>Skip/skipManagerUser">
-						<p>用户</p>
-				</a></li>
-				<li><a href="<%=basePath%>Skip/skipManagerUnit">
-						<p>单位</p>
-				</a></li>
-				<li><a href="<%=basePath%>Skip/skipStatisticalChart">
-						<p>图表</p>
-				</a></li>
+				<s:if test="#session.loginType=='unit'">
+					<li><a href="<%=basePath%>Skip/skipManagerService">
+							<p>业务</p>
+					</a></li>
+					<li><a href="<%=basePath%>Skip/skipManagerUser">
+							<p>用户</p>
+					</a></li>
+					<li><a href="<%=basePath%>Skip/skipManagerUnit">
+							<p>单位</p>
+					</a></li>
+				</s:if>
+				<s:if test="#session.loginType=='unit' || #session.user.user_type=='2' ">
+					<li><a href="<%=basePath%>Skip/skipStatisticalChart">
+							<p>图表</p>
+					</a></li>
+				</s:if>
 				<li><a href="<%=basePath%>Skip/skipClientInformation">
 						<p>当事人</p>
 				</a></li>
