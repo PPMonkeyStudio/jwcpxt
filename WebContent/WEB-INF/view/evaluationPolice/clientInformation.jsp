@@ -46,21 +46,21 @@ th {
 										class="form-control" name="clientInfoVO.screenUser"
 										@change="queryClient">
 										<option value="">选择测评员</option>
-										<option v-for="appraisal in allAppraisal" vlaue="appraisal.jwcpxt_user_id">{{appraisal.user_name}}</option>
+										<option v-for="appraisal in allAppraisal" :value="appraisal.jwcpxt_user_id">{{appraisal.user_name}}</option>
 									</select>
 									<div style="width: 500px; float: left; margin-left: 10px;">
 										<div class="form-group" style="margin: auto;">
 											<label>办理时间</label>
-											<input name="clientInfoVO.startTime" @change="queryClient"
+											<input name="clientInfoVO.startTime" @blur="queryClient"
 												class="mydate form-control" id="beginTime"
 												placeholder="起始时间" style="display: inline; width: 150px;">
 											<label>到</label>
-											<input name="clientInfoVO.endTime" @change="queryClient"
+											<input name="clientInfoVO.endTime" @blur="queryClient"
 												id="endTime" placeholder="结束时间" class="mydate form-control"
 												style="display: inline; width: 150px;">
 										</div>
 									</div>
-									<input @change="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
+									<input @keyup="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
 										name="clientInfoVO.search" class="form-control"
 										style="float: right; width: 250px;">
 									<table class="table" style="text-align: center; width: 100%;">
@@ -81,7 +81,12 @@ th {
 														<option value="7">拒访</option>
 														<option value="8">其他</option>
 												</select></th>
-												<th style="width: 60px;">所属业务</th>
+												<th style="width: 80px;">
+													<select class="form-control" @change="queryClient" name="clientInfoVO.screenService">
+														<option value="">全部业务</option>
+														<option v-for="service in allService" :value="service.jwcpxt_service_definition_id">{{service.service_definition_describe}}</option>
+													</select>
+												</th>
 												<th style="width: 150px;">办理单位</th>
 												<th style="width: 60px;">办理时间</th>
 												<s:if test="#session.user.user_type==1">
@@ -92,9 +97,9 @@ th {
 										<tbody v-cloak>
 											<template v-for="(ClientInfoDTO,index) in clientInfoVO">
 											<tr style="border-top: 1px solid #ddd;">
-												<th>{{ClientInfoDTO.serviceClient.service_client_name}}</th>
+												<th v-html="ClientInfoDTO.serviceClient.service_client_name"></th>
 												<td>{{ClientInfoDTO.serviceClient.service_client_sex}}</td>
-												<td>{{ClientInfoDTO.serviceClient.service_client_phone}}</td>
+												<td v-html="ClientInfoDTO.serviceClient.service_client_phone"></td>
 												<td><span
 													v-if="ClientInfoDTO.serviceClient.service_client_visit==1"
 													class="label label-primary">成功</span> <span
@@ -114,7 +119,7 @@ th {
 													class="label label-warning">其他</span> <span v-else
 													class="label label-warning">未定义</span></td>
 												<td>{{ClientInfoDTO.serviceDefinition.service_definition_describe}}</td>
-												<td>{{ClientInfoDTO.unit.unit_name}}</td>
+												<td v-html="ClientInfoDTO.unit.unit_name.replace('江西省萍乡市公安局','')"></td>
 												<td>{{ClientInfoDTO.serviceInstance.service_instance_date}}</td>
 												<s:if test="#session.user.user_type==1">
 													<td><a href="javascript:;"
