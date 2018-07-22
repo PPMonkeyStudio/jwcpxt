@@ -20,15 +20,22 @@
 				<li><a href="#">
 						<p>首页</p>
 				</a></li>
-				<li>
+				<s:if test="#session.loginType=='user'">
+					<s:if test="#session.user.user_type=='1'">
+						<li><a href="<%=basePath%>Skip/skipClientInformationPage?appraisalId=<s:property value="#session.user.jwcpxt_user_id"/>">
+								<p>当事人</p>
+						</a></li>
+					</s:if>
+					<s:if test="#session.user.user_type=='2'">
+						<li><a href="<%=basePath%>Skip/skipClientInformationPage">
+								<p>当事人</p>
+						</a></li>
+					</s:if>
+				</s:if>
 			</ul>
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<!-- <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="ti-panel"></i>
-						<p>Stats</p>
-				</a></li> -->
 				<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="ti-bell"></i>
 						<p class="notification">1</p>

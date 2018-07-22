@@ -4,6 +4,7 @@ public class SkipAction {
 	private String definitionId;
 	private String serviceClientId;
 	private String unitId;
+	private String appraisalId;
 
 	public String skipSidebar() {
 		return "skipSidebar";
@@ -110,6 +111,10 @@ public class SkipAction {
 		return "skipStatisticalChart";
 	}
 
+	public String skipClientInformationPage() {
+		return "skipClientInformationPage";
+	}
+	
 	public String skipClientInformation() {
 		return "skipClientInformation";
 	}
@@ -136,6 +141,14 @@ public class SkipAction {
 
 	public void setUnitId(String unitId) {
 		this.unitId = unitId;
+	}
+
+	public String getAppraisalId() {
+		return appraisalId;
+	}
+
+	public void setAppraisalId(String appraisalId) {
+		this.appraisalId = appraisalId;
 	}
 
 }
