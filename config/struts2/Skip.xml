@@ -15,8 +15,7 @@
 				<interceptor-ref name="sessionout" />
 			</interceptor-stack>
 		</interceptors>
-		<action name="*" class="com.pphgzs.action.SkipAction"
-			method="{1}">
+		<action name="*" class="com.pphgzs.action.SkipAction" method="{1}">
 			<result name="skipNavbarIndex">/WEB-INF/view/navbarIndex.jsp</result>
 			<result name="skipSystemIndex">/WEB-INF/view/systemIndex.jsp</result>
 			<result name="skipSidebar">/WEB-INF/view/sidebar.jsp</result>
@@ -58,8 +57,7 @@
 			<result name="skipPoliceAssessmentPageJsp">
 				/WEB-INF/view/evaluationPolice/policeAssessmentPage.jsp
 			</result>
-			<result name="skipPreviewPoliceAssessmentPage"
-				type="redirectAction">
+			<result name="skipPreviewPoliceAssessmentPage" type="redirectAction">
 				skipPreviewPoliceAssessmentPageJsp?definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
 			</result>
 			<result name="skipPreviewPoliceAssessmentPageJsp">
@@ -70,6 +68,9 @@
 			</result>
 			<result name="skipStatisticalChart">
 				/WEB-INF/view/statisticalData/statisticalChart.jsp
+			</result>
+			<result name="skipClientInformationPage" type="redirectAction">
+				skipClientInformation?definitionId=${definitionId}&amp;unitId=${unitId}
 			</result>
 			<result name="skipClientInformation">
 				/WEB-INF/view/evaluationPolice/clientInformation.jsp

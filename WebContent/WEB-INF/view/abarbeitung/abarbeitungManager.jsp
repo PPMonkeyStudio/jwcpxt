@@ -53,7 +53,7 @@ a:hover {
 											class="mydate form-control"
 											style="display: inline; width: 150px;"> <input
 											id="searchTitle" style="display: inline; width: 250px;"
-											oninput="changeQuery()" class="form-control"
+											onchange="changeQuery()" class="form-control"
 											placeholder="请输入搜索内容">
 
 									</div>
