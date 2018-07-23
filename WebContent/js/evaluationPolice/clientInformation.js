@@ -46,7 +46,7 @@ $(function() {
 							myData.allAppraisal = response;
 						}, 'json')
 					} else if (response.jwcpxt_user_id) {
-						queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
+						//queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
 					}
 					this.getInfo(queryData);
 				}, 'json');
