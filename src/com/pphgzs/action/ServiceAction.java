@@ -150,9 +150,9 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		jwcpxt_user user = new jwcpxt_user();
 		user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
 		if (type.equals("revisit")) {
-			clientInstanceDTO = serviceService.get_notServiceClient_byJudge(user);
-		} else {
 			clientInstanceDTO = serviceService.get_notServiceClient_byJudge_revisit(user);
+		} else {
+			clientInstanceDTO = serviceService.get_notServiceClient_byJudge(user);
 		}
 
 		http_response.getWriter().write(gson.toJson(clientInstanceDTO));

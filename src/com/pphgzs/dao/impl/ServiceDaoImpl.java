@@ -222,7 +222,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id "//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ " and serviceClient.service_client_visit = '2' "//
-				+ " and serviceInstance.service_client_visit = '2' "//
+				+ " and serviceInstance.service_instance_judge= :userId "//
 				+ " and serviceInstance.service_instance_service_definition = 'revisit' "//
 				+ " order by "//
 				+ " serviceInstance.service_instance_gmt_create "//
@@ -257,7 +257,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id "//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ " and serviceClient.service_client_visit= '2' "//
-				+ " and serviceInstance.service_client_visit= '2' "//
+				+ " and serviceInstance.service_instance_judge= :userId "//
 				+ " and serviceInstance.service_instance_service_definition != 'revisit' "//
 				+ " order by "//
 				+ " serviceInstance.service_instance_gmt_create "//
