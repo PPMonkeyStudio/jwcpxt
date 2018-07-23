@@ -8,6 +8,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInfoDTO;
@@ -177,5 +178,13 @@ public interface ServiceDao {
 	 * @return
 	 */
 	public List<jwcpxt_user> list_userDO();
+
+	/**
+	 * 根据机构代码获取单位
+	 * 
+	 * @param orginId
+	 * @return
+	 */
+	public jwcpxt_unit get_unitDo_byOrginaiId(String orginId);
 
 }

@@ -14,6 +14,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
+import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInfoDTO;
@@ -946,6 +947,16 @@ public class ServiceDaoImpl implements ServiceDao {
 		session.save(serviceDefinition);
 		session.flush();
 		return true;
+	}
+
+	@Override
+	public jwcpxt_unit get_unitDo_byOrginaiId(String orginId) {
+		Session session = getSession();
+		String hql = "from jwcpxt_unit where unit_num = '" + orginId + "'";
+		Query query = session.createQuery(hql);
+		jwcpxt_unit newUnit = (jwcpxt_unit) query.uniqueResult();
+		session.clear();
+		return newUnit;
 	}
 
 	/*
