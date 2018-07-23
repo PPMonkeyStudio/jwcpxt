@@ -115,7 +115,7 @@ th {
 </body>
 <script type="text/javascript">
 	/* 处理侧边栏选项 */
-	$('#sideManager').attr("class", "active");
+	$('#bellPage').attr("class", "active");
 </script>
 <script src="<%=basePath%>js/abarbeitung/notEectificationOverTime.js"></script>
 </html>

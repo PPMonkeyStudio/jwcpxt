@@ -23,7 +23,9 @@ $(function() {
 		data : myData,
 		methods : {
 			getInfo () {
-				$.post('/jwcpxt/Service/get_notServiceClient_byServiceClientId', '', response => {
+				$.post('/jwcpxt/Service/get_notServiceClient_byServiceClientId', {
+					type : getUrlParam("type")
+				}, response => {
 					this.returnedParty = response;
 				}, 'json')
 			},
@@ -35,4 +37,11 @@ $(function() {
 			this.getInfo();
 		},
 	})
+
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return unescape(r[2]);
+		return null;
+	}
 })
