@@ -58,11 +58,18 @@
 				</a></li>
 				<s:if test="#session.loginType=='unit'">
 					<s:if test="#session.unit.unit_grade==1">
-						<li id="bellPage"><a
+						<li id="bellNotEectificationPage"><a
 							href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
 								class="fa fa-bell-o"></i>
 								<p>
-									系统消息 <span style="background-color:red;" class="badge">0</span>
+									整改超时 <span style="background-color:red;" class="badge">0</span>
+								</p>
+						</a></li>
+						<li id="bellTwiceVisitPage"><a
+							href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
+								class="fa fa-bell-o"></i>
+								<p>
+									回访不满 <span style="background-color:red;" class="badge">0</span>
 								</p>
 						</a></li>
 					</s:if>
