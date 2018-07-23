@@ -245,6 +245,7 @@ function randerCrowdFocusChart(res) {
 			]
 		} ]
 	};
+	console.log(option);
 	crowdFocusChart.setOption(option);
 }
 

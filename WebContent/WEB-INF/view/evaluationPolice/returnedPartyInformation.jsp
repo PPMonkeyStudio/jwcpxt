@@ -31,7 +31,7 @@ th {
 		<s:action name="skipSidebar" namespace="/Skip" executeResult="true" />
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="navbarAppraisal" namespace="/Skip"
+			<s:action name="skipNavbarAppraisal" namespace="/Skip"
 				executeResult="true" />
 			<div class="" id="content"
 				style="width: calc( 100% - 800px ); margin: 50px 400px 50px 400px ">
