@@ -46,7 +46,7 @@ $(function() {
 							myData.allAppraisal = response;
 						}, 'json')
 					} else if (response.jwcpxt_user_id) {
-						queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
+						//queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
 					}
 					this.getInfo(queryData);
 				}, 'json');
@@ -78,7 +78,7 @@ $(function() {
 				this.getInfo(queryData);
 			},
 			pageTo (definition_id, client_id) {
-				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?definitionId=${definition_id}&serviceClientId=${client_id}`;
+				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=general&definitionId=${definition_id}&serviceClientId=${client_id}`;
 			},
 			firstPage () {
 				if (myData.page.isFirstPage) {
@@ -89,7 +89,7 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			prePage () {
-				if (myData.page.havePrePage) {
+				if (!myData.page.havePrePage) {
 					toastr.error("没有上一页了哦~");
 					return;
 				}
@@ -97,7 +97,7 @@ $(function() {
 				this.getInfo(queryData)
 			},
 			nextPage () {
-				if (myData.page.haveNextPage) {
+				if (!myData.page.haveNextPage) {
 					toastr.error("没有下一页了哦~");
 					return;
 				}

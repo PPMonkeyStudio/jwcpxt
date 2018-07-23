@@ -48,18 +48,36 @@
 		data-active-color="danger">
 		<div class="sidebar-wrapper">
 			<div class="logo">
-				<a href="<%=basePath%>Skip/skipSystemIndex" class="simple-text">警务测评系统 </a>
+				<a href="<%=basePath%>Skip/skipSystemIndex" class="simple-text">警务测评系统
+				</a>
 			</div>
-
 			<ul class="nav">
 				<li id="sideIndex"><a href="<%=basePath%>Skip/skipSystemIndex">
 						<i class="ti-world"></i>
 						<p>首页</p>
 				</a></li>
+				<s:if test="#session.loginType=='unit'">
+					<s:if test="#session.unit.unit_grade==1">
+						<li id="bellNotEectificationPage"><a
+							href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
+								class="fa fa-bell-o"></i>
+								<p>
+									整改超时 <span style="background-color:red;" class="badge">0</span>
+								</p>
+						</a></li>
+						<li id="bellTwiceVisitPage"><a
+							href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
+								class="fa fa-bell-o"></i>
+								<p>
+									回访不满 <span style="background-color:red;" class="badge">0</span>
+								</p>
+						</a></li>
+					</s:if>
+				</s:if>
 				<s:if test="#session.loginType=='user'">
 					<s:if test="#session.user.user_type==1">
 						<li id="sidePolice"><a
-							href="<%=basePath%>Skip/skipReturnedPartyInformation"> <i
+							href="<%=basePath%>Skip/skipEvaluationPoliceIndex"> <i
 								class="ti-user"></i>
 								<p>测评警务</p>
 						</a></li>
@@ -74,7 +92,9 @@
 				</s:if>
 				<s:if test="#session.loginType=='user'">
 					<s:if test="#session.user.user_type==2">
-						<li id="sideStatis"><a href="<%=basePath%>Skip/skipStatisticalData"> <i class="ti-stats-up"></i>
+						<li id="sideStatis"><a
+							href="<%=basePath%>Skip/skipStatisticalData"> <i
+								class="ti-stats-up"></i>
 								<p>统计数据</p>
 						</a></li>
 					</s:if>
@@ -119,6 +139,18 @@ td .label {
 	line-height: 33px !important;
 }
 </style>
-<script type="text/javascript" src="<%=basePath %>js/user/login.js"></script>
-<script type="text/javascript" src="<%=basePath %>js/user/updatePassword.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/user/login.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>js/user/updatePassword.js"></script>
+<script type="text/javascript">
+	//页面初始化时获取数量
+	$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
+		$('#bellPage .badge').html(response);
+	}, 'text')
+	setInterval(function() {
+		$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
+			$('#bellPage .badge').html(response);
+		}, 'text')
+	}, 10000)
+</script>
 </html>

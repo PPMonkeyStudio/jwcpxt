@@ -2,6 +2,7 @@ $(function() {
 	let myData = {
 		definitionId : getUrlParam('definitionId'), //业务定义ID
 		serviceClientId : getUrlParam('serviceClientId'), //业务当事人ID
+		type : getUrlParam('type'), //业务当事人ID
 		serviceClien : {},
 		serviceDefinition : {},
 		questionData : [],
@@ -38,7 +39,9 @@ $(function() {
 					myData.serviceDefinition = response;
 				}, 'json')
 				//获取session中的回访信息
-				$.post('/jwcpxt/Service/get_notServiceClient_byServiceClientId', '', response => {
+				$.post('/jwcpxt/Service/get_notServiceClient_byServiceClientId', {
+					type : myData.type
+				}, response => {
 					this.returnedParty = response;
 				}, 'json')
 				//获取当事人ID

@@ -31,7 +31,9 @@ public interface ServiceService {
 	 * @param user
 	 * @return
 	 */
-	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user);
+	public ClientInstanceDTO get_notServiceClient_byJudge(jwcpxt_user user);
+
+	public ClientInstanceDTO get_notServiceClient_byJudge_revisit(jwcpxt_user user);
 
 	/**
 	 * 根据抓取id获取抓取记录

@@ -121,7 +121,7 @@ public class QuestionTest {
 		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
 		jwcpxt_user user = new jwcpxt_user();
 		user.setJwcpxt_user_id("1");
-		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
+		clientInstanceDTO = serviceService.get_notServiceClient_byJudge(user);
 		System.out.println(clientInstanceDTO);
 	}
 

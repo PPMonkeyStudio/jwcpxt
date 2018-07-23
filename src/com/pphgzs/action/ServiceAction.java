@@ -54,6 +54,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private List<jwcpxt_service_grab> listServiceGrab;
 	private ClientInstanceDTO clientInstanceDTO;
 	private ClientInfoVO clientInfoVO;
+	private String type;
 
 	/**
 	 * 用户列表
@@ -135,7 +136,7 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	}
 
 	/**
-	 * 从session中拿到当前被分配的第一条测评人员的信息
+	 * 从session中拿到当前被分配的第一条当事人信息，加了一个类型
 	 * 
 	 * @throws IOException
 	 */
@@ -148,7 +149,12 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_user user = new jwcpxt_user();
 		user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
-		clientInstanceDTO = serviceService.get_notServiceClient_byServiceClientId(user);
+		if (type.equals("revisit")) {
+			clientInstanceDTO = serviceService.get_notServiceClient_byJudge_revisit(user);
+		} else {
+			clientInstanceDTO = serviceService.get_notServiceClient_byJudge(user);
+		}
+
 		http_response.getWriter().write(gson.toJson(clientInstanceDTO));
 	}
 
@@ -643,6 +649,14 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public void setServiceGrab(jwcpxt_service_grab serviceGrab) {
 		this.serviceGrab = serviceGrab;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	/*

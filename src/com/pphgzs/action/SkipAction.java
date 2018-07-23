@@ -5,6 +5,7 @@ public class SkipAction {
 	private String serviceClientId;
 	private String unitId;
 	private String appraisalId;
+	private String type;
 
 	public String skipSidebar() {
 		return "skipSidebar";
@@ -83,8 +84,16 @@ public class SkipAction {
 		return "skipQuestionnaireDetailsJsp";
 	}
 
+	public String skipEvaluationPoliceIndex() {
+		return "skipEvaluationPoliceIndex";
+	}
+
 	public String skipReturnedPartyInformation() {
 		return "skipReturnedPartyInformation";
+	}
+
+	public String skipReturnedRectificationInformation() {
+		return "skipReturnedRectificationInformation";
 	}
 
 	public String skipPoliceAssessmentPage() {
@@ -93,6 +102,10 @@ public class SkipAction {
 
 	public String skipPoliceAssessmentPageJsp() {
 		return "skipPoliceAssessmentPageJsp";
+	}
+
+	public String skipNotEectificationOverTime() {
+		return "skipNotEectificationOverTime";
 	}
 
 	public String login() {
@@ -153,6 +166,15 @@ public class SkipAction {
 
 	public void setAppraisalId(String appraisalId) {
 		this.appraisalId = appraisalId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+		System.out.println(type);
 	}
 
 }

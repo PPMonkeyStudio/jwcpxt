@@ -2,6 +2,7 @@ package com.pphgzs.service.impl;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.pphgzs.dao.ServiceDao;
@@ -140,7 +141,7 @@ public class ServiceServiceImpl implements ServiceService {
 	 * 获取当事人信息及所涉及的业务
 	 */
 	@Override
-	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user) {
+	public ClientInstanceDTO get_notServiceClient_byJudge(jwcpxt_user user) {
 		//
 		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
 		//
@@ -150,11 +151,26 @@ public class ServiceServiceImpl implements ServiceService {
 		if (user == null) {
 			return null;
 		}
-		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
+		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byJudge_general(user.getJwcpxt_user_id());
 		if (clientInstanceDTO == null) {
 			distributionNewServiceInstance_toUser(user.getJwcpxt_user_id());
-			clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
+			clientInstanceDTO = serviceDao.get_notServiceClientDTO_byJudge_general(user.getJwcpxt_user_id());
 		}
+		return clientInstanceDTO;
+	}
+
+	@Override
+	public ClientInstanceDTO get_notServiceClient_byJudge_revisit(jwcpxt_user user) {
+		//
+		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
+		//
+		if (user != null && user.getJwcpxt_user_id() != null && user.getJwcpxt_user_id().trim().length() > 0) {
+			user = userService.get_userDO_byUserID(user.getJwcpxt_user_id());
+		}
+		if (user == null) {
+			return null;
+		}
+		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byJudge_revisit(user.getJwcpxt_user_id());
 		return clientInstanceDTO;
 	}
 
@@ -179,7 +195,9 @@ public class ServiceServiceImpl implements ServiceService {
 		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
 		System.out.println("查询所有单位关联业务表:" + unitServiceList.size());
 		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
-		for (jwcpxt_unit_service unitServiceDO : unitServiceList) {
+		Iterator<jwcpxt_unit_service> iterator = unitServiceList.iterator();
+		while (iterator.hasNext()) {
+			jwcpxt_unit_service unitServiceDO = iterator.next();
 			// 需求数量
 			int wantNum = unitServiceDO.getEvaluation_count();
 			// System.out.println("需求数量：" + wantNum);
@@ -202,9 +220,13 @@ public class ServiceServiceImpl implements ServiceService {
 
 			// 分配足够了的就移出列表
 			if (currNum >= wantNum) {
-				unitServiceList.remove(unitServiceDO);
+				iterator.remove();
+				// unitServiceList.remove(unitServiceDO);
 			}
 		}
+		// for (jwcpxt_unit_service unitServiceDO : unitServiceList) {
+		//
+		// }
 		// 遍历一下这个列表
 		/*
 		 * for (jwcpxt_unit_service jwcpxt_unit_service : unitServiceList) {
@@ -240,21 +262,25 @@ public class ServiceServiceImpl implements ServiceService {
 			 */
 			return true;
 		}
+		jwcpxt_unit belongUnit = new jwcpxt_unit();
+		belongUnit = get_unitDo_byOrginaiId(grabInstance.getGrab_instance_organization_code());
+		// 根据机构代码获取单位对象
 		// 分配生成业务实例
 		jwcpxt_service_instance serviceInstance = new jwcpxt_service_instance();
 		serviceInstance.setJwcpxt_service_instance_id(uuidUtil.getUuid());
 		serviceInstance.setService_instance_gmt_create(TimeUtil.getStringSecond());
 		serviceInstance.setService_instance_gmt_modified(serviceInstance.getService_instance_gmt_create());
 		serviceInstance.setService_instance_service_definition(grabInstance.getGrab_instance_service_definition());
-		serviceInstance.setService_instance_belong_unit(thisUnitService.getUnit_id());
+		serviceInstance.setService_instance_belong_unit(belongUnit.getJwcpxt_unit_id());
 		serviceInstance.setService_instance_judge(userID);
 		serviceInstance.setService_instance_nid(grabInstance.getGrab_instance_unique_id());
 		/*
 		 * if (grabInstance.getGrab_instance_service_time() == null ||
 		 * "".equals(grabInstance.getGrab_instance_service_time())) {
-		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay()); }else {
-		 * serviceInstance.setService_instance_date(
-		 * TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time())); }
+		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay());
+		 * }else { serviceInstance.setService_instance_date(
+		 * TimeUtil.longDateFormatDate(grabInstance.
+		 * getGrab_instance_service_time())); }
 		 */
 		try {
 			serviceInstance.setService_instance_date(
@@ -283,6 +309,15 @@ public class ServiceServiceImpl implements ServiceService {
 		update_grabInstance(grabInstance);
 		//
 		return true;
+	}
+
+	/**
+	 * 根据机构代码获取
+	 * 
+	 * @return
+	 */
+	public jwcpxt_unit get_unitDo_byOrginaiId(String orginId) {
+		return serviceDao.get_unitDo_byOrginaiId(orginId);
 	}
 
 	/**
