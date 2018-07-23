@@ -56,13 +56,17 @@
 						<i class="ti-world"></i>
 						<p>首页</p>
 				</a></li>
-				<li id="bellPage"><a
-					href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
-						class="fa fa-bell-o"></i>
-						<p>
-							系统消息 <span style="background-color:red;" class="badge">0</span>
-						</p>
-				</a></li>
+				<s:if test="#session.loginType=='unit'">
+					<s:if test="#session.unit.unit_grade==1">
+						<li id="bellPage"><a
+							href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
+								class="fa fa-bell-o"></i>
+								<p>
+									系统消息 <span style="background-color:red;" class="badge">0</span>
+								</p>
+						</a></li>
+					</s:if>
+				</s:if>
 				<s:if test="#session.loginType=='user'">
 					<s:if test="#session.user.user_type==1">
 						<li id="sidePolice"><a
