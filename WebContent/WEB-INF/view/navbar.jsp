@@ -58,6 +58,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="#">张斌天天写bug</a></li>
 					</ul></li> -->
+				<li><a href="#"><span style="background-color: red;" class="badge">42</span></a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="ti-user"></i>
 						<p>
