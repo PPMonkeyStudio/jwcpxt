@@ -50,8 +50,7 @@ a:hover {
 											style="display: inline; width: 150px;">
 									</div>
 									<div id="showDiscontent">
-										<table class="table table-striped"
-											style="text-align: center;">
+										<table class="table table-striped" style="text-align: center;">
 											<thead>
 												<tr>
 													<td>问题描述</td>
@@ -73,9 +72,14 @@ a:hover {
 												<template
 													v-for="dissatisfiedQuestionDTO in discontentVO.listDissatisfiedQuestionDTO">
 												<tr>
-													<td>{{ dissatisfiedQuestionDTO.question.question_describe }}</td>
-													<td>{{ dissatisfiedQuestionDTO.unit.unit_name.replace("江西省萍乡市公安局","") }}</td>
-													<td>{{ dissatisfiedQuestionDTO.serviceClient.service_client_name }}</td>
+													<td>{{
+														dissatisfiedQuestionDTO.question.question_describe }}</td>
+													<td>{{
+														dissatisfiedQuestionDTO.unit.unit_name.replace("江西省萍乡市公安局","")
+														}}</td>
+													<td>{{
+														dissatisfiedQuestionDTO.serviceClient.service_client_name
+														}}</td>
 													<td><template
 															v-if="dissatisfiedQuestionDTO.dessatisfiedFeedback.dissatisfied_feedback_state == 1">
 														<span class="label label-primary">未审核</span> </template> <template

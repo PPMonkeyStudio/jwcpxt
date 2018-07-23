@@ -21,6 +21,15 @@
 						<p>首页</p>
 				</a></li>
 				<li>
+				<li><a
+					href="<%=basePath%>Skip/skipReturnedPartyInformation?type=general">
+						<p>业务回访</p>
+				</a></li>
+				<li>
+				<li><a href="<%=basePath%>Skip/skipReturnedRectificationInformation?type=revisit">
+						<p>整改回访</p>
+				</a></li>
+				<li>
 			</ul>
 		</div>
 		<div class="collapse navbar-collapse">

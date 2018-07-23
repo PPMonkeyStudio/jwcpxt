@@ -48,8 +48,14 @@
 			<result name="skipQuestionnaireDetailsJsp">
 				/WEB-INF/view/managerData/questionnaireDetails.jsp
 			</result>
+			<result name="skipEvaluationPoliceIndex">
+				/WEB-INF/view/evaluationPolice/evaluationPoliceIndex.jsp
+			</result>
 			<result name="skipReturnedPartyInformation">
 				/WEB-INF/view/evaluationPolice/returnedPartyInformation.jsp
+			</result>
+			<result name="skipReturnedRectificationInformation">
+				/WEB-INF/view/evaluationPolice/returnedRectificationInformation.jsp
 			</result>
 			<result name="skipPoliceAssessmentPage" type="redirectAction">
 				skipPoliceAssessmentPageJsp?definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
@@ -75,6 +81,9 @@
 			</result>
 			<result name="skipClientInformation">
 				/WEB-INF/view/evaluationPolice/clientInformation.jsp
+			</result>
+			<result name="skipNotEectificationOverTime">
+				/WEB-INF/view/abarbeitung/notEectificationOverTime.jsp
 			</result>
 			<result name="login">/login.jsp</result>
 		</action>
