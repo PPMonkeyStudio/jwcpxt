@@ -140,7 +140,7 @@ public class ServiceServiceImpl implements ServiceService {
 	 * 获取当事人信息及所涉及的业务
 	 */
 	@Override
-	public ClientInstanceDTO get_notServiceClient_byServiceClientId(jwcpxt_user user) {
+	public ClientInstanceDTO get_notServiceClient_byJudge(jwcpxt_user user) {
 		//
 		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
 		//
@@ -150,11 +150,26 @@ public class ServiceServiceImpl implements ServiceService {
 		if (user == null) {
 			return null;
 		}
-		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
+		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byJudge_general(user.getJwcpxt_user_id());
 		if (clientInstanceDTO == null) {
 			distributionNewServiceInstance_toUser(user.getJwcpxt_user_id());
-			clientInstanceDTO = serviceDao.get_notServiceClientDTO_byServiceClientId(user.getJwcpxt_user_id());
+			clientInstanceDTO = serviceDao.get_notServiceClientDTO_byJudge_general(user.getJwcpxt_user_id());
 		}
+		return clientInstanceDTO;
+	}
+
+	@Override
+	public ClientInstanceDTO get_notServiceClient_byJudge_revisit(jwcpxt_user user) {
+		//
+		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
+		//
+		if (user != null && user.getJwcpxt_user_id() != null && user.getJwcpxt_user_id().trim().length() > 0) {
+			user = userService.get_userDO_byUserID(user.getJwcpxt_user_id());
+		}
+		if (user == null) {
+			return null;
+		}
+		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byJudge_revisit(user.getJwcpxt_user_id());
 		return clientInstanceDTO;
 	}
 
@@ -252,9 +267,10 @@ public class ServiceServiceImpl implements ServiceService {
 		/*
 		 * if (grabInstance.getGrab_instance_service_time() == null ||
 		 * "".equals(grabInstance.getGrab_instance_service_time())) {
-		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay()); }else {
-		 * serviceInstance.setService_instance_date(
-		 * TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time())); }
+		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay());
+		 * }else { serviceInstance.setService_instance_date(
+		 * TimeUtil.longDateFormatDate(grabInstance.
+		 * getGrab_instance_service_time())); }
 		 */
 		try {
 			serviceInstance.setService_instance_date(

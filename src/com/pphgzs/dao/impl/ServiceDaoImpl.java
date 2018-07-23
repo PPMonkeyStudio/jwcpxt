@@ -173,13 +173,13 @@ public class ServiceDaoImpl implements ServiceDao {
 				// 当事人姓名
 				clientInfoDTO.getServiceClient()
 						.setService_client_name(clientInfoDTO.getServiceClient().getService_client_name().replaceAll(
-								clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
+										+ "</span>"));
 				// 性别
 				clientInfoDTO.getServiceClient()
 						.setService_client_phone(clientInfoDTO.getServiceClient().getService_client_phone().replaceAll(
-								clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
+										+ "</span>"));
 				// 单位名称
 				clientInfoDTO.getUnit()
 						.setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.getSearch(),
@@ -206,11 +206,43 @@ public class ServiceDaoImpl implements ServiceDao {
 		return jwcpxt_service_client;
 	}
 
+	@Override
+	public ClientInstanceDTO get_notServiceClientDTO_byJudge_revisit(String jwcpxt_user_id) {
+		List<ClientInstanceDTO> listClientInstanceDTO = new ArrayList<>();
+		Session session = getSession();
+		String hql = "select "//
+				+ " new com.pphgzs.domain.DTO.ClientInstanceDTO(serviceInstance,serviceClient,serviceDefinition,unit) "//
+				+ " from "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_definition serviceDefinition , "//
+				+ " jwcpxt_unit unit"//
+				+ " where "//
+				+ " serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance "//
+				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id "//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ " and serviceClient.service_client_visit = '2' "//
+				+ " and serviceInstance.service_client_visit = '2' "//
+				+ " and serviceInstance.service_instance_service_definition = 'revisit' "//
+				+ " order by "//
+				+ " serviceInstance.service_instance_gmt_create "//
+				+ " asc ";
+		Query query = session.createQuery(hql);
+		query.setParameter("userId", jwcpxt_user_id);
+		query.setMaxResults(1);
+		//
+		listClientInstanceDTO = query.list();
+		if (listClientInstanceDTO.size() <= 0) {
+			return null;
+		}
+		return listClientInstanceDTO.get(0);
+	}
+
 	/**
 	 * 获取ClientInstanceDTO内容
 	 */
 	@Override
-	public ClientInstanceDTO get_notServiceClientDTO_byServiceClientId(String userId) {
+	public ClientInstanceDTO get_notServiceClientDTO_byJudge_general(String userId) {
 		List<ClientInstanceDTO> listClientInstanceDTO = new ArrayList<>();
 		Session session = getSession();
 		String hql = "select "//
@@ -225,7 +257,8 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id "//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ " and serviceClient.service_client_visit= '2' "//
-				+ " and serviceInstance.service_instance_judge = :userId "//
+				+ " and serviceInstance.service_client_visit= '2' "//
+				+ " and serviceInstance.service_instance_service_definition != 'revisit' "//
 				+ " order by "//
 				+ " serviceInstance.service_instance_gmt_create "//
 				+ " asc ";

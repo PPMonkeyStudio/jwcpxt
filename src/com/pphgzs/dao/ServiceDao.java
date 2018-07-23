@@ -25,7 +25,9 @@ public interface ServiceDao {
 	 * @param jwcpxt_user_id
 	 * @return
 	 */
-	public ClientInstanceDTO get_notServiceClientDTO_byServiceClientId(String userId);
+	public ClientInstanceDTO get_notServiceClientDTO_byJudge_general(String userId);
+
+	public ClientInstanceDTO get_notServiceClientDTO_byJudge_revisit(String jwcpxt_user_id);
 
 	/**
 	 * 根据业务定义id获取抓取表
