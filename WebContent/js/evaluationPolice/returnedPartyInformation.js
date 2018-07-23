@@ -31,6 +31,7 @@ $(function() {
 				}, 'json')
 			},
 			beginReturned () {
+				//console.log(`/jwcpxt/Skip/skipPoliceAssessmentPage?type=${myData.type}&definitionId=${this.returnedParty.serviceDefinition.jwcpxt_service_definition_id}&serviceClientId=${this.returnedParty.serviceClient.jwcpxt_service_client_id}`);
 				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=${myData.type}&definitionId=${this.returnedParty.serviceDefinition.jwcpxt_service_definition_id}&serviceClientId=${this.returnedParty.serviceClient.jwcpxt_service_client_id}`;
 			}
 		},

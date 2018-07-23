@@ -174,6 +174,7 @@ public class SkipAction {
 
 	public void setType(String type) {
 		this.type = type;
+		System.out.println(type);
 	}
 
 }
