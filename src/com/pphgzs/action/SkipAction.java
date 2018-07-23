@@ -5,6 +5,7 @@ public class SkipAction {
 	private String serviceClientId;
 	private String unitId;
 	private String appraisalId;
+	private String type;
 
 	public String skipSidebar() {
 		return "skipSidebar";
@@ -165,6 +166,15 @@ public class SkipAction {
 
 	public void setAppraisalId(String appraisalId) {
 		this.appraisalId = appraisalId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+		System.out.println(type);
 	}
 
 }

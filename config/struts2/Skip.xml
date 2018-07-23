@@ -58,13 +58,12 @@
 				/WEB-INF/view/evaluationPolice/returnedRectificationInformation.jsp
 			</result>
 			<result name="skipPoliceAssessmentPage" type="redirectAction">
-				skipPoliceAssessmentPageJsp?definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
+				skipPoliceAssessmentPageJsp?type=${type}&amp;definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
 			</result>
 			<result name="skipPoliceAssessmentPageJsp">
 				/WEB-INF/view/evaluationPolice/policeAssessmentPage.jsp
 			</result>
-			<result name="skipPreviewPoliceAssessmentPage"
-				type="redirectAction">
+			<result name="skipPreviewPoliceAssessmentPage" type="redirectAction">
 				skipPreviewPoliceAssessmentPageJsp?definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
 			</result>
 			<result name="skipPreviewPoliceAssessmentPageJsp">
