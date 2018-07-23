@@ -83,8 +83,16 @@ public class SkipAction {
 		return "skipQuestionnaireDetailsJsp";
 	}
 
+	public String skipEvaluationPoliceIndex() {
+		return "skipEvaluationPoliceIndex";
+	}
+
 	public String skipReturnedPartyInformation() {
 		return "skipReturnedPartyInformation";
+	}
+
+	public String skipReturnedRectificationInformation() {
+		return "skipReturnedRectificationInformation";
 	}
 
 	public String skipPoliceAssessmentPage() {
@@ -93,6 +101,10 @@ public class SkipAction {
 
 	public String skipPoliceAssessmentPageJsp() {
 		return "skipPoliceAssessmentPageJsp";
+	}
+
+	public String skipNotEectificationOverTime() {
+		return "skipNotEectificationOverTime";
 	}
 
 	public String login() {

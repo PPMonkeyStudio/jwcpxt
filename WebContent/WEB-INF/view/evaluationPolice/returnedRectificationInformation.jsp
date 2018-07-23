@@ -34,7 +34,7 @@ th {
 			<s:action name="navbarAppraisal" namespace="/Skip"
 				executeResult="true" />
 			<div class="" id="content"
-				style="width: calc( 100% - 800px ); margin: 50px 400px 50px 400px ">
+				style="width: calc( 100% - 800px )   ;margin: 50px 400px 50px 400px ">
 				<!-- 主内容 -->
 				<div class="card" style="padding: 20px;">
 					<div class="" style="">
@@ -67,7 +67,7 @@ th {
 							</div>
 							<div style="" v-else>
 								<div class="form-group" style="">
-									<label class="">今日业务已回访完毕 </label> 
+									<label class="">今日业务已回访完毕 </label>
 								</div>
 							</div>
 							<div style="" v-if="returnedParty">
@@ -86,6 +86,7 @@ th {
 	/* 处理侧边栏选项 */
 	$('#sidePolice').attr("class", "active");
 </script>
+<!-- 和业务回访可以通用 -->
 <script
 	src="<%=basePath%>js/evaluationPolice/returnedPartyInformation.js"></script>
 </html>

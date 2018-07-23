@@ -49,7 +49,6 @@ th {
 											<div id="crowdFocus" style="width: 50%;height:600px; float: left;"></div>
 											<div id="crowdNotSatisfied" style="width: 50%;height:600px; float: left;"></div>
 										</div>
-										
 										<div class="form-group" style="margin: auto; padding-left: 20px;">
 											<p><h3>图表</h3></p>
 											<label>单位筛选</label>
@@ -62,12 +61,11 @@ th {
 										<div class="form-group" style="margin: auto; padding-left: 20px; margin-top: 10px;">
 											<p>
 												<label>按照时间区间类型：</label>
-												<button type="button" onclick="checkTimeType(this)" time-type="1" class="btn btn-primary btn-xs timeType" disabled="disabled">按日</button>
-												<button type="button" onclick="checkTimeType(this)" time-type="2" class="btn btn-success btn-xs timeType">按周</button>
-												<button type="button" onclick="checkTimeType(this)" time-type="3" class="btn btn-info btn-xs timeType">按月</button>
+												<button type="button" onclick="checkTimeType(this)" time-type="1" class="btn btn-primary btn-xs timeType" disabled="disabled">日统计</button>
+												<button type="button" onclick="checkTimeType(this)" time-type="2" class="btn btn-success btn-xs timeType">周统计</button>
+												<button type="button" onclick="checkTimeType(this)" time-type="3" class="btn btn-info btn-xs timeType">月统计</button>
 											</p>
 										</div>
-										
 										<div id="allDissatisfaction" style="width: 100%;height:600px; margin-top: 20px;"></div>
 										<div style="width: 100%; height:650px; margin-top: 50px;">
 											<div id="dissatisfiedService" style="width: 50%;height:600px; float: left;"></div>
