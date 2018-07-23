@@ -66,7 +66,7 @@
 				<s:if test="#session.loginType=='user'">
 					<s:if test="#session.user.user_type==1">
 						<li id="sidePolice"><a
-							href="<%=basePath%>Skip/evaluationPoliceIndex"> <i
+							href="<%=basePath%>Skip/skipEvaluationPoliceIndex"> <i
 								class="ti-user"></i>
 								<p>测评警务</p>
 						</a></li>
