@@ -56,9 +56,11 @@
 						<i class="ti-world"></i>
 						<p>首页</p>
 				</a></li>
-				<li id="bellPage"><a href="<%=basePath%>Skip/skipNotEectificationOverTime"> 
-						<i class="fa fa-bell-o"></i>
-						<p>系统消息 <span style="background-color:red;" class="badge">0</span>
+				<li id="bellPage"><a
+					href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
+						class="fa fa-bell-o"></i>
+						<p>
+							系统消息 <span style="background-color:red;" class="badge">0</span>
 						</p>
 				</a></li>
 				<s:if test="#session.loginType=='user'">
@@ -130,6 +132,10 @@ td .label {
 <script type="text/javascript"
 	src="<%=basePath%>js/user/updatePassword.js"></script>
 <script type="text/javascript">
+	//页面初始化时获取数量
+	$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
+		$('#bellPage .badge').html(response);
+	}, 'text')
 	setInterval(function() {
 		$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
 			$('#bellPage .badge').html(response);
