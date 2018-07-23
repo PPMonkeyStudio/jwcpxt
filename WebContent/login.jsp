@@ -69,7 +69,7 @@
 			</div>
 		</div>
 		<div
-			style="background-image: url(img/log2.png); background-size: cover; background-size: 100% 100%; width: 620px; height: 368px; float: right;"></div>
+			style="background-image: url(/jwcpxt/img/log2.png); background-size: cover; background-size: 100% 100%; width: 620px; height: 368px; float: right;"></div>
 	</div>
 	<script type="text/javascript" src="<%=basePath%>js/user/login.js"></script>
 </body>

@@ -15,6 +15,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -40,6 +41,19 @@ public class QuestionTest {
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 	@Resource
 	private StatisticsService statisticsService;
+
+	@Test
+	public void get_checkFeedbackRectificationVO() {
+		FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO = new FeedbackRectificationExceedTimeVO();
+		feedbackRectificationExceedTimeVO = dissatisfiedFeedbackService
+				.get_checkFeedbackRectificationVO(feedbackRectificationExceedTimeVO);
+		System.out.println(feedbackRectificationExceedTimeVO);
+	}
+
+	@Test
+	public void get_countExceedTimeFive() {
+		System.out.println(dissatisfiedFeedbackService.get_countExceedTimeFive());
+	}
 
 	@Test
 	public void get_statisQuestionDataVOTest() {
@@ -78,7 +92,7 @@ public class QuestionTest {
 		// statisDissatiDateVO.setTimeType("3");
 		System.out.println(statisticsService.get_statisDissatiDateVO(statisDissatiDateVO));
 	}
-	
+
 	/**
 	 * 
 	 */

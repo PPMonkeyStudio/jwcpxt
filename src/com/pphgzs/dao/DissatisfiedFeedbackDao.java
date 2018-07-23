@@ -92,8 +92,8 @@ public interface DissatisfiedFeedbackDao {
 	 * @param unit
 	 * @return
 	 */
-	public List<FeedbackRectificationDTO> get_feedbackRectificationVO(
-			FeedbackRectificationVO feedbackRectificationVO, jwcpxt_unit unit);
+	public List<FeedbackRectificationDTO> get_feedbackRectificationVO(FeedbackRectificationVO feedbackRectificationVO,
+			jwcpxt_unit unit);
 
 	/**
 	 * （审核）分页获得所有该单位下所需审核的整改反馈数量
@@ -117,8 +117,23 @@ public interface DissatisfiedFeedbackDao {
 
 	/**
 	 * 根据责任单位获取该责任单位的上级单位
+	 * 
 	 * @param jwcpxt_unit_id
 	 * @return
 	 */
 	public jwcpxt_unit get_unitDO_byChildrenUnit(String jwcpxt_unit_id);
+
+	/**
+	 * 获取5天仍然未进行整改的反馈整改
+	 * 
+	 * @return
+	 */
+	public int get_countExceedTimeFive();
+
+	/**
+	 * 获取5天仍然未进行整改的反馈整改记录
+	 * 
+	 * @return
+	 */
+	public List<FeedbackRectificationDTO> get_checkFeedbackRectificationVO();
 }

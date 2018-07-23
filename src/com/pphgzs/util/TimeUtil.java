@@ -12,6 +12,21 @@ import org.junit.Test;
 public class TimeUtil {
 	static SimpleDateFormat formatter;
 
+	/**
+	 * 得到几天前的时间
+	 * 
+	 * @param d
+	 * @param day
+	 * @return
+	 */
+	public static String getDateBefore(Date d, int day) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar now = Calendar.getInstance();
+		now.setTime(d);
+		now.set(Calendar.DATE, now.get(Calendar.DATE) - day);
+		return formatter.format(now.getTime());
+	}
+
 	public static String longDateFormatDate(String time) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		formatter.setLenient(false);
