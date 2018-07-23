@@ -31,7 +31,7 @@ th {
 		<s:action name="skipSidebar" namespace="/Skip" executeResult="true" />
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbar" namespace="/Skip" executeResult="true" />
+			<s:action name="skipNavbarIndex" namespace="/Skip" executeResult="true" />
 			<div class="content" id="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -115,7 +115,7 @@ th {
 </body>
 <script type="text/javascript">
 	/* 处理侧边栏选项 */
-	$('#sideManager').attr("class", "active");
+	$('#bellPage').attr("class", "active");
 </script>
 <script src="<%=basePath%>js/abarbeitung/notEectificationOverTime.js"></script>
 </html>

@@ -161,7 +161,7 @@ th {
 </body>
 <script type="text/javascript">
 	/* 处理侧边栏选项 */
-	$('#sideManager').attr("class", "active");
+	$('#sideStatis').attr("class", "active");
 </script>
 <script src="<%=basePath%>js/statisticalData/element.min.js"></script>
 <script src="<%=basePath%>js/statisticalData/doublebox-bootstrap.js"></script>
