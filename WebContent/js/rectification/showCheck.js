@@ -103,50 +103,48 @@ function skipToArbitrarilyPage() {
 
 
 function checkRectification(event, state) {
-	$
-		.confirm({
-			title : '审核',
-			type : 'blue',
-			boxWidth : '500px',
-			useBootstrap : false,
-			content : '<form id="checkRectification"><label>反馈意见</label><textarea name="feedbackRectification.feedback_rectification_cpzx_opinion" class="form-control"></textarea></form>',
-			buttons : {
-				cancel : {
-					text : '关闭',
-					btnClass : 'btn-red',
-					action : function() {}
-				},
-				save : {
-					text : '确定',
-					btnClass : 'btn-blue',
-					action : function() {
-						var formData = new FormData(document
-							.getElementById("checkRectification"));
-						formData
-							.append(
-								"feedbackRectification.jwcpxt_feedback_rectification_id",
-								event.id);
-						formData.append("feedbackRectification.feedback_rectification_audit_state", state);
-						$
-							.ajax({
-								url : '/jwcpxt/DissatisfiedFeedback/checkFeedbackRectification',
-								type : 'POST',
-								data : formData,
-								processData : false,
-								contentType : false,
-								success : function(data) {
-									if (data == 1) {
-										toastr.success("审核成功！");
-										loadData();
-									} else {
-										toastr.error("审核失败！");
-									}
-								}
-							})
-					}
-				}
+	$.confirm({
+		title : '审核',
+		type : 'blue',
+		boxWidth : '500px',
+		useBootstrap : false,
+		content : '<form id="checkRectification"><label>反馈意见</label><textarea name="feedbackRectification.feedback_rectification_cpzx_opinion" class="form-control"></textarea></form>',
+		buttons : {
+			cancel : {
+				text : '关闭',
+				btnClass : 'btn-red',
+				action : function() {}
 			},
-		})
+			save : {
+				text : '确定',
+				btnClass : 'btn-blue',
+				action : function() {
+					if (!$('#checkRectification textarea').val()) {
+						toastr.error('描述不能为空');
+						return false;
+					}
+					var formData = new FormData(document.getElementById("checkRectification"));
+					formData.append("feedbackRectification.jwcpxt_feedback_rectification_id", event.id);
+					formData.append("feedbackRectification.feedback_rectification_audit_state", state);
+					$.ajax({
+						url : '/jwcpxt/DissatisfiedFeedback/checkFeedbackRectification',
+						type : 'POST',
+						data : formData,
+						processData : false,
+						contentType : false,
+						success : function(data) {
+							if (data == 1) {
+								toastr.success("审核成功！");
+								loadData();
+							} else {
+								toastr.error("审核失败！");
+							}
+						}
+					})
+				}
+			}
+		},
+	})
 }
 
 var transferListVue;
@@ -187,16 +185,14 @@ function preview(event) {
 						transfer : ''
 					}
 				})
-
-				$
-					.ajax({
-						url : '/jwcpxt/DissatisfiedFeedback/get_feedbackRectficationDO_byId?feedbackRectification.jwcpxt_feedback_rectification_id='
-							+ event.id,
-						type : 'GET',
-						success : function(data) {
-							transferListVue.transfer = JSON.parse(data);
-						}
-					})
+				$.ajax({
+					url : '/jwcpxt/DissatisfiedFeedback/get_feedbackRectficationDO_byId?feedbackRectification.jwcpxt_feedback_rectification_id='
+						+ event.id,
+					type : 'GET',
+					success : function(data) {
+						transferListVue.transfer = JSON.parse(data);
+					}
+				})
 			}
 		})
 }
