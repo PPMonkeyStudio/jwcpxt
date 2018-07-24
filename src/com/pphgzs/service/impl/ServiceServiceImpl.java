@@ -21,6 +21,7 @@ import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.CountFinishReturnVisitVo;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
@@ -960,5 +961,10 @@ public class ServiceServiceImpl implements ServiceService {
 	/*
 	 * 
 	 */
+
+	@Override
+	public int get_countFinishReturnVisit_inDateAndByUserId(CountFinishReturnVisitVo countFinishReturnVisitVo) {
+		return serviceDao.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
+	}
 
 }

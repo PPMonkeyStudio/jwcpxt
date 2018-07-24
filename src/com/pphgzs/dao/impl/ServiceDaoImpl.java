@@ -22,6 +22,7 @@ import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.CountFinishReturnVisitVo;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.util.TimeUtil;
@@ -540,7 +541,9 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public int get_serviceInstanceTotalCount_byToday() {
 		Session session = getSession();
-		String hql = "select count(*) from jwcpxt_service_instance  " + " where  service_instance_gmt_create >= :date";
+		String hql = "select count(*) "//
+				+ "from jwcpxt_service_instance  "//
+				+ " where  service_instance_gmt_create >= :date";
 		Query query = session.createQuery(hql);
 		//
 		query.setParameter("date", TimeUtil.getStringDay());
@@ -957,6 +960,39 @@ public class ServiceDaoImpl implements ServiceDao {
 		jwcpxt_unit newUnit = (jwcpxt_unit) query.uniqueResult();
 		session.clear();
 		return newUnit;
+	}
+
+	@Override
+	public int get_countFinishReturnVisit_inDateAndByUserId(CountFinishReturnVisitVo countFinishReturnVisitVo) {
+		String appraisalId = countFinishReturnVisitVo.getAppraisalId();
+		String beginTime = countFinishReturnVisitVo.getBeginTime();
+		String endTime = countFinishReturnVisitVo.getEndTime();
+		String countType = countFinishReturnVisitVo.getCountType();
+		Session session = getSession();
+		String hql = "select count(*)" + " from jwcpxt_grab_instance instance,jwcpxt_service_client client "// like用来匹配所有id
+				+ " where instance.service_instance_judge like :appraisalId "//
+				+ " and instance.service_instance_gmt_modified >= :beginTime "//
+				+ " and instance.service_instance_gmt_modified <= :endTime "
+				+ " and client.service_client_visit = '1' ";//
+		Query query = session.createQuery(hql);
+		// 单个查询
+		appraisalId = (!"".equals(appraisalId) && appraisalId != null) ? appraisalId : "%";
+		// 此时开始时间和结束时间将无效
+		if ("all".equals(countType)) {
+			beginTime = "0000-00-00";
+			endTime = "9999-99-99";
+		} else {
+			// 如果结束时间为空，则只做开始时间的查询
+			if ("".equals(endTime) || endTime == null) {
+				endTime = beginTime;
+			}
+		}
+		query.setParameter("appraisalId", appraisalId);
+		query.setParameter("beginTime", beginTime);
+		query.setParameter("endTime", endTime);
+		int count = ((Number) query.uniqueResult()).intValue();
+		session.clear();
+		return count;
 	}
 
 	/*

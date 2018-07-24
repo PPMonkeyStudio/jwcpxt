@@ -25,6 +25,7 @@ import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.CountFinishReturnVisitVo;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.service.ServiceService;
@@ -55,6 +56,22 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private ClientInstanceDTO clientInstanceDTO;
 	private ClientInfoVO clientInfoVO;
 	private String type;
+	private CountFinishReturnVisitVo countFinishReturnVisitVo;
+
+	/**
+	 * 获取测评员当天成功回访数
+	 * 
+	 */
+	public void get_countFinishReturnVisit_inDate() throws Exception {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		int count = serviceService.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
+		http_response.getWriter().write(count);
+	}
 
 	/**
 	 * 用户列表
@@ -657,6 +674,14 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public CountFinishReturnVisitVo getCountFinishReturnVisitVo() {
+		return countFinishReturnVisitVo;
+	}
+
+	public void setCountFinishReturnVisitVo(CountFinishReturnVisitVo countFinishReturnVisitVo) {
+		this.countFinishReturnVisitVo = countFinishReturnVisitVo;
 	}
 
 	/*
