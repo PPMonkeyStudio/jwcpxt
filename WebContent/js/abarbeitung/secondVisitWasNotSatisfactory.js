@@ -1,7 +1,7 @@
 $(function() {
 	let myData = {
 		ready : false,
-		listFeedbackRectificationDTO : [],
+		listSecondDistatisDTO : [],
 		page : {
 			currPage : 1,
 			totalPage : 1,
@@ -25,7 +25,7 @@ $(function() {
 		methods : {
 			getInfo (pramas) {
 				$.post('/jwcpxt/DissatisfiedFeedback/get_sercondDisStatisExceedTimeVO', pramas, response => {
-					myData.listFeedbackRectificationDTO = response.listFeedbackRectificationDTO;
+					myData.listSecondDistatisDTO = response.listSecondDistatisDTO;
 					myData.page.currPage = response.currPage;
 					myData.page.totalPage = response.totalPage;
 					myData.page.totalCount = response.totalCount;

@@ -23,7 +23,7 @@ th {
 	text-align: center !important;
 }
 </style>
-<title>超时未整改</title>
+<title>二次回访</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -39,7 +39,7 @@ th {
 						<div class="col-md-12">
 							<div class="card" style="padding: 10px;">
 								<div class="header">
-									<h4 class="title">未整改</h4>
+									<h4 class="title">二次回访仍不满意列表</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
@@ -61,26 +61,25 @@ th {
 										<table class="table table-striped" style="text-align: center;">
 											<thead>
 												<tr>
-													<td>编号</td>
-													<td>问题标题</td>
 													<td>单位</td>
 													<td>单位负责人</td>
+													<td>单位号码</td>
+													<td>业务名称</td>
+													<td>问题标题</td>
 													<td>当事人姓名</td>
-													<td>当事人性别</td>
 													<td>当事人电话</td>
 												</tr>
 											</thead>
 											<tbody>
-												<template
-													v-for="feedbackRectificationDTO in listFeedbackRectificationDTO">
+												<template v-for="SecondDistatisDTO in listSecondDistatisDTO">
 												<tr>
-													<td>{{feedbackRectificationDTO.feedbackRectification.feedback_rectification_no}}</td>
-													<td>{{feedbackRectificationDTO.question.question_describe}}</td>
-													<td>{{feedbackRectificationDTO.unit.unit_name}}</td>
-													<td>{{feedbackRectificationDTO.unit.unit_contacts_name}}</td>
-													<td>{{feedbackRectificationDTO.serviceClient.service_client_name}}</td>
-													<td>{{feedbackRectificationDTO.serviceClient.service_client_sex}}</td>
-													<td>{{feedbackRectificationDTO.serviceClient.service_client_phone}}</td>
+													<td>{{SecondDistatisDTO.unit.unit_name}}</td>
+													<td>{{SecondDistatisDTO.unit.unit_contacts_name}}</td>
+													<td>{{SecondDistatisDTO.unit.unit_phone}}</td>
+													<td>{{SecondDistatisDTO.serviceDefinition.service_definition_describe}}</td>
+													<td>{{SecondDistatisDTO.question.question_describe}}</td>
+													<td>{{SecondDistatisDTO.serviceClient.service_client_name}}</td>
+													<td>{{SecondDistatisDTO.serviceClient.service_client_phone}}</td>
 												</tr>
 												</template>
 											</tbody>
@@ -95,7 +94,7 @@ th {
 												class="pageOperation" @click="lastPage">末页</span> <span><input
 												type="text" id="toPageInput"
 												style="text-align: center; width: 60px; height: 30px;"
-												onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+												onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
 												onblur="this.v();">
 												<button class="btn btn-default" @click="toPage"
 													style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
