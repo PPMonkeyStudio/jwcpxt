@@ -83,9 +83,7 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO) {
 		List<ClientInfoDTO> listClientInfo = new ArrayList<>();
-		System.out.println("df:" + clientInfoVO);
 		listClientInfo = serviceDao.get_clientInfoVO_byUserId(clientInfoVO);
-		System.out.println("size:" + listClientInfo.size());
 		int totalRecords = serviceDao.get_clientInfoVOCount_byUserId(clientInfoVO);
 		int totalPages = ((totalRecords - 1) / clientInfoVO.getPageSize()) + 1;
 		clientInfoVO.setListClientInfoDTO(listClientInfo);
@@ -199,14 +197,12 @@ public class ServiceServiceImpl implements ServiceService {
 
 		// 查询所有单位关联业务表
 		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
-		System.out.println("查询所有单位关联业务表:" + unitServiceList.size());
 		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
 		Iterator<jwcpxt_unit_service> iterator = unitServiceList.iterator();
 		while (iterator.hasNext()) {
 			jwcpxt_unit_service unitServiceDO = iterator.next();
 			// 需求数量
 			int wantNum = unitServiceDO.getEvaluation_count();
-			// System.out.println("需求数量：" + wantNum);
 			/*
 			 * 如果这个单位是二级单位，那么就查出他所有子单位已分配的实例数量
 			 * 
@@ -221,7 +217,6 @@ public class ServiceServiceImpl implements ServiceService {
 				// 已分配数量：获取当天该单位该业务的业务实例的数量
 				currNum = get_serviceInstanceCount_byServiceDefinitionAndUnit(unitServiceDO.getService_definition_id(),
 						unitServiceDO.getUnit_id());
-				// System.out.println("三级单位当前业务实例数量：" + currNum);
 			}
 
 			// 分配足够了的就移出列表
@@ -292,7 +287,6 @@ public class ServiceServiceImpl implements ServiceService {
 			serviceInstance.setService_instance_date(
 					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));
 		} catch (ParseException e) {
-			System.err.println(e);
 			serviceInstance.setService_instance_date(TimeUtil.getStringDay());
 		}
 		// serviceInstance.setService_instance_date(grabInstance.getGrab_instance_service_time());

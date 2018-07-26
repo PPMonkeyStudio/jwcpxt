@@ -65,7 +65,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 						listDate = TimeUtil.findDates(statisDissaServiceDateVO.getStartTime(),
 								statisDissaServiceDateVO.getEndTime());
 					} catch (ParseException e) {
-						System.err.println(e);
 					}
 					break;
 				case "2":
@@ -141,7 +140,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 						listDate = TimeUtil.findDates(statisDissaQuestionDateVO.getStartTime(),
 								statisDissaQuestionDateVO.getEndTime());
 					} catch (ParseException e) {
-						System.err.println(e);
 					}
 					break;
 				case "2":
@@ -230,7 +228,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 						listDate = TimeUtil.findDates(statisDissaServiceDateVO.getStartTime(),
 								statisDissaServiceDateVO.getEndTime());
 					} catch (ParseException e) {
-						System.err.println(e);
 					}
 					break;
 				case "2":
@@ -300,7 +297,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 						listDate = TimeUtil.findDates(statisDissatiDateVO.getStartTime(),
 								statisDissatiDateVO.getEndTime());
 					} catch (ParseException e) {
-						System.err.println(e);
 					}
 					break;
 				case "2":

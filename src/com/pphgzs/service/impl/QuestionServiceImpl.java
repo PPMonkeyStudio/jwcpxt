@@ -173,7 +173,6 @@ public class QuestionServiceImpl implements QuestionService {
 			if ("1".equals(moveQuestionType.trim())) {
 				// 如果是最上面的就不能进行移动
 				if (minQuestionSort == currentQuestionSort) {
-					System.out.println("当前已经是第一个");
 					return false;
 				}
 				// 否则就能进行移动
@@ -182,7 +181,6 @@ public class QuestionServiceImpl implements QuestionService {
 			} else if ("2".equals(moveQuestionType.trim())) {
 				// 如果是最小面的就不能进行移动
 				if (maxQuestionSort == currentQuestionSort) {
-					System.out.println("当前已经是最后一个");
 					return false;
 				}
 				// 否则就能进行移动
@@ -382,7 +380,6 @@ public class QuestionServiceImpl implements QuestionService {
 			if ("1".equals(moveOptionType.trim())) {
 				// 如果是最上面的就不能进行移动
 				if (minOptionSort == currentOptionSort) {
-					System.out.println("当前已经是第一个");
 					return false;
 				}
 				// 否则就能进行移动
@@ -391,7 +388,6 @@ public class QuestionServiceImpl implements QuestionService {
 			} else if ("2".equals(moveOptionType.trim())) {
 				// 如果是最小面的就不能进行移动
 				if (maxOptionSort == currentOptionSort) {
-					System.out.println("当前已经是最后一个");
 					return false;
 				}
 				// 否则就能进行移动
