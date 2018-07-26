@@ -1031,6 +1031,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		default:
 			break;
 		}
+		System.out.println(hql);
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_service_client_id", jwcpxt_service_client_id);
 		query.setParameter("question", question.getJwcpxt_question_id());

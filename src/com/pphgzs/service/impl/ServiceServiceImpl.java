@@ -988,33 +988,41 @@ public class ServiceServiceImpl implements ServiceService {
 		
 		//List DTO 包含所有的问题和选项
 		List<ClientNotSatisfiedQusetionAndOptionDTO> list = new ArrayList<ClientNotSatisfiedQusetionAndOptionDTO>();
-		//通过业务定义获取问题和选取的答案  为上一个list中使用
-		ClientNotSatisfiedQusetionAndOptionDTO clientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();//循环中使用的对象
 		
 		//1.获取业务中所有的问题
 		List<jwcpxt_question> allQuestion = serviceDao.get_AllQuestion_ByServiceId(allClientNotSatisfiedInformationVo.getDefinition().getJwcpxt_service_definition_id());
 		//2.循环获取对应当事人，对应问题的回答
 		//List 获得所有追问时候使用
 		List<jwcpxt_question> askQuestionList;
+		
 		//DTO  ask  追问使用
-		ClientNotSatisfiedQusetionAndOptionDTO askClientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();
+		List<ClientNotSatisfiedQusetionAndOptionDTO> askClientNotSatisfiedQusetionAndOptionDTOList = new ArrayList<ClientNotSatisfiedQusetionAndOptionDTO>();
 		for(jwcpxt_question question : allQuestion){
+			
+			ClientNotSatisfiedQusetionAndOptionDTO clientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();	
+			
 			clientNotSatisfiedQusetionAndOptionDTO.setQuestion(question);
 			clientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(question,serviceClient.getJwcpxt_service_client_id()));
+			
 			//选项获取追问
 			//1.获取所有的追问问题
 			askQuestionList = serviceDao.get_askQusetionList_ByQuestionAndClientId(question,serviceClient.getJwcpxt_service_client_id());
 			//2.获取所有问题的答案
 			if(askQuestionList!=null){
 				for(jwcpxt_question askQuestion : askQuestionList){ //选项的追问
+					
+					ClientNotSatisfiedQusetionAndOptionDTO askClientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();
+					
 					askClientNotSatisfiedQusetionAndOptionDTO.setQuestion(askQuestion);
 					askClientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(askQuestion,serviceClient.getJwcpxt_service_client_id()));
-					clientNotSatisfiedQusetionAndOptionDTO.getAskQusetionAndOptionDTO().add(askClientNotSatisfiedQusetionAndOptionDTO);
+					askClientNotSatisfiedQusetionAndOptionDTOList.add(askClientNotSatisfiedQusetionAndOptionDTO);
 				}
+				clientNotSatisfiedQusetionAndOptionDTO.setAskQusetionAndOptionDTO(askClientNotSatisfiedQusetionAndOptionDTOList);
 			}else{
 				//无追问就放空
 				clientNotSatisfiedQusetionAndOptionDTO.setAskQusetionAndOptionDTO(null);
 			}
+			
 			list.add(clientNotSatisfiedQusetionAndOptionDTO);
 		}
 		allClientNotSatisfiedInformationVo.setQusetionAndOptionDTO(list);
