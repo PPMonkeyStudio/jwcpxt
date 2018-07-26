@@ -174,13 +174,13 @@ public class ServiceDaoImpl implements ServiceDao {
 				// 当事人姓名
 				clientInfoDTO.getServiceClient()
 						.setService_client_name(clientInfoDTO.getServiceClient().getService_client_name().replaceAll(
-								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
-										+ "</span>"));
+								clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
 				// 性别
 				clientInfoDTO.getServiceClient()
 						.setService_client_phone(clientInfoDTO.getServiceClient().getService_client_phone().replaceAll(
-								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
-										+ "</span>"));
+								clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
 				// 单位名称
 				clientInfoDTO.getUnit()
 						.setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.getSearch(),
