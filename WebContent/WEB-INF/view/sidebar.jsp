@@ -144,13 +144,16 @@ td .label {
 	src="<%=basePath%>js/user/updatePassword.js"></script>
 <script type="text/javascript">
 	//页面初始化时获取数量
-	$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
-		$('#bellPage .badge').html(response);
-	}, 'text')
-	setInterval(function() {
+	function countInit() {
 		$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
-			$('#bellPage .badge').html(response);
+			$('#bellNotEectificationPage .badge').text(response);
+		}, 'text');
+		$.post('/jwcpxt/DissatisfiedFeedback/get_sercondDisStatisExceedTimeVO', {}, response => {
+			$('#bellTwiceVisitPage .badge').text(response);
 		}, 'text')
-	}, 10000)
+		setTimeout(function() {
+			countInit();
+		}, 10000)
+	}
 </script>
 </html>
