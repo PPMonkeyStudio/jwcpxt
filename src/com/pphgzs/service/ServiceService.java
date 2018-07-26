@@ -15,7 +15,9 @@ import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.AllClientNotSatisfiedInformationVo;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.CountFinishReturnVisitVo;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 
@@ -258,5 +260,20 @@ public interface ServiceService {
 	 * @return
 	 */
 	public List<jwcpxt_user> list_userDO();
+
+	/**
+	 * 获取(单个，全部)回访员（当天，时间区间）内的成功测评的数量
+	 * 
+	 * @param countFinishReturnVisitVo
+	 * @return
+	 */
+	public int get_countFinishReturnVisit_inDateAndByUserId(CountFinishReturnVisitVo countFinishReturnVisitVo);
+
+	/**
+	 * 通过当事人ID获取所有的信息
+	 * @param serviceClient
+	 * @return
+	 */
+	public AllClientNotSatisfiedInformationVo get_AllInformation_ByClientId(jwcpxt_service_client serviceClient);
 
 }

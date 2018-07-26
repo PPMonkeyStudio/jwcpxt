@@ -97,8 +97,12 @@ th {
 										<tbody v-cloak>
 											<template v-for="(ClientInfoDTO,index) in clientInfoVO">
 											<tr style="border-top: 1px solid #ddd;">
-												<th v-html="ClientInfoDTO.serviceClient.service_client_name"></th>
-												<td>{{ClientInfoDTO.serviceClient.service_client_sex}}</td>
+												<th>
+													<a href='javascript:;' @click='showClientInfomation($event)' 
+														:id='ClientInfoDTO.serviceClient.jwcpxt_service_client_id' 
+														v-html="ClientInfoDTO.serviceClient.service_client_name"></a>
+												</th>
+												<td>{{ClientInfoDTO.serviceClient.service_client_sex=='1'?'男':'女'}}</td>
 												<td v-html="ClientInfoDTO.serviceClient.service_client_phone"></td>
 												<td><span
 													v-if="ClientInfoDTO.serviceClient.service_client_visit==1"

@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import com.pphgzs.dao.ServiceDao;
 import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_grab_journal;
+import com.pphgzs.domain.DO.jwcpxt_option;
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
@@ -19,9 +21,11 @@ import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInfoDTO;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
+import com.pphgzs.domain.DTO.ClientNotSatisfiedQusetionAndOptionDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.CountFinishReturnVisitVo;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
 import com.pphgzs.domain.VO.ServiceInstanceVO;
 import com.pphgzs.util.TimeUtil;
@@ -540,7 +544,9 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public int get_serviceInstanceTotalCount_byToday() {
 		Session session = getSession();
-		String hql = "select count(*) from jwcpxt_service_instance  " + " where  service_instance_gmt_create >= :date";
+		String hql = "select count(*) "//
+				+ "from jwcpxt_service_instance  "//
+				+ " where  service_instance_gmt_create >= :date";
 		Query query = session.createQuery(hql);
 		//
 		query.setParameter("date", TimeUtil.getStringDay());
@@ -957,6 +963,103 @@ public class ServiceDaoImpl implements ServiceDao {
 		jwcpxt_unit newUnit = (jwcpxt_unit) query.uniqueResult();
 		session.clear();
 		return newUnit;
+	}
+
+	@Override
+	public int get_countFinishReturnVisit_inDateAndByUserId(CountFinishReturnVisitVo countFinishReturnVisitVo) {
+		String appraisalId = countFinishReturnVisitVo.getAppraisalId();
+		String beginTime = countFinishReturnVisitVo.getBeginTime();
+		String endTime = countFinishReturnVisitVo.getEndTime();
+		String countType = countFinishReturnVisitVo.getCountType();
+		Session session = getSession();
+		String hql = "select count(*)" + " from jwcpxt_grab_instance instance,jwcpxt_service_client client "// like用来匹配所有id
+				+ " where instance.service_instance_judge like :appraisalId "//
+				+ " and instance.service_instance_gmt_modified >= :beginTime "//
+				+ " and instance.service_instance_gmt_modified <= :endTime "
+				+ " and client.service_client_visit = '1' ";//
+		Query query = session.createQuery(hql);
+		// 单个查询
+		appraisalId = (!"".equals(appraisalId) && appraisalId != null) ? appraisalId : "%";
+		// 此时开始时间和结束时间将无效
+		if ("all".equals(countType)) {
+			beginTime = "0000-00-00";
+			endTime = "9999-99-99";
+		} else {
+			// 如果结束时间为空，则只做开始时间的查询
+			if ("".equals(endTime) || endTime == null) {
+				endTime = beginTime;
+			}
+		}
+		query.setParameter("appraisalId", appraisalId);
+		query.setParameter("beginTime", beginTime);
+		query.setParameter("endTime", endTime);
+		int count = ((Number) query.uniqueResult()).intValue();
+		session.clear();
+		return count;
+	}
+
+	@Override
+	public List<jwcpxt_question> get_AllQuestion_ByServiceId(String jwcpxt_service_definition_id) {
+		Session session = getSession();
+		String hql = "from jwcpxt_question where question_service_definition = '" + jwcpxt_service_definition_id + "'";
+		Query query = session.createQuery(hql);
+		List<jwcpxt_question> allQuestion = query.list();
+		session.clear();
+		return allQuestion;
+	}
+
+	@Override
+	public String get_ClientAnswer_ByQuestionAndClientId(jwcpxt_question question, String jwcpxt_service_client_id) {
+		Session session = getSession();
+		String hql = null;
+		switch (question.getQuestion_type()) {
+		case "4":
+		case "1":
+			hql = " select option.option_describe "
+				+ " from jwcpxt_answer_choice choice,jwcpxt_option option "
+				+ " where choice.answer_choice_client = :jwcpxt_service_client_id "
+				+ " and choice.answer_choice_question = :question "
+				+ " and option.jwcpxt_option_id = choice.answer_choice_option";
+			break;
+		case "3":
+		case "2":
+			hql = " select open.answer_open_content "
+				+ " from jwcpxt_answer_open open "
+				+ " where open.answer_open_client = :jwcpxt_service_client_id "
+				+ " and open.answer_open_question = :question ";
+			break;
+		default:
+			break;
+		}
+		System.out.println(hql);
+		Query query = session.createQuery(hql);
+		query.setParameter("jwcpxt_service_client_id", jwcpxt_service_client_id);
+		query.setParameter("question", question.getJwcpxt_question_id());
+		String describe =  (String) query.uniqueResult();
+		session.clear();
+		return describe;
+	}
+
+	@Override
+	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(
+			jwcpxt_question question, String jwcpxt_service_client_id) {
+		Session session = getSession();
+		String hql = " select question "
+				+ " from jwcpxt_answer_choice choice,jwcpxt_option option, jwcpxt_question question"
+				+ " where choice.answer_choice_client = :jwcpxt_service_client_id "
+				+ " and choice.answer_choice_question = :question "
+				+ " and option.jwcpxt_option_id = choice.answer_choice_option "
+				+ " and question.question_service_definition = option.jwcpxt_option_id";
+		Query query = session.createQuery(hql);
+		query.setParameter("jwcpxt_service_client_id", jwcpxt_service_client_id);
+		query.setParameter("question", question.getJwcpxt_question_id());
+		List<jwcpxt_question> askQuestion =  query.list();
+		session.clear();
+		if(askQuestion.size()>0){
+			return askQuestion;
+		}else{
+			return null;
+		}
 	}
 
 	/*

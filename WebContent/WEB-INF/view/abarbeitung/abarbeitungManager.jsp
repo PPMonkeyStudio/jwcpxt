@@ -70,6 +70,7 @@ a:hover {
 															<option value="2">办结</option>
 													</select></td>
 													<td>当事人</td>
+													<td>联系方式</td>
 													<td><select id="searchAuditState"
 														onchange="changeQuery()" class="form-control">
 															<option value="-1">审核状态</option>
@@ -97,6 +98,9 @@ a:hover {
 														</template></td>
 													<td>{{
 														feedbackRectification.feedbackRectification.feedback_rectification_client_name
+														}}</td>
+													<td>{{
+														feedbackRectification.feedbackRectification.feedback_rectification_client_phone
 														}}</td>
 													<td><template
 															v-if="feedbackRectification.feedbackRectification.feedback_rectification_audit_state == 1">
