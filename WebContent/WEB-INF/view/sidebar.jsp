@@ -66,7 +66,7 @@
 								</p>
 						</a></li>
 						<li id="bellTwiceVisitPage"><a
-							href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
+							href="<%=basePath%>Skip/skipSecondVisitWasNotSatisfactory"> <i
 								class="fa fa-bell-o"></i>
 								<p>
 									回访不满 <span style="background-color:red;" class="badge">0</span>
@@ -148,7 +148,7 @@ td .label {
 		$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
 			$('#bellNotEectificationPage .badge').text(response);
 		}, 'text');
-		$.post('/jwcpxt/DissatisfiedFeedback/get_sercondDisStatisExceedTimeVO', {}, response => {
+		$.post('/jwcpxt/DissatisfiedFeedback/get_secondDisStatisCountExceedTime', {}, response => {
 			$('#bellTwiceVisitPage .badge').text(response);
 		}, 'text')
 		setTimeout(function() {

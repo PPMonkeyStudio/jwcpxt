@@ -108,6 +108,10 @@ public class SkipAction {
 		return "skipNotEectificationOverTime";
 	}
 
+	public String skipSecondVisitWasNotSatisfactory() {
+		return "skipSecondVisitWasNotSatisfactory";
+	}
+
 	public String login() {
 		return "login";
 	}
@@ -174,7 +178,6 @@ public class SkipAction {
 
 	public void setType(String type) {
 		this.type = type;
-		System.out.println(type);
 	}
 
 }
