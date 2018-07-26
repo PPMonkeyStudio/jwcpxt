@@ -7,6 +7,7 @@ import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
+import com.pphgzs.domain.VO.SecondDistatisVO;
 
 public interface DissatisfiedFeedbackService {
 
@@ -103,5 +104,20 @@ public interface DissatisfiedFeedbackService {
 	 */
 	public FeedbackRectificationExceedTimeVO get_checkFeedbackRectificationVO(
 			FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO);
+
+	/**
+	 * 获取二次回访还是不满意的数量
+	 * 
+	 * @return
+	 */
+	public int get_secondDisStatisCountExceedTime();
+
+	/**
+	 * 第二次回访仍然不满意
+	 * 
+	 * @param secondDistatisVO
+	 * @return
+	 */
+	public SecondDistatisVO get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO);
 
 }

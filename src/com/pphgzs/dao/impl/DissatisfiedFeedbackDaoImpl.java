@@ -15,9 +15,12 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
+import com.pphgzs.domain.DTO.SecondDistatisDTO;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
+import com.pphgzs.domain.VO.SecondDistatisVO;
 import com.pphgzs.util.TimeUtil;
 
 public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
@@ -32,10 +35,87 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	}
 
 	/**
+	 * VO
+	 */
+	@Override
+	public List<SecondDistatisDTO> get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO) {
+		Session session = getSession();
+		String hql = "select new com.pphgzs.domain.DTO.SecondDistatisDTO(answerChoice,question,serviceDefinition,_option,serviceClient,serviceInstance,unit)"//
+				+ " from "//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_question question,"//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_option _option,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_unit unit"//
+				+ " where "//
+				+ " answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
+				+ " and _option.option_question = question.jwcpxt_question_id"//
+				+ " and question.question_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ " "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id = 'revisit'"//
+				+ " and question.question_describe like '请问您是否对整改结果满意'"//
+				+ " and _option.option_describe like '不满意'"//
+				+ " order by "//
+				+ " answerChoice.answer_choice_gmt_create desc";//
+
+		//
+		Query query = session.createQuery(hql);
+		query.setFirstResult((secondDistatisVO.getCurrPage() - 1) * secondDistatisVO.getPageSize());
+		query.setMaxResults(secondDistatisVO.getPageSize());
+		List<SecondDistatisDTO> list = new ArrayList<>();
+		list = query.list();
+		session.clear();
+		return list;
+	}
+
+	/**
+	 * 获取对二次整改仍然为不满意
+	 */
+	@Override
+	public int get_secondDisStatisCountExceedTime() {
+		Session session = getSession();
+		String hql = "select count(*) from "//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_question question,"//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_option _option,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_unit unit"//
+				+ " where "//
+				+ " answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
+				+ " and _option.option_question = question.jwcpxt_question_id"//
+				+ " and question.question_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ " "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id = 'revisit'"//
+				+ " and question.question_describe like '请问您是否对整改结果满意'"//
+				+ " and _option.option_describe like '不满意'";//
+		//
+		Query query = session.createSQLQuery(hql);
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			return 0;
+		} finally {
+			session.clear();
+		}
+	}
+
+	/**
 	 * 反馈整改表
 	 */
 	@Override
-	public List<FeedbackRectificationDTO> get_checkFeedbackRectificationVO() {
+	public List<FeedbackRectificationDTO> get_checkFeedbackRectificationVO(
+			FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO) {
 		Session session = getSession();
 		String hql = "select new com.pphgzs.domain.DTO.FeedbackRectificationDTO(feedbackRectification,dissatisfiedFeedback,question,serviceClient"//
 				+ " ,serviceInstance,serviceDefinition,unit)"//
@@ -62,6 +142,9 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		Query query = session.createQuery(hql);
 		// 获取五天前
 		query.setParameter("beforeDate", TimeUtil.getDateBefore(new Date(), 5));
+		query.setFirstResult((feedbackRectificationExceedTimeVO.getCurrPage() - 1)
+				* feedbackRectificationExceedTimeVO.getPageSize());
+		query.setMaxResults(feedbackRectificationExceedTimeVO.getPageSize());
 		List<FeedbackRectificationDTO> list = new ArrayList<>();
 		list = query.list();
 		session.clear();
@@ -226,6 +309,9 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		} else {
 			query.setParameter("screenEndTime", dissatisfiedQuestionVO.getScreenEndTime());
 		}
+		//
+		query.setFirstResult((dissatisfiedQuestionVO.getCurrPage() - 1) * dissatisfiedQuestionVO.getPageSize());
+		query.setMaxResults(dissatisfiedQuestionVO.getPageSize());
 		//
 		List<DissatisfiedQuestionDTO> list = query.list();
 		session.clear();
@@ -453,6 +539,9 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			query.setParameter("screenEndTime", feedbackRectificationVO.getScreenEndTime());
 		}
 		//
+		query.setFirstResult((feedbackRectificationVO.getCurrPage() - 1) * feedbackRectificationVO.getPageSize());
+		query.setMaxResults(feedbackRectificationVO.getPageSize());
+		//
 		List<FeedbackRectificationDTO> list = query.list();
 		session.clear();
 		return list;
@@ -525,6 +614,9 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		} else {
 			query.setParameter("screenEndTime", checkFeedbackRectificationVO.getScreenEndTime());
 		}
+		query.setFirstResult(
+				(checkFeedbackRectificationVO.getCurrPage() - 1) * checkFeedbackRectificationVO.getPageSize());
+		query.setMaxResults(checkFeedbackRectificationVO.getPageSize());
 		//
 		List<FeedbackRectificationDTO> list = query.list();
 		session.clear();

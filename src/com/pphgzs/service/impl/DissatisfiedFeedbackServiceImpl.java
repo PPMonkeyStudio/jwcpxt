@@ -13,10 +13,12 @@ import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
+import com.pphgzs.domain.DTO.SecondDistatisDTO;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
+import com.pphgzs.domain.VO.SecondDistatisVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
@@ -37,12 +39,36 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	 * 
 	 */
 	@Override
+	public SecondDistatisVO get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO) {
+		List<SecondDistatisDTO> listSecondDistatisDTO = new ArrayList<>();
+		int totalRecords = get_secondDisStatisCountExceedTime();
+		int totalPages = ((totalRecords - 1) / secondDistatisVO.getPageSize()) + 1;
+		listSecondDistatisDTO = dissatisfiedFeedbackDao.get_sercondDisStatisExceedTimeVO(secondDistatisVO);
+		secondDistatisVO.setTotalCount(totalRecords);
+		secondDistatisVO.setListSecondDistatisDTO(listSecondDistatisDTO);
+		secondDistatisVO.setTotalPage(totalPages);
+		return secondDistatisVO;
+	}
+
+	/**
+	 * 二次回访仍然为不满意数量
+	 */
+	@Override
+	public int get_secondDisStatisCountExceedTime() {
+		return dissatisfiedFeedbackDao.get_secondDisStatisCountExceedTime();
+	}
+
+	/**
+	 * 
+	 */
+	@Override
 	public FeedbackRectificationExceedTimeVO get_checkFeedbackRectificationVO(
 			FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO) {
 		List<FeedbackRectificationDTO> listFeedbackRectificationDTO = new ArrayList<>();
 		int totalRecords = get_countExceedTimeFive();
 		int totalPages = ((totalRecords - 1) / feedbackRectificationExceedTimeVO.getPageSize()) + 1;
-		listFeedbackRectificationDTO = dissatisfiedFeedbackDao.get_checkFeedbackRectificationVO();
+		listFeedbackRectificationDTO = dissatisfiedFeedbackDao
+				.get_checkFeedbackRectificationVO(feedbackRectificationExceedTimeVO);
 		feedbackRectificationExceedTimeVO.setListFeedbackRectificationDTO(listFeedbackRectificationDTO);
 		feedbackRectificationExceedTimeVO.setTotalCount(totalRecords);
 		feedbackRectificationExceedTimeVO.setTotalPage(totalPages);

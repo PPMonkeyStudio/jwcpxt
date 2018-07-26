@@ -16,6 +16,7 @@ import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
+import com.pphgzs.domain.VO.SecondDistatisVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -41,6 +42,12 @@ public class QuestionTest {
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 	@Resource
 	private StatisticsService statisticsService;
+
+	@Test
+	public void get_sercondDisStatisExceedTimeVO() {
+		SecondDistatisVO secondDistatisVO = new SecondDistatisVO();
+		System.out.println(dissatisfiedFeedbackService.get_sercondDisStatisExceedTimeVO(secondDistatisVO));
+	}
 
 	@Test
 	public void get_checkFeedbackRectificationVO() {
