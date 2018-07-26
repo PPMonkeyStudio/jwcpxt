@@ -144,6 +144,7 @@ td .label {
 	src="<%=basePath%>js/user/updatePassword.js"></script>
 <script type="text/javascript">
 	//页面初始化时获取数量
+	countInit();
 	function countInit() {
 		$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
 			$('#bellNotEectificationPage .badge').text(response);
@@ -153,7 +154,7 @@ td .label {
 		}, 'text')
 		setTimeout(function() {
 			countInit();
-		}, 10000)
+		}, 7000)
 	}
 </script>
 </html>
