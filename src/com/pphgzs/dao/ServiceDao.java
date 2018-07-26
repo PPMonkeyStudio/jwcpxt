@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_grab_journal;
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
@@ -13,6 +14,7 @@ import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInfoDTO;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
+import com.pphgzs.domain.DTO.ClientNotSatisfiedQusetionAndOptionDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.VO.ClientInfoVO;
@@ -195,5 +197,33 @@ public interface ServiceDao {
 	 * @return
 	 */
 	public int get_countFinishReturnVisit_inDateAndByUserId(CountFinishReturnVisitVo countFinishReturnVisitVo);
+
+	/**
+	 * 通过业务id获取所有的问题
+	 * 
+	 * @param jwcpxt_service_definition_id
+	 * @return
+	 */
+	public List<jwcpxt_question> get_AllQuestion_ByServiceId(String jwcpxt_service_definition_id);
+
+	/**
+	 * 通过问题id和问题类型和当事人ID去获取当事人对该问题的回答
+	 * 
+	 * @param question
+	 * @param jwcpxt_service_client_id
+	 * @return
+	 */
+
+	public String get_ClientAnswer_ByQuestionAndClientId(jwcpxt_question question, String jwcpxt_service_client_id);
+
+	/**
+	 * 选项获取追问(在DAO做判断)
+	 * 
+	 * @param question
+	 * @param jwcpxt_service_client_id
+	 * @return
+	 */
+	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(
+			jwcpxt_question question, String jwcpxt_service_client_id);
 
 }

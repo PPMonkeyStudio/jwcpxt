@@ -77,6 +77,9 @@ $(function() {
 				queryData[$event.target.name] = $($event.target).val();
 				this.getInfo(queryData);
 			},
+			showClientInfomation(event){
+				showClientInformation(event.target.id);
+			},
 			pageTo (definition_id, client_id) {
 				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=general&definitionId=${definition_id}&serviceClientId=${client_id}`;
 			},
@@ -126,6 +129,54 @@ $(function() {
 			this.before();
 		},
 	})
+	
+	function showClientInformation(clientId){
+		console.log(clientId);
+		return;
+		$.confirm({
+			title : '驳回反馈',
+			type : 'blue',
+			boxWidth : '500px',
+			useBootstrap : false,
+			content : '<div><form id="refuseDiscontentForm">'
+				+ '<label>审核意见：</label><textarea name="dissatisfiedFeedback.dissatisfied_feedback_audit_opinion" class="form-control"></textarea>'
+				+ '</form></div>',
+			buttons : {
+				cancel : {
+					text : '关闭',
+					btnClass : 'btn-red',
+					action : function() {}
+				},
+				save : {
+					text : '驳回',
+					btnClass : 'btn-blue',
+					action : function() {
+						if (!$('#refuseDiscontentForm textarea').val()) {
+							toastr.error('意见不能为空');
+							return false;
+						}
+						var formData = new FormData(document.getElementById("refuseDiscontentForm"));
+						formData.append("dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id", event.id);
+						$.ajax({
+							url : '/jwcpxt/DissatisfiedFeedback/update_dissatisfiedFeedbackState_toReject',
+							type : 'POST',
+							data : formData,
+							processData : false,
+							contentType : false,
+							success : function(data) {
+								if (data == 1) {
+									toastr.success("驳回成功！");
+									loadData();
+								} else {
+									toastr.error("驳回失败！");
+								}
+							}
+						})
+					}
+				}
+			},
+		})
+	}
 
 	randerTimeUtil();
 	function randerTimeUtil() {

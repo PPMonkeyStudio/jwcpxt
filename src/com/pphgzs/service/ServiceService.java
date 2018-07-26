@@ -15,6 +15,7 @@ import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.AllClientNotSatisfiedInformationVo;
 import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.CountFinishReturnVisitVo;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -267,5 +268,12 @@ public interface ServiceService {
 	 * @return
 	 */
 	public int get_countFinishReturnVisit_inDateAndByUserId(CountFinishReturnVisitVo countFinishReturnVisitVo);
+
+	/**
+	 * 通过当事人ID获取所有的信息
+	 * @param serviceClient
+	 * @return
+	 */
+	public AllClientNotSatisfiedInformationVo get_AllInformation_ByClientId(jwcpxt_service_client serviceClient);
 
 }

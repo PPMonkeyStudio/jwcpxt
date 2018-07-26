@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 import com.pphgzs.dao.ServiceDao;
 import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_grab_journal;
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_grab;
@@ -17,9 +20,11 @@ import com.pphgzs.domain.DO.jwcpxt_unit_service;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInfoDTO;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
+import com.pphgzs.domain.DTO.ClientNotSatisfiedQusetionAndOptionDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceDefinitionDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.AllClientNotSatisfiedInformationVo;
 import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.CountFinishReturnVisitVo;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -965,6 +970,55 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public int get_countFinishReturnVisit_inDateAndByUserId(CountFinishReturnVisitVo countFinishReturnVisitVo) {
 		return serviceDao.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
+	}
+
+	@Override
+	public AllClientNotSatisfiedInformationVo get_AllInformation_ByClientId(jwcpxt_service_client serviceClient) {
+		AllClientNotSatisfiedInformationVo allClientNotSatisfiedInformationVo = new AllClientNotSatisfiedInformationVo();
+		//通过当事人ID获取当事人信息
+		allClientNotSatisfiedInformationVo.setClient(serviceDao.get_serviceClientDo_byId(serviceClient.getJwcpxt_service_client_id()));
+		//通过当事人对象获取业务实例信息
+		allClientNotSatisfiedInformationVo.setInstance(serviceDao.get_serviceInstance_byServiceInstanceID(allClientNotSatisfiedInformationVo.getClient().getService_client_service_instance()));;
+		//通过业务实例获取业务定义
+		allClientNotSatisfiedInformationVo.setDefinition(serviceDao.get_serviceDefinition_byServiceDefinitionID(allClientNotSatisfiedInformationVo.getInstance().getService_instance_service_definition()));
+		//通过业务实例获取测评员信息
+		allClientNotSatisfiedInformationVo.setUser(userService.get_userDO_byUserID(allClientNotSatisfiedInformationVo.getInstance().getService_instance_judge()));
+		//通过业务实例获取单位信息
+		allClientNotSatisfiedInformationVo.setUnit(unitService.get_unitDO_byID(allClientNotSatisfiedInformationVo.getInstance().getService_instance_belong_unit()));
+		
+		//List DTO 包含所有的问题和选项
+		List<ClientNotSatisfiedQusetionAndOptionDTO> list = new ArrayList<ClientNotSatisfiedQusetionAndOptionDTO>();
+		//通过业务定义获取问题和选取的答案  为上一个list中使用
+		ClientNotSatisfiedQusetionAndOptionDTO clientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();//循环中使用的对象
+		
+		//1.获取业务中所有的问题
+		List<jwcpxt_question> allQuestion = serviceDao.get_AllQuestion_ByServiceId(allClientNotSatisfiedInformationVo.getDefinition().getJwcpxt_service_definition_id());
+		//2.循环获取对应当事人，对应问题的回答
+		//List 获得所有追问时候使用
+		List<jwcpxt_question> askQuestionList;
+		//DTO  ask  追问使用
+		ClientNotSatisfiedQusetionAndOptionDTO askClientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();
+		for(jwcpxt_question question : allQuestion){
+			clientNotSatisfiedQusetionAndOptionDTO.setQuestion(question);
+			clientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(question,serviceClient.getJwcpxt_service_client_id()));
+			//选项获取追问
+			//1.获取所有的追问问题
+			askQuestionList = serviceDao.get_askQusetionList_ByQuestionAndClientId(question,serviceClient.getJwcpxt_service_client_id());
+			//2.获取所有问题的答案
+			if(askQuestionList!=null){
+				for(jwcpxt_question askQuestion : askQuestionList){ //选项的追问
+					askClientNotSatisfiedQusetionAndOptionDTO.setQuestion(askQuestion);
+					askClientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(askQuestion,serviceClient.getJwcpxt_service_client_id()));
+					clientNotSatisfiedQusetionAndOptionDTO.getAskQusetionAndOptionDTO().add(askClientNotSatisfiedQusetionAndOptionDTO);
+				}
+			}else{
+				//无追问就放空
+				clientNotSatisfiedQusetionAndOptionDTO.setAskQusetionAndOptionDTO(null);
+			}
+			list.add(clientNotSatisfiedQusetionAndOptionDTO);
+		}
+		allClientNotSatisfiedInformationVo.setQusetionAndOptionDTO(list);
+		return allClientNotSatisfiedInformationVo;
 	}
 
 }

@@ -24,6 +24,7 @@ import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.DTO.ServiceConnectDTO;
 import com.pphgzs.domain.DTO.ServiceInstanceDTO;
+import com.pphgzs.domain.VO.AllClientNotSatisfiedInformationVo;
 import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.CountFinishReturnVisitVo;
 import com.pphgzs.domain.VO.ServiceDefinitionVO;
@@ -57,6 +58,22 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private ClientInfoVO clientInfoVO;
 	private String type;
 	private CountFinishReturnVisitVo countFinishReturnVisitVo;
+
+	/**
+	 * 通过当事人id获取<所有>的信息
+	 * @throws IOException 
+	 */
+	public void get_AllInformation_ByClientId() throws IOException{
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		AllClientNotSatisfiedInformationVo allClientNotSatisfiedInformationVo = serviceService.get_AllInformation_ByClientId(serviceClient);
+		//int count = serviceService.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
+		http_response.getWriter().write(gson.toJson(allClientNotSatisfiedInformationVo));
+	}
 
 	/**
 	 * 获取测评员当天成功回访数

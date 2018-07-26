@@ -71,7 +71,7 @@ th {
 											  <div class="form-group">
 											    <label for="sex">性别</label>
 											    <div class="col-sm-10">
-											      <p class="form-control-static">{{serviceClien.service_client_sex}}</p>
+											      <p class="form-control-static">{{serviceClien.service_client_sex=='1'?'男':'女'}}</p>
 											    </div>
 											  </div>
 											  <div class="form-group">
