@@ -8,9 +8,12 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
+import com.pphgzs.domain.DTO.SecondDistatisDTO;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
+import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
+import com.pphgzs.domain.VO.SecondDistatisVO;
 
 public interface DissatisfiedFeedbackDao {
 
@@ -135,5 +138,18 @@ public interface DissatisfiedFeedbackDao {
 	 * 
 	 * @return
 	 */
-	public List<FeedbackRectificationDTO> get_checkFeedbackRectificationVO();
+	public List<FeedbackRectificationDTO> get_checkFeedbackRectificationVO(
+			FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO);
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int get_secondDisStatisCountExceedTime();
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<SecondDistatisDTO> get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO);
 }

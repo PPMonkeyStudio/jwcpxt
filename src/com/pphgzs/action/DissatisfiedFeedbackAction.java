@@ -19,6 +19,7 @@ import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.FeedbackRectificationVO;
+import com.pphgzs.domain.VO.SecondDistatisVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 
 @SuppressWarnings("serial")
@@ -33,6 +34,33 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private FeedbackRectificationVO feedbackRectificationVO;
 	private CheckFeedbackRectificationVO checkFeedbackRectificationVO;
 	private FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO;
+	private SecondDistatisVO secondDistatisVO;
+
+	/**
+	 * 获取二次回访还是不满意的VO
+	 * 
+	 * @throws IOException
+	 */
+	public void get_sercondDisStatisExceedTimeVO() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		secondDistatisVO = dissatisfiedFeedbackService.get_sercondDisStatisExceedTimeVO(secondDistatisVO);
+		http_response.getWriter().write(gson.toJson(secondDistatisVO));
+	}
+
+	/**
+	 * 获取二次回访还是不满意的数量
+	 * 
+	 * @throws IOException
+	 */
+	public void get_secondDisStatisCountExceedTime() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		http_response.getWriter().write(dissatisfiedFeedbackService.get_secondDisStatisCountExceedTime() + "");
+	}
 
 	/**
 	 * @throws IOException
@@ -233,6 +261,14 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	@Override
 	public void setServletRequest(HttpServletRequest http_request) {
 		this.http_request = http_request;
+	}
+
+	public SecondDistatisVO getSecondDistatisVO() {
+		return secondDistatisVO;
+	}
+
+	public void setSecondDistatisVO(SecondDistatisVO secondDistatisVO) {
+		this.secondDistatisVO = secondDistatisVO;
 	}
 
 	public DissatisfiedQuestionVO getDissatisfiedQuestionVO() {
