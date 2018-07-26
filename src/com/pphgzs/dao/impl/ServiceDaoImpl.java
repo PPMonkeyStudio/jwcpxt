@@ -284,11 +284,14 @@ public class ServiceDaoImpl implements ServiceDao {
 		String hql = " select "//
 				+ " count(*) "//
 				+ " from "//
-				+ " jwcpxt_service_instance "//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_service_client serviceClient"//
 				+ " where "//
-				+ " service_instance_service_definition = :serviceDefinitionID "//
-				+ " and service_instance_belong_unit = :unitID "//
-				+ " and service_instance_gmt_create >= :date ";
+				+ " serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance"//
+				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
+				+ " and serviceClient.service_client_visit = '1'"//
+				+ " and serviceInstance.service_instance_belong_unit = :unitID "//
+				+ " and serviceInstance.service_instance_gmt_modified >= :date ";
 		Query query = session.createQuery(hql);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("unitID", unitID);
@@ -308,13 +311,16 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " count(*) "//
 				+ " from "//
 				+ " jwcpxt_service_instance serviceInstance , "//
-				+ " jwcpxt_unit unit"//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_service_client serviceClient"//
 				+ " where "//
 				+ " serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
+				+ " and serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance"//
 				//
 				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
 				+ " and unit.unit_father = :fatherUnitID "//
-				+ " and serviceInstance.service_instance_gmt_create >= :date ";
+				+ " and serviceClient.service_client_visit = '1'"//
+				+ " and serviceInstance.service_instance_gmt_modified >= :date ";
 		Query query = session.createQuery(hql);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("fatherUnitID", fatherUnitID);
@@ -1015,18 +1021,16 @@ public class ServiceDaoImpl implements ServiceDao {
 		switch (question.getQuestion_type()) {
 		case "4":
 		case "1":
-			hql = " select option.option_describe "
-				+ " from jwcpxt_answer_choice choice,jwcpxt_option option "
-				+ " where choice.answer_choice_client = :jwcpxt_service_client_id "
-				+ " and choice.answer_choice_question = :question "
-				+ " and option.jwcpxt_option_id = choice.answer_choice_option";
+			hql = " select option.option_describe " + " from jwcpxt_answer_choice choice,jwcpxt_option option "
+					+ " where choice.answer_choice_client = :jwcpxt_service_client_id "
+					+ " and choice.answer_choice_question = :question "
+					+ " and option.jwcpxt_option_id = choice.answer_choice_option";
 			break;
 		case "3":
 		case "2":
-			hql = " select open.answer_open_content "
-				+ " from jwcpxt_answer_open open "
-				+ " where open.answer_open_client = :jwcpxt_service_client_id "
-				+ " and open.answer_open_question = :question ";
+			hql = " select open.answer_open_content " + " from jwcpxt_answer_open open "
+					+ " where open.answer_open_client = :jwcpxt_service_client_id "
+					+ " and open.answer_open_question = :question ";
 			break;
 		default:
 			break;
@@ -1035,14 +1039,14 @@ public class ServiceDaoImpl implements ServiceDao {
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_service_client_id", jwcpxt_service_client_id);
 		query.setParameter("question", question.getJwcpxt_question_id());
-		String describe =  (String) query.uniqueResult();
+		String describe = (String) query.uniqueResult();
 		session.clear();
 		return describe;
 	}
 
 	@Override
-	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(
-			jwcpxt_question question, String jwcpxt_service_client_id) {
+	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(jwcpxt_question question,
+			String jwcpxt_service_client_id) {
 		Session session = getSession();
 		String hql = " select question "
 				+ " from jwcpxt_answer_choice choice,jwcpxt_option option, jwcpxt_question question"
@@ -1053,11 +1057,11 @@ public class ServiceDaoImpl implements ServiceDao {
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_service_client_id", jwcpxt_service_client_id);
 		query.setParameter("question", question.getJwcpxt_question_id());
-		List<jwcpxt_question> askQuestion =  query.list();
+		List<jwcpxt_question> askQuestion = query.list();
 		session.clear();
-		if(askQuestion.size()>0){
+		if (askQuestion.size() > 0) {
 			return askQuestion;
-		}else{
+		} else {
 			return null;
 		}
 	}
