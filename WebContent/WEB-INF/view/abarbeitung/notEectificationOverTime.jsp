@@ -95,7 +95,7 @@ th {
 												class="pageOperation" @click="lastPage">末页</span> <span><input
 												type="text" id="toPageInput"
 												style="text-align: center; width: 60px; height: 30px;"
-												onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+												onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
 												onblur="this.v();">
 												<button class="btn btn-default" @click="toPage"
 													style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
