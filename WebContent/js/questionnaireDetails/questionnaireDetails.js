@@ -433,7 +433,7 @@ $(function() {
 				<div class="form-group">
 					<label>选项扣分</label>
 					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="addOptionConfirm_grade"
-						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
 						onblur="this.v();" value="0">
 				</div>
 				<div class="form-group">
@@ -509,7 +509,7 @@ $(function() {
 				<div class="form-group">
 					<label>选项扣分</label>
 					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="modifyConfirm_grade" value="${option.option.option_grade}"
-						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
 						onblur="this.v();" value="0">
 				</div>
 			</form>
@@ -845,7 +845,7 @@ $(function() {
 			<div class="form-group">
 				<label>选项扣分</label>
 				<input type="text" placeholder="请输入选项扣分..." class="form-control" id="modifyInquiriesOption_grade"
-						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
 						onblur="this.v();" value="${option.option_grade}">
 			</div>
 			`,
@@ -913,7 +913,7 @@ $(function() {
 				<div class="form-group">
 					<label>选项扣分</label>
 					<input type="text" placeholder="请输入选项扣分..." class="form-control" id="addInquiriesOptionConfirm_grade"
-						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
 						onblur="this.v();" value="0">
 				</div>
 			</div>

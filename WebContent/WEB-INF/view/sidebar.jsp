@@ -66,7 +66,7 @@
 								</p>
 						</a></li>
 						<li id="bellTwiceVisitPage"><a
-							href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
+							href="<%=basePath%>Skip/skipSecondVisitWasNotSatisfactory"> <i
 								class="fa fa-bell-o"></i>
 								<p>
 									回访不满 <span style="background-color:red;" class="badge">0</span>
@@ -144,13 +144,16 @@ td .label {
 	src="<%=basePath%>js/user/updatePassword.js"></script>
 <script type="text/javascript">
 	//页面初始化时获取数量
-	$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
-		$('#bellPage .badge').html(response);
-	}, 'text')
-	setInterval(function() {
+	function countInit() {
 		$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
-			$('#bellPage .badge').html(response);
+			$('#bellNotEectificationPage .badge').text(response);
+		}, 'text');
+		$.post('/jwcpxt/DissatisfiedFeedback/get_secondDisStatisCountExceedTime', {}, response => {
+			$('#bellTwiceVisitPage .badge').text(response);
 		}, 'text')
-	}, 10000)
+		setTimeout(function() {
+			countInit();
+		}, 10000)
+	}
 </script>
 </html>
