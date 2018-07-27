@@ -1,13 +1,16 @@
 package com.pphgzs.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
+import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
+import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -106,5 +109,12 @@ public interface StatisticsDao {
 	 */
 	public int get_totalCountService_byTime(StatisDissaServiceDateVO statisDissaServiceDateVO, String string,
 			String string2, jwcpxt_service_definition serviceDefinition);
+
+	/**
+	 * 
+	 * @param returnVisitVO
+	 * @return
+	 */
+	public List<ReturnVisitDTO> getUserCountVO(ReturnVisitVO returnVisitVO);
 
 }

@@ -19,6 +19,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -48,6 +49,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private StatisDissatiDateVO statisDissatiDateVO;
 	private StatisDissaServiceDateVO statisDissaServiceDateVO;
 	private StatisDissaQuestionDateVO statisDissaQuestionDateVO;
+	private ReturnVisitVO returnVisitVO;
 	/*
 	 * 
 	 */
@@ -56,6 +58,22 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	/**
+	 * 获取测评员测评数量比
+	 * 
+	 * @throws IOException
+	 */
+	public void getUserCountVO() throws IOException {
+		returnVisitVO = statisticsService.getUserCountVO(returnVisitVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(gson.toJson(returnVisitVO));
+	}
 
 	/**
 	 * @throws IOException
@@ -363,6 +381,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public StatisticsDissatisfiedDateCountVO getStatisticsDissatisfiedDateCountVO() {
 		return statisticsDissatisfiedDateCountVO;
+	}
+
+	public ReturnVisitVO getReturnVisitVO() {
+		return returnVisitVO;
+	}
+
+	public void setReturnVisitVO(ReturnVisitVO returnVisitVO) {
+		this.returnVisitVO = returnVisitVO;
 	}
 
 	public void setStatisticsDissatisfiedDateCountVO(

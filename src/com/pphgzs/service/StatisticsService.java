@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -56,5 +57,13 @@ public interface StatisticsService {
 	 * @return
 	 */
 	public StatisDissaServiceDateVO get_statisQuestionDataVO(StatisDissaServiceDateVO statisDissaServiceDateVO);
+
+	/**
+	 * 获取返回的VO
+	 * 
+	 * @param returnVisitVO
+	 * @return
+	 */
+	public ReturnVisitVO getUserCountVO(ReturnVisitVO returnVisitVO);
 
 }

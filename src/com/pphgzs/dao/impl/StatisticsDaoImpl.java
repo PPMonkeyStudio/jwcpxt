@@ -10,7 +10,9 @@ import org.hibernate.SessionFactory;
 import com.pphgzs.dao.StatisticsDao;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
+import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -28,6 +30,44 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<ReturnVisitDTO> getUserCountVO(ReturnVisitVO returnVisitVO) {
+		Session session = getSession();
+		String hql = "select new com.pphgzs.domain.DTO.ReturnVisitDTO(serviceClient.service_client_visit,count(*))"//
+				+ " from"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance"//
+				+ " where"//
+				+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceClient.service_client_gmt_modified >= :beforeDate"//
+				+ " and serviceClient.service_client_gmt_modified < :afterDate"//
+				+ " and serviceInstance.service_instance_judge like :userId"//
+				+ " group by serviceClient.service_client_visit";
+		Query query = session.createQuery(hql);
+		// 昨天和今天
+		if ("".equals(returnVisitVO.getStartTime())) {
+			query.setParameter("beforeDate", "0000-00-00");
+		} else {
+			query.setParameter("beforeDate", returnVisitVO.getStartTime());
+		}
+		if ("".equals(returnVisitVO.getEndTime())) {
+			query.setParameter("afterDate", "9999-99-99");
+		} else {
+			query.setParameter("afterDate", returnVisitVO.getEndTime());
+		}
+		if ("".equals(returnVisitVO.getUserId())) {
+			query.setParameter("userId", "%%");
+		} else {
+			query.setParameter("userId", "%" + returnVisitVO.getUserId() + "%");
+		}
+		List<ReturnVisitDTO> listReturnVisitDTO = new ArrayList<>();
+		listReturnVisitDTO = query.list();
+		return listReturnVisitDTO;
 	}
 
 	/**

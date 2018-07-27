@@ -84,6 +84,25 @@ public class TimeUtil {
 
 	}
 
+	// 获得精确到天的时间，提前七天
+	public static String getStringDay_beforeDay(int day) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date secondDate = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(secondDate);
+		calendar.add(Calendar.DAY_OF_MONTH, day);
+		secondDate = calendar.getTime();
+		String date = formatter.format(secondDate);
+		try {
+			secondDate = formatter.parse(date);
+			return date;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 	@Test
 	public void ttt() {
 		String start = "2012-02-01";
