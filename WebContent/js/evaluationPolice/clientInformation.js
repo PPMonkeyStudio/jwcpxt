@@ -37,7 +37,16 @@ $(function() {
 				if (definitionId) {
 					//选中传过来的业务ID
 					$('input[name="clientInfoVO.screenService"]').val();
+					queryData["clientInfoVO.screenService"] = definitionId;
 				}
+				//单位搜索情况
+				let unitText = getUrlParam('unitId');
+				if (unitText) {
+					//选中传过来的业务ID
+					$('input[name="clientInfoVO.search"]').val();
+					queryData["clientInfoVO.search"] = unitText;
+				}
+
 				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
@@ -79,6 +88,9 @@ $(function() {
 			},
 			showClientInfomation (event) {
 				showClientInformation(event.target.id);
+			},
+			previewChart () {
+				previewChart();
 			},
 			pageTo (definition_id, client_id) {
 				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=general&definitionId=${definition_id}&serviceClientId=${client_id}`;
@@ -258,8 +270,101 @@ $(function() {
 				}
 			},
 		})
-
 	}
+
+	//查看图表
+	function previewChart() {
+		//		queryData
+		let params = {
+			"returnVisitVO.userId" : queryData["clientInfoVO.screenUser"],
+			"returnVisitVO.startTime" : queryData["clientInfoVO.startTime"],
+			"returnVisitVO.endTime" : queryData["clientInfoVO.endTime"]
+		}
+		let previewChartConfirm = $.confirm({
+			title : '回访数量统计',
+			type : 'dark',
+			boxWidth : '1000px',
+			useBootstrap : false,
+			content : `
+			<form id="previewChartConfirmForm">
+				  <div id="previewChartConfirmFormChart" style="width: 90%;height:400px;"></div>
+			</form>
+			`,
+			onContentReady : function() {
+				$.post('/jwcpxt/DissatisfiedFeedback/getUserCountVO', params, response => {
+					new Vue({
+						el : '#showAskQuestionConfirmForm',
+						data : {
+							countDTO : response
+						},
+						mounted () {
+							let option = {
+								title : {
+									text : '某站点用户访问来源',
+									subtext : '纯属虚构',
+									x : 'center'
+								},
+								tooltip : {
+									trigger : 'item',
+									formatter : "{a} <br/>{b} : {c} ({d}%)"
+								},
+								legend : {
+									orient : 'vertical',
+									left : 'left',
+									data : [ '直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎' ]
+								},
+								series : [
+									{
+										name : '访问来源',
+										type : 'pie',
+										radius : '55%',
+										center : [ '50%', '60%' ],
+										data : [
+											{
+												value : 335,
+												name : '直接访问'
+											},
+											{
+												value : 310,
+												name : '邮件营销'
+											},
+											{
+												value : 234,
+												name : '联盟广告'
+											},
+											{
+												value : 135,
+												name : '视频广告'
+											},
+											{
+												value : 1548,
+												name : '搜索引擎'
+											}
+										],
+										itemStyle : {
+											emphasis : {
+												shadowBlur : 10,
+												shadowOffsetX : 0,
+												shadowColor : 'rgba(0, 0, 0, 0.5)'
+											}
+										}
+									}
+								]
+							};
+							echarts.init(document.getElementById('previewChartConfirmFormChart'), 'light').setOption(option); //群众不满意
+						}
+					});
+				}, 'json');
+			},
+			buttons : {
+				cancel : {
+					text : '关闭',
+					btnClass : 'btn-blue'
+				}
+			},
+		})
+	}
+
 
 	randerTimeUtil();
 	function randerTimeUtil() {

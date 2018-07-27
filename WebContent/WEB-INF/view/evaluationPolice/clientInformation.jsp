@@ -59,6 +59,9 @@ th {
 												id="endTime" placeholder="结束时间" class="mydate form-control"
 												style="display: inline; width: 150px;">
 										</div>
+										<button type="button" class="btn btn-default" @click="previewChart">
+										<i class="fa fa-adjust"></i>图表
+									</button>
 									</div>
 									<input @keyup="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
 										name="clientInfoVO.search" class="form-control"
@@ -172,5 +175,6 @@ th {
 	/* 处理侧边栏选项 */
 	$('#sideManager').attr("class", "active");
 </script>
+<script src="<%=basePath%>js/statisticalData/echarts.min.js"></script>
 <script src="<%=basePath%>js/evaluationPolice/clientInformation.js"></script>
 </html>

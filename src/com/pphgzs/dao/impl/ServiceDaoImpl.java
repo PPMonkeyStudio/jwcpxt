@@ -178,13 +178,13 @@ public class ServiceDaoImpl implements ServiceDao {
 				// 当事人姓名
 				clientInfoDTO.getServiceClient()
 						.setService_client_name(clientInfoDTO.getServiceClient().getService_client_name().replaceAll(
-								clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
+										+ "</span>"));
 				// 性别
 				clientInfoDTO.getServiceClient()
 						.setService_client_phone(clientInfoDTO.getServiceClient().getService_client_phone().replaceAll(
-								clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
+										+ "</span>"));
 				// 单位名称
 				clientInfoDTO.getUnit()
 						.setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.getSearch(),
@@ -971,12 +971,13 @@ public class ServiceDaoImpl implements ServiceDao {
 		String beginTime = countFinishReturnVisitVo.getBeginTime();
 		String endTime = countFinishReturnVisitVo.getEndTime();
 		String countType = countFinishReturnVisitVo.getCountType();
+		String type = countFinishReturnVisitVo.getType();
 		Session session = getSession();
 		String hql = "select count(*)" + " from jwcpxt_grab_instance instance,jwcpxt_service_client client "// like用来匹配所有id
 				+ " where instance.service_instance_judge like :appraisalId "//
 				+ " and instance.service_instance_gmt_modified >= :beginTime "//
 				+ " and instance.service_instance_gmt_modified <= :endTime "
-				+ " and client.service_client_visit = '1' ";//
+				+ " and client.service_client_visit like :type ";//
 		Query query = session.createQuery(hql);
 		// 单个查询
 		appraisalId = (!"".equals(appraisalId) && appraisalId != null) ? appraisalId : "%";
@@ -993,6 +994,11 @@ public class ServiceDaoImpl implements ServiceDao {
 		query.setParameter("appraisalId", appraisalId);
 		query.setParameter("beginTime", beginTime);
 		query.setParameter("endTime", endTime);
+		// 如果为-1，则获取全部状态的数量
+		if ("-1".equals(type)) {
+			type = "%";
+		}
+		query.setParameter("type", type);
 		int count = ((Number) query.uniqueResult()).intValue();
 		session.clear();
 		return count;
@@ -1015,18 +1021,16 @@ public class ServiceDaoImpl implements ServiceDao {
 		switch (question.getQuestion_type()) {
 		case "4":
 		case "1":
-			hql = " select option.option_describe "
-				+ " from jwcpxt_answer_choice choice,jwcpxt_option option "
-				+ " where choice.answer_choice_client = :jwcpxt_service_client_id "
-				+ " and choice.answer_choice_question = :question "
-				+ " and option.jwcpxt_option_id = choice.answer_choice_option";
+			hql = " select option.option_describe " + " from jwcpxt_answer_choice choice,jwcpxt_option option "
+					+ " where choice.answer_choice_client = :jwcpxt_service_client_id "
+					+ " and choice.answer_choice_question = :question "
+					+ " and option.jwcpxt_option_id = choice.answer_choice_option";
 			break;
 		case "3":
 		case "2":
-			hql = " select open.answer_open_content "
-				+ " from jwcpxt_answer_open open "
-				+ " where open.answer_open_client = :jwcpxt_service_client_id "
-				+ " and open.answer_open_question = :question ";
+			hql = " select open.answer_open_content " + " from jwcpxt_answer_open open "
+					+ " where open.answer_open_client = :jwcpxt_service_client_id "
+					+ " and open.answer_open_question = :question ";
 			break;
 		default:
 			break;
@@ -1035,14 +1039,14 @@ public class ServiceDaoImpl implements ServiceDao {
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_service_client_id", jwcpxt_service_client_id);
 		query.setParameter("question", question.getJwcpxt_question_id());
-		String describe =  (String) query.uniqueResult();
+		String describe = (String) query.uniqueResult();
 		session.clear();
 		return describe;
 	}
 
 	@Override
-	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(
-			jwcpxt_question question, String jwcpxt_service_client_id) {
+	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(jwcpxt_question question,
+			String jwcpxt_service_client_id) {
 		Session session = getSession();
 		String hql = " select question "
 				+ " from jwcpxt_answer_choice choice,jwcpxt_option option, jwcpxt_question question"
@@ -1053,11 +1057,11 @@ public class ServiceDaoImpl implements ServiceDao {
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_service_client_id", jwcpxt_service_client_id);
 		query.setParameter("question", question.getJwcpxt_question_id());
-		List<jwcpxt_question> askQuestion =  query.list();
+		List<jwcpxt_question> askQuestion = query.list();
 		session.clear();
-		if(askQuestion.size()>0){
+		if (askQuestion.size() > 0) {
 			return askQuestion;
-		}else{
+		} else {
 			return null;
 		}
 	}
