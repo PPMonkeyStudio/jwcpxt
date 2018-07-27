@@ -512,6 +512,13 @@ $(function() {
 						onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
 						onblur="this.v();" value="0">
 				</div>
+				<div class="form-group">
+				<label>是否推送</label>
+				<select class="form-control" id="modifyConfirm_push" value="${option.option.option_push}">
+					<option value="2">不推送</option>
+					<option value="1">推送</option>
+				</select>
+			</div>
 			</form>
 			`,
 			buttons : {
@@ -531,7 +538,8 @@ $(function() {
 						let params = {
 							"option.jwcpxt_option_id" : option.option.jwcpxt_option_id,
 							"option.option_describe" : modifyConfirm.$content.find('#modifyConfirm_describe').val(),
-							"option.option_grade" : modifyConfirm.$content.find('#modifyConfirm_grade').val()
+							"option.option_grade" : modifyConfirm.$content.find('#modifyConfirm_grade').val(),
+							"option.option_push" : modifyConfirm.$content.find('#modifyConfirm_push').val()
 						};
 						$.post('/jwcpxt/Question/update_option', params, response => {
 							if (response == "1") {
