@@ -171,13 +171,13 @@ public class ServiceDaoImpl implements ServiceDao {
 				// 当事人姓名
 				clientInfoDTO.getServiceClient()
 						.setService_client_name(clientInfoDTO.getServiceClient().getService_client_name().replaceAll(
-								clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
+										+ "</span>"));
 				// 性别
 				clientInfoDTO.getServiceClient()
 						.setService_client_phone(clientInfoDTO.getServiceClient().getService_client_phone().replaceAll(
-								clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
+								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
+										+ "</span>"));
 				// 单位名称
 				clientInfoDTO.getUnit()
 						.setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.getSearch(),
@@ -968,12 +968,13 @@ public class ServiceDaoImpl implements ServiceDao {
 		String beginTime = countFinishReturnVisitVo.getBeginTime();
 		String endTime = countFinishReturnVisitVo.getEndTime();
 		String countType = countFinishReturnVisitVo.getCountType();
+		String type = countFinishReturnVisitVo.getType();
 		Session session = getSession();
 		String hql = "select count(*)" + " from jwcpxt_grab_instance instance,jwcpxt_service_client client "// like用来匹配所有id
 				+ " where instance.service_instance_judge like :appraisalId "//
 				+ " and instance.service_instance_gmt_modified >= :beginTime "//
 				+ " and instance.service_instance_gmt_modified <= :endTime "
-				+ " and client.service_client_visit = '1' ";//
+				+ " and client.service_client_visit like :type ";//
 		Query query = session.createQuery(hql);
 		// 单个查询
 		appraisalId = (!"".equals(appraisalId) && appraisalId != null) ? appraisalId : "%";
@@ -990,6 +991,11 @@ public class ServiceDaoImpl implements ServiceDao {
 		query.setParameter("appraisalId", appraisalId);
 		query.setParameter("beginTime", beginTime);
 		query.setParameter("endTime", endTime);
+		// 如果为-1，则获取全部状态的数量
+		if ("-1".equals(type)) {
+			type = "%";
+		}
+		query.setParameter("type", type);
 		int count = ((Number) query.uniqueResult()).intValue();
 		session.clear();
 		return count;

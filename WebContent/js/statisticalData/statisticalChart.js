@@ -423,7 +423,7 @@ function randerDissatisfactionChart(res) {
 	setTimeout(function() {
 		let option = {
 			title : {
-				text : '汇总统计各情况图',
+				text : '测评数据统计分析图',
 				subtext : ''
 			},
 			legend : {},
@@ -557,7 +557,7 @@ function randerDissatisfiedServiceChart(res, title) {
 	setTimeout(function() {
 		let option = {
 			title : {
-				text : title ? title + "业务分布图" : "不满意业务分布图",
+				text : "群从满意业务分布图",
 				subtext : ''
 			},
 			legend : {},
@@ -612,7 +612,8 @@ function randerDissatisfiedServiceChart(res, title) {
 					res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.forEach(function(elt, i) {
 						if (elt.serviceDefinition.service_definition_describe == describe) {
 							definitionId = elt.serviceDefinition.jwcpxt_service_definition_id;
-							dissatisfactionProblemSendData(describe);
+							if (definitionId)
+								dissatisfactionProblemSendData(describe);
 							throw 'Jump';
 						}
 					})
@@ -623,7 +624,8 @@ function randerDissatisfiedServiceChart(res, title) {
 		});
 		//默认将右边图画出
 		definitionId = res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO[0].serviceDefinition.jwcpxt_service_definition_id
-		dissatisfactionProblemSendData(option.dataset.source[1][0]);
+		if (definitionId)
+			dissatisfactionProblemSendData(option.dataset.source[1][0]);
 	});
 }
 

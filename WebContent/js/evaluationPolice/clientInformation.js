@@ -14,7 +14,8 @@ $(function() {
 		},
 		isUnit : false,
 		allAppraisal : [],
-		allService : []
+		allService : [],
+		screenUser_chart : ''
 	};
 
 	let queryData = {
@@ -37,7 +38,16 @@ $(function() {
 				if (definitionId) {
 					//选中传过来的业务ID
 					$('input[name="clientInfoVO.screenService"]').val();
+					queryData["clientInfoVO.screenService"] = definitionId;
 				}
+				//单位搜索情况
+				let unitText = getUrlParam('unitId');
+				if (unitText) {
+					//选中传过来的业务ID
+					$('input[name="clientInfoVO.search"]').val();
+					queryData["clientInfoVO.search"] = unitText;
+				}
+
 				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
@@ -47,6 +57,7 @@ $(function() {
 						}, 'json')
 					} else if (response.jwcpxt_user_id) {
 						//queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
+						myData.screenUser_chart = response.jwcpxt_user_id;
 					}
 					this.getInfo(queryData);
 				}, 'json');
@@ -79,6 +90,9 @@ $(function() {
 			},
 			showClientInfomation (event) {
 				showClientInformation(event.target.id);
+			},
+			previewChart () {
+				previewChart();
 			},
 			pageTo (definition_id, client_id) {
 				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=general&definitionId=${definition_id}&serviceClientId=${client_id}`;
@@ -258,8 +272,94 @@ $(function() {
 				}
 			},
 		})
-
 	}
+
+	//查看图表
+	function previewChart() {
+		//		queryData
+		let params = {
+			"returnVisitVO.userId" : myData.screenUser_chart ? myData.screenUser_chart : "",
+			"returnVisitVO.startTime" : queryData["clientInfoVO.startTime"] ? queryData["clientInfoVO.startTime"] : getFormatDate(),
+			"returnVisitVO.endTime" : queryData["clientInfoVO.endTime"] ? queryData["clientInfoVO.endTime"] : getFormatDate()
+		}
+		//如果测评员搜索不为空
+		if (queryData["clientInfoVO.screenUser"]) {
+			params["returnVisitVO.userId"] = queryData["clientInfoVO.screenUser"];
+		}
+		let previewChartConfirm = $.confirm({
+			title : '回访数量统计',
+			type : 'dark',
+			boxWidth : '1000px',
+			useBootstrap : false,
+			content : `
+			<form id="previewChartConfirmForm">
+				  <div id="previewChartConfirmFormChart" style="width: 90%;height:400px;"></div>
+			</form>
+			`,
+			onContentReady : function() {
+				$.post('/jwcpxt/Statistics/getUserCountVO', params, response => {
+					let dataText = [];
+					let dataSeries = [];
+					response.listReturnVisitDTO.forEach(function(elt, i) {
+						let params = {
+							value : elt.returnCount,
+							name : typeReplace(elt.returnVisitType)
+						}
+						dataSeries.push(params);
+						dataText.push(typeReplace(elt.returnVisitType));
+					})
+					new Vue({
+						el : '#previewChartConfirmForm',
+						data : {
+							countDTO : response
+						},
+						mounted () {
+							let option = {
+								title : {
+									text : '回访数据统计图表',
+									subtext : '',
+									x : 'center'
+								},
+								tooltip : {
+									trigger : 'item',
+									formatter : "{a} <br/>{b} : {c} ({d}%)"
+								},
+								legend : {
+									orient : 'vertical',
+									left : 'left',
+									data : dataText
+								},
+								series : [
+									{
+										name : '访问来源',
+										type : 'pie',
+										radius : '55%',
+										center : [ '50%', '60%' ],
+										data : dataSeries,
+										itemStyle : {
+											emphasis : {
+												shadowBlur : 10,
+												shadowOffsetX : 0,
+												shadowColor : 'rgba(0, 0, 0, 0.5)'
+											}
+										}
+									}
+								]
+							};
+							echarts.init(document.getElementById('previewChartConfirmFormChart'), 'light').setOption(option); //群众不满意
+						}
+					});
+				}, 'json');
+			},
+			buttons : {
+				cancel : {
+					text : '关闭',
+					btnClass : 'btn-blue'
+				}
+			},
+		})
+	}
+
 
 	randerTimeUtil();
 	function randerTimeUtil() {
@@ -274,6 +374,40 @@ $(function() {
 			minDate : '1900/01/01', // 设置最小日期
 			maxDate : '2050/01/01', // 设置最大日期
 		});
+	}
+
+	function getFormatDate() {
+		var nowDate = new Date();
+		var year = nowDate.getFullYear();
+		var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+		var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+		// var hour = nowDate.getHours()< 10 ? "0" + nowDate.getHours() : nowDate.getHours();  
+		// var minute = nowDate.getMinutes()< 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();  
+		// var second = nowDate.getSeconds()< 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();  
+		return year + "-" + month + "-" + date;
+	}
+
+	function typeReplace(type) {
+		switch (type) {
+		case '1':
+			return "成功";			break;
+		case '2':
+			return "未回访";			break;
+		case '3':
+			return "空号";			break;
+		case '4':
+			return "无人接听";			break;
+		case '5':
+			return "占线";			break;
+		case '6':
+			return "停机";			break;
+		case '7':
+			return "拒访 ";			break;
+		case '8':
+			return "其他";			break;
+		default:
+			break;
+		}
 	}
 
 	function getUrlParam(name) {

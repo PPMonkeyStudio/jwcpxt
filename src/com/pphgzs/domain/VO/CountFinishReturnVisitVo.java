@@ -5,6 +5,7 @@ public class CountFinishReturnVisitVo {
 	private String beginTime;
 	private String endTime;
 	private String countType;
+	private String type;
 
 	public String getAppraisalId() {
 		return appraisalId;
@@ -38,10 +39,21 @@ public class CountFinishReturnVisitVo {
 		this.countType = countType;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
 		return "CountFinishReturnVisitVo [appraisalId=" + appraisalId + ", beginTime=" + beginTime + ", endTime="
-				+ endTime + ", countType=" + countType + "]";
+				+ endTime + ", countType=" + countType + ", type=" + type + ", getAppraisalId()=" + getAppraisalId()
+				+ ", getBeginTime()=" + getBeginTime() + ", getEndTime()=" + getEndTime() + ", getCountType()="
+				+ getCountType() + ", getType()=" + getType() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
 }
