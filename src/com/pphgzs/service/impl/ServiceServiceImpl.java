@@ -83,9 +83,7 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO) {
 		List<ClientInfoDTO> listClientInfo = new ArrayList<>();
-		System.out.println("df:" + clientInfoVO);
 		listClientInfo = serviceDao.get_clientInfoVO_byUserId(clientInfoVO);
-		System.out.println("size:" + listClientInfo.size());
 		int totalRecords = serviceDao.get_clientInfoVOCount_byUserId(clientInfoVO);
 		int totalPages = ((totalRecords - 1) / clientInfoVO.getPageSize()) + 1;
 		clientInfoVO.setListClientInfoDTO(listClientInfo);
@@ -199,14 +197,12 @@ public class ServiceServiceImpl implements ServiceService {
 
 		// 查询所有单位关联业务表
 		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
-		System.out.println("查询所有单位关联业务表:" + unitServiceList.size());
 		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
 		Iterator<jwcpxt_unit_service> iterator = unitServiceList.iterator();
 		while (iterator.hasNext()) {
 			jwcpxt_unit_service unitServiceDO = iterator.next();
 			// 需求数量
 			int wantNum = unitServiceDO.getEvaluation_count();
-			// System.out.println("需求数量：" + wantNum);
 			/*
 			 * 如果这个单位是二级单位，那么就查出他所有子单位已分配的实例数量
 			 * 
@@ -221,7 +217,6 @@ public class ServiceServiceImpl implements ServiceService {
 				// 已分配数量：获取当天该单位该业务的业务实例的数量
 				currNum = get_serviceInstanceCount_byServiceDefinitionAndUnit(unitServiceDO.getService_definition_id(),
 						unitServiceDO.getUnit_id());
-				// System.out.println("三级单位当前业务实例数量：" + currNum);
 			}
 
 			// 分配足够了的就移出列表
@@ -283,16 +278,15 @@ public class ServiceServiceImpl implements ServiceService {
 		/*
 		 * if (grabInstance.getGrab_instance_service_time() == null ||
 		 * "".equals(grabInstance.getGrab_instance_service_time())) {
-		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay());
-		 * }else { serviceInstance.setService_instance_date(
-		 * TimeUtil.longDateFormatDate(grabInstance.
-		 * getGrab_instance_service_time())); }
+		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay()); }else {
+		 * serviceInstance.setService_instance_date(
+		 * TimeUtil.longDateFormatDate(grabInstance. getGrab_instance_service_time()));
+		 * }
 		 */
 		try {
 			serviceInstance.setService_instance_date(
 					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));
 		} catch (ParseException e) {
-			System.err.println(e);
 			serviceInstance.setService_instance_date(TimeUtil.getStringDay());
 		}
 		// serviceInstance.setService_instance_date(grabInstance.getGrab_instance_service_time());
@@ -963,10 +957,10 @@ public class ServiceServiceImpl implements ServiceService {
 		return serviceDao.get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
 				serviceDefinitionID, organizationCode);
 	}
+
 	/*
 	 * 
 	 */
-
 	@Override
 	public int get_countFinishReturnVisit_inDateAndByUserId(CountFinishReturnVisitVo countFinishReturnVisitVo) {
 		return serviceDao.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
@@ -975,54 +969,66 @@ public class ServiceServiceImpl implements ServiceService {
 	@Override
 	public AllClientNotSatisfiedInformationVo get_AllInformation_ByClientId(jwcpxt_service_client serviceClient) {
 		AllClientNotSatisfiedInformationVo allClientNotSatisfiedInformationVo = new AllClientNotSatisfiedInformationVo();
-		//通过当事人ID获取当事人信息
-		allClientNotSatisfiedInformationVo.setClient(serviceDao.get_serviceClientDo_byId(serviceClient.getJwcpxt_service_client_id()));
-		//通过当事人对象获取业务实例信息
-		allClientNotSatisfiedInformationVo.setInstance(serviceDao.get_serviceInstance_byServiceInstanceID(allClientNotSatisfiedInformationVo.getClient().getService_client_service_instance()));;
-		//通过业务实例获取业务定义
-		allClientNotSatisfiedInformationVo.setDefinition(serviceDao.get_serviceDefinition_byServiceDefinitionID(allClientNotSatisfiedInformationVo.getInstance().getService_instance_service_definition()));
-		//通过业务实例获取测评员信息
-		allClientNotSatisfiedInformationVo.setUser(userService.get_userDO_byUserID(allClientNotSatisfiedInformationVo.getInstance().getService_instance_judge()));
-		//通过业务实例获取单位信息
-		allClientNotSatisfiedInformationVo.setUnit(unitService.get_unitDO_byID(allClientNotSatisfiedInformationVo.getInstance().getService_instance_belong_unit()));
-		
-		//List DTO 包含所有的问题和选项
+		// 通过当事人ID获取当事人信息
+		allClientNotSatisfiedInformationVo
+				.setClient(serviceDao.get_serviceClientDo_byId(serviceClient.getJwcpxt_service_client_id()));
+		// 通过当事人对象获取业务实例信息
+		allClientNotSatisfiedInformationVo.setInstance(serviceDao.get_serviceInstance_byServiceInstanceID(
+				allClientNotSatisfiedInformationVo.getClient().getService_client_service_instance()));
+		;
+		// 通过业务实例获取业务定义
+		allClientNotSatisfiedInformationVo.setDefinition(serviceDao.get_serviceDefinition_byServiceDefinitionID(
+				allClientNotSatisfiedInformationVo.getInstance().getService_instance_service_definition()));
+		// 通过业务实例获取测评员信息
+		allClientNotSatisfiedInformationVo.setUser(userService
+				.get_userDO_byUserID(allClientNotSatisfiedInformationVo.getInstance().getService_instance_judge()));
+		// 通过业务实例获取单位信息
+		allClientNotSatisfiedInformationVo.setUnit(unitService
+				.get_unitDO_byID(allClientNotSatisfiedInformationVo.getInstance().getService_instance_belong_unit()));
+
+		// List DTO 包含所有的问题和选项
 		List<ClientNotSatisfiedQusetionAndOptionDTO> list = new ArrayList<ClientNotSatisfiedQusetionAndOptionDTO>();
-		
-		//1.获取业务中所有的问题
-		List<jwcpxt_question> allQuestion = serviceDao.get_AllQuestion_ByServiceId(allClientNotSatisfiedInformationVo.getDefinition().getJwcpxt_service_definition_id());
-		//2.循环获取对应当事人，对应问题的回答
-		//List 获得所有追问时候使用
+
+		// 1.获取业务中所有的问题
+		List<jwcpxt_question> allQuestion = serviceDao.get_AllQuestion_ByServiceId(
+				allClientNotSatisfiedInformationVo.getDefinition().getJwcpxt_service_definition_id());
+		// 2.循环获取对应当事人，对应问题的回答
+		// List 获得所有追问时候使用
 		List<jwcpxt_question> askQuestionList;
-		
-		//DTO  ask  追问使用
+
+		// DTO ask 追问使用
 		List<ClientNotSatisfiedQusetionAndOptionDTO> askClientNotSatisfiedQusetionAndOptionDTOList = new ArrayList<ClientNotSatisfiedQusetionAndOptionDTO>();
-		for(jwcpxt_question question : allQuestion){
-			
-			ClientNotSatisfiedQusetionAndOptionDTO clientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();	
-			
+		for (jwcpxt_question question : allQuestion) {
+
+			ClientNotSatisfiedQusetionAndOptionDTO clientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();
+
 			clientNotSatisfiedQusetionAndOptionDTO.setQuestion(question);
-			clientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(question,serviceClient.getJwcpxt_service_client_id()));
-			
-			//选项获取追问
-			//1.获取所有的追问问题
-			askQuestionList = serviceDao.get_askQusetionList_ByQuestionAndClientId(question,serviceClient.getJwcpxt_service_client_id());
-			//2.获取所有问题的答案
-			if(askQuestionList!=null){
-				for(jwcpxt_question askQuestion : askQuestionList){ //选项的追问
-					
+			clientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(question,
+					serviceClient.getJwcpxt_service_client_id()));
+
+			// 选项获取追问
+			// 1.获取所有的追问问题
+			askQuestionList = serviceDao.get_askQusetionList_ByQuestionAndClientId(question,
+					serviceClient.getJwcpxt_service_client_id());
+			// 2.获取所有问题的答案
+			if (askQuestionList != null) {
+				for (jwcpxt_question askQuestion : askQuestionList) { // 选项的追问
+
 					ClientNotSatisfiedQusetionAndOptionDTO askClientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();
-					
+
 					askClientNotSatisfiedQusetionAndOptionDTO.setQuestion(askQuestion);
-					askClientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(askQuestion,serviceClient.getJwcpxt_service_client_id()));
+					askClientNotSatisfiedQusetionAndOptionDTO
+							.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(askQuestion,
+									serviceClient.getJwcpxt_service_client_id()));
 					askClientNotSatisfiedQusetionAndOptionDTOList.add(askClientNotSatisfiedQusetionAndOptionDTO);
 				}
-				clientNotSatisfiedQusetionAndOptionDTO.setAskQusetionAndOptionDTO(askClientNotSatisfiedQusetionAndOptionDTOList);
-			}else{
-				//无追问就放空
+				clientNotSatisfiedQusetionAndOptionDTO
+						.setAskQusetionAndOptionDTO(askClientNotSatisfiedQusetionAndOptionDTOList);
+			} else {
+				// 无追问就放空
 				clientNotSatisfiedQusetionAndOptionDTO.setAskQusetionAndOptionDTO(null);
 			}
-			
+
 			list.add(clientNotSatisfiedQusetionAndOptionDTO);
 		}
 		allClientNotSatisfiedInformationVo.setQusetionAndOptionDTO(list);

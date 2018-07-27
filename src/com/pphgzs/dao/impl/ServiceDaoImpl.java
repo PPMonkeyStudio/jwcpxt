@@ -131,12 +131,6 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ "(serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "
 				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
 		Query query = session.createQuery(hql);
-		System.out.println("startTime" + clientInfoVO.getStartTime());
-		System.out.println("endTime" + clientInfoVO.getEndTime());
-		System.out.println("screenService" + clientInfoVO.getScreenService());
-		System.out.println("screenVisit" + clientInfoVO.getScreenVisit());
-		System.out.println("screenUser" + clientInfoVO.getScreenUser());
-		System.out.println("search" + clientInfoVO.getSearch());
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
 		} else {
@@ -167,7 +161,6 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("search", "%" + clientInfoVO.getSearch() + "%");
 		}
-		System.out.println(hql);
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());
 		query.setMaxResults(clientInfoVO.getPageSize());
 		listClientInfo = query.list();
@@ -284,11 +277,14 @@ public class ServiceDaoImpl implements ServiceDao {
 		String hql = " select "//
 				+ " count(*) "//
 				+ " from "//
-				+ " jwcpxt_service_instance "//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_service_client serviceClient"//
 				+ " where "//
-				+ " service_instance_service_definition = :serviceDefinitionID "//
-				+ " and service_instance_belong_unit = :unitID "//
-				+ " and service_instance_gmt_create >= :date ";
+				+ " serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance"//
+				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
+				+ " and serviceClient.service_client_visit = '1'"//
+				+ " and serviceInstance.service_instance_belong_unit = :unitID "//
+				+ " and serviceInstance.service_instance_gmt_modified >= :date ";
 		Query query = session.createQuery(hql);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("unitID", unitID);
@@ -308,13 +304,16 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " count(*) "//
 				+ " from "//
 				+ " jwcpxt_service_instance serviceInstance , "//
-				+ " jwcpxt_unit unit"//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_service_client serviceClient"//
 				+ " where "//
 				+ " serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
+				+ " and serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance"//
 				//
 				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
 				+ " and unit.unit_father = :fatherUnitID "//
-				+ " and serviceInstance.service_instance_gmt_create >= :date ";
+				+ " and serviceClient.service_client_visit = '1'"//
+				+ " and serviceInstance.service_instance_gmt_modified >= :date ";
 		Query query = session.createQuery(hql);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("fatherUnitID", fatherUnitID);
@@ -355,8 +354,6 @@ public class ServiceDaoImpl implements ServiceDao {
 		;
 		Query query = session.createQuery(hql);
 		query.setParameter("unitID", unitID);
-		System.out.println("hql:" + hql);
-		System.out.println("unitID：" + unitID);
 		//
 		List<jwcpxt_service_definition> list = query.list();
 		session.clear();
@@ -1035,7 +1032,6 @@ public class ServiceDaoImpl implements ServiceDao {
 		default:
 			break;
 		}
-		System.out.println(hql);
 		Query query = session.createQuery(hql);
 		query.setParameter("jwcpxt_service_client_id", jwcpxt_service_client_id);
 		query.setParameter("question", question.getJwcpxt_question_id());

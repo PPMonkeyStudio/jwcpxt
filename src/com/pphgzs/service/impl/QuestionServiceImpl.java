@@ -173,7 +173,6 @@ public class QuestionServiceImpl implements QuestionService {
 			if ("1".equals(moveQuestionType.trim())) {
 				// 如果是最上面的就不能进行移动
 				if (minQuestionSort == currentQuestionSort) {
-					System.out.println("当前已经是第一个");
 					return false;
 				}
 				// 否则就能进行移动
@@ -182,7 +181,6 @@ public class QuestionServiceImpl implements QuestionService {
 			} else if ("2".equals(moveQuestionType.trim())) {
 				// 如果是最小面的就不能进行移动
 				if (maxQuestionSort == currentQuestionSort) {
-					System.out.println("当前已经是最后一个");
 					return false;
 				}
 				// 否则就能进行移动
@@ -265,28 +263,26 @@ public class QuestionServiceImpl implements QuestionService {
 	 * 获取选项列表
 	 */
 	/*
-	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question)
-	 * { // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO>
-	 * listOptionDTO = new ArrayList<>(); List<jwcpxt_option> listOption = new
-	 * ArrayList<>(); List<jwcpxt_option_inquiries> listOptionInquireies = new
-	 * ArrayList<>(); // 1.获取问题对象 if (question != null &&
-	 * question.getJwcpxt_question_id() != null &&
-	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象
-	 * question =
+	 * @Override public List<OptionDTO> list_optionDTO(jwcpxt_question question) {
+	 * // 定义 OptionDTO optionDTO = new OptionDTO(); List<OptionDTO> listOptionDTO =
+	 * new ArrayList<>(); List<jwcpxt_option> listOption = new ArrayList<>();
+	 * List<jwcpxt_option_inquiries> listOptionInquireies = new ArrayList<>(); //
+	 * 1.获取问题对象 if (question != null && question.getJwcpxt_question_id() != null &&
+	 * question.getJwcpxt_question_id().trim().length() > 0) { // 获取问题对象 question =
 	 * questionDao.get_question_byQuestionId(question.getJwcpxt_question_id().
 	 * trim() ); } else { return null; } // 2.判断问题类型是否是选择题类型 if
 	 * ("1".equals(question.getQuestion_type())) { // 获取选项列表 listOption =
 	 * questionDao.get_option_byQuestionId(question.getJwcpxt_question_id().trim
-	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO =
-	 * new OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表
-	 * if (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null
-	 * && jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
+	 * ()); // 遍历选项 for (jwcpxt_option jwcpxt_option : listOption) { optionDTO = new
+	 * OptionDTO(); listOptionInquireies = new ArrayList<>(); // 根据选项获取选项追问表 if
+	 * (jwcpxt_option != null && jwcpxt_option.getJwcpxt_option_id() != null &&
+	 * jwcpxt_option.getJwcpxt_option_id().trim().length() > 0) { // 获取选项追问
 	 * listOptionInquireies = questionDao
 	 * .get_optionInquireies_byOptionId(jwcpxt_option.getJwcpxt_option_id().trim
 	 * ()); } optionDTO.setOption(jwcpxt_option);
 	 * optionDTO.setInquiriesList(listOptionInquireies);
-	 * listOptionDTO.add(optionDTO); } } else { return null; } return
-	 * listOptionDTO; }
+	 * listOptionDTO.add(optionDTO); } } else { return null; } return listOptionDTO;
+	 * }
 	 */
 	/**
 	 * 保存选项
@@ -337,6 +333,7 @@ public class QuestionServiceImpl implements QuestionService {
 			return false;
 		}
 		// 更改信息
+		oldOption.setOption_push(option.getOption_push());
 		oldOption.setOption_describe(option.getOption_describe());
 		oldOption.setOption_grade(option.getOption_grade());
 		oldOption.setOption_gmt_modified(TimeUtil.getStringSecond());
@@ -382,7 +379,6 @@ public class QuestionServiceImpl implements QuestionService {
 			if ("1".equals(moveOptionType.trim())) {
 				// 如果是最上面的就不能进行移动
 				if (minOptionSort == currentOptionSort) {
-					System.out.println("当前已经是第一个");
 					return false;
 				}
 				// 否则就能进行移动
@@ -391,7 +387,6 @@ public class QuestionServiceImpl implements QuestionService {
 			} else if ("2".equals(moveOptionType.trim())) {
 				// 如果是最小面的就不能进行移动
 				if (maxOptionSort == currentOptionSort) {
-					System.out.println("当前已经是最后一个");
 					return false;
 				}
 				// 否则就能进行移动

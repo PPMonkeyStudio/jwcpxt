@@ -16,6 +16,7 @@ import com.pphgzs.dao.UnitDao;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
+import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisDIssaServiceDTO;
@@ -27,6 +28,7 @@ import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -42,6 +44,17 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private StatisticsDao statisticsDao;
 	private UnitDao unitDao;
 	private ServiceService serviceService;
+
+	/**
+	 * 获取VO
+	 */
+	@Override
+	public ReturnVisitVO getUserCountVO(ReturnVisitVO returnVisitVO) {
+		List<ReturnVisitDTO> listReturnVisitDTO = new ArrayList<>();
+		listReturnVisitDTO = statisticsDao.getUserCountVO(returnVisitVO);
+		returnVisitVO.setListReturnVisitDTO(listReturnVisitDTO);
+		return returnVisitVO;
+	}
 
 	/**
 	 * 满意业务分布
@@ -65,7 +78,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 						listDate = TimeUtil.findDates(statisDissaServiceDateVO.getStartTime(),
 								statisDissaServiceDateVO.getEndTime());
 					} catch (ParseException e) {
-						System.err.println(e);
 					}
 					break;
 				case "2":
@@ -141,7 +153,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 						listDate = TimeUtil.findDates(statisDissaQuestionDateVO.getStartTime(),
 								statisDissaQuestionDateVO.getEndTime());
 					} catch (ParseException e) {
-						System.err.println(e);
 					}
 					break;
 				case "2":
@@ -230,7 +241,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 						listDate = TimeUtil.findDates(statisDissaServiceDateVO.getStartTime(),
 								statisDissaServiceDateVO.getEndTime());
 					} catch (ParseException e) {
-						System.err.println(e);
 					}
 					break;
 				case "2":
@@ -300,7 +310,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 						listDate = TimeUtil.findDates(statisDissatiDateVO.getStartTime(),
 								statisDissatiDateVO.getEndTime());
 					} catch (ParseException e) {
-						System.err.println(e);
 					}
 					break;
 				case "2":
