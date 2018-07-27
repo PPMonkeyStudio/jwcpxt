@@ -48,7 +48,7 @@
 				<!-- 			<div> -->
 				<%-- 				<img src="<%=basePath%>img/logo.jpg" height="40px"> --%>
 				<!-- 			</div> -->
-				<h2 style="text-align: center;"><!-- 萍乡市公安警务测评系统 -->萍乡市公安服务群众出测评系统</h2>
+				<h2 style="text-align: center;"><!-- 萍乡市公安警务测评系统 -->萍乡市公安服务群众测评系统</h2>
 			</div>
 			<div class="panel-body" style="margin: 0 0 20px 0;">
 				<div class="form-group" style="margin: 20px auto 30px;">
