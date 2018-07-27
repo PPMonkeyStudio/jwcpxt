@@ -58,10 +58,10 @@ th {
 											<input name="clientInfoVO.endTime" @blur="queryClient"
 												id="endTime" placeholder="结束时间" class="mydate form-control"
 												style="display: inline; width: 150px;">
+											<button type="button" class="btn btn-default" @click="previewChart">
+											<i class="fa fa-adjust"></i>图表
+											</button>
 										</div>
-										<button type="button" class="btn btn-default" @click="previewChart">
-										<i class="fa fa-adjust"></i>图表
-									</button>
 									</div>
 									<input @keyup="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
 										name="clientInfoVO.search" class="form-control"

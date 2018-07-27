@@ -14,7 +14,8 @@ $(function() {
 		},
 		isUnit : false,
 		allAppraisal : [],
-		allService : []
+		allService : [],
+		screenUser_chart : ''
 	};
 
 	let queryData = {
@@ -56,6 +57,7 @@ $(function() {
 						}, 'json')
 					} else if (response.jwcpxt_user_id) {
 						//queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
+						myData.screenUser_chart = response.jwcpxt_user_id;
 					}
 					this.getInfo(queryData);
 				}, 'json');
@@ -276,9 +278,13 @@ $(function() {
 	function previewChart() {
 		//		queryData
 		let params = {
-			"returnVisitVO.userId" : queryData["clientInfoVO.screenUser"],
-			"returnVisitVO.startTime" : queryData["clientInfoVO.startTime"],
-			"returnVisitVO.endTime" : queryData["clientInfoVO.endTime"]
+			"returnVisitVO.userId" : myData.screenUser_chart ? myData.screenUser_chart : "",
+			"returnVisitVO.startTime" : queryData["clientInfoVO.startTime"] ? queryData["clientInfoVO.startTime"] : getFormatDate(),
+			"returnVisitVO.endTime" : queryData["clientInfoVO.endTime"] ? queryData["clientInfoVO.endTime"] : getFormatDate()
+		}
+		//如果测评员搜索不为空
+		if (queryData["clientInfoVO.screenUser"]) {
+			params["returnVisitVO.userId"] = queryData["clientInfoVO.screenUser"];
 		}
 		let previewChartConfirm = $.confirm({
 			title : '回访数量统计',
@@ -291,17 +297,27 @@ $(function() {
 			</form>
 			`,
 			onContentReady : function() {
-				$.post('/jwcpxt/DissatisfiedFeedback/getUserCountVO', params, response => {
+				$.post('/jwcpxt/Statistics/getUserCountVO', params, response => {
+					let dataText = [];
+					let dataSeries = [];
+					response.listReturnVisitDTO.forEach(function(elt, i) {
+						let params = {
+							value : elt.returnCount,
+							name : typeReplace(elt.returnVisitType)
+						}
+						dataSeries.push(params);
+						dataText.push(typeReplace(elt.returnVisitType));
+					})
 					new Vue({
-						el : '#showAskQuestionConfirmForm',
+						el : '#previewChartConfirmForm',
 						data : {
 							countDTO : response
 						},
 						mounted () {
 							let option = {
 								title : {
-									text : '某站点用户访问来源',
-									subtext : '纯属虚构',
+									text : '回访数据统计图表',
+									subtext : '',
 									x : 'center'
 								},
 								tooltip : {
@@ -311,7 +327,7 @@ $(function() {
 								legend : {
 									orient : 'vertical',
 									left : 'left',
-									data : [ '直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎' ]
+									data : dataText
 								},
 								series : [
 									{
@@ -319,28 +335,7 @@ $(function() {
 										type : 'pie',
 										radius : '55%',
 										center : [ '50%', '60%' ],
-										data : [
-											{
-												value : 335,
-												name : '直接访问'
-											},
-											{
-												value : 310,
-												name : '邮件营销'
-											},
-											{
-												value : 234,
-												name : '联盟广告'
-											},
-											{
-												value : 135,
-												name : '视频广告'
-											},
-											{
-												value : 1548,
-												name : '搜索引擎'
-											}
-										],
+										data : dataSeries,
 										itemStyle : {
 											emphasis : {
 												shadowBlur : 10,
@@ -379,6 +374,40 @@ $(function() {
 			minDate : '1900/01/01', // 设置最小日期
 			maxDate : '2050/01/01', // 设置最大日期
 		});
+	}
+
+	function getFormatDate() {
+		var nowDate = new Date();
+		var year = nowDate.getFullYear();
+		var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+		var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+		// var hour = nowDate.getHours()< 10 ? "0" + nowDate.getHours() : nowDate.getHours();  
+		// var minute = nowDate.getMinutes()< 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();  
+		// var second = nowDate.getSeconds()< 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();  
+		return year + "-" + month + "-" + date;
+	}
+
+	function typeReplace(type) {
+		switch (type) {
+		case '1':
+			return "成功";			break;
+		case '2':
+			return "未回访";			break;
+		case '3':
+			return "空号";			break;
+		case '4':
+			return "无人接听";			break;
+		case '5':
+			return "占线";			break;
+		case '6':
+			return "停机";			break;
+		case '7':
+			return "拒访 ";			break;
+		case '8':
+			return "其他";			break;
+		default:
+			break;
+		}
 	}
 
 	function getUrlParam(name) {
