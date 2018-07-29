@@ -33,7 +33,8 @@ th {
 		<script src="<%=basePath%>js/icheck.js"></script>
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="navbarAppraisal" namespace="/Skip" executeResult="true" />
+			<s:action name="navbarAppraisal" namespace="/Skip"
+				executeResult="true" />
 			<div class="content" id="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -43,59 +44,108 @@ th {
 								<div class="header">
 									<h4 class="title">警务测评</h4>
 									<div class="dropdown" style="float:right;">
-									  <button style="background-color: #d9534f;" class="btn btn-danger dropdown-toggle" type="button" id="termination" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-									    终止回访
-									    <span class="caret"></span>
-									  </button>
-									  <ul class="dropdown-menu" aria-labelledby="termination">
-									    <li><a @click="terminationReturned($event)" terminationNum="3" href="javascript:;">空号</a></li>
-									    <li><a @click="terminationReturned($event)" terminationNum="4" href="javascript:;">无人接听</a></li>
-									    <li><a @click="terminationReturned($event)" terminationNum="5" href="javascript:;">占线</a></li>
-									    <li><a @click="terminationReturned($event)" terminationNum="6" href="javascript:;">停机</a></li>
-									    <li><a @click="terminationReturned($event)" terminationNum="7" href="javascript:;">拒访</a></li>
-									    <li><a @click="terminationReturned($event)" terminationNum="8" href="javascript:;">其他</a></li>
-									  </ul>
+										<button style="background-color: #d9534f;"
+											class="btn btn-danger dropdown-toggle" type="button"
+											id="termination" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="true">
+											终止回访 <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" aria-labelledby="termination">
+											<li><a @click="terminationReturned($event)"
+												terminationNum="3" href="javascript:;">空号</a></li>
+											<li><a @click="terminationReturned($event)"
+												terminationNum="4" href="javascript:;">无人接听</a></li>
+											<li><a @click="terminationReturned($event)"
+												terminationNum="5" href="javascript:;">占线</a></li>
+											<li><a @click="terminationReturned($event)"
+												terminationNum="6" href="javascript:;">停机</a></li>
+											<li><a @click="terminationReturned($event)"
+												terminationNum="7" href="javascript:;">拒访</a></li>
+											<li><a @click="terminationReturned($event)"
+												terminationNum="8" href="javascript:;">其他</a></li>
+										</ul>
 									</div>
 								</div>
 								<div class="content table-responsive table-full-width" v-cloak>
-<!-- 									<div class="panel panel-def"> -->
-										<div class="panel-heading">业务名称:{{serviceDefinition.service_definition_describe}}</div>
-										<div class="panel-body">
-										    <form class="form-inline">
-											  <div class="form-group">
-											    <label for="name">姓名</label>
-											    <div class="col-sm-10">
-											      <p class="form-control-static">{{serviceClien.service_client_name}}</p>
-											    </div>
-											  </div>
-											  <div class="form-group">
-											    <label for="sex">性别</label>
-											    <div class="col-sm-10">
-											      <p class="form-control-static">{{serviceClien.service_client_sex=='1'?'男':'女'}}</p>
-											    </div>
-											  </div>
-											  <div class="form-group">
-											    <label for="phone">号码</label>
-											    <div class="col-sm-10">
-											      <p class="form-control-static">{{serviceClien.service_client_phone}}</p>
-											    </div>
-											  </div>
-											  <div class="form-group">
-												<label class="">办理时间</label> 
-												<div class="col-sm-10">
+									<!-- <div class="panel panel-def"> -->
+									<div class="panel-heading"><strong>业务名称:</strong>{{serviceDefinition.service_definition_describe}}</div>
+									<div class="panel-body">
+										<div style="width: 50%; float: left;">
+											<form class="form-horizontal">
+												<div class="form-group">
+													 <label for="name">姓名:</label>
+													 <p class="form-control-static">{{serviceClien.service_client_name}}</p>
+												</div>
+												<div class="form-group">
+													  <label for="sex">性别</label>
+													  <p class="form-control-static">{{serviceClien.service_client_sex=='1'?'男':'女'}}</p>
+												</div>
+												<div class="form-group">
+													  <label for="phone">号码</label>
+													  <p class="form-control-static">{{serviceClien.service_client_phone}}</p>
+												</div>
+												<div class="form-group">
+													<label class="">办理时间</label> 
 													<p class="form-control-static">{{returnedParty.serviceInstance.service_instance_date}}</p>
-											  	</div>
-											  </div>
-											  <div class="form-group">
-												<label class="">办理单位</label> 
-												<div class="col-sm-10">
+												</div>
+												<div class="form-group">
+													<label class="">办理单位</label> 
 													<p class="form-control-static">{{returnedParty.unit.unit_name}}</p>
 												</div>
-											</div>
 											</form>
 										</div>
+										<div style="width: 50%; float: left;">
+											<p class="form-control-static">
+												   <template v-if="serviceDefinition.service_definition_describe.indexOf('110')>-1">
+													   <p>110报警:</p>
+													   <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
+													   <p>您于{{returnedParty.serviceInstance.service_instance_date}}向110报过警,为更好改进公安工作,</p>
+													   <p> 我们特向您做个回访,大约需要耽提您2分钟时间,对您回答的问题,我们将严格保密。</p>
+												   </template>
+												   <template v-if="serviceDefinition.service_definition_describe.indexOf('122')>-1">
+													   <p>122报警:</p>
+												 	   <p>您好,我们是满乡市公安局服务群众测评中心,</p>
+												 	   <p>您于{{returnedParty.serviceInstance.service_instance_date}}向122报过交通事故警,为更好改进交通工作,</p>
+												 	   <p>我们特向您做个回访,大约需要耽误您2分钟时间，对您回答的问题,我们将严格保密。  </p>
+												   </template>
+												   <template v-if="serviceDefinition.service_definition_describe.indexOf('车管所')>-1">
+													    <p> 车管所:</p>
+													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
+													    <p> 您于{{returnedParty.serviceInstance.service_instance_date}}在上交警大队车管所办理机动车驾驶证业务,请问您是本人办的吗?</p>
+													    <p>(是)为改进公安工作,我们特向您做个回访,大约需要耽误您2纷钟时间,对您回答的问题,我们将严格保密。</p>
+												   </template>
+												   <template v-if="serviceDefinition.service_definition_describe.indexOf('出入境')>-1">
+													    <p>出入境:</p>
+													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
+													    <p>您于{{returnedParty.serviceInstance.service_instance_date}}在一一公安局办理一业务 请问您是自己办的吗?</p>
+													   	<p>(是)为改进公安工作,我们特向您做个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
+												   </template>
+												   <template v-if="serviceDefinition.service_definition_describe.indexOf('刑事案件')>-1">
+													    <p>刑事案件:</p>
+													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
+													    <p>您于{{returnedParty.serviceInstance.service_instance_date}}在一向10报过刑事案件警请问您是当事人本人吗?</p>
+													   	<p>(是)为了好改进公安工作,我们特向您作个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
+												   </template>
+												   <template v-if="serviceDefinition.service_definition_describe.indexOf('特种行业')>-1">
+													    <p>特种行业:</p>
+													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
+													    <p>请问您是{{}}负责人吗?</p>
+													  	<p>(是)为改进公安机关的常管理我们特向您做个国访大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
+												   </template>
+												   <template v-if="serviceDefinition.service_definition_describe.indexOf('户政业务')>-1">
+													   	<p>户政业务:</p>
+													   	<p>您好,我们是萍乡市公安局服务群众测评中心,</p>
+													   	<p>您于{{returnedParty.serviceInstance.service_instance_date}}在{{returnedParty.unit.unit_name}}办理过户政业务,请问是本人去办的吗?</p>
+													   	<p>(是)为改进公安机关工作我们特向您做个回访大约需要职误您纷钟时间,对您回答的问题,我们将严格保密。</p>
+												   </template>
+												   <template v-if="serviceDefinition.service_definition_describe.indexOf('安全感满意度')>-1">
+													    <p> 安全感满意度:</p>
+													    <p> 您好,这里是萍乡市公安局服务群众测评中心,我们想对您就当地社会治安状况做个电话调查需要和说您几分钟时间。</p>
+												   </template>
+												   </p>
+										</div>
+										</div>
 										<div style="padding: 20px">
-										
 										
 										<template v-for="(questionDTO,index) in questionData">
 										<hr>
