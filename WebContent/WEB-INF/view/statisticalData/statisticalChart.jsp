@@ -44,10 +44,17 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="width: 100%">
-										<div style="width: 100%; height:650px; margin-top: 20px;">
+										<div style="width: 100%; height:450px; margin-top: 20px;">
 											<!-- 群众关注 -->
-											<div id="crowdFocus" style="width: 50%;height:600px; float: left;"></div>
-											<div id="crowdNotSatisfied" style="width: 50%;height:600px; float: left;"></div>
+											<div id="crowdFocus" style="width: 50%;height:400px; float: left;"></div>
+											<!-- 群众不满意 -->
+											<div id="crowdNotSatisfied" style="width: 50%;height:400px; float: left;"></div>
+										</div>
+										<div style="width: 100%; height:450px;">
+											<!-- 群众关注 -->
+											<div id="crowdFocus_bar" style="width: 50%;height:400px; float: left;"></div>
+											<!-- 群众不满意 -->
+											<div id="crowdNotSatisfied_bar" style="width: 50%;height:400px; float: left;"></div>
 										</div>
 										<div class="form-group" style="margin: auto; padding-left: 20px;">
 											<p><h3>图表</h3></p>

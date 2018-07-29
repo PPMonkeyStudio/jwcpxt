@@ -16,8 +16,11 @@ var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfact
 var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light'); //不满意或满意业务
 var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light'); //问题
 var crowdFocusChart = echarts.init(document.getElementById('crowdFocus'), 'light'); //群众关注
+var crowdFocusChart_bar = echarts.init(document.getElementById('crowdFocus_bar'), 'light'); //群众关注-条形图
 var crowdNotSatisfiedChart = echarts.init(document.getElementById('crowdNotSatisfied'), 'light'); //群众不满意
+var crowdNotSatisfiedChart_bar = echarts.init(document.getElementById('crowdNotSatisfied_bar'), 'light'); //群众不满意
 var definitionId = '';
+
 function getDate() {
 	let dateTime = new Date();
 	let year = dateTime.getFullYear();
@@ -106,10 +109,13 @@ function checkTimeType(btn) {
 	getChart(params);
 }
 
-function createRandomItemStyle() {
+var normal_color_CrowdFocus = [];
+function createRandomItemStyle_CrowdFocus() {
+	let colorName = '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6);
+	normal_color_CrowdFocus.push(colorName);
 	return {
 		normal : {
-			color : '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6)
+			color : colorName
 		}
 	};
 }
@@ -123,7 +129,6 @@ function randerCrowdFocusChart(res) {
 	let option = {
 		title : {
 			text : '群众关注',
-		//link : 'http://www.google.com/trends/hottrends'
 		},
 		tooltip : {
 			show : true
@@ -142,107 +147,169 @@ function randerCrowdFocusChart(res) {
 				{
 					name : "就业",
 					value : 10000,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "社会保障",
 					value : 6181,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "居民生活",
 					value : 4386,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "社会治安",
 					value : 4055,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "公共安全",
 					value : 2467,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "公共交通",
 					value : 2244,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "医疗卫生",
 					value : 1898,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "公共教育",
 					value : 1484,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "文化发展",
 					value : 1112,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "社会道德",
 					value : 965,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "外来人口",
 					value : 847,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "环境保护",
 					value : 582,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "征地拆迁",
 					value : 555,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "城市建设及管理",
 					value : 550,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "新农村建设",
 					value : 462,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "民营企业及非公经济发展",
 					value : 366,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "民主法制建设",
 					value : 360,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "农村基层组织建设",
 					value : 282,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "公务员队伍建设",
 					value : 273,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				},
 				{
 					name : "党风廉政建设",
 					value : 265,
-					textStyle : createRandomItemStyle()
+					textStyle : createRandomItemStyle_CrowdFocus()
 				}
 			]
 		} ]
 	};
 	crowdFocusChart.setOption(option);
+	//画条形图
+	let option_bar = {
+		tooltip : {
+			trigger : 'axis',
+			axisPointer : { // 坐标轴指示器，坐标轴触发有效
+				type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+			}
+		},
+		grid : {
+			left : '3%',
+			right : '4%',
+			bottom : '3%',
+			containLabel : true
+		},
+		xAxis : [ {
+			type : 'category',
+			data : [ '就业', '社会保障', "居民生活", "社会治安", "公共安全", "公共交通", "医疗卫生", "公共教育",
+				"文化发展", "社会道德", "外来人口", "环境保护", "征地拆迁", "城市建设及管理", "新农村建设",
+				"民营企业及非公经济发展", "民主法制建设", "农村基层组织建设", "公务员队伍建设", "党风廉政建设" ],
+			axisTick : {
+				alignWithLabel : true
+			}
+		} ],
+		yAxis : [ {
+			type : 'value'
+		} ],
+		series : [
+			{
+				name : '直接访问',
+				type : 'bar',
+				barWidth : '60%',
+				data : [ 10000, 6181, 4386, 4055, 2467, 2244, 1898, 1112, 965, 847, 582, 555, 550, 462, 366, 360, 282, 273, 265 ],
+				itemStyle : {
+					normal : {
+						//这里用函数控制柱子颜色，定义一个list，然后根据所以取得不同的值
+						color : function(params) {
+							var colorList = normal_color_CrowdFocus;
+							return colorList[params.dataIndex]
+						},
+						label : {
+							show : true,
+							position : 'top',
+							formatter : '{b}\n{c}'
+						}
+					}
+				},
+			}
+		]
+	};
+	crowdFocusChart_bar.setOption(option_bar);
+}
+
+
+var normal_color_CrowdNotSatisfied = [];
+function createRandomItemStyle_CrowdNotSatisfied() {
+	let colorName = '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6);
+	normal_color_CrowdNotSatisfied.push(colorName);
+	return {
+		normal : {
+			color : colorName
+		}
+	};
 }
 
 renderCrowdNotSatisfiedChart('');
@@ -250,7 +317,6 @@ function renderCrowdNotSatisfiedChart(res) {
 	let option = {
 		title : {
 			text : '群众不满意',
-		//link : 'http://www.google.com/trends/hottrends'
 		},
 		tooltip : {
 			show : true
@@ -267,113 +333,88 @@ function renderCrowdNotSatisfiedChart(res) {
 			},
 			data : [
 				{
-					name : "农村垃圾收运不及时，堆积如山、臭气熏天",
-					value : 10000,
-					textStyle : {
-						normal : {
-							color : 'black'
-						}
-					}
+					name : "110报警",
+					value : 34,
+					textStyle : createRandomItemStyle_CrowdNotSatisfied()
 				},
 				{
-					name : "场镇管网滞后，污水横流",
-					value : 6181,
-					textStyle : createRandomItemStyle()
+					name : "刑事案件",
+					value : 34,
+					textStyle : createRandomItemStyle_CrowdNotSatisfied()
 				},
 				{
-					name : "乡镇场镇公共厕所少",
-					value : 4386,
-					textStyle : createRandomItemStyle()
+					name : "交通事故",
+					value : 23,
+					textStyle : createRandomItemStyle_CrowdNotSatisfied()
 				},
 				{
-					name : "旧城改造推进缓慢，拆迁安置问题多",
-					value : 4055,
-					textStyle : createRandomItemStyle()
+					name : "户政办证",
+					value : 6,
+					textStyle : createRandomItemStyle_CrowdNotSatisfied()
 				},
 				{
-					name : "小区物业管理不到位，公共服务质量差",
-					value : 2467,
-					textStyle : createRandomItemStyle()
+					name : "车管办证",
+					value : 5,
+					textStyle : createRandomItemStyle_CrowdNotSatisfied()
 				},
 				{
-					name : "校园周边食品安全、交通安全隐患大",
-					value : 2244,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "乡镇便民服务中心不便民",
-					value : 1898,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "农村广播配置不齐，缺少维护、效果不好",
-					value : 1484,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "村级权利过多过滥，‘小微权力’任性",
-					value : 1112,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "村务不公开不透明，群众知情难",
-					value : 965,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "外来人口",
-					value : 847,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "环境保护",
-					value : 582,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "征地拆迁",
-					value : 555,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "城市建设及管理",
-					value : 550,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "新农村建设",
-					value : 462,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "民营企业及非公经济发展",
-					value : 366,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "民主法制建设",
-					value : 360,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "农村基层组织建设",
-					value : 282,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "公务员队伍建设",
-					value : 273,
-					textStyle : createRandomItemStyle()
-				},
-				{
-					name : "党风廉政建设",
-					value : 265,
-					textStyle : createRandomItemStyle()
+					name : "出入境办证",
+					value : 5,
+					textStyle : createRandomItemStyle_CrowdNotSatisfied()
 				}
 			]
 		} ]
 	};
 	crowdNotSatisfiedChart.setOption(option);
+
+	//画条形图
+	let option_bar = {
+		tooltip : {
+			trigger : 'axis',
+			axisPointer : { // 坐标轴指示器，坐标轴触发有效
+				type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+			}
+		},
+		grid : {
+			left : '3%',
+			right : '4%',
+			bottom : '3%',
+			containLabel : true
+		},
+		xAxis : [ {
+			type : 'category',
+			data : [ '110报警', '刑事案件', "交通事故", "户政办证", "车管办证", "出入境办证" ],
+			axisTick : {
+				alignWithLabel : true
+			}
+		} ],
+		yAxis : [ {
+			type : 'value'
+		} ],
+		series : [
+			{
+				name : '数量',
+				type : 'bar',
+				barWidth : '60%',
+				data : [ 34, 34, 23, 6, 5, 5 ],
+				itemStyle : {
+					normal : {
+						//这里用函数控制柱子颜色，定义一个list，然后根据所以取得不同的值
+						color : function(params) {
+							var colorList = normal_color_CrowdNotSatisfied;
+							return colorList[params.dataIndex]
+						},
+						label : {
+							show : true,
+							position : 'top',
+							formatter : '{b}\n{c}'
+						}
+					}
+				},
+			}
+		]
+	};
+	crowdNotSatisfiedChart_bar.setOption(option_bar);
 }
 
 
