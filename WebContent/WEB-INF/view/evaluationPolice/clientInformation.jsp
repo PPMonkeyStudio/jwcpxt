@@ -42,7 +42,8 @@ th {
 									<h4 class="title">当事人查看</h4>
 								</div>
 								<div class="content table-responsive table-full-width">
-									<select v-if="isUnit" style="width:120px; float: left;"
+									<%-- <select v-if="isUnit" style="width:120px; float: left;" --%>
+									<select style="width:120px; float: left;"
 										class="form-control" name="clientInfoVO.screenUser"
 										@change="queryClient">
 										<option value="">选择测评员</option>
@@ -102,8 +103,9 @@ th {
 											<tr style="border-top: 1px solid #ddd;">
 												<th>
 													<a href='javascript:;' @click='showClientInfomation($event)' 
-														:id='ClientInfoDTO.serviceClient.jwcpxt_service_client_id' 
-														v-html="ClientInfoDTO.serviceClient.service_client_name"></a>
+														:id='ClientInfoDTO.serviceClient.jwcpxt_service_client_id'>
+														<span v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
+													</a>
 												</th>
 												<td>{{ClientInfoDTO.serviceClient.service_client_sex=='1'?'男':'女'}}</td>
 												<td v-html="ClientInfoDTO.serviceClient.service_client_phone"></td>

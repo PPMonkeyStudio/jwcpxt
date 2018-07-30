@@ -526,7 +526,7 @@ function randerDissatisfactionChart(res) {
 						}, response => {
 							randerDissatisfiedServiceChart(response, describe); //所有不满意图表
 						}, 'json')
-					} else if (describe == "不满意") {
+					} else { // if (describe == "不满意")
 						//业务分类
 						$.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
 							'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
@@ -778,7 +778,7 @@ function randerDissatisfactionProblem(res, title) {
 	});
 	dissatisfactionProblemChart.clear();
 	dissatisfactionProblemChart.setOption(option);
-	dissatisfactionProblemChart.on("click", function(param) {
+	dissatisfactionProblemChart.unbind().on("click", function(param) {
 		if (param.componentSubType == "pie") {
 			let index = param.dataIndex;
 			//let describe = option.dataset.source[index + 1][0];
@@ -803,39 +803,6 @@ function randerDissatisfactionProblem(res, title) {
 		}
 	});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

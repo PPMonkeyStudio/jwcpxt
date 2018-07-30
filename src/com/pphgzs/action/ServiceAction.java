@@ -87,7 +87,8 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		//
 		http_response.setContentType("text/html;charset=utf-8");
 		int count = serviceService.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
-		http_response.getWriter().write(count);
+		System.out.println(count);
+		http_response.getWriter().write(""+count);
 	}
 
 	/**

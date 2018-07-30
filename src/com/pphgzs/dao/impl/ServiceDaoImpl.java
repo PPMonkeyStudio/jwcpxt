@@ -970,7 +970,8 @@ public class ServiceDaoImpl implements ServiceDao {
 		String countType = countFinishReturnVisitVo.getCountType();
 		String type = countFinishReturnVisitVo.getType();
 		Session session = getSession();
-		String hql = "select count(*)" + " from jwcpxt_grab_instance instance,jwcpxt_service_client client "// like用来匹配所有id
+		String hql = "select count(*) " // 
+				+ " from jwcpxt_service_instance instance,jwcpxt_service_client client "// like用来匹配所有id
 				+ " where instance.service_instance_judge like :appraisalId "//
 				+ " and instance.service_instance_gmt_modified >= :beginTime "//
 				+ " and instance.service_instance_gmt_modified <= :endTime "
