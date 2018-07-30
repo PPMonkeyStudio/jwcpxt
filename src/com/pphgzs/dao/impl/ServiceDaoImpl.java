@@ -72,17 +72,17 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ "serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
 				+ "serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "
 				+ "(serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "
-				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
+				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";
 		Query query = session.createQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
-			query.setParameter("startTime", "%%");
+			query.setParameter("startTime", "0000-00-00");
 		} else {
-			query.setParameter("startTime", clientInfoVO.getStartTime());
+			query.setParameter("startTime", clientInfoVO.getStartTime() + " 00:00:00");
 		}
 		if (clientInfoVO.getEndTime().equals("")) {
-			query.setParameter("endTime", "%%");
+			query.setParameter("endTime", "9999-99-99");
 		} else {
-			query.setParameter("endTime", clientInfoVO.getEndTime());
+			query.setParameter("endTime", clientInfoVO.getEndTime() + " 23:59:59");
 		}
 		if (clientInfoVO.getScreenService().equals("")) {
 			query.setParameter("screenService", "%%");
@@ -129,17 +129,17 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ "serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
 				+ "serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "
 				+ "(serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "
-				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
+				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";
 		Query query = session.createQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
 		} else {
-			query.setParameter("startTime", clientInfoVO.getStartTime());
+			query.setParameter("startTime", clientInfoVO.getStartTime() + " 00:00:00");
 		}
 		if (clientInfoVO.getEndTime().equals("")) {
 			query.setParameter("endTime", "9999-99-99");
 		} else {
-			query.setParameter("endTime", clientInfoVO.getEndTime());
+			query.setParameter("endTime", clientInfoVO.getEndTime() + " 23:59:59");
 		}
 		if (clientInfoVO.getScreenService().equals("")) {
 			query.setParameter("screenService", "%%");
@@ -171,13 +171,13 @@ public class ServiceDaoImpl implements ServiceDao {
 				// 当事人姓名
 				clientInfoDTO.getServiceClient()
 						.setService_client_name(clientInfoDTO.getServiceClient().getService_client_name().replaceAll(
-								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
-										+ "</span>"));
+								clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
 				// 性别
 				clientInfoDTO.getServiceClient()
 						.setService_client_phone(clientInfoDTO.getServiceClient().getService_client_phone().replaceAll(
-								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
-										+ "</span>"));
+								clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
 				// 单位名称
 				clientInfoDTO.getUnit()
 						.setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.getSearch(),
@@ -970,7 +970,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		String countType = countFinishReturnVisitVo.getCountType();
 		String type = countFinishReturnVisitVo.getType();
 		Session session = getSession();
-		String hql = "select count(*) " // 
+		String hql = "select count(*) " //
 				+ " from jwcpxt_service_instance instance,jwcpxt_service_client client "// like用来匹配所有id
 				+ " where instance.service_instance_judge like :appraisalId "//
 				+ " and instance.service_instance_gmt_modified >= :beginTime "//

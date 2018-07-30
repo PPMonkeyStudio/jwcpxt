@@ -45,7 +45,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " where"//
 				+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
 				+ " and serviceClient.service_client_gmt_modified >= :beforeDate"//
-				+ " and serviceClient.service_client_gmt_modified < :afterDate"//
+				+ " and serviceClient.service_client_gmt_modified <= :afterDate"//
 				+ " and serviceInstance.service_instance_judge like :userId"//
 				+ " group by serviceClient.service_client_visit";
 		Query query = session.createQuery(hql);
@@ -53,12 +53,12 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		if ("".equals(returnVisitVO.getStartTime())) {
 			query.setParameter("beforeDate", "0000-00-00");
 		} else {
-			query.setParameter("beforeDate", returnVisitVO.getStartTime());
+			query.setParameter("beforeDate", returnVisitVO.getStartTime() + " 00:00:00");
 		}
 		if ("".equals(returnVisitVO.getEndTime())) {
 			query.setParameter("afterDate", "9999-99-99");
 		} else {
-			query.setParameter("afterDate", returnVisitVO.getEndTime());
+			query.setParameter("afterDate", returnVisitVO.getEndTime() + " 23:59:59");
 		}
 		if ("".equals(returnVisitVO.getUserId())) {
 			query.setParameter("userId", "%%");
@@ -92,15 +92,15 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and unit.jwcpxt_unit_id like :unitId"//
 				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId"//
 				+ " and serviceInstance.service_instance_date >= :startTime "//
-				+ " and serviceInstance.service_instance_date < :endTime ";
+				+ " and serviceInstance.service_instance_date <= :endTime ";
 		Query query = session.createQuery(hql);
 		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
 		} else {
 			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
 		}
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
+		query.setParameter("startTime", startTime + " 00:00:00");
+		query.setParameter("endTime", endTime + " 23:59:59");
 		query.setParameter("serviceDefinitionId", serviceDefinition.getJwcpxt_service_definition_id());
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
@@ -176,8 +176,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		} else {
 			query.setParameter("unitId", statisDissaQuestionDateVO.getScreenUnit());
 		}
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
+		query.setParameter("startTime", startTime + " 00:00:00");
+		query.setParameter("endTime", endTime + " 23:59:59");
 		query.setParameter("serviceDefinitionId", statisDissaQuestionDateVO.getScreenService());
 		query.setParameter("questionId", questionOptionAnswerDTO.getQuestion().getJwcpxt_question_id());
 		query.setParameter("optionId", questionOptionAnswerDTO.getOption().getJwcpxt_option_id());
@@ -268,8 +268,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		} else {
 			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
 		}
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
+		query.setParameter("startTime", startTime + " 00:00:00");
+		query.setParameter("endTime", endTime + " 23:59:59");
 		query.setParameter("serviceDefinitionId", serviceDefinition.getJwcpxt_service_definition_id());
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
@@ -342,8 +342,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		} else {
 			query.setParameter("unitId", statisDissatiDateVO.getScreenUnit());
 		}
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
+		query.setParameter("startTime", startTime + " 00:00:00");
+		query.setParameter("endTime", endTime + " 23:59:59");
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
@@ -385,8 +385,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		} else {
 			query.setParameter("unitId", statisDissatiDateVO.getScreenUnit());
 		}
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
+		query.setParameter("startTime", startTime + " 00:00:00");
+		query.setParameter("endTime", endTime + " 23:59:59");
 		query.setParameter("option", option);
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
@@ -461,8 +461,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		//
 		query.setParameter("unitID", jwcpxt_unit_id);
 		query.setParameter("serviceDefinitionID", jwcpxt_service_definition_id);
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
+		query.setParameter("startTime", startTime + " 00:00:00");
+		query.setParameter("endTime", endTime + " 23:59:59");
 		//
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
@@ -502,8 +502,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		//
 		query.setParameter("unitID", jwcpxt_unit_id);
 		query.setParameter("serviceDefinitionID", jwcpxt_service_definition_id);
-		query.setParameter("startTime", startTime);
-		query.setParameter("endTime", endTime);
+		query.setParameter("startTime", startTime + " 00:00:00");
+		query.setParameter("endTime", endTime + " 23:59:59");
 		//
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
@@ -628,12 +628,12 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		if (searchTimeStart.equals("")) {
 			query.setParameter("searchTimeStart", "0000-00-00");
 		} else {
-			query.setParameter("searchTimeStart", searchTimeStart);
+			query.setParameter("searchTimeStart", searchTimeStart + " 00:00:00");
 		}
 		if (searchTimeEnd.equals("")) {
 			query.setParameter("searchTimeEnd", "9999-99-99");
 		} else {
-			query.setParameter("searchTimeEnd", searchTimeEnd);
+			query.setParameter("searchTimeEnd", searchTimeEnd + " 23:59:59");
 		}
 
 		//
@@ -677,8 +677,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		query.setParameter("unitId", unitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
 		//
-		query.setParameter("searchTimeStart", searchTimeStart);
-		query.setParameter("searchTimeEnd", searchTimeEnd);
+		query.setParameter("searchTimeStart", searchTimeStart + " 00:00:00");
+		query.setParameter("searchTimeEnd", searchTimeEnd + " 23:59:59");
 		//
 		//
 

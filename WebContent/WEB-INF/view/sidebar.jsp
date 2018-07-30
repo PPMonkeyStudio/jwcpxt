@@ -48,7 +48,7 @@
 		data-active-color="danger">
 		<div class="sidebar-wrapper">
 			<div class="logo">
-				<a href="<%=basePath%>Skip/skipSystemIndex" class="simple-text">警务测评系统
+				<a href="<%=basePath%>Skip/skipSystemIndex" class="simple-text">服务群众测评系统
 				</a>
 			</div>
 			<ul class="nav">
@@ -62,14 +62,14 @@
 							href="<%=basePath%>Skip/skipNotEectificationOverTime"> <i
 								class="fa fa-bell-o"></i>
 								<p>
-									整改超时 <span style="background-color:red;" class="badge">0</span>
+									整改超时 <span style="background-color: red;" class="badge">0</span>
 								</p>
 						</a></li>
 						<li id="bellTwiceVisitPage"><a
 							href="<%=basePath%>Skip/skipSecondVisitWasNotSatisfactory"> <i
 								class="fa fa-bell-o"></i>
 								<p>
-									回访不满 <span style="background-color:red;" class="badge">0</span>
+									回访不满 <span style="background-color: red;" class="badge">0</span>
 								</p>
 						</a></li>
 					</s:if>
