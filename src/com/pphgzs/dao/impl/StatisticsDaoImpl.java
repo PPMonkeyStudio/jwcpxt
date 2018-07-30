@@ -45,7 +45,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " where"//
 				+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
 				+ " and serviceClient.service_client_gmt_modified >= :beforeDate"//
-				+ " and serviceClient.service_client_gmt_modified < :afterDate"//
+				+ " and serviceClient.service_client_gmt_modified <= :afterDate"//
 				+ " and serviceInstance.service_instance_judge like :userId"//
 				+ " group by serviceClient.service_client_visit";
 		Query query = session.createQuery(hql);
@@ -92,7 +92,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and unit.jwcpxt_unit_id like :unitId"//
 				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId"//
 				+ " and serviceInstance.service_instance_date >= :startTime "//
-				+ " and serviceInstance.service_instance_date < :endTime ";
+				+ " and serviceInstance.service_instance_date <= :endTime ";
 		Query query = session.createQuery(hql);
 		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
