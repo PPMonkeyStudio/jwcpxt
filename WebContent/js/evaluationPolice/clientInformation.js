@@ -78,10 +78,10 @@ $(function() {
 				}, 'json');
 			},
 			pageInit (response) {
-				myData.page.haveNextPage = response.currentPage < response.totalPage;
-				myData.page.havePrePage = response.currentPage > 1;
-				myData.page.isFirstPage = response.currentPage == 1;
-				myData.page.isLastPage = response.currentPage == response.totalPage;
+				myData.page.haveNextPage = response.currPage < response.totalPage;
+				myData.page.havePrePage = response.currPage > 1;
+				myData.page.isFirstPage = response.currPage == 1;
+				myData.page.isLastPage = response.currPage == response.totalPage;
 			},
 			queryClient ($event) {
 				queryData[$event.target.name] = $($event.target).val();
