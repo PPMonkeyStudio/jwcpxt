@@ -251,12 +251,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		if (dissatisfiedQuestionVO.getScreenStartTime().equals("")) {
 			query.setParameter("screenStartTime", "0000-00-00");
 		} else {
-			query.setParameter("screenStartTime", dissatisfiedQuestionVO.getScreenStartTime());
+			query.setParameter("screenStartTime", dissatisfiedQuestionVO.getScreenStartTime() + " 00:00:00");
 		}
 		if (dissatisfiedQuestionVO.getScreenEndTime().equals("")) {
 			query.setParameter("screenEndTime", "9999-99-99");
 		} else {
-			query.setParameter("screenEndTime", dissatisfiedQuestionVO.getScreenEndTime());
+			query.setParameter("screenEndTime", dissatisfiedQuestionVO.getScreenEndTime() + " 23:59:59");
 		}
 		//
 		int count = ((Number) query.uniqueResult()).intValue();
@@ -302,12 +302,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		if (dissatisfiedQuestionVO.getScreenStartTime().equals("")) {
 			query.setParameter("screenStartTime", "0000-00-00");
 		} else {
-			query.setParameter("screenStartTime", dissatisfiedQuestionVO.getScreenStartTime());
+			query.setParameter("screenStartTime", dissatisfiedQuestionVO.getScreenStartTime() + " 00:00:00");
 		}
 		if (dissatisfiedQuestionVO.getScreenEndTime().equals("")) {
 			query.setParameter("screenEndTime", "9999-99-99");
 		} else {
-			query.setParameter("screenEndTime", dissatisfiedQuestionVO.getScreenEndTime());
+			query.setParameter("screenEndTime", dissatisfiedQuestionVO.getScreenEndTime() + " 23:59:59");
 		}
 		//
 		query.setFirstResult((dissatisfiedQuestionVO.getCurrPage() - 1) * dissatisfiedQuestionVO.getPageSize());
@@ -456,12 +456,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		if (feedbackRectificationVO.getScreenStartTime().equals("")) {
 			query.setParameter("screenStartTime", "0000-00-00");
 		} else {
-			query.setParameter("screenStartTime", feedbackRectificationVO.getScreenStartTime());
+			query.setParameter("screenStartTime", feedbackRectificationVO.getScreenStartTime() + " 00:00:00");
 		}
 		if (feedbackRectificationVO.getScreenEndTime().equals("")) {
 			query.setParameter("screenEndTime", "9999-99-99");
 		} else {
-			query.setParameter("screenEndTime", feedbackRectificationVO.getScreenEndTime());
+			query.setParameter("screenEndTime", feedbackRectificationVO.getScreenEndTime() + " 23:59:59");
 		}
 		if (query.uniqueResult() == null) {
 			return 0;
@@ -531,12 +531,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		if (feedbackRectificationVO.getScreenStartTime().equals("")) {
 			query.setParameter("screenStartTime", "0000-00-00");
 		} else {
-			query.setParameter("screenStartTime", feedbackRectificationVO.getScreenStartTime());
+			query.setParameter("screenStartTime", feedbackRectificationVO.getScreenStartTime() + " 00:00:00");
 		}
 		if (feedbackRectificationVO.getScreenEndTime().equals("")) {
 			query.setParameter("screenEndTime", "9999-99-99");
 		} else {
-			query.setParameter("screenEndTime", feedbackRectificationVO.getScreenEndTime());
+			query.setParameter("screenEndTime", feedbackRectificationVO.getScreenEndTime() + " 23:59:59");
 		}
 		//
 		query.setFirstResult((feedbackRectificationVO.getCurrPage() - 1) * feedbackRectificationVO.getPageSize());
@@ -607,12 +607,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		if (checkFeedbackRectificationVO.getScreenStartTime().equals("")) {
 			query.setParameter("screenStartTime", "0000-00-00");
 		} else {
-			query.setParameter("screenStartTime", checkFeedbackRectificationVO.getScreenStartTime());
+			query.setParameter("screenStartTime", checkFeedbackRectificationVO.getScreenStartTime() + " 00:00:00");
 		}
 		if (checkFeedbackRectificationVO.getScreenEndTime().equals("")) {
 			query.setParameter("screenEndTime", "9999-99-99");
 		} else {
-			query.setParameter("screenEndTime", checkFeedbackRectificationVO.getScreenEndTime());
+			query.setParameter("screenEndTime", checkFeedbackRectificationVO.getScreenEndTime() + " 23:59:59");
 		}
 		query.setFirstResult(
 				(checkFeedbackRectificationVO.getCurrPage() - 1) * checkFeedbackRectificationVO.getPageSize());
@@ -678,12 +678,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		if (checkFeedbackRectificationVO.getScreenStartTime().equals("")) {
 			query.setParameter("screenStartTime", "0000-00-00");
 		} else {
-			query.setParameter("screenStartTime", checkFeedbackRectificationVO.getScreenStartTime());
+			query.setParameter("screenStartTime", checkFeedbackRectificationVO.getScreenStartTime() + " 00:00:00");
 		}
 		if (checkFeedbackRectificationVO.getScreenEndTime().equals("")) {
 			query.setParameter("screenEndTime", "9999-99-99");
 		} else {
-			query.setParameter("screenEndTime", checkFeedbackRectificationVO.getScreenEndTime());
+			query.setParameter("screenEndTime", checkFeedbackRectificationVO.getScreenEndTime() + " 23:59:59");
 		}
 		//
 		int count = ((Number) query.uniqueResult()).intValue();

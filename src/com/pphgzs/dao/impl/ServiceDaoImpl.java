@@ -77,12 +77,12 @@ public class ServiceDaoImpl implements ServiceDao {
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
 		} else {
-			query.setParameter("startTime", clientInfoVO.getStartTime());
+			query.setParameter("startTime", clientInfoVO.getStartTime() + " 00:00:00");
 		}
 		if (clientInfoVO.getEndTime().equals("")) {
 			query.setParameter("endTime", "9999-99-99");
 		} else {
-			query.setParameter("endTime", clientInfoVO.getEndTime());
+			query.setParameter("endTime", clientInfoVO.getEndTime() + " 23:59:59");
 		}
 		if (clientInfoVO.getScreenService().equals("")) {
 			query.setParameter("screenService", "%%");
@@ -134,12 +134,12 @@ public class ServiceDaoImpl implements ServiceDao {
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
 		} else {
-			query.setParameter("startTime", clientInfoVO.getStartTime());
+			query.setParameter("startTime", clientInfoVO.getStartTime() + " 00:00:00");
 		}
 		if (clientInfoVO.getEndTime().equals("")) {
 			query.setParameter("endTime", "9999-99-99");
 		} else {
-			query.setParameter("endTime", clientInfoVO.getEndTime());
+			query.setParameter("endTime", clientInfoVO.getEndTime() + " 23:59:59");
 		}
 		if (clientInfoVO.getScreenService().equals("")) {
 			query.setParameter("screenService", "%%");
