@@ -89,10 +89,17 @@ function skipToLastPage() {
 // 跳页
 function skipToArbitrarilyPage() {
 	if ($('#skipPage').val() < '1'
-			|| $('#skipPage').val() > discontentVue.discontentVO.totalPage) {
+		|| $('#skipPage').val() > discontentVue.discontentVO.totalPage) {
 		toastr.error("不存在此页");
 	} else {
 		queryTemp.currPage = $('#skipPage').val();
 		loadData();
 	}
+}
+
+//跳转到当事人见面
+function skipToClientInfomation(that) {
+	let definitionId = $(that).attr('definitionId');
+	let name = $(that).text();
+	window.open('/jwcpxt/Skip/skipClientInformationPage?definitionId=' + definitionId + '&unitId=' + name);
 }

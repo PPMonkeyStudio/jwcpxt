@@ -102,8 +102,8 @@ th {
 											<template v-for="(ClientInfoDTO,index) in clientInfoVO">
 											<tr style="border-top: 1px solid #ddd;">
 												<th>
-													<a href='javascript:;' @click='showClientInfomation($event)' 
-														:id='ClientInfoDTO.serviceClient.jwcpxt_service_client_id'>
+													<a href="javascript:;" @click="showClientInfomation($event)" 
+														:id="ClientInfoDTO.serviceClient.jwcpxt_service_client_id">
 														<span v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
 													</a>
 												</th>

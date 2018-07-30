@@ -37,20 +37,22 @@ $(function() {
 				let definitionId = getUrlParam('definitionId');
 				if (definitionId) {
 					//选中传过来的业务ID
-					$('input[name="clientInfoVO.screenService"]').val();
+					$('input[name="clientInfoVO.screenService"]').val(definitionId);
 					queryData["clientInfoVO.screenService"] = definitionId;
 				}
-				//单位搜索情况
+				//(各种)搜索情况
 				let unitText = getUrlParam('unitId');
 				if (unitText) {
-					//选中传过来的业务ID
-					$('input[name="clientInfoVO.search"]').val();
+					//选中传过来的(各种)信息
+					$('input[name="clientInfoVO.search"]').val(unitText);
 					queryData["clientInfoVO.search"] = unitText;
 				}
+				
+				
 				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
-						//获取所有测评员
+					//获取所有测评员
 					} else if (response.jwcpxt_user_id) {
 						//queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
 						myData.screenUser_chart = response.jwcpxt_user_id;
@@ -86,6 +88,7 @@ $(function() {
 			},
 			queryClient ($event) {
 				queryData[$event.target.name] = $($event.target).val();
+				queryData["clientInfoVO.currPage"] = 1;
 				this.getInfo(queryData);
 			},
 			showClientInfomation (event) {
@@ -277,6 +280,8 @@ $(function() {
 	//查看图表
 	function previewChart() {
 		//		queryData
+		console.log(queryData["clientInfoVO.startTime"]?1:2);
+		console.log(queryData["clientInfoVO.endTime"]?1:2);
 		let params = {
 			"returnVisitVO.userId" : myData.screenUser_chart ? myData.screenUser_chart : "",
 			"returnVisitVO.startTime" : queryData["clientInfoVO.startTime"] ? queryData["clientInfoVO.startTime"] : getFormatDate(),
@@ -413,7 +418,7 @@ $(function() {
 	function getUrlParam(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 		var r = window.location.search.substr(1).match(reg);
-		if (r != null) return unescape(r[2]);
+		if (r != null) return decodeURI(r[2]);
 		return null;
 	}
 })
