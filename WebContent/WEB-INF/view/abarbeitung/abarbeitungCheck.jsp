@@ -97,9 +97,12 @@ a:hover {
 													<td>{{
 														checkFeedbackRectification.feedbackRectification.feedback_rectification_unit_name
 														}}</td>
-													<td>{{
-														checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name
-														}}</td>
+													<td>
+														<a href="javascript:;" 
+														   onclick="skipToClientInfomation(this)" 
+														   :definitionId="checkFeedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
+														{{ checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name }}</a>
+													</td>
 													<td>{{
 														checkFeedbackRectification.feedbackRectification.feedback_rectification_client_phone
 														}}</td>
