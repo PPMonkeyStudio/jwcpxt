@@ -137,8 +137,8 @@ th {
 													    <p>请问您是{{}}负责人吗?</p>
 													  	<p>(是)为改进公安机关的常管理我们特向您做个国访大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
-												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('户政业务')>-1">
-													   	<p>户政:</p>
+												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('户政')>-1">
+													   	<p>户政业务:</p>
 													   	<p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													   	<p>您于{{returnedParty.serviceInstance.service_instance_date}}在{{returnedParty.unit.unit_name}}办理过户政业务,请问是本人去办的吗?</p>
 													   	<p>(是)为改进公安机关工作我们特向您做个回访大约需要职误您纷钟时间,对您回答的问题,我们将严格保密。</p>
