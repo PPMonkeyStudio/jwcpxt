@@ -72,7 +72,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ "serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
 				+ "serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "
 				+ "(serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "
-				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
+				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";
 		Query query = session.createQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
@@ -129,7 +129,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ "serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "
 				+ "serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "
 				+ "(serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "
-				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
+				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";
 		Query query = session.createQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
@@ -970,7 +970,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		String countType = countFinishReturnVisitVo.getCountType();
 		String type = countFinishReturnVisitVo.getType();
 		Session session = getSession();
-		String hql = "select count(*) " // 
+		String hql = "select count(*) " //
 				+ " from jwcpxt_service_instance instance,jwcpxt_service_client client "// like用来匹配所有id
 				+ " where instance.service_instance_judge like :appraisalId "//
 				+ " and instance.service_instance_gmt_modified >= :beginTime "//
