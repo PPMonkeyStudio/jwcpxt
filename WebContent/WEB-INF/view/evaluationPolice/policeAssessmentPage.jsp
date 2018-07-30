@@ -95,6 +95,11 @@ th {
 											</form>
 										</div>
 										<div style="width: 50%; float: left;">
+											<p>今天回访数量总数为:<span style="color:red;">{{todayCount}}</span></p>
+											<p>今天回访成功数量为:<span style="color:green;">{{todaySuccessCount}}</span></p>
+											<br>
+											<br>
+											<br>
 											<p class="form-control-static">
 												   <template v-if="serviceDefinition.service_definition_describe.indexOf('110')>-1">
 													   <p>110报警:</p>
@@ -102,47 +107,47 @@ th {
 													   <p>您于{{returnedParty.serviceInstance.service_instance_date}}向110报过警,为更好改进公安工作,</p>
 													   <p> 我们特向您做个回访,大约需要耽提您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
-												   <template v-if="serviceDefinition.service_definition_describe.indexOf('122')>-1">
+												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('122')>-1">
 													   <p>122报警:</p>
 												 	   <p>您好,我们是满乡市公安局服务群众测评中心,</p>
 												 	   <p>您于{{returnedParty.serviceInstance.service_instance_date}}向122报过交通事故警,为更好改进交通工作,</p>
 												 	   <p>我们特向您做个回访,大约需要耽误您2分钟时间，对您回答的问题,我们将严格保密。  </p>
 												   </template>
-												   <template v-if="serviceDefinition.service_definition_describe.indexOf('车管所')>-1">
-													    <p> 车管所:</p>
+												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('车管所')>-1">
+													    <p>车管所:</p>
 													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													    <p> 您于{{returnedParty.serviceInstance.service_instance_date}}在上交警大队车管所办理机动车驾驶证业务,请问您是本人办的吗?</p>
 													    <p>(是)为改进公安工作,我们特向您做个回访,大约需要耽误您2纷钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
-												   <template v-if="serviceDefinition.service_definition_describe.indexOf('出入境')>-1">
+												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('出入境')>-1">
 													    <p>出入境:</p>
 													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													    <p>您于{{returnedParty.serviceInstance.service_instance_date}}在一一公安局办理一业务 请问您是自己办的吗?</p>
 													   	<p>(是)为改进公安工作,我们特向您做个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
-												   <template v-if="serviceDefinition.service_definition_describe.indexOf('刑事案件')>-1">
+												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('刑事案件')>-1">
 													    <p>刑事案件:</p>
 													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													    <p>您于{{returnedParty.serviceInstance.service_instance_date}}在一向10报过刑事案件警请问您是当事人本人吗?</p>
 													   	<p>(是)为了好改进公安工作,我们特向您作个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
-												   <template v-if="serviceDefinition.service_definition_describe.indexOf('特种行业')>-1">
+												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('特种行业')>-1">
 													    <p>特种行业:</p>
 													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													    <p>请问您是{{}}负责人吗?</p>
 													  	<p>(是)为改进公安机关的常管理我们特向您做个国访大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
-												   <template v-if="serviceDefinition.service_definition_describe.indexOf('户政业务')>-1">
-													   	<p>户政业务:</p>
+												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('户政业务')>-1">
+													   	<p>户政:</p>
 													   	<p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													   	<p>您于{{returnedParty.serviceInstance.service_instance_date}}在{{returnedParty.unit.unit_name}}办理过户政业务,请问是本人去办的吗?</p>
 													   	<p>(是)为改进公安机关工作我们特向您做个回访大约需要职误您纷钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
-												   <template v-if="serviceDefinition.service_definition_describe.indexOf('安全感满意度')>-1">
+												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('安全感满意度')>-1">
 													    <p> 安全感满意度:</p>
 													    <p> 您好,这里是萍乡市公安局服务群众测评中心,我们想对您就当地社会治安状况做个电话调查需要和说您几分钟时间。</p>
 												   </template>
-												   </p>
+											</p>
 										</div>
 										</div>
 										<div style="padding: 20px">

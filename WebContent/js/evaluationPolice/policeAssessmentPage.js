@@ -3,6 +3,8 @@ $(function() {
 		definitionId : getUrlParam('definitionId'), //业务定义ID
 		serviceClientId : getUrlParam('serviceClientId'), //业务当事人ID
 		type : getUrlParam('type'), //业务当事人ID
+		todayCount : 0,
+		todaySuccessCount : 0,
 		serviceClien : {},
 		serviceDefinition : {},
 		questionData : [],
@@ -55,6 +57,26 @@ $(function() {
 					"serviceDefinition.jwcpxt_service_definition_id" : myData.definitionId
 				}, response => {
 					myData.questionData = response;
+				}, 'json')
+				//获取测评员当日成功回访个数
+				let nowData = getFormatDate();
+				//今天总数
+				$.post('/jwcpxt/Service/get_countFinishReturnVisit_inDate', {
+					"countFinishReturnVisitVo.beginTime" : nowData,
+					"countFinishReturnVisitVo.appraisalId" : myData.serviceClientId,
+					"countFinishReturnVisitVo.countType" : 'scope',
+					"countFinishReturnVisitVo.type" : '-1'
+				}, response => {
+					myData.todayCount = response;
+				}, 'json')
+				//今天成功总数
+				$.post('/jwcpxt/Service/get_countFinishReturnVisit_inDate', {
+					"countFinishReturnVisitVo.beginTime" : nowData,
+					"countFinishReturnVisitVo.appraisalId" : myData.serviceClientId,
+					"countFinishReturnVisitVo.countType" : 'scope',
+					"countFinishReturnVisitVo.type" : '1'
+				}, response => {
+					myData.todaySuccessCount = response;
 				}, 'json')
 			},
 			checkOption ($event, index) {
@@ -365,6 +387,16 @@ $(function() {
 	}
 })
 
+function getFormatDate() {
+	var nowDate = new Date();
+	var year = nowDate.getFullYear();
+	var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+	var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+	// var hour = nowDate.getHours()< 10 ? "0" + nowDate.getHours() : nowDate.getHours();  
+	// var minute = nowDate.getMinutes()< 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();  
+	// var second = nowDate.getSeconds()< 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();  
+	return year + "-" + month + "-" + date;
+}
 
 function getUrlParam(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

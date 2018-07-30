@@ -20,8 +20,8 @@ $(function() {
 
 	let queryData = {
 		"clientInfoVO.currPage" : 1,
-		"clientInfoVO.startTime" : '',
-		"clientInfoVO.endTime" : '',
+		"clientInfoVO.startTime" : getFormatDate(),
+		"clientInfoVO.endTime" : getFormatDate(),
 		"clientInfoVO.screenService" : '',
 		"clientInfoVO.screenVisit" : '',
 		"clientInfoVO.screenUser" : '',
@@ -47,7 +47,6 @@ $(function() {
 					$('input[name="clientInfoVO.search"]').val();
 					queryData["clientInfoVO.search"] = unitText;
 				}
-
 				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
@@ -89,7 +88,7 @@ $(function() {
 				this.getInfo(queryData);
 			},
 			showClientInfomation (event) {
-				showClientInformation(event.target.id);
+				showClientInformation($(event.target).parents('a').attr('id'));
 			},
 			previewChart () {
 				previewChart();

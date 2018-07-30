@@ -51,11 +51,10 @@ th {
 											onchange="changeQuery()" id="searchTimeEnd"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"> -->
-										<input name="feedbackRectificationExceedTimeVO.search"
+										<!-- <input name="feedbackRectificationExceedTimeVO.search"
 											style="display: inline; width: 250px;"
 											@keyup="searchRectification($event)" class="form-control"
-											placeholder="请输入搜索内容(全)">
-
+											placeholder="请输入搜索内容(全)"> -->
 									</div>
 									<div id="notRectification" v-cloak>
 										<table class="table table-striped" style="text-align: center;">
