@@ -20,8 +20,8 @@ $(function() {
 
 	let queryData = {
 		"clientInfoVO.currPage" : 1,
-		"clientInfoVO.startTime" : getFormatDate(),
-		"clientInfoVO.endTime" : getFormatDate(),
+		"clientInfoVO.startTime" : '',
+		"clientInfoVO.endTime" : '',
 		"clientInfoVO.screenService" : '',
 		"clientInfoVO.screenVisit" : '',
 		"clientInfoVO.screenUser" : '',
@@ -51,13 +51,14 @@ $(function() {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
 						//获取所有测评员
-						$.post('/jwcpxt/Service/list_userDO', {}, response => {
-							myData.allAppraisal = response;
-						}, 'json')
 					} else if (response.jwcpxt_user_id) {
 						//queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
 						myData.screenUser_chart = response.jwcpxt_user_id;
 					}
+					//查询所有的测评员
+					$.post('/jwcpxt/Service/list_userDO', {}, response => {
+						myData.allAppraisal = response;
+					}, 'json')
 					this.getInfo(queryData);
 				}, 'json');
 				//获取所有的业务
