@@ -75,12 +75,12 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ "unit.unit_name like :search) order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_create desc";
 		Query query = session.createQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
-			query.setParameter("startTime", "%%");
+			query.setParameter("startTime", "0000-00-00");
 		} else {
 			query.setParameter("startTime", clientInfoVO.getStartTime());
 		}
 		if (clientInfoVO.getEndTime().equals("")) {
-			query.setParameter("endTime", "%%");
+			query.setParameter("endTime", "9999-99-99");
 		} else {
 			query.setParameter("endTime", clientInfoVO.getEndTime());
 		}
@@ -171,13 +171,13 @@ public class ServiceDaoImpl implements ServiceDao {
 				// 当事人姓名
 				clientInfoDTO.getServiceClient()
 						.setService_client_name(clientInfoDTO.getServiceClient().getService_client_name().replaceAll(
-								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
-										+ "</span>"));
+								clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
 				// 性别
 				clientInfoDTO.getServiceClient()
 						.setService_client_phone(clientInfoDTO.getServiceClient().getService_client_phone().replaceAll(
-								clientInfoVO.getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch()
-										+ "</span>"));
+								clientInfoVO.getSearch(),
+								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
 				// 单位名称
 				clientInfoDTO.getUnit()
 						.setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.getSearch(),
