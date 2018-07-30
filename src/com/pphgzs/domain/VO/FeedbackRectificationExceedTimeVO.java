@@ -10,6 +10,8 @@ import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
  *
  */
 public class FeedbackRectificationExceedTimeVO {
+	// 搜索
+	private String search = "";
 	// 当前页
 	private int currPage = 1;
 	// 总页数
@@ -56,20 +58,29 @@ public class FeedbackRectificationExceedTimeVO {
 		return listFeedbackRectificationDTO;
 	}
 
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
 	public void setListFeedbackRectificationDTO(List<FeedbackRectificationDTO> listFeedbackRectificationDTO) {
 		this.listFeedbackRectificationDTO = listFeedbackRectificationDTO;
 	}
 
 	@Override
 	public String toString() {
-		return "FeedbackRectificationExceedTimeVO [currPage=" + currPage + ", totalPage=" + totalPage + ", totalCount="
-				+ totalCount + ", pageSize=" + pageSize + ", listFeedbackRectificationDTO="
-				+ listFeedbackRectificationDTO + "]";
+		return "FeedbackRectificationExceedTimeVO [search=" + search + ", currPage=" + currPage + ", totalPage="
+				+ totalPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize
+				+ ", listFeedbackRectificationDTO=" + listFeedbackRectificationDTO + "]";
 	}
 
-	public FeedbackRectificationExceedTimeVO(int currPage, int totalPage, int totalCount, int pageSize,
+	public FeedbackRectificationExceedTimeVO(String search, int currPage, int totalPage, int totalCount, int pageSize,
 			List<FeedbackRectificationDTO> listFeedbackRectificationDTO) {
 		super();
+		this.search = search;
 		this.currPage = currPage;
 		this.totalPage = totalPage;
 		this.totalCount = totalCount;
