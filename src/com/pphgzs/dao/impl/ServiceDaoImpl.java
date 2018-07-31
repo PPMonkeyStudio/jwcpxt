@@ -79,23 +79,24 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " ("//
 				+ " serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "//
 				+ " unit.unit_name like :search"//
-				+ " )"//
-				+ " and serviceClient.jwcpxt_service_client_id in ( "//
-				+ " select"//
-				+ " client.jwcpxt_service_client_id"//
-				+ "	from "//
-				+ " jwcpxt_answer_choice choice,"//
-				+ " jwcpxt_option _option,"//
-				+ " jwcpxt_service_client client"//
-				+ " where"//
-				+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
-				+ " and choice.answer_choice_option = _option.jwcpxt_option_id"//
-				+ " and _option.option_describe like :screenClientState"//
-				+ " group by"//
-				+ "	client.jwcpxt_service_client_id"//
-				+ ")"//
-				+ " order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";//
-		System.out.println("hql:" + hql);
+				+ " )";//
+		if (!clientInfoVO.getScreenClientState().equals("")) {
+			hql = hql + " and serviceClient.jwcpxt_service_client_id in ( "//
+					+ " select"//
+					+ " client.jwcpxt_service_client_id"//
+					+ "	from "//
+					+ " jwcpxt_answer_choice choice,"//
+					+ " jwcpxt_option _option,"//
+					+ " jwcpxt_service_client client"//
+					+ " where"//
+					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
+					+ " and choice.answer_choice_option = _option.jwcpxt_option_id"//
+					+ " and _option.option_describe like :screenClientState"//
+					+ " group by"//
+					+ "	client.jwcpxt_service_client_id"//
+					+ ")";
+		}
+		hql = hql + " order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";//
 		Query query = session.createQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
@@ -127,9 +128,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("search", "%" + clientInfoVO.getSearch() + "%");
 		}
-		if (clientInfoVO.getScreenClientState().equals("")) {
-			query.setParameter("screenClientState", "%%");
-		} else {
+		if (!clientInfoVO.getScreenClientState().equals("")) {
 			query.setParameter("screenClientState", "%" + clientInfoVO.getScreenClientState() + "%");
 		}
 		if (query.uniqueResult() == null) {
@@ -164,22 +163,24 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " serviceClient.service_client_name like :search or"//
 				+ " serviceClient.service_client_phone like :search or"//
 				+ " unit.unit_name like :search"//
-				+ " )"//
-				+ " and serviceClient.jwcpxt_service_client_id in ( "//
-				+ " select"//
-				+ " client.jwcpxt_service_client_id"//
-				+ "	from "//
-				+ " jwcpxt_answer_choice choice,"//
-				+ " jwcpxt_option _option,"//
-				+ " jwcpxt_service_client client"//
-				+ " where"//
-				+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
-				+ " and choice.answer_choice_option = _option.jwcpxt_option_id"//
-				+ " and _option.option_describe like :screenClientState"//
-				+ " group by"//
-				+ "	client.jwcpxt_service_client_id"//
-				+ ")"//
-				+ " order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";
+				+ " )";
+		if (!clientInfoVO.getScreenClientState().equals("")) {
+			hql = hql + " and serviceClient.jwcpxt_service_client_id in ( "//
+					+ " select"//
+					+ " client.jwcpxt_service_client_id"//
+					+ "	from "//
+					+ " jwcpxt_answer_choice choice,"//
+					+ " jwcpxt_option _option,"//
+					+ " jwcpxt_service_client client"//
+					+ " where"//
+					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
+					+ " and choice.answer_choice_option = _option.jwcpxt_option_id"//
+					+ " and _option.option_describe like :screenClientState"//
+					+ " group by"//
+					+ "	client.jwcpxt_service_client_id"//
+					+ ")";
+		}
+		hql = hql + " order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";//
 		Query query = session.createQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
@@ -211,9 +212,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("search", "%" + clientInfoVO.getSearch() + "%");
 		}
-		if (clientInfoVO.getScreenClientState().equals("")) {
-			query.setParameter("screenClientState", "%%");
-		} else {
+		if (!clientInfoVO.getScreenClientState().equals("")) {
 			query.setParameter("screenClientState", "%" + clientInfoVO.getScreenClientState() + "%");
 		}
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());
@@ -325,6 +324,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		}
 		return listClientInstanceDTO.get(0);
 	}
+
 	@Override
 	public ClientInstanceDTO get_notServiceClientDTO_byJudge_specified(String jwcpxt_service_client_id) {
 		Session session = getSession();
@@ -335,15 +335,14 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " jwcpxt_service_client serviceClient , "//
 				+ " jwcpxt_service_definition serviceDefinition , "//
 				+ " jwcpxt_unit unit"//
-				+ " where "
-				+ " serviceClient.jwcpxt_service_client_id= :clientId"//
+				+ " where " + " serviceClient.jwcpxt_service_client_id= :clientId"//
 				+ " and serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = serviceInstance.service_instance_service_definition "//
 				+ " and unit.jwcpxt_unit_id = serviceInstance.service_instance_belong_unit";//
 		Query query = session.createQuery(hql);
 		query.setParameter("clientId", jwcpxt_service_client_id);
 		//
-		ClientInstanceDTO clientInstanceDTO = (ClientInstanceDTO)query.uniqueResult();
+		ClientInstanceDTO clientInstanceDTO = (ClientInstanceDTO) query.uniqueResult();
 		if (clientInstanceDTO == null) {
 			return null;
 		}
