@@ -617,6 +617,8 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		// 遍历回答列表
 		for (AnswerDTO answerDTO : listAnswerDTO) {
+			
+			
 			listQuestionDTO = new ArrayList<>();
 			serviceDefinition = new jwcpxt_service_definition();
 			// 定义

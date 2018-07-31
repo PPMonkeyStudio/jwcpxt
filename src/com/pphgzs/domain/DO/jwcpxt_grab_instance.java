@@ -5,6 +5,7 @@ public class jwcpxt_grab_instance {
 
 	private String grab_instance_service_definition;
 	private String grab_instance_unique_id;
+	private String grab_instance_service_grab;
 	private String grab_instance_client_name;
 	private String grab_instance_client_sex;
 	private String grab_instance_client_phone;
@@ -16,14 +17,23 @@ public class jwcpxt_grab_instance {
 
 	@Override
 	public String toString() {
-		return "jwcpxt_grab_instance 【\njwcpxt_grab_instance_id=" + jwcpxt_grab_instance_id
-				+ ", \ngrab_instance_service_definition=" + grab_instance_service_definition
-				+ ", \ngrab_instance_unique_id=" + grab_instance_unique_id + ", \ngrab_instance_client_name="
-				+ grab_instance_client_name + ", \ngrab_instance_client_sex=" + grab_instance_client_sex
-				+ ", \ngrab_instance_client_phone=" + grab_instance_client_phone + ", \ngrab_instance_service_time="
-				+ grab_instance_service_time + ", \ngrab_instance_organization_code=" + grab_instance_organization_code
-				+ ", \ngrab_instance_distribution=" + grab_instance_distribution + ", \ngrab_instance_gmt_create="
-				+ grab_instance_gmt_create + ", \ngrab_instance_gmt_modified=" + grab_instance_gmt_modified + "\n】";
+		return "jwcpxt_grab_instance [jwcpxt_grab_instance_id=" + jwcpxt_grab_instance_id
+				+ ", grab_instance_service_definition=" + grab_instance_service_definition
+				+ ", grab_instance_unique_id=" + grab_instance_unique_id + ", grab_instance_service_grab="
+				+ grab_instance_service_grab + ", grab_instance_client_name=" + grab_instance_client_name
+				+ ", grab_instance_client_sex=" + grab_instance_client_sex + ", grab_instance_client_phone="
+				+ grab_instance_client_phone + ", grab_instance_service_time=" + grab_instance_service_time
+				+ ", grab_instance_organization_code=" + grab_instance_organization_code
+				+ ", grab_instance_distribution=" + grab_instance_distribution + ", grab_instance_gmt_create="
+				+ grab_instance_gmt_create + ", grab_instance_gmt_modified=" + grab_instance_gmt_modified + "]";
+	}
+
+	public String getGrab_instance_service_grab() {
+		return grab_instance_service_grab;
+	}
+
+	public void setGrab_instance_service_grab(String grab_instance_service_grab) {
+		this.grab_instance_service_grab = grab_instance_service_grab;
 	}
 
 	public String getJwcpxt_grab_instance_id() {
