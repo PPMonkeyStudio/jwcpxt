@@ -164,8 +164,6 @@ $(function() {
 										index += 1;
 									})
 									//
-									console.log(params);
-									return ;
 									$.post('/jwcpxt/Question/save_answer', params, response => {
 										if (response == "1") {
 											$($event.target).attr("disabled", "disabled");
