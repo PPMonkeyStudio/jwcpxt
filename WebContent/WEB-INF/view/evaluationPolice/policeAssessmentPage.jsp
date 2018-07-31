@@ -105,11 +105,11 @@ th {
 													   <p>110报警:</p>
 													   <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													   <p>您于{{returnedParty.serviceInstance.service_instance_date}}向110报过警,为更好改进公安工作,</p>
-													   <p> 我们特向您做个回访,大约需要耽提您2分钟时间,对您回答的问题,我们将严格保密。</p>
+													   <p>我们特向您做个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('交通事故')>-1">
 													   <p>交通事故报警:</p>
-												 	   <p>您好,我们是满乡市公安局服务群众测评中心,</p>
+												 	   <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 												 	   <p>您于{{returnedParty.serviceInstance.service_instance_date}}向122报过交通事故警,为更好改进交通工作,</p>
 												 	   <p>我们特向您做个回访,大约需要耽误您2分钟时间，对您回答的问题,我们将严格保密。  </p>
 												   </template>
@@ -122,13 +122,13 @@ th {
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('出入境')>-1">
 													    <p>出入境:</p>
 													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
-													    <p>您于{{returnedParty.serviceInstance.service_instance_date}}在一一公安局办理一业务 请问您是自己办的吗?</p>
+													    <p>您于{{returnedParty.serviceInstance.service_instance_date}}在公安局办理业务,请问您是自己办的吗?</p>
 													   	<p>(是)为改进公安工作,我们特向您做个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('刑事案件')>-1">
 													    <p>刑事案件:</p>
 													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
-													    <p>您于{{returnedParty.serviceInstance.service_instance_date}}在一向10报过刑事案件警请问您是当事人本人吗?</p>
+													    <p>您于{{returnedParty.serviceInstance.service_instance_date}}在{{returnedParty.unit.unit_name}}向110报过刑事案件警,请问您是当事人本人吗?</p>
 													   	<p>(是)为了好改进公安工作,我们特向您作个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('特种行业')>-1">
@@ -141,7 +141,7 @@ th {
 													   	<p>户政办证:</p>
 													   	<p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													   	<p>您于{{returnedParty.serviceInstance.service_instance_date}}在{{returnedParty.unit.unit_name}}办理过户政业务,请问是本人去办的吗?</p>
-													   	<p>(是)为改进公安机关工作我们特向您做个回访,大约需要职误您纷钟时间,对您回答的问题,我们将严格保密。</p>
+													   	<p>(是)为改进公安机关工作我们特向您做个回访,大约需要职误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('安全感满意度')>-1">
 													    <p> 安全感满意度:</p>
