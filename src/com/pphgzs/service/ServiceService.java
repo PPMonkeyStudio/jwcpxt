@@ -38,6 +38,12 @@ public interface ServiceService {
 	public ClientInstanceDTO get_notServiceClient_byJudge_revisit(jwcpxt_user user);
 
 	/**
+	 * 依据当事人id获取问卷
+	 * @param jwcpxt_service_client_id
+	 * @return
+	 */
+	public ClientInstanceDTO get_notServiceClient_byJudge_specified(String jwcpxt_service_client_id);
+	/**
 	 * 根据抓取id获取抓取记录
 	 */
 	public jwcpxt_service_grab get_serviceGrab(jwcpxt_service_grab serviceGrab);

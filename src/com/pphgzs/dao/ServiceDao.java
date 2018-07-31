@@ -33,6 +33,7 @@ public interface ServiceDao {
 
 	public ClientInstanceDTO get_notServiceClientDTO_byJudge_revisit(String jwcpxt_user_id);
 
+	public ClientInstanceDTO get_notServiceClientDTO_byJudge_specified(String jwcpxt_service_client_id);
 	/**
 	 * 根据业务定义id获取抓取表
 	 * 
@@ -225,5 +226,6 @@ public interface ServiceDao {
 	 */
 	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(
 			jwcpxt_question question, String jwcpxt_service_client_id);
+
 
 }

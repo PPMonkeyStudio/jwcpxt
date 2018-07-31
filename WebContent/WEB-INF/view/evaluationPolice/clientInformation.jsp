@@ -146,7 +146,7 @@ th {
 														</td>
 													</template>
 													<template v-else>
-														<td><a href="javascript:;">暂无操作</a>
+														<td><span>暂无操作</span>
 														</td>
 													</template>
 												</s:if>

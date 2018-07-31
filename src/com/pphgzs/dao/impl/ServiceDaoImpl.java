@@ -270,6 +270,30 @@ public class ServiceDaoImpl implements ServiceDao {
 		}
 		return listClientInstanceDTO.get(0);
 	}
+	@Override
+	public ClientInstanceDTO get_notServiceClientDTO_byJudge_specified(String jwcpxt_service_client_id) {
+		Session session = getSession();
+		String hql = "select "//
+				+ " new com.pphgzs.domain.DTO.ClientInstanceDTO(serviceInstance,serviceClient,serviceDefinition,unit) "//
+				+ " from "//
+				+ " jwcpxt_service_instance serviceInstance , "//
+				+ " jwcpxt_service_client serviceClient , "//
+				+ " jwcpxt_service_definition serviceDefinition , "//
+				+ " jwcpxt_unit unit"//
+				+ " where "
+				+ " serviceClient.jwcpxt_service_client_id= :clientId"//
+				+ " and serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id = serviceInstance.service_instance_service_definition "//
+				+ " and unit.jwcpxt_unit_id = serviceInstance.service_instance_belong_unit";//
+		Query query = session.createQuery(hql);
+		query.setParameter("clientId", jwcpxt_service_client_id);
+		//
+		ClientInstanceDTO clientInstanceDTO = (ClientInstanceDTO)query.uniqueResult();
+		if (clientInstanceDTO == null) {
+			return null;
+		}
+		return clientInstanceDTO;
+	}
 
 	@Override
 	public int get_serviceInstanceCount_byServiceDefinitionAndUnit(String serviceDefinitionID, String unitID) {
