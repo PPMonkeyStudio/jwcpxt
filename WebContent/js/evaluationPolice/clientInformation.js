@@ -98,7 +98,7 @@ $(function() {
 				previewChart();
 			},
 			pageTo (definition_id, client_id) {
-				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=general&definitionId=${definition_id}&serviceClientId=${client_id}`;
+				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=specified&definitionId=${definition_id}&serviceClientId=${client_id}`;
 			},
 			firstPage () {
 				if (myData.page.isFirstPage) {

@@ -56,8 +56,11 @@ public class AnswerDTO {
 
 	@Override
 	public String toString() {
-		return "AnswerDTO [question=" + question + ", answerChoice=" + answerChoice + ", option=" + option
-				+ ", answerOpen=" + answerOpen + "]";
+		return "AnswerDTO ["
+				+ "\n question=" + question + ","
+				+ "\n answerChoice=" + answerChoice + ","
+				+ "\n option=" + option + ","
+				+ "\n answerOpen=" + answerOpen + "\n ]";
 	}
 
 }

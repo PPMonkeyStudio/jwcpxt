@@ -162,6 +162,15 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 		return clientInstanceDTO;
 	}
+	
+	@Override
+	public ClientInstanceDTO get_notServiceClient_byJudge_specified(String jwcpxt_service_client_id) {
+		//
+		ClientInstanceDTO clientInstanceDTO = new ClientInstanceDTO();
+		//
+		clientInstanceDTO = serviceDao.get_notServiceClientDTO_byJudge_specified(jwcpxt_service_client_id);
+		return clientInstanceDTO;
+	}
 
 	@Override
 	public ClientInstanceDTO get_notServiceClient_byJudge_revisit(jwcpxt_user user) {

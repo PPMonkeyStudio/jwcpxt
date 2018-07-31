@@ -67,10 +67,10 @@ public class jwcpxt_question {
 
 	@Override
 	public String toString() {
-		return "jwcpxt_question 【\njwcpxt_question_id=" + jwcpxt_question_id + ", \nquestion_describe="
-				+ question_describe + ", \nquestion_type=" + question_type + ", \nquestion_service_definition="
-				+ question_service_definition + ", \nquestion_sort=" + question_sort + ", \nquestion_gmt_create="
-				+ question_gmt_create + ", \nquestion_gmt_modified=" + question_gmt_modified + "\n】";
+		return "jwcpxt_question 【jwcpxt_question_id=" + jwcpxt_question_id + ", question_describe="
+				+ question_describe + ", question_type=" + question_type + ", question_service_definition="
+				+ question_service_definition + ", question_sort=" + question_sort + ", question_gmt_create="
+				+ question_gmt_create + ", question_gmt_modified=" + question_gmt_modified + "】";
 	}
 
 }

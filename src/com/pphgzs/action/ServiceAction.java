@@ -186,7 +186,9 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
 		if (type.equals("revisit")) {
 			clientInstanceDTO = serviceService.get_notServiceClient_byJudge_revisit(user);
-		} else {
+		}else if("specified".equals(type)){
+			clientInstanceDTO = serviceService.get_notServiceClient_byJudge_specified(serviceClient.getJwcpxt_service_client_id());
+		}else {
 			clientInstanceDTO = serviceService.get_notServiceClient_byJudge(user);
 		}
 

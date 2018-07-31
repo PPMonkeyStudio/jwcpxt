@@ -2,7 +2,7 @@ $(function() {
 	let myData = {
 		definitionId : getUrlParam('definitionId'), //业务定义ID
 		serviceClientId : getUrlParam('serviceClientId'), //业务当事人ID
-		type : getUrlParam('type'), //业务当事人ID
+		type : getUrlParam('type'), //leixing
 		todayCount : 0,
 		todaySuccessCount : 0,
 		serviceClien : {},
@@ -42,7 +42,8 @@ $(function() {
 				}, 'json')
 				//获取session中的回访信息
 				$.post('/jwcpxt/Service/get_notServiceClient_byServiceClientId', {
-					type : myData.type
+					type : myData.type,
+					"serviceClient.jwcpxt_service_client_id":myData.serviceClientId
 				}, response => {
 					this.returnedParty = response;
 				}, 'json')
@@ -161,7 +162,6 @@ $(function() {
 											}
 											index += 1;
 										})
-										index += 1;
 									})
 									//
 									$.post('/jwcpxt/Question/save_answer', params, response => {
