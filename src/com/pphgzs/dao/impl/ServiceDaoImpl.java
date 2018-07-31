@@ -972,9 +972,10 @@ public class ServiceDaoImpl implements ServiceDao {
 		Session session = getSession();
 		String hql = "select count(*) " //
 				+ " from jwcpxt_service_instance instance,jwcpxt_service_client client "// like用来匹配所有id
-				+ " where instance.service_instance_judge like :appraisalId "//
-				+ " and instance.service_instance_gmt_modified >= :beginTime "//
-				+ " and instance.service_instance_gmt_modified <= :endTime "
+				+ " where client.service_client_service_instance = instance.jwcpxt_service_instance_id"
+				+ " and instance.service_instance_judge like :appraisalId "//
+				+ " and instance.service_instance_gmt_modified >= DATE_FORMAT( :beginTime ,'%Y-%m-%d 00:00:00') "//
+				+ " and instance.service_instance_gmt_modified <= DATE_FORMAT( :endTime ,'%Y-%m-%d 23:59:59') "
 				+ " and client.service_client_visit like :type ";//
 		Query query = session.createQuery(hql);
 		// 单个查询

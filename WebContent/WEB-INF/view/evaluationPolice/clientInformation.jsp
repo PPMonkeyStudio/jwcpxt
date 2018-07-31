@@ -70,10 +70,10 @@ th {
 									<table class="table" style="text-align: center; width: 100%;">
 										<thead>
 											<tr style="border-bottom: 2px solid #ddd">
-												<th style="width: 60px;">姓名</th>
-												<th style="width: 60px;">性别</th>
-												<th style="width: 60px;">电话</th>
-												<th style="width: 60px;"><select class="form-control"
+												<td style="width: 60px;">姓名</td>
+												<td style="width: 60px;">性别</td>
+												<td style="width: 60px;">电话</td>
+												<td style="width: 60px;"><select class="form-control"
 													@change="queryClient" name="clientInfoVO.screenVisit">
 														<option value="">全部</option>
 														<option value="1">成功</option>
@@ -84,17 +84,18 @@ th {
 														<option value="6">停机</option>
 														<option value="7">拒访</option>
 														<option value="8">其他</option>
-												</select></th>
-												<th style="width: 80px;">
+												</select></td>
+												<td style="width: 80px;">
 													<select class="form-control" @change="queryClient" name="clientInfoVO.screenService">
 														<option value="">全部业务</option>
 														<option v-for="service in allService" :value="service.jwcpxt_service_definition_id">{{service.service_definition_describe}}</option>
 													</select>
-												</th>
-												<th style="width: 150px;">办理单位</th>
-												<th style="width: 60px;">办理时间</th>
+												</td>
+												<td style="width: 150px;">办理单位</td>
+												<td style="width: 60px;">办理时间</td>
+												<td style="width: 60px;">回访时间</td>
 												<s:if test="#session.user.user_type==1">
-													<th style="width: 60px;">操作</th>
+													<td style="width: 60px;">操作</td>
 												</s:if>
 											</tr>
 										</thead>
@@ -130,6 +131,14 @@ th {
 												<td>{{ClientInfoDTO.serviceDefinition.service_definition_describe}}</td>
 												<td v-html="ClientInfoDTO.unit.unit_name.replace('江西省萍乡市公安局','')"></td>
 												<td>{{ClientInfoDTO.serviceInstance.service_instance_date}}</td>
+												<td>
+													<template v-if="ClientInfoDTO.serviceClient.service_client_visit==2">
+														{{ClientInfoDTO.serviceInstance.service_instance_gmt_modified}}
+													</template>
+													<template v-else>
+														{{ClientInfoDTO.serviceInstance.service_instance_gmt_modified}}
+													</template>
+												</td>
 												<s:if test="#session.user.user_type==1">
 													<template v-if="ClientInfoDTO.serviceClient.service_client_visit!=1">
 														<td><a href="javascript:;"
