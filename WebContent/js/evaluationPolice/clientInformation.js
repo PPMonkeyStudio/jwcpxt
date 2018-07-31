@@ -25,6 +25,7 @@ $(function() {
 		"clientInfoVO.screenService" : '',
 		"clientInfoVO.screenVisit" : '',
 		"clientInfoVO.screenUser" : '',
+		"clientInfoVO.screenClientState" : '',
 		"clientInfoVO.search" : ''
 	}
 

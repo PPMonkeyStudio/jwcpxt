@@ -49,6 +49,14 @@ th {
 										<option value="">选择测评员</option>
 										<option v-for="appraisal in allAppraisal" :value="appraisal.jwcpxt_user_id">{{appraisal.user_name}}</option>
 									</select>
+									<select style="width:120px; float: left; margin-left:10px;" 
+											@change="queryClient" 
+											name="clientInfoVO.screenClientState" 
+											class="form-control">
+										<option value="">全部</option>
+										<option value="不太满意">不太满意</option>
+										<option value="不满意">不满意</option>
+									</select>
 									<div style="width: 500px; float: left; margin-left: 10px;">
 										<div class="form-group" style="margin: auto;">
 											<label>办理时间</label>
