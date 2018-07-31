@@ -22,8 +22,9 @@ public class ClientInfoVO {
 	// 测评员筛选
 	private String screenUser = "";
 	// 搜索当事人姓名、电话号码、单位
-	private String search="";
-
+	private String search = "";
+	// 当事人状态筛选
+	private String screenClientState = "";
 	// 当前页
 	private int currPage = 1;
 	// 总页数
@@ -121,12 +122,20 @@ public class ClientInfoVO {
 		this.pageSize = pageSize;
 	}
 
+	public String getScreenClientState() {
+		return screenClientState;
+	}
+
+	public void setScreenClientState(String screenClientState) {
+		this.screenClientState = screenClientState;
+	}
+
 	@Override
 	public String toString() {
 		return "ClientInfoVO [listClientInfoDTO=" + listClientInfoDTO + ", startTime=" + startTime + ", endTime="
 				+ endTime + ", screenService=" + screenService + ", screenVisit=" + screenVisit + ", screenUser="
-				+ screenUser + ", search=" + search + ", currPage=" + currPage + ", totalPage=" + totalPage
-				+ ", totalCount=" + totalCount + ", pageSize=" + pageSize + "]";
+				+ screenUser + ", search=" + search + ", screenClientState=" + screenClientState + ", currPage="
+				+ currPage + ", totalPage=" + totalPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize + "]";
 	}
 
 }
