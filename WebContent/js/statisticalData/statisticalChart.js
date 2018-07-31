@@ -15,6 +15,7 @@ function getAllUnit() {
 var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'light'); //所有不满意
 var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light'); //不满意或满意业务
 var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light'); //问题
+
 var crowdFocusChart = echarts.init(document.getElementById('crowdFocus'), 'light'); //群众关注
 var crowdFocusChart_bar = echarts.init(document.getElementById('crowdFocus_bar'), 'light'); //群众关注-条形图
 var crowdNotSatisfiedChart = echarts.init(document.getElementById('crowdNotSatisfied'), 'light'); //群众不满意
@@ -37,10 +38,10 @@ function getDate7() {
 }
 
 let params = {
-	'jwcpxt_unit_id' : '',
-	'startTime' : getDate7(),
-	'endTime' : getDate(),
-	'timeType' : 1
+	"jwcpxt_unit_id" : '',
+	"startTime" : getDate7(),
+	"endTime" : getDate(),
+	"timeType" : 1
 }
 
 //到页面时默认执行一次方法
@@ -99,7 +100,7 @@ function search(select) {
 	if (!value) {
 		return false;
 	}
-	params[$(this).attr('name')] = value;
+	params[$(select).attr('id')] = value;
 	getChart(params);
 }
 function checkTimeType(btn) {
@@ -427,6 +428,9 @@ function renderCrowdNotSatisfiedChart(res) {
 ]*/
 //绘制总体不满意分布
 function randerDissatisfactionChart(res) {
+	dissatisfactionProblemChart.clear(); //
+	dissatisfiedServiceChart.clear(); //
+
 	let _source = [ [ 'time' ], ];
 	res.listStaDisDateDTO.forEach(function(elt, i) {
 		_source[0].push(elt.dateScale);
@@ -511,6 +515,7 @@ function randerDissatisfactionChart(res) {
 		});
 		dissatisfactionChart.clear();
 		dissatisfactionChart.setOption(option);
+		dissatisfactionChart.off('click');
 		dissatisfactionChart.on("click", function(param) {
 			if (param.componentSubType == "pie") {
 				let index = param.dataIndex;
@@ -561,6 +566,7 @@ function randerDissatisfactionChart(res) {
 ]*/
 //绘制不满意和业务关联的图
 function randerDissatisfiedServiceChart(res, title) {
+	if (!res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.length > 0) return false;
 	let _source = [ [ 'time' ], ];
 	res.listStatisDIssaServiceDateDTO.forEach(function(elt, i) {
 		_source[0].push(elt.dateScale);
@@ -665,8 +671,7 @@ function randerDissatisfiedServiceChart(res, title) {
 		});
 		//默认将右边图画出
 		definitionId = res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO[0].serviceDefinition.jwcpxt_service_definition_id
-		if (definitionId)
-			dissatisfactionProblemSendData(option.dataset.source[1][0]);
+		dissatisfactionProblemSendData(option.dataset.source[1][0]);
 	});
 }
 
@@ -692,7 +697,7 @@ function randerDissatisfactionProblem(res, title) {
 			//(请问)[\u4e00-\u9fa5]+(有没有向您)[、\u4e00-\u9fa5]+[?|？]
 			let question = elt1.questionOptionAnswerDTO.question.question_describe;
 			let answer = elt1.questionOptionAnswerDTO.option.option_describe;
-			
+
 			/*let replaceQuestion;
 			if (/(请问)?(您对)[\u4e00-\u9fa5]+(满意吗)[?|？]/.test(question)) {
 				replaceQuestion = question.replace("请问", "").replace("您对", "对").replace("满意吗", answer).replace("？", "");

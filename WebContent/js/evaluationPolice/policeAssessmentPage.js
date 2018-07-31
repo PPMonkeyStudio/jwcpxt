@@ -329,7 +329,7 @@ $(function() {
 							let optionIndex = $event.target.attributes.optionIndex.value;
 							inquiriesStr[index] = `<br/><small>${this.inquiriesOptionData[index].listInquiriesOption[optionIndex].option_describe}</small>`;
 						},
-						inputInquiriesTextarea (event, index) {
+						inputInquiriesTextarea ($event, index) {
 							let answer = {
 								"question.jwcpxt_question_id" : this.inquiriesOptionData[index].inquiriesQuestion.jwcpxt_question_id, //所属问题id
 								"answerOpen.answer_open_content" : $event.target.value //开放题回答的内容
