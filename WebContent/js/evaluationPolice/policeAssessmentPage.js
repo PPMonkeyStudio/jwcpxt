@@ -43,7 +43,7 @@ $(function() {
 				//获取session中的回访信息
 				$.post('/jwcpxt/Service/get_notServiceClient_byServiceClientId', {
 					type : myData.type,
-					"serviceClient.jwcpxt_service_client_id":myData.serviceClientId
+					"serviceClient.jwcpxt_service_client_id" : myData.serviceClientId
 				}, response => {
 					this.returnedParty = response;
 				}, 'json')
@@ -64,7 +64,7 @@ $(function() {
 				//今天总数
 				$.post('/jwcpxt/Service/get_countFinishReturnVisit_inDate', {
 					"countFinishReturnVisitVo.beginTime" : nowData,
-					"countFinishReturnVisitVo.appraisalId" : myData.serviceClientId,
+					"countFinishReturnVisitVo.appraisalId" : "self",
 					"countFinishReturnVisitVo.countType" : 'scope',
 					"countFinishReturnVisitVo.type" : '-1'
 				}, response => {
@@ -73,7 +73,7 @@ $(function() {
 				//今天成功总数
 				$.post('/jwcpxt/Service/get_countFinishReturnVisit_inDate', {
 					"countFinishReturnVisitVo.beginTime" : nowData,
-					"countFinishReturnVisitVo.appraisalId" : myData.serviceClientId,
+					"countFinishReturnVisitVo.appraisalId" : "self",
 					"countFinishReturnVisitVo.countType" : 'scope',
 					"countFinishReturnVisitVo.type" : '1'
 				}, response => {

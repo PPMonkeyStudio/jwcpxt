@@ -86,8 +86,12 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		Gson gson = gsonBuilder.serializeNulls().create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
+		if("self".equals(countFinishReturnVisitVo.getAppraisalId())){
+			jwcpxt_user user = new jwcpxt_user();
+			user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
+			countFinishReturnVisitVo.setAppraisalId(user.getJwcpxt_user_id());
+		}
 		int count = serviceService.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
-		System.out.println(count);
 		http_response.getWriter().write(""+count);
 	}
 
