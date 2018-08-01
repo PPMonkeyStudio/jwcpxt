@@ -11,6 +11,7 @@ import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.InquiriesOptionDTO;
@@ -606,6 +607,12 @@ public class QuestionServiceImpl implements QuestionService {
 		jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
 		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
 		jwcpxt_dissatisfied_feedback dissatisfiedFeedback = new jwcpxt_dissatisfied_feedback();
+		
+		/**
+		 * hy
+		 */
+		jwcpxt_service_instance serviceInstance = serviceService.get_serviceInstanceDo_byServiceClientID(serviceClient);
+		
 		// 根据当事人id获取当事人信息 确保当事人信息正确
 		jwcpxt_service_client client = new jwcpxt_service_client();
 		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
@@ -726,8 +733,10 @@ public class QuestionServiceImpl implements QuestionService {
 		// serviceService.distributionNewServiceInstance_toUser(user.getJwcpxt_user_id());
 
 		/*
-		 * 
+		 *处理 当事人回访时候，在当事人业务回访记录还是刚开始分配的测评员的问题，由另一个测评员回访，则需要改变分配的测评员 
 		 */
+		serviceInstance.setService_instance_judge(user.getJwcpxt_user_id());
+		questionDao.saveOrUpdateObject(serviceInstance);
 		return true;
 	}
 

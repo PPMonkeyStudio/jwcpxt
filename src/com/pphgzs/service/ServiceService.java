@@ -282,4 +282,11 @@ public interface ServiceService {
 	 */
 	public AllClientNotSatisfiedInformationVo get_AllInformation_ByClientId(jwcpxt_service_client serviceClient);
 
+	/**
+	 * 通过当事人ID获取业务实例DO
+	 * @param serviceClient
+	 * @return
+	 */
+	public jwcpxt_service_instance get_serviceInstanceDo_byServiceClientID(jwcpxt_service_client serviceClient);
+
 }

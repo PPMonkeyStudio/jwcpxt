@@ -88,6 +88,18 @@ public class ServiceServiceImpl implements ServiceService {
 		int totalPages = ((totalRecords - 1) / clientInfoVO.getPageSize()) + 1;
 		clientInfoVO.setTotalCount(totalRecords);
 		clientInfoVO.setTotalPage(totalPages);
+		
+		/**
+		 * VO封装
+		 */
+		List<ClientInfoDTO> listClientInfoDTO =  new ArrayList<ClientInfoDTO>();
+		jwcpxt_service_client client = new jwcpxt_service_client();
+		
+		for(String clientId : listClientIdInfo){
+			client.setJwcpxt_service_client_id(clientId);
+			listClientInfoDTO.add(serviceDao.get_clientInfoVO_byClientId(client));
+		}
+		clientInfoVO.setListClientInfoDTO(listClientInfoDTO);
 		return clientInfoVO;
 	}
 
@@ -1046,6 +1058,11 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 		allClientNotSatisfiedInformationVo.setQusetionAndOptionDTO(list);
 		return allClientNotSatisfiedInformationVo;
+	}
+
+	@Override
+	public jwcpxt_service_instance get_serviceInstanceDo_byServiceClientID(jwcpxt_service_client serviceClient) {
+		return serviceDao.get_serviceInstanceDo_byServiceClientID(serviceClient);
 	}
 
 }
