@@ -72,15 +72,15 @@ function getChart($params) {
 		}, response => {
 			randerDissatisfactionChart(response); //所有不满意图表
 		}, 'json')
-		//业务分类
-		$.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
-			'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
-			'statisDissaServiceDateVO.startTime' : params.startTime,
-			'statisDissaServiceDateVO.endTime' : params.endTime,
-			'statisDissaServiceDateVO.timeType' : params.timeType
-		}, response => {
-			randerDissatisfiedServiceChart(response); //所有不满意图表
-		}, 'json')
+	/*//业务分类
+	$.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
+		'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
+		'statisDissaServiceDateVO.startTime' : params.startTime,
+		'statisDissaServiceDateVO.endTime' : params.endTime,
+		'statisDissaServiceDateVO.timeType' : params.timeType
+	}, response => {
+		randerDissatisfiedServiceChart(response); //所有不满意图表
+	}, 'json')*/
 	/*$.post('/jwcpxt/Statistics/get_StatisticsDissatisfiedDayDataVO', $params, response => {
 		randerLineChart(response); //折线图
 	}, 'json')
@@ -529,7 +529,7 @@ function randerDissatisfactionChart(res) {
 							'statisDissaServiceDateVO.endTime' : params.endTime,
 							'statisDissaServiceDateVO.timeType' : params.timeType
 						}, response => {
-							randerDissatisfiedServiceChart(response, describe); //所有不满意图表
+							randerDissatisfiedServiceChart(response, describe); //满意图表
 						}, 'json')
 					} else { // if (describe == "不满意")
 						//业务分类
@@ -539,7 +539,7 @@ function randerDissatisfactionChart(res) {
 							'statisDissaServiceDateVO.endTime' : params.endTime,
 							'statisDissaServiceDateVO.timeType' : params.timeType
 						}, response => {
-							randerDissatisfiedServiceChart(response, describe); //所有不满意图表
+							randerDissatisfiedServiceChart(response, describe); //不满意图表
 						}, 'json')
 					}
 				/*res.listStaDisDateDTO[0].listDissaOptionDTO.forEach(function(elt, i) {
@@ -554,6 +554,32 @@ function randerDissatisfactionChart(res) {
 				}
 			}
 		});
+
+		//默认将满意图画出
+		if (true) {
+			let describe = option.dataset.source[1][0];
+			if (describe == "满意") {
+				//业务分类
+				$.post('/jwcpxt/Statistics/get_statisQuestionDataVO', {
+					'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
+					'statisDissaServiceDateVO.startTime' : params.startTime,
+					'statisDissaServiceDateVO.endTime' : params.endTime,
+					'statisDissaServiceDateVO.timeType' : params.timeType
+				}, response => {
+					randerDissatisfiedServiceChart(response, describe); //满意图表
+				}, 'json')
+			} else { // if (describe == "不满意")
+				//业务分类
+				$.post('/jwcpxt/Statistics/get_statisDissaServiceDateVO', {
+					'statisDissaServiceDateVO.screenUnit' : params.jwcpxt_unit_id,
+					'statisDissaServiceDateVO.startTime' : params.startTime,
+					'statisDissaServiceDateVO.endTime' : params.endTime,
+					'statisDissaServiceDateVO.timeType' : params.timeType
+				}, response => {
+					randerDissatisfiedServiceChart(response, describe); //不满意图表
+				}, 'json')
+			}
+		}
 	});
 }
 
@@ -566,7 +592,8 @@ function randerDissatisfactionChart(res) {
 ]*/
 //绘制不满意和业务关联的图
 function randerDissatisfiedServiceChart(res, title) {
-	if (!res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.length > 0) return false;
+	dissatisfactionProblemChart.clear(); //
+	//	if (!res.listStatisDIssaServiceDateDTO[0].listStatisDIssaServiceDTO.length < 1) return false;
 	let _source = [ [ 'time' ], ];
 	res.listStatisDIssaServiceDateDTO.forEach(function(elt, i) {
 		_source[0].push(elt.dateScale);
