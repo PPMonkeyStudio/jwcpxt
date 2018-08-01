@@ -19,6 +19,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -50,6 +51,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private StatisDissaServiceDateVO statisDissaServiceDateVO;
 	private StatisDissaQuestionDateVO statisDissaQuestionDateVO;
 	private ReturnVisitVO returnVisitVO;
+	private ClientAttentionServiceVO clientAttentionServiceVO;
 	/*
 	 * 
 	 */
@@ -58,6 +60,22 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	/**
+	 * 获取群众最关注的业务（满意的）
+	 * 
+	 * @throws IOException
+	 */
+	public void get_clientAttentionService() throws IOException {
+		clientAttentionServiceVO = statisticsService.get_clientAttentionService(clientAttentionServiceVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(gson.toJson(clientAttentionServiceVO));
+	}
 
 	/**
 	 * 获取测评员测评数量比

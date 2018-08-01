@@ -164,7 +164,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ "	and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				+ " "//
-				+ " and unit.jwcpxt_unit_id like :unitId"//
+				+ " and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId)"//
 				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId"//
 				+ " and serviceInstance.service_instance_date >= :startTime "//
 				+ " and serviceInstance.service_instance_date < :endTime "
@@ -216,7 +216,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ "	and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				+ " "//
-				+ " and unit.jwcpxt_unit_id like :unitId"//
+				+ " and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId)"//
 				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId";//
 		Query query = session.createQuery(hql);
 		if (statisDissaQuestionDateVO.getScreenUnit().equals("")) {
@@ -258,7 +258,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ ""//
-				+ " and unit.jwcpxt_unit_id like :unitId "//
+				+ " and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId) "//
 				+ " and serviceInstance.service_instance_date >= :startTime "//
 				+ " and serviceInstance.service_instance_date < :endTime "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionId";
@@ -303,7 +303,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ ""//
-				+ " and unit.jwcpxt_unit_id like :unitId ";//
+				+ " and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId) ";//
 		Query query = session.createQuery(hql);
 		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -375,7 +375,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
 				+ "and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
 				+ ""//
-				+ "and unit.jwcpxt_unit_id like :unitId "//
+				+ "and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId) "//
 				+ "and serviceInstance.service_instance_date >= :startTime "//
 				+ "and serviceInstance.service_instance_date < :endTime "//
 				+ "and _option.option_describe like :option";
@@ -418,7 +418,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
 				+ "and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
 				+ ""//
-				+ "and unit.jwcpxt_unit_id like :unitId ";
+				+ "and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId) ";
 		Query query = session.createQuery(hql);
 		if (statisDissatiDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");

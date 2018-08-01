@@ -28,6 +28,7 @@ import com.pphgzs.domain.DTO.StatisticsDissatisfiedDateDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
+import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -44,6 +45,15 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private StatisticsDao statisticsDao;
 	private UnitDao unitDao;
 	private ServiceService serviceService;
+
+	/**
+	 * 
+	 */
+	@Override
+	public ClientAttentionServiceVO get_clientAttentionService(ClientAttentionServiceVO clientAttentionServiceVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * 获取VO
@@ -353,7 +363,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 				listDissaOptionDTO.add(statisticsDissatisfiedOptionDTO);
 			}
 			statisticsDissatisfiedOptionDTO = new StatisticsDissatisfiedOptionDTO();
-			statisticsDissatisfiedOptionDTO.setCount(totalAnswer - disCount);
+			if ((totalAnswer - disCount) < 0) {
+				statisticsDissatisfiedOptionDTO.setCount(0);
+			} else {
+				statisticsDissatisfiedOptionDTO.setCount(totalAnswer - disCount);
+			}
 			statisticsDissatisfiedOptionDTO.setOption("满意");
 			listDissaOptionDTO.add(statisticsDissatisfiedOptionDTO);
 			statisticsDissatisfiedDateDTO.setDateScale(listDate.get(i));
