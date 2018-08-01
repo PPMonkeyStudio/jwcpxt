@@ -141,7 +141,7 @@ th {
 													   	<p>户政办证:</p>
 													   	<p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													   	<p>您于{{returnedParty.serviceInstance.service_instance_date}}在{{returnedParty.unit.unit_name}}办理过户政业务,请问是本人去办的吗?</p>
-													   	<p>(是)为改进公安机关工作我们特向您做个回访,大约需要职误您2分钟时间,对您回答的问题,我们将严格保密。</p>
+													   	<p>(是)为改进公安机关工作我们特向您做个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('安全感满意度')>-1">
 													    <p> 安全感满意度:</p>

@@ -36,8 +36,8 @@
 	</session-config>
 
 	<!-- 自启动线程 -->
-	<listener>
+<!-- 	<listener>
 		<listener-class>com.pphgzs.thread.AllThread</listener-class>
-	</listener>
+	</listener> -->
 
 </web-app>
