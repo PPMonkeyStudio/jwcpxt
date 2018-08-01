@@ -62,8 +62,18 @@ public class ServiceDaoImpl implements ServiceDao {
 	public int get_clientInfoVOCount_byUserId(ClientInfoVO clientInfoVO) {
 		int count = 0;
 		Session session = getSession();
-		String hql = "select count(*)"//
-				+ " from"//
+		String hql = "";
+		if (!clientInfoVO.getScreenClientState().equals("")) {
+			hql = hql + "select count(*)"//
+					+ " from(";
+		}
+		hql = hql + " select ";
+		if (!clientInfoVO.getScreenClientState().equals("")) {
+			hql = hql + " *";
+		} else {
+			hql = hql + " count(*)";
+		}
+		hql = hql + " from"//
 				+ " jwcpxt_service_instance serviceInstance,"//
 				+ " jwcpxt_service_client serviceClient,"//
 				+ " jwcpxt_service_definition serviceDefinition,"//
@@ -81,7 +91,8 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " unit.unit_name like :search"//
 				+ " )";//
 		if (!clientInfoVO.getScreenClientState().equals("")) {
-			hql = hql + " and serviceClient.jwcpxt_service_client_id in ( "//
+			hql = hql + " ) t1"//
+					+ " right join("//
 					+ " select"//
 					+ " client.jwcpxt_service_client_id"//
 					+ "	from "//
@@ -93,11 +104,13 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ " and choice.answer_choice_option = _option.jwcpxt_option_id"//
 					+ " and _option.option_describe like :screenClientState"//
 					+ " group by"//
-					+ "	client.jwcpxt_service_client_id"//
-					+ ")";
+					+ "	client.jwcpxt_service_client_id)"//
+					+ " t2 ON t1.jwcpxt_service_client_id = t2.jwcpxt_service_client_id";
 		}
-		hql = hql + " order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";//
-		Query query = session.createQuery(hql);
+		// hql = hql + " order by serviceClient.service_client_visit
+		// desc,serviceClient.service_client_gmt_modified desc";//
+		System.out.println("hql:" + hql);
+		Query query = session.createSQLQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
 		} else {
@@ -143,29 +156,42 @@ public class ServiceDaoImpl implements ServiceDao {
 	 * 根据VO获取当事人列表
 	 */
 	@Override
-	public List<ClientInfoDTO> get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO) {
-		List<ClientInfoDTO> listClientInfo = new ArrayList<>();
+	public List<String> get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO) {
+		List<String> listClientInfo = new ArrayList<>();
 		Session session = getSession();
-		String hql = "select "//
-				+ " new com.pphgzs.domain.DTO.ClientInfoDTO(serviceClient,serviceInstance,serviceDefinition,_user,unit)"//
-				+ " from"//
+		String hql = "";
+		if (!clientInfoVO.getScreenClientState().equals("")) {
+			hql = hql + "select t1.jwcpxt_service_client_id"//
+					+ " from(";
+		}
+		hql = hql + " select ";
+		if (!clientInfoVO.getScreenClientState().equals("")) {
+			hql = hql + " *";
+		} else {
+			hql = hql + " serviceClient.jwcpxt_service_client_id";
+		}
+		hql = hql + " from"//
 				+ " jwcpxt_service_instance serviceInstance,"//
 				+ " jwcpxt_service_client serviceClient,"//
 				+ " jwcpxt_service_definition serviceDefinition,"//
-				+ " jwcpxt_unit unit," + "jwcpxt_user _user where "//
-				+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id and "//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_user _user"//
+				+ " where"//
+				+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id and"//
 				+ " serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id and "//
 				+ " serviceInstance.service_instance_judge = _user.jwcpxt_user_id and "//
 				+ " serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id and serviceInstance.service_instance_date >= :startTime and "//
 				+ " serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "//
 				+ " serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "//
 				+ " ("//
-				+ " serviceClient.service_client_name like :search or"//
-				+ " serviceClient.service_client_phone like :search or"//
+				+ " serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "//
 				+ " unit.unit_name like :search"//
-				+ " )";
+				+ " )"//
+				+ " order by serviceClient.service_client_visit DESC,"//
+				+ " serviceClient.service_client_gmt_modified DESC";//
 		if (!clientInfoVO.getScreenClientState().equals("")) {
-			hql = hql + " and serviceClient.jwcpxt_service_client_id in ( "//
+			hql = hql + " ) t1"//
+					+ " right join("//
 					+ " select"//
 					+ " client.jwcpxt_service_client_id"//
 					+ "	from "//
@@ -177,11 +203,14 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ " and choice.answer_choice_option = _option.jwcpxt_option_id"//
 					+ " and _option.option_describe like :screenClientState"//
 					+ " group by"//
-					+ "	client.jwcpxt_service_client_id"//
-					+ ")";
+					+ "	client.jwcpxt_service_client_id)"//
+					+ " t2 ON t1.jwcpxt_service_client_id = t2.jwcpxt_service_client_id"//
+					+ " order by"//
+					+ " t1.service_client_visit DESC,"//
+					+ " t1.service_client_gmt_modified DESC";
 		}
-		hql = hql + " order by serviceClient.service_client_visit desc,serviceClient.service_client_gmt_modified desc";//
-		Query query = session.createQuery(hql);
+		System.out.println("hql:" + hql);
+		Query query = session.createSQLQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
 		} else {
@@ -220,24 +249,22 @@ public class ServiceDaoImpl implements ServiceDao {
 		listClientInfo = query.list();
 		//
 		session.clear();
-		for (ClientInfoDTO clientInfoDTO : listClientInfo) {
-			if (!clientInfoVO.getSearch().equals("")) {
-				// 当事人姓名
-				clientInfoDTO.getServiceClient()
-						.setService_client_name(clientInfoDTO.getServiceClient().getService_client_name().replaceAll(
-								clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
-				// 性别
-				clientInfoDTO.getServiceClient()
-						.setService_client_phone(clientInfoDTO.getServiceClient().getService_client_phone().replaceAll(
-								clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
-				// 单位名称
-				clientInfoDTO.getUnit()
-						.setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.getSearch(),
-								"<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>"));
-			}
-		}
+		/*
+		 * for (ClientInfoDTO clientInfoDTO : listClientInfo) { if
+		 * (!clientInfoVO.getSearch().equals("")) { // 当事人姓名
+		 * clientInfoDTO.getServiceClient()
+		 * .setService_client_name(clientInfoDTO.getServiceClient().
+		 * getService_client_name().replaceAll( clientInfoVO.getSearch(),
+		 * "<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>")); //
+		 * 性别 clientInfoDTO.getServiceClient()
+		 * .setService_client_phone(clientInfoDTO.getServiceClient().
+		 * getService_client_phone().replaceAll( clientInfoVO.getSearch(),
+		 * "<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>")); //
+		 * 单位名称 clientInfoDTO.getUnit()
+		 * .setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.
+		 * getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch() +
+		 * "</span>")); } }
+		 */
 		return listClientInfo;
 	}
 

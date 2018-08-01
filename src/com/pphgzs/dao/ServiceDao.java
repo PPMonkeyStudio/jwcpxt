@@ -166,7 +166,7 @@ public interface ServiceDao {
 	 * @param clientInfoVO
 	 * @return
 	 */
-	public List<ClientInfoDTO> get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO);
+	public List<String> get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO);
 
 	/**
 	 * 根据VO获取数量
