@@ -82,11 +82,10 @@ public class ServiceServiceImpl implements ServiceService {
 	 */
 	@Override
 	public ClientInfoVO get_clientInfoVO_byUserId(ClientInfoVO clientInfoVO) {
-		List<ClientInfoDTO> listClientInfo = new ArrayList<>();
-		listClientInfo = serviceDao.get_clientInfoVO_byUserId(clientInfoVO);
+		List<String> listClientIdInfo = new ArrayList<>();
+		listClientIdInfo = serviceDao.get_clientInfoVO_byUserId(clientInfoVO);
 		int totalRecords = serviceDao.get_clientInfoVOCount_byUserId(clientInfoVO);
 		int totalPages = ((totalRecords - 1) / clientInfoVO.getPageSize()) + 1;
-		clientInfoVO.setListClientInfoDTO(listClientInfo);
 		clientInfoVO.setTotalCount(totalRecords);
 		clientInfoVO.setTotalPage(totalPages);
 		return clientInfoVO;
@@ -162,7 +161,7 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 		return clientInstanceDTO;
 	}
-	
+
 	@Override
 	public ClientInstanceDTO get_notServiceClient_byJudge_specified(String jwcpxt_service_client_id) {
 		//
@@ -999,7 +998,8 @@ public class ServiceServiceImpl implements ServiceService {
 		List<ClientNotSatisfiedQusetionAndOptionDTO> list = new ArrayList<ClientNotSatisfiedQusetionAndOptionDTO>();
 
 		// 1.获取业务中所有的问题
-		List<jwcpxt_question> allQuestion = serviceDao.get_AllQuestion_ByServiceId(allClientNotSatisfiedInformationVo.getDefinition().getJwcpxt_service_definition_id());
+		List<jwcpxt_question> allQuestion = serviceDao.get_AllQuestion_ByServiceId(
+				allClientNotSatisfiedInformationVo.getDefinition().getJwcpxt_service_definition_id());
 		// 2.循环获取对应当事人，对应问题的回答
 		// List 获得所有追问时候使用
 		List<jwcpxt_question> askQuestionList;
@@ -1009,29 +1009,34 @@ public class ServiceServiceImpl implements ServiceService {
 		for (jwcpxt_question question : allQuestion) {
 
 			askClientNotSatisfiedQusetionAndOptionDTOList = new ArrayList<ClientNotSatisfiedQusetionAndOptionDTO>();
-			
+
 			ClientNotSatisfiedQusetionAndOptionDTO clientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();
 
 			clientNotSatisfiedQusetionAndOptionDTO.setQuestion(question);
-			clientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(question, serviceClient.getJwcpxt_service_client_id()));
+			clientNotSatisfiedQusetionAndOptionDTO.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(question,
+					serviceClient.getJwcpxt_service_client_id()));
 
 			// 选项获取追问
 			// 1.获取所有的追问问题
-			askQuestionList = serviceDao.get_askQusetionList_ByQuestionAndClientId(question, serviceClient.getJwcpxt_service_client_id());
-			
+			askQuestionList = serviceDao.get_askQusetionList_ByQuestionAndClientId(question,
+					serviceClient.getJwcpxt_service_client_id());
+
 			// 2.获取所有问题的答案
 			if (askQuestionList != null) {
-				
+
 				for (jwcpxt_question askQuestion : askQuestionList) { // 选项的追问
 
 					ClientNotSatisfiedQusetionAndOptionDTO askClientNotSatisfiedQusetionAndOptionDTO = new ClientNotSatisfiedQusetionAndOptionDTO();
 
 					askClientNotSatisfiedQusetionAndOptionDTO.setQuestion(askQuestion);
-					askClientNotSatisfiedQusetionAndOptionDTO .setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(askQuestion, serviceClient.getJwcpxt_service_client_id()));
-					
+					askClientNotSatisfiedQusetionAndOptionDTO
+							.setAnswer(serviceDao.get_ClientAnswer_ByQuestionAndClientId(askQuestion,
+									serviceClient.getJwcpxt_service_client_id()));
+
 					askClientNotSatisfiedQusetionAndOptionDTOList.add(askClientNotSatisfiedQusetionAndOptionDTO);
 				}
-				clientNotSatisfiedQusetionAndOptionDTO .setAskQusetionAndOptionDTO(askClientNotSatisfiedQusetionAndOptionDTOList);
+				clientNotSatisfiedQusetionAndOptionDTO
+						.setAskQusetionAndOptionDTO(askClientNotSatisfiedQusetionAndOptionDTOList);
 			} else {
 				// 无追问就放空
 				clientNotSatisfiedQusetionAndOptionDTO.setAskQusetionAndOptionDTO(null);
