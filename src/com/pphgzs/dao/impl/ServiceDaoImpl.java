@@ -92,7 +92,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " )";//
 		if (!clientInfoVO.getScreenClientState().equals("")) {
 			hql = hql + " ) t1"//
-					+ " right join("//
+					+ " inner join("//
 					+ " select"//
 					+ " client.jwcpxt_service_client_id"//
 					+ "	from "//
@@ -107,9 +107,6 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ "	client.jwcpxt_service_client_id)"//
 					+ " t2 ON t1.jwcpxt_service_client_id = t2.jwcpxt_service_client_id";
 		}
-		// hql = hql + " order by serviceClient.service_client_visit
-		// desc,serviceClient.service_client_gmt_modified desc";//
-		System.out.println("hql:" + hql);
 		Query query = session.createSQLQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
@@ -191,7 +188,7 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " serviceClient.service_client_gmt_modified DESC";//
 		if (!clientInfoVO.getScreenClientState().equals("")) {
 			hql = hql + " ) t1"//
-					+ " right join("//
+					+ " inner join("//
 					+ " select"//
 					+ " client.jwcpxt_service_client_id"//
 					+ "	from "//
@@ -209,7 +206,6 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ " t1.service_client_visit DESC,"//
 					+ " t1.service_client_gmt_modified DESC";
 		}
-		System.out.println("hql:" + hql);
 		Query query = session.createSQLQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
