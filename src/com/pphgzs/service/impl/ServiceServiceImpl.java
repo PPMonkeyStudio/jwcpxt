@@ -1043,4 +1043,9 @@ public class ServiceServiceImpl implements ServiceService {
 		return allClientNotSatisfiedInformationVo;
 	}
 
+	@Override
+	public jwcpxt_service_instance get_serviceInstanceDo_byServiceClientID(jwcpxt_service_client serviceClient) {
+		return serviceDao.get_serviceInstanceDo_byServiceClientID(serviceClient);
+	}
+
 }

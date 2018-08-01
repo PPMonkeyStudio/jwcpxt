@@ -226,6 +226,13 @@ public interface ServiceDao {
 	 */
 	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(
 			jwcpxt_question question, String jwcpxt_service_client_id);
+	
+	/**
+	 * 通过当事人ID获取业务实例DO
+	 * @param serviceClient
+	 * @return
+	 */
+	public jwcpxt_service_instance get_serviceInstanceDo_byServiceClientID(jwcpxt_service_client serviceClient);
 
 
 }

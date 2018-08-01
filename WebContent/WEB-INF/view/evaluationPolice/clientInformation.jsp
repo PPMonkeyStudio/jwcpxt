@@ -91,6 +91,8 @@ th {
 														<option value="5">占线</option>
 														<option value="6">停机</option>
 														<option value="7">拒访</option>
+														<option value="9">关机</option>
+														<option value="10">非本人</option>
 														<option value="8">其他</option>
 												</select></td>
 												<td style="width: 80px;">

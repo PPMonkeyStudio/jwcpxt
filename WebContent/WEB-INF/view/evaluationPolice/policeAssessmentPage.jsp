@@ -62,6 +62,10 @@ th {
 											<li><a @click="terminationReturned($event)"
 												terminationNum="7" href="javascript:;">拒访</a></li>
 											<li><a @click="terminationReturned($event)"
+												terminationNum="9" href="javascript:;">关机</a></li>
+											<li><a @click="terminationReturned($event)"
+												terminationNum="10" href="javascript:;">非本人</a></li>
+											<li><a @click="terminationReturned($event)"
 												terminationNum="8" href="javascript:;">其他</a></li>
 										</ul>
 									</div>
