@@ -175,6 +175,13 @@ public interface ServiceDao {
 	 * @return
 	 */
 	public int get_clientInfoVOCount_byUserId(ClientInfoVO clientInfoVO);
+	
+	/**
+	 * 通过当事人ID获取有关业务实例关联的所有信息，放入ClientInfoDTO内
+	 * @param client
+	 * @return
+	 */
+	public ClientInfoDTO get_clientInfoVO_byClientId(jwcpxt_service_client client);
 
 	/**
 	 * 测评员列表
@@ -233,6 +240,8 @@ public interface ServiceDao {
 	 * @return
 	 */
 	public jwcpxt_service_instance get_serviceInstanceDo_byServiceClientID(jwcpxt_service_client serviceClient);
+
+
 
 
 }

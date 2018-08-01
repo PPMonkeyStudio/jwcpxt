@@ -1183,6 +1183,23 @@ public class ServiceDaoImpl implements ServiceDao {
 		return service_instance;
 	}
 
+	@Override
+	public ClientInfoDTO get_clientInfoVO_byClientId(jwcpxt_service_client client) {
+		Session session = getSession();
+		String hql = " select new com.pphgzs.domain.DTO.ClientInfoDTO(serviceClient,serviceInstance,serviceDefinition,user,unit) "
+				+ " from jwcpxt_service_client serviceClient,jwcpxt_service_instance serviceInstance,jwcpxt_service_definition serviceDefinition,jwcpxt_user user,jwcpxt_unit unit"
+				+ " where serviceClient.jwcpxt_service_client_id = :clientId "//
+				+ " and serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id = serviceInstance.service_instance_service_definition "
+				+ " and user.jwcpxt_user_id = serviceInstance.service_instance_judge "
+				+ " and unit.jwcpxt_unit_id = serviceInstance.service_instance_belong_unit ";
+		Query query = session.createQuery(hql);
+		query.setParameter("clientId", client.getJwcpxt_service_client_id());
+		ClientInfoDTO clientInfoDTO = (ClientInfoDTO) query.uniqueResult();
+		session.clear();
+		return clientInfoDTO;
+	}
+
 	/*
 	 * 
 	 */
