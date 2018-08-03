@@ -1099,9 +1099,10 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " from jwcpxt_service_instance instance,jwcpxt_service_client client "// like用来匹配所有id
 				+ " where client.service_client_service_instance = instance.jwcpxt_service_instance_id"
 				+ " and instance.service_instance_judge like :appraisalId "//
-				+ " and instance.service_instance_gmt_modified >= DATE_FORMAT( :beginTime ,'%Y-%m-%d 00:00:00') "//
-				+ " and instance.service_instance_gmt_modified <= DATE_FORMAT( :endTime ,'%Y-%m-%d 23:59:59') "
+				+ " and client.service_client_gmt_modified >= DATE_FORMAT( :beginTime ,'%Y-%m-%d 00:00:00') "//
+				+ " and client.service_client_gmt_modified <= DATE_FORMAT( :endTime ,'%Y-%m-%d 23:59:59') "
 				+ " and client.service_client_visit like :type ";//
+		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		// 单个查询
 		appraisalId = (!"".equals(appraisalId) && appraisalId != null) ? appraisalId : "%";
@@ -1123,6 +1124,10 @@ public class ServiceDaoImpl implements ServiceDao {
 			type = "%";
 		}
 		query.setParameter("type", type);
+		System.out.println("appraisalId:" + appraisalId);
+		System.out.println("beginTime:" + beginTime);
+		System.out.println("endTime:" + endTime);
+		System.out.println("type:" + type);
 		int count = ((Number) query.uniqueResult()).intValue();
 		session.clear();
 		return count;
