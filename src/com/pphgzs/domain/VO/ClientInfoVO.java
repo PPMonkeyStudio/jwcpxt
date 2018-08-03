@@ -11,6 +11,9 @@ import com.pphgzs.domain.DTO.ClientInfoDTO;
  */
 public class ClientInfoVO {
 	private List<ClientInfoDTO> listClientInfoDTO;
+	// 回访时间
+	private String startHTime = "0000-00-00";
+	private String endHTime = "9999-99-99";
 	// 开始时间
 	private String startTime = "0000-00-00";
 	// 结束时间
@@ -44,6 +47,22 @@ public class ClientInfoVO {
 
 	public String getStartTime() {
 		return startTime;
+	}
+
+	public String getStartHTime() {
+		return startHTime;
+	}
+
+	public void setStartHTime(String startHTime) {
+		this.startHTime = startHTime;
+	}
+
+	public String getEndHTime() {
+		return endHTime;
+	}
+
+	public void setEndHTime(String endHTime) {
+		this.endHTime = endHTime;
 	}
 
 	public void setStartTime(String startTime) {
@@ -132,10 +151,35 @@ public class ClientInfoVO {
 
 	@Override
 	public String toString() {
-		return "ClientInfoVO [listClientInfoDTO=" + listClientInfoDTO + ", startTime=" + startTime + ", endTime="
-				+ endTime + ", screenService=" + screenService + ", screenVisit=" + screenVisit + ", screenUser="
-				+ screenUser + ", search=" + search + ", screenClientState=" + screenClientState + ", currPage="
-				+ currPage + ", totalPage=" + totalPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize + "]";
+		return "ClientInfoVO [listClientInfoDTO=" + listClientInfoDTO + ", startHTime=" + startHTime + ", endHTime="
+				+ endHTime + ", startTime=" + startTime + ", endTime=" + endTime + ", screenService=" + screenService
+				+ ", screenVisit=" + screenVisit + ", screenUser=" + screenUser + ", search=" + search
+				+ ", screenClientState=" + screenClientState + ", currPage=" + currPage + ", totalPage=" + totalPage
+				+ ", totalCount=" + totalCount + ", pageSize=" + pageSize + "]";
+	}
+
+	public ClientInfoVO(List<ClientInfoDTO> listClientInfoDTO, String startHTime, String endHTime, String startTime,
+			String endTime, String screenService, String screenVisit, String screenUser, String search,
+			String screenClientState, int currPage, int totalPage, int totalCount, int pageSize) {
+		super();
+		this.listClientInfoDTO = listClientInfoDTO;
+		this.startHTime = startHTime;
+		this.endHTime = endHTime;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.screenService = screenService;
+		this.screenVisit = screenVisit;
+		this.screenUser = screenUser;
+		this.search = search;
+		this.screenClientState = screenClientState;
+		this.currPage = currPage;
+		this.totalPage = totalPage;
+		this.totalCount = totalCount;
+		this.pageSize = pageSize;
+	}
+
+	public ClientInfoVO() {
+		super();
 	}
 
 }

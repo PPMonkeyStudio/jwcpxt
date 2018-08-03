@@ -34,17 +34,17 @@ $(function() {
 		data : myData,
 		methods : {
 			before () {
-				//业务id
+				// 业务id
 				let definitionId = getUrlParam('definitionId');
 				if (definitionId) {
-					//选中传过来的业务ID
+					// 选中传过来的业务ID
 					$('input[name="clientInfoVO.screenService"]').val(definitionId);
 					queryData["clientInfoVO.screenService"] = definitionId;
 				}
-				//(各种)搜索情况
+				// (各种)搜索情况
 				let unitText = getUrlParam('unitId');
 				if (unitText) {
-					//选中传过来的(各种)信息
+					// 选中传过来的(各种)信息
 					$('input[name="clientInfoVO.search"]').val(unitText);
 					queryData["clientInfoVO.search"] = unitText;
 				}
@@ -53,18 +53,19 @@ $(function() {
 				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
-					//获取所有测评员
+					// 获取所有测评员
 					} else if (response.jwcpxt_user_id) {
-						//queryData["clientInfoVO.screenUser"] = response.jwcpxt_user_id;
+						// queryData["clientInfoVO.screenUser"] =
+						// response.jwcpxt_user_id;
 						myData.screenUser_chart = response.jwcpxt_user_id;
 					}
-					//查询所有的测评员
+					// 查询所有的测评员
 					$.post('/jwcpxt/Service/list_userDO', {}, response => {
 						myData.allAppraisal = response;
 					}, 'json')
 					this.getInfo(queryData);
 				}, 'json');
-				//获取所有的业务
+				// 获取所有的业务
 				$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
 					myData.allService = response;
 				}, 'json');
@@ -278,9 +279,9 @@ $(function() {
 		})
 	}
 
-	//查看图表
+	// 查看图表
 	function previewChart() {
-		//		queryData
+		// queryData
 		console.log(queryData["clientInfoVO.startTime"]?1:2);
 		console.log(queryData["clientInfoVO.endTime"]?1:2);
 		let params = {
@@ -288,7 +289,7 @@ $(function() {
 			"returnVisitVO.startTime" : queryData["clientInfoVO.startTime"] ? queryData["clientInfoVO.startTime"] : getFormatDate(),
 			"returnVisitVO.endTime" : queryData["clientInfoVO.endTime"] ? queryData["clientInfoVO.endTime"] : getFormatDate()
 		}
-		//如果测评员搜索不为空
+		// 如果测评员搜索不为空
 		if (queryData["clientInfoVO.screenUser"]) {
 			params["returnVisitVO.userId"] = queryData["clientInfoVO.screenUser"];
 		}
@@ -352,7 +353,7 @@ $(function() {
 									}
 								]
 							};
-							echarts.init(document.getElementById('previewChartConfirmFormChart'), 'light').setOption(option); //群众不满意
+							echarts.init(document.getElementById('previewChartConfirmFormChart'), 'light').setOption(option); // 群众不满意
 						}
 					});
 				}, 'json');
@@ -387,9 +388,12 @@ $(function() {
 		var year = nowDate.getFullYear();
 		var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
 		var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
-		// var hour = nowDate.getHours()< 10 ? "0" + nowDate.getHours() : nowDate.getHours();  
-		// var minute = nowDate.getMinutes()< 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();  
-		// var second = nowDate.getSeconds()< 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();  
+		// var hour = nowDate.getHours()< 10 ? "0" + nowDate.getHours() :
+		// nowDate.getHours();
+		// var minute = nowDate.getMinutes()< 10 ? "0" + nowDate.getMinutes() :
+		// nowDate.getMinutes();
+		// var second = nowDate.getSeconds()< 10 ? "0" + nowDate.getSeconds() :
+		// nowDate.getSeconds();
 		return year + "-" + month + "-" + date;
 	}
 
@@ -411,6 +415,10 @@ $(function() {
 			return "拒访 ";			break;
 		case '8':
 			return "其他";			break;
+		case '9':
+			return "关机";
+		case '10':
+			return "非本人";
 		default:
 			break;
 		}

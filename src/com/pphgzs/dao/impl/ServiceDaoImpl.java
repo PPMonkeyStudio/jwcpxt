@@ -86,6 +86,8 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id and serviceInstance.service_instance_date >= :startTime and "//
 				+ " serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "//
 				+ " serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "//
+				+ " serviceClient.service_client_gmt_modified >= :startHTime and"//
+				+ " serviceClient.service_client_gmt_modified <= :endHTime and"//
 				+ " ("//
 				+ " serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "//
 				+ " unit.unit_name like :search"//
@@ -117,6 +119,16 @@ public class ServiceDaoImpl implements ServiceDao {
 			query.setParameter("endTime", "9999-99-99");
 		} else {
 			query.setParameter("endTime", clientInfoVO.getEndTime() + " 23:59:59");
+		}
+		if (clientInfoVO.getStartHTime().equals("")) {
+			query.setParameter("startHTime", "0000-00-00");
+		} else {
+			query.setParameter("startHTime", clientInfoVO.getStartHTime() + " 00:00:00");
+		}
+		if (clientInfoVO.getEndHTime().equals("")) {
+			query.setParameter("endHTime", "0000-00-00");
+		} else {
+			query.setParameter("endHTime", clientInfoVO.getEndHTime() + " 00:00:00");
 		}
 		if (clientInfoVO.getScreenService().equals("")) {
 			query.setParameter("screenService", "%%");
@@ -180,6 +192,8 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id and serviceInstance.service_instance_date >= :startTime and "//
 				+ " serviceInstance.service_instance_date <= :endTime and serviceDefinition.jwcpxt_service_definition_id like :screenService and "//
 				+ " serviceClient.service_client_visit like :screenVisit and _user.jwcpxt_user_id like :screenUser and "//
+				+ " serviceClient.service_client_gmt_modified >= :startHTime and"//
+				+ " serviceClient.service_client_gmt_modified <= :endHTime and"//
 				+ " ("//
 				+ " serviceClient.service_client_name like :search or serviceClient.service_client_phone like :search or "//
 				+ " unit.unit_name like :search"//
@@ -216,6 +230,16 @@ public class ServiceDaoImpl implements ServiceDao {
 			query.setParameter("endTime", "9999-99-99");
 		} else {
 			query.setParameter("endTime", clientInfoVO.getEndTime() + " 23:59:59");
+		}
+		if (clientInfoVO.getStartHTime().equals("")) {
+			query.setParameter("startHTime", "0000-00-00");
+		} else {
+			query.setParameter("startHTime", clientInfoVO.getStartHTime() + " 00:00:00");
+		}
+		if (clientInfoVO.getEndHTime().equals("")) {
+			query.setParameter("endHTime", "0000-00-00");
+		} else {
+			query.setParameter("endHTime", clientInfoVO.getEndHTime() + " 00:00:00");
 		}
 		if (clientInfoVO.getScreenService().equals("")) {
 			query.setParameter("screenService", "%%");

@@ -219,6 +219,56 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			newFeedbackRectification.setFeedback_rectification_gmt_modified(
 					newFeedbackRectification.getFeedback_rectification_gmt_create());
 			dissatisfiedFeedbackDao.saveOrUpdateObject(newFeedbackRectification);
+			if (unit.getUnit_grade() == 1) {
+				// 一级单位驳回
+				jwcpxt_unit dutyUnit = new jwcpxt_unit();
+				dutyUnit = dissatisfiedFeedbackDao.get_unit_byDisFeedbackId(
+						newFeedbackRectification.getFeedback_rectification_dissatisfied_feedback());
+				if (dutyUnit != null) {
+					// 通知责任单位
+					String unitDXNR = "测评中心驳回了编号为" + newFeedbackRectification.getFeedback_rectification_no()
+							+ "的反馈整改,请在5个自然日内完成整改，并由主管单位进行审核";
+					// 发短信
+					SendMessageUtil sendMessageUtil = new SendMessageUtil(dutyUnit.getUnit_phone(), unitDXNR);
+					try {
+						sendMessageUtil.send();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					// 通知上级单位
+					jwcpxt_unit dutyUnitFather = new jwcpxt_unit();
+					dutyUnitFather = unitService.get_unitDO_byID(dutyUnit.getUnit_father());
+					if (dutyUnitFather != null) {
+						// 通知责任单位
+						unitDXNR = "测评中心驳回了编号为" + newFeedbackRectification.getFeedback_rectification_no()
+								+ "的反馈整改,请在5个自然日内监督下属单位整改并进行审核";
+						// 发短信
+						sendMessageUtil = new SendMessageUtil(dutyUnitFather.getUnit_phone(), unitDXNR);
+						try {
+							sendMessageUtil.send();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			} else if (unit.getUnit_grade() == 2) {
+				// 二级单位进行驳回
+				jwcpxt_unit dutyUnit = new jwcpxt_unit();
+				dutyUnit = dissatisfiedFeedbackDao.get_unit_byDisFeedbackId(
+						newFeedbackRectification.getFeedback_rectification_dissatisfied_feedback());
+				if (dutyUnit != null) {
+					// 通知责任单位
+					String unitDXNR = "主管单位驳回了编号为" + newFeedbackRectification.getFeedback_rectification_no()
+							+ "的反馈整改,请在5个自然日内完成整改，并由主管单位重新进行审核";
+					// 发短信
+					SendMessageUtil sendMessageUtil = new SendMessageUtil(dutyUnit.getUnit_phone(), unitDXNR);
+					try {
+						sendMessageUtil.send();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 			return true;
 		}
 		return false;
@@ -303,6 +353,24 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		feeRectification.setFeedback_rectification_content(feedbackRectification.getFeedback_rectification_content());
 		feeRectification.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(feeRectification);
+		// 发送短信到主管单位
+		jwcpxt_unit unit = new jwcpxt_unit();
+		jwcpxt_unit unitFather = new jwcpxt_unit();
+		unit = dissatisfiedFeedbackDao
+				.get_unit_byDisFeedbackId(feeRectification.getFeedback_rectification_dissatisfied_feedback());
+		unitFather = unitService.get_unitDO_byID(unit.getUnit_father());
+		if (unitFather != null) {
+			// 发短信lo
+			String unitDXNR = "下级单位<" + unit.getUnit_name() + ">已经完成编号为"
+					+ feeRectification.getFeedback_rectification_no() + "的反馈整改,请尽快对该整改情况进行审核。";
+			// 发短信
+			SendMessageUtil sendMessageUtil = new SendMessageUtil(unitFather.getUnit_phone(), unitDXNR);
+			try {
+				sendMessageUtil.send();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return true;
 	}
 
@@ -396,7 +464,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			 */
 			// 责任单位短信
 			if (unit != null) {
-				String unitDXNR = "单位<" + unit.getUnit_name() + ">接受到一条整改信息,请在5天内对该整改做出反馈。";
+				String unitDXNR = "单位<" + unit.getUnit_name() + ">接受到一条整改信息,请在5个自然日内对该整改做出反馈,并完成主管部门的审核。";
 				// 发短信
 				SendMessageUtil sendMessageUtil = new SendMessageUtil(unit.getUnit_phone(), unitDXNR);
 				sendMessageUtil.send();
@@ -407,7 +475,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			// dissatisfiedFeedbackDao.get_unitDO_byChildrenUnit(unit.getJwcpxt_unit_id());
 			if (unitFather != null) {
 				// 通知上级单位的短信
-				String fatherUnitDXNR = "您的下属单位<" + unit.getUnit_name() + ">,接收到一条整改要求,请监督下属单位进行整改，并对整改结果进行审核";
+				String fatherUnitDXNR = "您的下属单位<" + unit.getUnit_name() + ">,接收到一条整改要求,请在5个自然日内监督下属单位进行整改，并对整改结果进行审核";
 				// 发短信
 				SendMessageUtil sendMessageUtil = new SendMessageUtil(unitFather.getUnit_phone(), fatherUnitDXNR);
 				sendMessageUtil.send();

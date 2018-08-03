@@ -136,7 +136,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
-				+ " and feedbackRectification.feedback_rectification_handle_state = 1"//
+				+ " and feedbackRectification.feedback_rectification_audit_state = 1"//
 				+ " and feedbackRectification.feedback_rectification_gmt_create < :beforeDate"//
 				+ " order by feedback_rectification_gmt_create asc";//
 		Query query = session.createQuery(hql);
@@ -175,7 +175,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id "//
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
-				+ " and feedbackRectification.feedback_rectification_handle_state = 1"//
+				+ " and feedbackRectification.feedback_rectification_audit_state = 1"//
 				+ " and feedbackRectification.feedback_rectification_gmt_create < DATE_SUB(DATE_FORMAT(CURRENT_TIME(),'%Y-%m-%d %T'),INTERVAL 5 day)";//
 		//
 		Query query = session.createSQLQuery(hql);
