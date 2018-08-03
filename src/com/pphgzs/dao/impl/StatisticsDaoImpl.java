@@ -33,6 +33,39 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	}
 
 	/**
+	 * 获取相对应的数量
+	 */
+	@Override
+	public int getServiceOptionCount(String serviceName, String questionName, String optionName) {
+		Session session = getSession();
+		String hql = "select count(*)"//
+				+ " from"//
+				+ " jwcpxt_answer_choice choice,"//
+				+ " jwcpxt_option _option,"//
+				+ " jwcpxt_question question,"//
+				+ " jwcpxt_service_definition definition"//
+				+ " where"//
+				+ " choice.answer_choice_option = _option.jwcpxt_option_id"//
+				+ " and _option.option_question = question.jwcpxt_question_id"//
+				+ " and question.question_service_definition = definition.jwcpxt_service_definition_id"//
+				+ " and _option.option_describe = :optionName"//
+				+ " and question.question_describe = :questionName"//
+				+ " and definition.service_definition_describe = :serviceName";
+		Query query = session.createQuery(hql);
+		query.setParameter("serviceName", serviceName);
+		query.setParameter("questionName", questionName);
+		query.setParameter("optionName", optionName);
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			return 0;
+		} finally {
+			session.clear();
+		}
+	}
+
+	/**
 	 * 
 	 */
 	@Override

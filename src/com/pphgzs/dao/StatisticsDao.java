@@ -117,4 +117,14 @@ public interface StatisticsDao {
 	 */
 	public List<ReturnVisitDTO> getUserCountVO(ReturnVisitVO returnVisitVO);
 
+	/**
+	 * 获取相对应的数量
+	 * 
+	 * @param string
+	 * @param string2
+	 * @param string3
+	 * @return
+	 */
+	public int getServiceOptionCount(String string, String string2, String string3);
+
 }

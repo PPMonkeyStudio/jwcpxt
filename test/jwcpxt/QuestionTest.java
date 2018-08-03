@@ -14,7 +14,9 @@ import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
+import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.SecondDistatisVO;
@@ -43,6 +45,18 @@ public class QuestionTest {
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 	@Resource
 	private StatisticsService statisticsService;
+
+	@Test
+	public void get_clientDissatisfiedServiceTest() {
+		DissatisfiedVO dissatisfiedVO = new DissatisfiedVO();
+		System.out.println(statisticsService.get_clientDissatisfiedService(dissatisfiedVO));
+	}
+
+	@Test
+	public void get_clientAttentionServiceTest() {
+		ClientAttentionServiceVO d = new ClientAttentionServiceVO();
+		System.out.println(statisticsService.get_clientAttentionService(d));
+	}
 
 	@Test
 	public void get_getUserCountVO() {

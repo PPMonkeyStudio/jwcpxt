@@ -15,6 +15,8 @@ import com.pphgzs.dao.StatisticsDao;
 import com.pphgzs.dao.UnitDao;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
+import com.pphgzs.domain.DTO.ClientAttentionServiceDTO;
+import com.pphgzs.domain.DTO.DissatisfiedDTO;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
@@ -29,6 +31,7 @@ import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
+import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -47,12 +50,176 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private ServiceService serviceService;
 
 	/**
-	 * 
+	 * 群众最不满意的项目
+	 */
+	@Override
+	public DissatisfiedVO get_clientDissatisfiedService(DissatisfiedVO dissatisfiedVO) {
+		List<DissatisfiedDTO> listAttentionDTO = new ArrayList<>();
+		DissatisfiedDTO dissatisfiedDTO = null;
+		// 根据业务描述、问题描述、选项描述获取数量
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("交通事故民警处理不及时");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("交通事故报警", "请问您报警后，民警是否及时受理？", "否"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("交通事故民警执法不文明不规范");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("交通事故报警", "请问您对民警文明规范执法是否满意？", "否"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("110报警民警到达现场迟缓不及时");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("110报警", "请问您报警后，民警是否及时到现场？", "半个小时之后到现场"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("110报警民警未出现场");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("110报警", "请问您报警后，民警是否及时到现场？", "没有出现场"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("110报警民警执法不文明不规范");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("110报警", "请问您对民警文明规范执法是否满意？", "不满意")
+				+ statisticsDao.getServiceOptionCount("110报警", "请问您对民警文明规范执法是否满意？", "不太满意"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("出入境办证窗口工作人员的服务态度差");
+		dissatisfiedDTO
+				.setServiceCount(statisticsDao.getServiceOptionCount("出入境办证", "请问您能对公安机关出入境办证窗口工作人员的服务态度满意吗？", "不满意")
+						+ statisticsDao.getServiceOptionCount("出入境办证", "请问您能对公安机关出入境办证窗口工作人员的服务态度满意吗？", "不太满意"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("户政办证窗口工作人员的服务态度差");
+		dissatisfiedDTO
+				.setServiceCount((statisticsDao.getServiceOptionCount("户政办证", "请问您对公安机关户政窗口工作人员的服务态度满意吗？", "不满意"))
+						+ (statisticsDao.getServiceOptionCount("户政办证", "请问您对公安机关户政窗口工作人员的服务态度满意吗？", "不太满意")));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("户政办证窗口工作人员办事效率低");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("户政办证", "您对办理业务的工作人员办事效率满意吗？", "不满意")
+				+ statisticsDao.getServiceOptionCount("户政办证", "您对办理业务的工作人员办事效率满意吗？", "不太满意"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("刑事案件民警执法不文明不规范");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("刑事案件", "请问您对民警文明规范执法是否满意？", "不满意")
+				+ statisticsDao.getServiceOptionCount("刑事案件", "请问您对民警文明规范执法是否满意？", "不太满意"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("交警车管窗口工作人员的服务态度差");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("车管办证", "请问您对交警车管窗口工作人员的服务态度满意吗？", "不满意")
+				+ statisticsDao.getServiceOptionCount("车管办证", "请问您对交警车管窗口工作人员的服务态度满意吗？", "不太满意"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("交警车管窗口工作人员办理业务效率低");
+		dissatisfiedDTO.setServiceCount(statisticsDao.getServiceOptionCount("车管办证", "请问您到交警车管窗口办理业务材料齐全时是否一次办结？", "否"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("市民对居住的社会治安不满意");
+		dissatisfiedDTO.setServiceCount(
+				statisticsDao.getServiceOptionCount("安全感满意度", "请问您对居住的地方社会治安感觉是安全、比较安全、不太安全、不安全？", "不安全")
+						+ statisticsDao.getServiceOptionCount("安全感满意度", "请问您对居住的地方社会治安感觉是安全、比较安全、不太安全、不太安全？", "不安全"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedDTO = new DissatisfiedDTO();
+		dissatisfiedDTO.setServiceName("市民对本地公安机关工作不满意");
+		dissatisfiedDTO.setServiceCount(
+				statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "不满意")
+						+ statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "不太满意"));
+		listAttentionDTO.add(dissatisfiedDTO);
+		//
+		dissatisfiedVO.setListAttentionDTO(listAttentionDTO);
+		return dissatisfiedVO;
+	}
+
+	/**
+	 * 群众最关注的业务
 	 */
 	@Override
 	public ClientAttentionServiceVO get_clientAttentionService(ClientAttentionServiceVO clientAttentionServiceVO) {
-		// TODO Auto-generated method stub
-		return null;
+		//
+		List<ClientAttentionServiceDTO> listClientAttentionServiceDTO = new ArrayList<>();
+		ClientAttentionServiceDTO clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		// 根据业务描述、问题描述、选项描述获取数量
+		clientAttentionServiceDTO.setAttentionService("交通事故民警处理及时");
+		clientAttentionServiceDTO.setCount(statisticsDao.getServiceOptionCount("交通事故报警", "请问您报警后，民警是否及时受理？", "是"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("交通事故民警执法文明规范");
+		clientAttentionServiceDTO.setCount(statisticsDao.getServiceOptionCount("交通事故报警", "请问您对民警文明规范执法是否满意？", "是"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("110报警民警到达现场及时");
+		clientAttentionServiceDTO.setCount(statisticsDao.getServiceOptionCount("110报警", "请问您报警后，民警是否及时到现场？", "及时"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("110报警民警执法文明规范");
+		clientAttentionServiceDTO.setCount(statisticsDao.getServiceOptionCount("110报警", "请问您对民警文明规范执法是否满意？", "满意")
+				+ statisticsDao.getServiceOptionCount("110报警", "请问您对民警文明规范执法是否满意？", "比较满意"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("出入境办证窗口工作人员的服务态度好");
+		clientAttentionServiceDTO
+				.setCount(statisticsDao.getServiceOptionCount("出入境办证", "请问您能对公安机关出入境办证窗口工作人员的服务态度满意吗？", "满意")
+						+ statisticsDao.getServiceOptionCount("出入境办证", "请问您能对公安机关出入境办证窗口工作人员的服务态度满意吗？", "比较满意"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("户政办证窗口工作人员的服务态度好");
+		clientAttentionServiceDTO
+				.setCount(statisticsDao.getServiceOptionCount("户政办证", "请问您对公安机关户政窗口工作人员的服务态度满意吗？", "满意")
+						+ statisticsDao.getServiceOptionCount("户政办证", "请问您对公安机关户政窗口工作人员的服务态度满意吗？", "比较满意"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("户政办证窗口工作人员办事效率高");
+		clientAttentionServiceDTO.setCount(statisticsDao.getServiceOptionCount("户政办证", "您对办理业务的工作人员办事效率满意吗？", "满意")
+				+ statisticsDao.getServiceOptionCount("户政办证", "您对办理业务的工作人员办事效率满意吗？", "比较满意"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("刑事案件民警执法文明规范");
+		clientAttentionServiceDTO.setCount(statisticsDao.getServiceOptionCount("刑事案件", "请问您对民警文明规范执法是否满意？", "满意")
+				+ statisticsDao.getServiceOptionCount("刑事案件", "请问您对民警文明规范执法是否满意？", "比较满意"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("交警车管窗口工作人员的服务态度好");
+		clientAttentionServiceDTO.setCount(statisticsDao.getServiceOptionCount("车管办证", "请问您对交警车管窗口工作人员的服务态度满意吗？", "满意")
+				+ statisticsDao.getServiceOptionCount("车管办证", "请问您对交警车管窗口工作人员的服务态度满意吗？", "比较满意"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("交警车管窗口工作人员办理业务效率高");
+		clientAttentionServiceDTO
+				.setCount(statisticsDao.getServiceOptionCount("车管办证", "请问您到交警车管窗口办理业务材料齐全时是否一次办结？", "是"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("市民对居住的社会治安满意");
+		clientAttentionServiceDTO
+				.setCount(statisticsDao.getServiceOptionCount("安全感满意度", "请问您对居住的地方社会治安感觉是安全、比较安全、不太安全、不安全？", "安全")
+						+ statisticsDao.getServiceOptionCount("安全感满意度", "请问您对居住的地方社会治安感觉是安全、比较安全、不太安全、不安全？", "比较安全"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		//
+		clientAttentionServiceDTO = new ClientAttentionServiceDTO();
+		clientAttentionServiceDTO.setAttentionService("市民对本地公安机关工作满意");
+		clientAttentionServiceDTO
+				.setCount(statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "满意")
+						+ statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "比较满意"));
+		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		clientAttentionServiceVO.setListClientAttentionServiceDTO(listClientAttentionServiceDTO);
+		return clientAttentionServiceVO;
 	}
 
 	/**

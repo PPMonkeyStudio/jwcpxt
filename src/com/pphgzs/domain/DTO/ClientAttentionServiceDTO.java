@@ -17,14 +17,6 @@ public class ClientAttentionServiceDTO {
 		this.attentionService = attentionService;
 	}
 
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
 	@Override
 	public String toString() {
 		return "ClientAttentionServiceDTO [attentionService=" + attentionService + ", count=" + count + "]";
@@ -33,6 +25,14 @@ public class ClientAttentionServiceDTO {
 	public ClientAttentionServiceDTO(String attentionService, int count) {
 		super();
 		this.attentionService = attentionService;
+		this.count = count;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
 		this.count = count;
 	}
 

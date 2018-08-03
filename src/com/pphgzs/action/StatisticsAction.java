@@ -20,6 +20,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
+import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -52,6 +53,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private StatisDissaQuestionDateVO statisDissaQuestionDateVO;
 	private ReturnVisitVO returnVisitVO;
 	private ClientAttentionServiceVO clientAttentionServiceVO;
+	private DissatisfiedVO dissatisfiedVO;
 	/*
 	 * 
 	 */
@@ -60,6 +62,22 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	/**
+	 * 群众最不满意业务
+	 * 
+	 * @throws IOException
+	 */
+	public void get_clientDissatisfiedService() throws IOException {
+		dissatisfiedVO = statisticsService.get_clientDissatisfiedService(dissatisfiedVO);
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(gson.toJson(dissatisfiedVO));
+	}
 
 	/**
 	 * 获取群众最关注的业务（满意的）
@@ -351,6 +369,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		return serviceGradeDTOList;
 	}
 
+	public ClientAttentionServiceVO getClientAttentionServiceVO() {
+		return clientAttentionServiceVO;
+	}
+
+	public void setClientAttentionServiceVO(ClientAttentionServiceVO clientAttentionServiceVO) {
+		this.clientAttentionServiceVO = clientAttentionServiceVO;
+	}
+
 	public void setServiceGradeDTOList(List<ServiceGradeDTO> serviceGradeDTOList) {
 		this.serviceGradeDTOList = serviceGradeDTOList;
 	}
@@ -412,6 +438,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	public void setStatisticsDissatisfiedDateCountVO(
 			StatisticsDissatisfiedDateCountVO statisticsDissatisfiedDateCountVO) {
 		this.statisticsDissatisfiedDateCountVO = statisticsDissatisfiedDateCountVO;
+	}
+
+	public DissatisfiedVO getDissatisfiedVO() {
+		return dissatisfiedVO;
+	}
+
+	public void setDissatisfiedVO(DissatisfiedVO dissatisfiedVO) {
+		this.dissatisfiedVO = dissatisfiedVO;
 	}
 
 }
