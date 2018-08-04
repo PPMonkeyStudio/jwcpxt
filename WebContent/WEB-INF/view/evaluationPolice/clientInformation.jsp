@@ -43,38 +43,40 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<%-- <select v-if="isUnit" style="width:120px; float: left;" --%>
-									<select style="width:120px; float: left;"
-										class="form-control" name="clientInfoVO.screenUser"
-										@change="queryClient">
-										<option value="">选择测评员</option>
-										<option v-for="appraisal in allAppraisal" :value="appraisal.jwcpxt_user_id">{{appraisal.user_name}}</option>
-									</select>
-									<select style="width:120px; float: left; margin-left:10px;" 
-											@change="queryClient" 
-											name="clientInfoVO.screenClientState" 
-											class="form-control">
-										<option value="">全部</option>
-										<option value="不太满意">不太满意</option>
-										<option value="不满意">不满意</option>
-									</select>
-									<div style="width: 500px; float: left; margin-left: 10px;">
-										<div class="form-group" style="margin: auto;">
-											<label>办理时间</label>
-											<input name="clientInfoVO.startTime" @blur="queryClient"
-												class="mydate form-control" id="beginTime"
-												placeholder="起始时间" style="display: inline; width: 150px;">
-											<label>到</label>
-											<input name="clientInfoVO.endTime" @blur="queryClient"
-												id="endTime" placeholder="结束时间" class="mydate form-control"
-												style="display: inline; width: 150px;">
-											<button type="button" class="btn btn-default" @click="previewChart">
-											<i class="fa fa-adjust"></i>图表
-											</button>
+									<s:if test="#session.unit.unit_grade==1 || #session.user.user_type==2 ">
+										<select style="width:120px; float: left;"
+											class="form-control" name="clientInfoVO.screenUser"
+											@change="queryClient">
+											<option value="">选择测评员</option>
+											<option v-for="appraisal in allAppraisal" :value="appraisal.jwcpxt_user_id">{{appraisal.user_name}}</option>
+										</select>
+										<select style="width:120px; float: left; margin-left:10px;" 
+												@change="queryClient" 
+												name="clientInfoVO.screenClientState" 
+												class="form-control">
+											<option value="">全部</option>
+											<option value="不太满意">不太满意</option>
+											<option value="不满意">不满意</option>
+										</select>
+										<div style="width: 500px; float: left; margin-left: 10px;">
+											<div class="form-group" style="margin: auto;">
+												<label>办理时间</label>
+												<input name="clientInfoVO.startTime" @blur="queryClient"
+													class="mydate form-control" id="beginTime"
+													placeholder="起始时间" style="display: inline; width: 150px;">
+												<label>到</label>
+												<input name="clientInfoVO.endTime" @blur="queryClient"
+													id="endTime" placeholder="结束时间" class="mydate form-control"
+													style="display: inline; width: 150px;">
+												<button type="button" class="btn btn-default" @click="previewChart">
+												<i class="fa fa-adjust"></i>图表
+												</button>
+											</div>
 										</div>
-									</div>
-									<input @keyup="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
-										name="clientInfoVO.search" class="form-control"
-										style="float: right; width: 250px;">
+										<input @keyup="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
+											name="clientInfoVO.search" class="form-control"
+											style="float: right; width: 250px;">
+									</s:if>
 									<table class="table" style="text-align: center; width: 100%;">
 										<thead>
 											<tr style="border-bottom: 2px solid #ddd">

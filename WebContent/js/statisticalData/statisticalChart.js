@@ -127,178 +127,98 @@ function createRandomItemStyle_CrowdFocus() {
 ].join(',') + ')'*/
 randerCrowdFocusChart('');
 function randerCrowdFocusChart(res) {
-	let option = {
-		title : {
-			text : '群众关注',
-		},
-		tooltip : {
-			show : true
-		},
-		series : [ {
-			name : '群众关注',
-			type : 'wordCloud',
-			size : [ '100%', '100%' ],
-			textRotation : [ 0, 45, 90, -45 ],
-			textPadding : 0,
-			autoSize : {
-				enable : true,
-				minSize : 14
+	$.post('/jwcpxt/Statistics/get_clientAttentionService', {
+		"clientAttentionServiceVO.tmp" : "1"
+	}, response => {
+		let pieData = [];
+		let name = [];
+		let data = [];
+		response.listClientAttentionServiceDTO.forEach(function(elt, i) {
+			name.push(elt.attentionService);
+			data.push(elt.count);
+			pieData.push({
+				name : elt.attentionService,
+				value : elt.count,
+				textStyle : createRandomItemStyle_CrowdFocus()
+			});
+		})
+
+
+		let option = {
+			title : {
+				text : '群众关注',
 			},
-			data : [
-				{
-					name : "就业",
-					value : 10000,
-					textStyle : createRandomItemStyle_CrowdFocus()
+			tooltip : {
+				show : true
+			},
+			series : [ {
+				name : '群众关注',
+				type : 'wordCloud',
+				size : [ '100%', '100%' ],
+				textRotation : [ 0, 45, 90, -45 ],
+				textPadding : 0,
+				autoSize : {
+					enable : true,
+					minSize : 14
 				},
+				data : [
+					{
+						name : null,
+						value : pieData[0].value * 3,
+					}, ...pieData
+				]
+			} ]
+		};
+		crowdFocusChart.setOption(option);
+		//画条形图
+		let option_bar = {
+			tooltip : {
+				trigger : 'axis',
+				axisPointer : { // 坐标轴指示器，坐标轴触发有效
+					type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+				}
+			},
+			grid : {
+				left : '3%',
+				right : '4%',
+				bottom : '3%',
+				containLabel : true
+			},
+			xAxis : [ {
+				type : 'category',
+				data : name,
+				axisTick : {
+					alignWithLabel : true
+				}
+			} ],
+			yAxis : [ {
+				type : 'value'
+			} ],
+			series : [
 				{
-					name : "社会保障",
-					value : 6181,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "居民生活",
-					value : 4386,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "社会治安",
-					value : 4055,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "公共安全",
-					value : 2467,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "公共交通",
-					value : 2244,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "医疗卫生",
-					value : 1898,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "公共教育",
-					value : 1484,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "文化发展",
-					value : 1112,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "社会道德",
-					value : 965,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "外来人口",
-					value : 847,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "环境保护",
-					value : 582,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "征地拆迁",
-					value : 555,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "城市建设及管理",
-					value : 550,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "新农村建设",
-					value : 462,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "民营企业及非公经济发展",
-					value : 366,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "民主法制建设",
-					value : 360,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "农村基层组织建设",
-					value : 282,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "公务员队伍建设",
-					value : 273,
-					textStyle : createRandomItemStyle_CrowdFocus()
-				},
-				{
-					name : "党风廉政建设",
-					value : 265,
-					textStyle : createRandomItemStyle_CrowdFocus()
+					name : '直接访问',
+					type : 'bar',
+					barWidth : '60%',
+					data : data,
+					itemStyle : {
+						normal : {
+							//这里用函数控制柱子颜色，定义一个list，然后根据所以取得不同的值
+							color : function(params) {
+								var colorList = normal_color_CrowdFocus;
+								return colorList[params.dataIndex]
+							},
+							label : {
+								show : true,
+								position : 'top',
+								formatter : '{b}\n{c}'
+							}
+						}
+					},
 				}
 			]
-		} ]
-	};
-	crowdFocusChart.setOption(option);
-	//画条形图
-	let option_bar = {
-		tooltip : {
-			trigger : 'axis',
-			axisPointer : { // 坐标轴指示器，坐标轴触发有效
-				type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-			}
-		},
-		grid : {
-			left : '3%',
-			right : '4%',
-			bottom : '3%',
-			containLabel : true
-		},
-		xAxis : [ {
-			type : 'category',
-			data : [ '就业', '社会保障', "居民生活", "社会治安", "公共安全", "公共交通", "医疗卫生", "公共教育",
-				"文化发展", "社会道德", "外来人口", "环境保护", "征地拆迁", "城市建设及管理", "新农村建设",
-				"民营企业及非公经济发展", "民主法制建设", "农村基层组织建设", "公务员队伍建设", "党风廉政建设" ],
-			axisTick : {
-				alignWithLabel : true
-			}
-		} ],
-		yAxis : [ {
-			type : 'value'
-		} ],
-		series : [
-			{
-				name : '直接访问',
-				type : 'bar',
-				barWidth : '60%',
-				data : [ 10000, 6181, 4386, 4055, 2467, 2244, 1898, 1112, 965, 847, 582, 555, 550, 462, 366, 360, 282, 273, 265 ],
-				itemStyle : {
-					normal : {
-						//这里用函数控制柱子颜色，定义一个list，然后根据所以取得不同的值
-						color : function(params) {
-							var colorList = normal_color_CrowdFocus;
-							return colorList[params.dataIndex]
-						},
-						label : {
-							show : true,
-							position : 'top',
-							formatter : '{b}\n{c}'
-						}
-					}
-				},
-			}
-		]
-	};
-	crowdFocusChart_bar.setOption(option_bar);
+		};
+		crowdFocusChart_bar.setOption(option_bar);
+	}, 'json')
 }
 
 
@@ -312,110 +232,102 @@ function createRandomItemStyle_CrowdNotSatisfied() {
 		}
 	};
 }
-
 renderCrowdNotSatisfiedChart('');
 function renderCrowdNotSatisfiedChart(res) {
-	let option = {
-		title : {
-			text : '群众不满意',
-		},
-		tooltip : {
-			show : true
-		},
-		series : [ {
-			name : '群众不满意',
-			type : 'wordCloud',
-			size : [ '100%', '100%' ],
-			textRotation : [ 0, 45, 90, -45 ],
-			textPadding : 0,
-			autoSize : {
-				enable : true,
-				minSize : 14
+	$.post('/jwcpxt/Statistics/get_clientDissatisfiedService', {
+		"dissatisfiedVO.tmp" : "1"
+	}, response => {
+		let pieData = [];
+		let name = [];
+		let data = []
+		response.listAttentionDTO.forEach(function(elt, i) {
+			name.push(elt.serviceName);
+			data.push(elt.serviceCount);
+			pieData.push({
+				name : elt.serviceName,
+				value : elt.serviceCount,
+				textStyle : createRandomItemStyle_CrowdNotSatisfied()
+			});
+		})
+		console.log(pieData);
+		let option = {
+			title : {
+				text : '群众不满意',
 			},
-			data : [
-				{
-					name : "110报警",
-					value : 34,
-					textStyle : createRandomItemStyle_CrowdNotSatisfied()
+			tooltip : {
+				show : true
+			},
+			series : [ {
+				name : '群众不满意',
+				type : 'wordCloud',
+				shape : 'smooth', //平滑
+				gridSize : 2, //网格尺寸
+				size : [ '80%', '80%' ],
+				textRotation : [ 0, 45, 90, -45 ],
+				textPadding : 1,
+				autoSize : {
+					enable : true,
+					minSize : 14
 				},
+				data : [
+					{
+						name : null,
+						value : pieData[0].value * 3,
+					}, ...pieData
+				]
+			} ]
+		};
+		crowdNotSatisfiedChart.setOption(option);
+
+		//画条形图
+		let option_bar = {
+			tooltip : {
+				trigger : 'axis',
+				axisPointer : { // 坐标轴指示器，坐标轴触发有效
+					type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+				}
+			},
+			grid : {
+				left : '3%',
+				right : '4%',
+				bottom : '3%',
+				containLabel : true
+			},
+			xAxis : [ {
+				type : 'category',
+				data : name,
+				axisTick : {
+					alignWithLabel : true
+				}
+			} ],
+			yAxis : [ {
+				type : 'value'
+			} ],
+			series : [
 				{
-					name : "刑事案件",
-					value : 34,
-					textStyle : createRandomItemStyle_CrowdNotSatisfied()
-				},
-				{
-					name : "交通事故",
-					value : 23,
-					textStyle : createRandomItemStyle_CrowdNotSatisfied()
-				},
-				{
-					name : "户政办证",
-					value : 6,
-					textStyle : createRandomItemStyle_CrowdNotSatisfied()
-				},
-				{
-					name : "车管办证",
-					value : 5,
-					textStyle : createRandomItemStyle_CrowdNotSatisfied()
-				},
-				{
-					name : "出入境办证",
-					value : 5,
-					textStyle : createRandomItemStyle_CrowdNotSatisfied()
+					name : '数量',
+					type : 'bar',
+					barWidth : '60%',
+					data : data,
+					itemStyle : {
+						normal : {
+							//这里用函数控制柱子颜色，定义一个list，然后根据所以取得不同的值
+							color : function(params) {
+								var colorList = normal_color_CrowdNotSatisfied;
+								return colorList[params.dataIndex]
+							},
+							label : {
+								show : true,
+								position : 'top',
+								formatter : '{b}\n{c}'
+							}
+						}
+					},
 				}
 			]
-		} ]
-	};
-	crowdNotSatisfiedChart.setOption(option);
-
-	//画条形图
-	let option_bar = {
-		tooltip : {
-			trigger : 'axis',
-			axisPointer : { // 坐标轴指示器，坐标轴触发有效
-				type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-			}
-		},
-		grid : {
-			left : '3%',
-			right : '4%',
-			bottom : '3%',
-			containLabel : true
-		},
-		xAxis : [ {
-			type : 'category',
-			data : [ '110报警', '刑事案件', "交通事故", "户政办证", "车管办证", "出入境办证" ],
-			axisTick : {
-				alignWithLabel : true
-			}
-		} ],
-		yAxis : [ {
-			type : 'value'
-		} ],
-		series : [
-			{
-				name : '数量',
-				type : 'bar',
-				barWidth : '60%',
-				data : [ 34, 34, 23, 6, 5, 5 ],
-				itemStyle : {
-					normal : {
-						//这里用函数控制柱子颜色，定义一个list，然后根据所以取得不同的值
-						color : function(params) {
-							var colorList = normal_color_CrowdNotSatisfied;
-							return colorList[params.dataIndex]
-						},
-						label : {
-							show : true,
-							position : 'top',
-							formatter : '{b}\n{c}'
-						}
-					}
-				},
-			}
-		]
-	};
-	crowdNotSatisfiedChart_bar.setOption(option_bar);
+		};
+		crowdNotSatisfiedChart_bar.setOption(option_bar);
+	}, 'json')
 }
 
 
