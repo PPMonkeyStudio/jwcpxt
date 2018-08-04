@@ -11,6 +11,15 @@ import com.pphgzs.domain.DTO.ClientAttentionServiceDTO;
  */
 public class ClientAttentionServiceVO {
 	private List<ClientAttentionServiceDTO> listClientAttentionServiceDTO;
+	private String tmp = "";
+
+	public String getTmp() {
+		return tmp;
+	}
+
+	public void setTmp(String tmp) {
+		this.tmp = tmp;
+	}
 
 	public List<ClientAttentionServiceDTO> getListClientAttentionServiceDTO() {
 		return listClientAttentionServiceDTO;
