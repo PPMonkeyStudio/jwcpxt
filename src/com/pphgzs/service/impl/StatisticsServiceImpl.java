@@ -3,6 +3,8 @@ package com.pphgzs.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -134,6 +136,22 @@ public class StatisticsServiceImpl implements StatisticsService {
 						+ statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "不太满意"));
 		listAttentionDTO.add(dissatisfiedDTO);
 		//
+		/**
+		 * 按点数量正序   hy
+		 */
+		Collections.sort(listAttentionDTO, new Comparator<DissatisfiedDTO>() {
+			public int compare(DissatisfiedDTO arg0, DissatisfiedDTO arg1) {
+				int hits0 = arg0.getServiceCount();
+				int hits1 = arg1.getServiceCount();
+				if (hits1 > hits0) {
+					return 1;
+				} else if (hits1 == hits0) {
+					return 0;
+				} else {
+					return -1;
+				}
+			}
+		});
 		dissatisfiedVO.setListAttentionDTO(listAttentionDTO);
 		return dissatisfiedVO;
 	}
@@ -218,6 +236,22 @@ public class StatisticsServiceImpl implements StatisticsService {
 				.setCount(statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "满意")
 						+ statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "比较满意"));
 		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
+		/**
+		 * 按点数量正序  hy
+		 */
+		Collections.sort(listClientAttentionServiceDTO, new Comparator<ClientAttentionServiceDTO>() {
+			public int compare(ClientAttentionServiceDTO arg0, ClientAttentionServiceDTO arg1) {
+				int hits0 = arg0.getCount();
+				int hits1 = arg1.getCount();
+				if (hits1 > hits0) {
+					return 1;
+				} else if (hits1 == hits0) {
+					return 0;
+				} else {
+					return -1;
+				}
+			}
+		});
 		clientAttentionServiceVO.setListClientAttentionServiceDTO(listClientAttentionServiceDTO);
 		return clientAttentionServiceVO;
 	}
