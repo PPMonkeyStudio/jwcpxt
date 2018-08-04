@@ -58,7 +58,7 @@ a:hover {
 											style="display: inline; width: 150px;"> <input
 											id="searchTitle" style="display: inline; width: 250px;"
 											oninput="changeQuery()" class="form-control"
-											placeholder="请输入搜索内容">
+											placeholder="请输入单位名称搜索">
 
 									</div>
 									<div id="showContent">
@@ -97,12 +97,12 @@ a:hover {
 													<td>{{
 														checkFeedbackRectification.feedbackRectification.feedback_rectification_unit_name
 														}}</td>
-													<td>
-														<a href="javascript:;" 
-														   onclick="skipToClientInfomation(this)" 
-														   :definitionId="checkFeedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
-														{{ checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name }}</a>
-													</td>
+													<td><a href="javascript:;"
+														onclick="skipToClientInfomation(this)"
+														:definitionId="checkFeedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
+															{{
+															checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name
+															}}</a></td>
 													<td>{{
 														checkFeedbackRectification.feedbackRectification.feedback_rectification_client_phone
 														}}</td>
