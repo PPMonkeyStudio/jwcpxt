@@ -83,15 +83,15 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " group by serviceClient.service_client_visit";
 		Query query = session.createQuery(hql);
 		// 昨天和今天
-		if ("".equals(returnVisitVO.getStartTime())) {
+		if ("".equals(returnVisitVO.getStartHTime())) {
 			query.setParameter("beforeDate", "0000-00-00");
 		} else {
-			query.setParameter("beforeDate", returnVisitVO.getStartTime() + " 00:00:00");
+			query.setParameter("beforeDate", returnVisitVO.getStartHTime() + " 00:00:00");
 		}
-		if ("".equals(returnVisitVO.getEndTime())) {
+		if ("".equals(returnVisitVO.getEndHTime())) {
 			query.setParameter("afterDate", "9999-99-99");
 		} else {
-			query.setParameter("afterDate", returnVisitVO.getEndTime() + " 23:59:59");
+			query.setParameter("afterDate", returnVisitVO.getEndHTime() + " 23:59:59");
 		}
 		if ("".equals(returnVisitVO.getUserId())) {
 			query.setParameter("userId", "%%");

@@ -11,8 +11,29 @@ import com.pphgzs.domain.DTO.ReturnVisitDTO;
  */
 public class ReturnVisitVO {
 	private List<ReturnVisitDTO> listReturnVisitDTO = null;
+	// 办理时间
 	private String userId = "";
-	private String startTime = "";
+	private String startTime = "0000-00-00";
+
+	// 回访时间
+	private String startHTime = "0000-00-00";
+	private String endHTime = "9999-99-99";
+
+	public String getStartHTime() {
+		return startHTime;
+	}
+
+	public void setStartHTime(String startHTime) {
+		this.startHTime = startHTime;
+	}
+
+	public String getEndHTime() {
+		return endHTime;
+	}
+
+	public void setEndHTime(String endHTime) {
+		this.endHTime = endHTime;
+	}
 
 	public String getUserId() {
 		return userId;
@@ -52,18 +73,21 @@ public class ReturnVisitVO {
 		super();
 	}
 
-	public ReturnVisitVO(List<ReturnVisitDTO> listReturnVisitDTO, String userId, String startTime, String endTime) {
+	public ReturnVisitVO(List<ReturnVisitDTO> listReturnVisitDTO, String userId, String startTime, String startHTime,
+			String endHTime, String endTime) {
 		super();
 		this.listReturnVisitDTO = listReturnVisitDTO;
 		this.userId = userId;
 		this.startTime = startTime;
+		this.startHTime = startHTime;
+		this.endHTime = endHTime;
 		this.endTime = endTime;
 	}
 
 	@Override
 	public String toString() {
 		return "ReturnVisitVO [listReturnVisitDTO=" + listReturnVisitDTO + ", userId=" + userId + ", startTime="
-				+ startTime + ", endTime=" + endTime + "]";
+				+ startTime + ", startHTime=" + startHTime + ", endHTime=" + endHTime + ", endTime=" + endTime + "]";
 	}
 
 }

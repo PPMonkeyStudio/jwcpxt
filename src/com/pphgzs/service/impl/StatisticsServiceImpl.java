@@ -137,7 +137,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		listAttentionDTO.add(dissatisfiedDTO);
 		//
 		/**
-		 * 按点数量正序   hy
+		 * 按点数量正序 hy
 		 */
 		Collections.sort(listAttentionDTO, new Comparator<DissatisfiedDTO>() {
 			public int compare(DissatisfiedDTO arg0, DissatisfiedDTO arg1) {
@@ -237,7 +237,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 						+ statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "比较满意"));
 		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
 		/**
-		 * 按点数量正序  hy
+		 * 按点数量正序 hy
 		 */
 		Collections.sort(listClientAttentionServiceDTO, new Comparator<ClientAttentionServiceDTO>() {
 			public int compare(ClientAttentionServiceDTO arg0, ClientAttentionServiceDTO arg1) {
