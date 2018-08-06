@@ -126,9 +126,9 @@ public class ServiceDaoImpl implements ServiceDao {
 			query.setParameter("startHTime", clientInfoVO.getStartHTime() + " 00:00:00");
 		}
 		if (clientInfoVO.getEndHTime().equals("")) {
-			query.setParameter("endHTime", "0000-00-00");
+			query.setParameter("endHTime", "9999-99-99");
 		} else {
-			query.setParameter("endHTime", clientInfoVO.getEndHTime() + " 00:00:00");
+			query.setParameter("endHTime", clientInfoVO.getEndHTime() + " 23:59:59");
 		}
 		if (clientInfoVO.getScreenService().equals("")) {
 			query.setParameter("screenService", "%%");
@@ -232,14 +232,14 @@ public class ServiceDaoImpl implements ServiceDao {
 			query.setParameter("endTime", clientInfoVO.getEndTime());
 		}
 		if (clientInfoVO.getStartHTime().equals("")) {
-			query.setParameter("startHTime", "0000-00-00");
+			query.setParameter("startHTime", "0000-00-00" + " 00:00:00");
 		} else {
 			query.setParameter("startHTime", clientInfoVO.getStartHTime() + " 00:00:00");
 		}
 		if (clientInfoVO.getEndHTime().equals("")) {
-			query.setParameter("endHTime", "0000-00-00");
+			query.setParameter("endHTime", "9999-99-99" + " 23:59:59");
 		} else {
-			query.setParameter("endHTime", clientInfoVO.getEndHTime() + " 00:00:00");
+			query.setParameter("endHTime", clientInfoVO.getEndHTime() + " 23:59:59");
 		}
 		if (clientInfoVO.getScreenService().equals("")) {
 			query.setParameter("screenService", "%%");
@@ -1102,7 +1102,6 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " and client.service_client_gmt_modified >= DATE_FORMAT( :beginTime ,'%Y-%m-%d 00:00:00') "//
 				+ " and client.service_client_gmt_modified <= DATE_FORMAT( :endTime ,'%Y-%m-%d 23:59:59') "
 				+ " and client.service_client_visit like :type ";//
-		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		// 单个查询
 		appraisalId = (!"".equals(appraisalId) && appraisalId != null) ? appraisalId : "%";
@@ -1124,10 +1123,6 @@ public class ServiceDaoImpl implements ServiceDao {
 			type = "%";
 		}
 		query.setParameter("type", type);
-		System.out.println("appraisalId:" + appraisalId);
-		System.out.println("beginTime:" + beginTime);
-		System.out.println("endTime:" + endTime);
-		System.out.println("type:" + type);
 		int count = ((Number) query.uniqueResult()).intValue();
 		session.clear();
 		return count;

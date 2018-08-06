@@ -286,7 +286,7 @@ $(function() {
 		// queryData
 		let params = {
 			"returnVisitVO.userId" : myData.screenUser_chart ? myData.screenUser_chart : "",
-			"returnVisitVO.startHTime" : queryData["clientInfoVO.starHtTime"] ? queryData["clientInfoVO.startHTime"] : getFormatDate(),
+			"returnVisitVO.startHTime" : queryData["clientInfoVO.startHTime"] ? queryData["clientInfoVO.startHTime"] : getFormatDate(),
 			"returnVisitVO.endHTime" : queryData["clientInfoVO.endHTime"] ? queryData["clientInfoVO.endHTime"] : getFormatDate()
 		}
 		// 如果测评员搜索不为空

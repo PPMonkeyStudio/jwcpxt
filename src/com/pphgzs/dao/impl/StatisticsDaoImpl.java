@@ -88,12 +88,12 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		if ("".equals(returnVisitVO.getStartTime())) {
 			query.setParameter("startHTime", "0000-00-00");
 		} else {
-			query.setParameter("startHTime", returnVisitVO.getStartTime() + " 00:00:00");
+			query.setParameter("startHTime", returnVisitVO.getStartTime());
 		}
 		if ("".equals(returnVisitVO.getEndTime())) {
 			query.setParameter("endHTime", "9999-99-99");
 		} else {
-			query.setParameter("endHTime", returnVisitVO.getEndTime() + " 23:59:59");
+			query.setParameter("endHTime", returnVisitVO.getEndTime());
 		}
 		if ("".equals(returnVisitVO.getStartHTime())) {
 			query.setParameter("beforeDate", "0000-00-00");

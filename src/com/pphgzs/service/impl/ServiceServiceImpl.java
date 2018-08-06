@@ -88,7 +88,6 @@ public class ServiceServiceImpl implements ServiceService {
 		int totalPages = ((totalRecords - 1) / clientInfoVO.getPageSize()) + 1;
 		clientInfoVO.setTotalCount(totalRecords);
 		clientInfoVO.setTotalPage(totalPages);
-
 		/**
 		 * VO封装
 		 */

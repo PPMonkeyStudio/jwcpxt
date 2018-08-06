@@ -763,7 +763,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 			// 遍历需要统计的业务，查询这项业务分数
 			for (ServiceGradeDTO serviceGradeDTO : serviceGradeDTOList) {
 				double statisticsGrade;
-
 				// 创建一个业务分数DTO
 				ServiceGradeBelongUnitDTO serviceGradeBelongUnitDTO = new ServiceGradeBelongUnitDTO();
 				// 将业务DO放入到DTO中
@@ -779,6 +778,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 							searchTimeEnd);
 				}
 				totalGrade = totalGrade + statisticsGrade;
+				statisticsGrade = ((int) (statisticsGrade * 10000 + 0.5)) / 10000.0;
+				totalGrade = ((int) (totalGrade * 10000 + 0.5)) / 10000.0;
 				// 将所得分放入到DTO中
 				serviceGradeBelongUnitDTO.setGrade(statisticsGrade);
 				// 将一个业务及他的分数的DTO放入到DTO列表中
