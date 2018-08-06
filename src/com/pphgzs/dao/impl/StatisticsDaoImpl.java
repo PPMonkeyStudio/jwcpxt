@@ -77,12 +77,24 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " jwcpxt_service_instance serviceInstance"//
 				+ " where"//
 				+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_date >= :startHTime"
+				+ " and serviceInstance.service_instance_date <= :endHTime"//
 				+ " and serviceClient.service_client_gmt_modified >= :beforeDate"//
 				+ " and serviceClient.service_client_gmt_modified <= :afterDate"//
 				+ " and serviceInstance.service_instance_judge like :userId"//
 				+ " group by serviceClient.service_client_visit";
 		Query query = session.createQuery(hql);
 		// 昨天和今天
+		if ("".equals(returnVisitVO.getStartTime())) {
+			query.setParameter("startHTime", "0000-00-00");
+		} else {
+			query.setParameter("startHTime", returnVisitVO.getStartTime() + " 00:00:00");
+		}
+		if ("".equals(returnVisitVO.getEndTime())) {
+			query.setParameter("endHTime", "9999-99-99");
+		} else {
+			query.setParameter("endHTime", returnVisitVO.getEndTime() + " 23:59:59");
+		}
 		if ("".equals(returnVisitVO.getStartHTime())) {
 			query.setParameter("beforeDate", "0000-00-00");
 		} else {
