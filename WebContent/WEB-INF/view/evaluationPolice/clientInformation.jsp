@@ -59,7 +59,7 @@ th {
 											<option value="不太满意">不太满意</option>
 											<option value="不满意">不满意</option>
 										</select>
-										<div style="width: 500px; float: left; margin-left: 10px;">
+										<div style="float: left; margin-left: 10px;">
 											<div class="form-group" style="margin: auto;">
 												<label>办理时间</label> <input name="clientInfoVO.startTime"
 													@blur="queryClient" class="mydate form-control"
@@ -156,9 +156,9 @@ th {
 												<td>{{ClientInfoDTO.serviceInstance.service_instance_date}}</td>
 												<td><template
 														v-if="ClientInfoDTO.serviceClient.service_client_visit==2">
-													{{ClientInfoDTO.serviceInstance.service_instance_gmt_modified}}
+													{{ClientInfoDTO.serviceClient.service_client_gmt_modified}}
 													</template> <template v-else>
-													{{ClientInfoDTO.serviceInstance.service_instance_gmt_modified}}
+													{{ClientInfoDTO.serviceClient.service_client_gmt_modified}}
 													</template></td>
 												<s:if test="#session.user.user_type==1">
 													<template

@@ -71,7 +71,7 @@ public class TimeUtil {
 		Date secondDate = new Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(secondDate);
-		calendar.add(Calendar.DAY_OF_MONTH, -15);
+		calendar.add(Calendar.DAY_OF_MONTH, -7);
 		secondDate = calendar.getTime();
 		String date = formatter.format(secondDate);
 		try {
