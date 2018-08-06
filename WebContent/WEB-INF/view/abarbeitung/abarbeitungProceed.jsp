@@ -47,7 +47,10 @@ a:hover {
 											style="color: black">&nbsp;至&nbsp;</label><input
 											onchange="changeQuery()" id="endTime"
 											class="mydate form-control"
-											style="display: inline; width: 150px;">
+											style="display: inline; width: 150px;"> <input
+											id="searchTitle" style="display: inline; width: 250px;"
+											oninput="changeQuery()" class="form-control"
+											placeholder="请输入搜索内容">
 									</div>
 									<div id="showDiscontent">
 										<table class="table table-striped" style="text-align: center;">
@@ -100,7 +103,7 @@ a:hover {
 														<a onclick="pushDiscontent(this)"
 															:id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id">推送</a>|<a
 															onclick="refuseDiscontent(this)"
-															:id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id">驳回</a>
+															:id="dissatisfiedQuestionDTO.dessatisfiedFeedback.jwcpxt_dissatisfied_feedback_id">不推送</a>
 														</template> <template v-else> 暂无操作 </template></td>
 												</tr>
 												</template>

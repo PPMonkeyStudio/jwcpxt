@@ -7,7 +7,8 @@ var queryTemp = {
 	'currPage' : '1',
 	'searchTimeStart' : '',
 	'searchTimeEnd' : '',
-	'searchStatus' : '-1'
+	'searchStatus' : '-1',
+	'searchTitle' : ''
 }
 
 $(function() {
@@ -29,7 +30,8 @@ function loadData() {
 		'dissatisfiedQuestionVO.screenStartTime' : queryTemp.searchTimeStart,
 		'dissatisfiedQuestionVO.screenEndTime' : queryTemp.searchTimeEnd,
 		'dissatisfiedQuestionVO.screenState' : queryTemp.searchStatus,
-		'dissatisfiedQuestionVO.currPage' : queryTemp.currPage
+		'dissatisfiedQuestionVO.currPage' : queryTemp.currPage,
+		'dissatisfiedQuestionVO.searchTitle' : queryTemp.searchTitle
 	}
 	$.ajax({
 		url : '/jwcpxt/DissatisfiedFeedback/get_dissatisfiedQuestionVO',
@@ -47,6 +49,7 @@ function changeQuery() {
 	queryTemp.searchTimeStart = $('#startTime').val();
 	queryTemp.searchTimeEnd = $('#endTime').val();
 	queryTemp.searchStatus = $('#searchState').val();
+	queryTemp.searchTitle = $('#searchTitle').val();
 	loadData();
 }
 
