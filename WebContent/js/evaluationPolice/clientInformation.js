@@ -22,6 +22,8 @@ $(function() {
 		"clientInfoVO.currPage" : 1,
 		"clientInfoVO.startTime" : '',
 		"clientInfoVO.endTime" : '',
+		"clientInfoVO.startHTime" : '',
+		"clientInfoVO.endHTime" : '',
 		"clientInfoVO.screenService" : '',
 		"clientInfoVO.screenVisit" : '',
 		"clientInfoVO.screenUser" : '',
@@ -282,12 +284,10 @@ $(function() {
 	// 查看图表
 	function previewChart() {
 		// queryData
-		console.log(queryData["clientInfoVO.startTime"]?1:2);
-		console.log(queryData["clientInfoVO.endTime"]?1:2);
 		let params = {
 			"returnVisitVO.userId" : myData.screenUser_chart ? myData.screenUser_chart : "",
-			"returnVisitVO.startTime" : queryData["clientInfoVO.startTime"] ? queryData["clientInfoVO.startTime"] : getFormatDate(),
-			"returnVisitVO.endTime" : queryData["clientInfoVO.endTime"] ? queryData["clientInfoVO.endTime"] : getFormatDate()
+			"returnVisitVO.startHTime" : queryData["clientInfoVO.starHtTime"] ? queryData["clientInfoVO.startHTime"] : getFormatDate(),
+			"returnVisitVO.endHTime" : queryData["clientInfoVO.endHTime"] ? queryData["clientInfoVO.endHTime"] : getFormatDate()
 		}
 		// 如果测评员搜索不为空
 		if (queryData["clientInfoVO.screenUser"]) {

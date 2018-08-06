@@ -55,12 +55,51 @@ function pushDiscontent(event) {
 			type : 'blue',
 			boxWidth : '800px',
 			useBootstrap : false,
-			content : '<form id="pushDiscontentForm"><table class="table table-bordered">'
-				+ '<tr><td><span style="color:red;">*</span>问题标题</td><td colspan="3"><input type="text" name="feedbackRectification.feedback_rectification_title" class="form-control mustWrite"><td></tr>'
-				+ '<tr><td><span style="color:red;">*</span>收集渠道</td><td colspan="3"><input type="text" name="feedbackRectification.feedback_rectification_collect_channel" class="form-control mustWrite"><td></tr>'
-				+ '<tr><td><span style="color:red;">*</span>问题简述</td><td colspan="3"><textarea type="text" name="feedbackRectification.feedback_rectification_question_describe" class="form-control mustWrite"></textarea><td></tr>'
-				+ '<tr><td><span style="color:red;">*</span>审核意见</td><td colspan="3"><textarea type="text" name="dissatisfiedFeedback.dissatisfied_feedback_audit_opinion" class="form-control mustWrite"></textarea><td></tr>'
-				+ '</table></form>',
+			content : `<form id="pushDiscontentForm"><table class="table table-bordered">'
+				<tr>
+					<td>
+						<span style="color:red;">*</span>问题标题
+					</td>
+					<td colspan="3">
+						<select name="feedbackRectification.feedback_rectification_title" class="form-control mustWrite">
+							<option value="">请选择问题标题</option>
+							<option value="诉求">诉求</option>
+							<option value="投诉">投诉</option>
+							<option value="意见/建议">意见/建议</option>
+							<option value="举报">举报</option>
+							<option value="不满意问题">不满意问题</option>
+							<option value="不太满意问题">不太满意问题</option>
+							<option value="报警受理不及时">报警受理不及时</option>
+							<option value="没有出现场">没有出现场</option>
+							<option value="其他">其他</option>
+						</select>
+						<!-- <input type="text" name="feedbackRectification.feedback_rectification_title" class="form-control mustWrite"> -->
+					<td>
+				</tr>
+				<tr>
+					<td>
+						<span style="color:red;">*</span>收集渠道
+					</td>
+					<td colspan="3">
+						<select name="feedbackRectification.feedback_rectification_collect_channel" class="form-control mustWrite">
+							<option value="">请选择收集渠道</option>
+							<option value="电话回访">电话回访</option>
+							<option value="短信回访">短信回访</option>
+							<option value="群众来电">群众来电</option>
+							<option value="其他">其他</option>
+						</select>
+						<!-- <input type="text" name="feedbackRectification.feedback_rectification_collect_channel" class="form-control mustWrite"> -->
+					<td>
+				</tr>
+				<tr>
+					<td><span style="color:red;">*</span>问题简述</td>
+					<td colspan="3"><textarea type="text" name="feedbackRectification.feedback_rectification_question_describe" class="form-control mustWrite"></textarea><td>
+				</tr>
+				<tr>
+					<td><span style="color:red;">*</span>审核意见</td>
+					<td colspan="3"><textarea type="text" name="dissatisfiedFeedback.dissatisfied_feedback_audit_opinion" class="form-control mustWrite"></textarea><td>
+				</tr>
+				</table></form>`,
 			buttons : {
 				cancel : {
 					text : '关闭',

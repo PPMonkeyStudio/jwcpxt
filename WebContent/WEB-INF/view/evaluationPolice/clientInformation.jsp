@@ -43,7 +43,7 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<%-- <select v-if="isUnit" style="width:120px; float: left;" --%>
-									<s:if test="#session.unit.unit_grade==1 || #session.user.user_type==2 ">
+									<s:if test="#session.unit.unit_grade==1 || #session.user.user_type==2 || #session.user.user_type==1">
 										<select style="width:120px; float: left;"
 											class="form-control" name="clientInfoVO.screenUser"
 											@change="queryClient">
@@ -68,6 +68,16 @@ th {
 												<input name="clientInfoVO.endTime" @blur="queryClient"
 													id="endTime" placeholder="结束时间" class="mydate form-control"
 													style="display: inline; width: 150px;">
+												
+												<label>回访时间</label>
+												<input name="clientInfoVO.startHTime" @blur="queryClient"
+													class="mydate form-control" id="beginTime"
+													placeholder="起始时间" style="display: inline; width: 150px;">
+												<label>到</label>
+												<input name="clientInfoVO.endHTime" @blur="queryClient"
+													id="endTime" placeholder="结束时间" class="mydate form-control"
+													style="display: inline; width: 150px;">	
+												
 												<button type="button" class="btn btn-default" @click="previewChart">
 												<i class="fa fa-adjust"></i>图表
 												</button>
