@@ -79,8 +79,8 @@ a:hover {
 													<td>{{ dissatisfiedQuestionDTO.question.question_describe }}</td>
 													<td>{{ dissatisfiedQuestionDTO.unit.unit_name.replace("江西省萍乡市公安局","") }}</td>
 													<td>
-														<a href="javascript:;" 
-														   onclick="skipToClientInfomation(this)" 
+														<a href="javascript:;"  onclick="skipToClientInfomation(this)"
+														   :phone="dissatisfiedQuestionDTO.serviceClient.service_client_phone"
 														   :definitionId="dissatisfiedQuestionDTO.serviceDefinition.jwcpxt_service_definition_id">
 														{{ dissatisfiedQuestionDTO.serviceClient.service_client_name }}</a>
 													</td>

@@ -88,18 +88,12 @@ a:hover {
 												<template
 													v-for="checkFeedbackRectification in checkVO.listFeedbackRectificationDTO">
 												<tr>
-													<td>{{
-														checkFeedbackRectification.feedbackRectification.feedback_rectification_no
-														}}</td>
-													<td>{{
-														checkFeedbackRectification.feedbackRectification.feedback_rectification_title
-														}}</td>
-													<td>{{
-														checkFeedbackRectification.feedbackRectification.feedback_rectification_unit_name
-														}}</td>
+													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_no}}</td>
+													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_title}}</td>
+													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_unit_name}}</td>
 													<td>
-														<a href="javascript:;" 
-														   onclick="skipToClientInfomation(this)" 
+														<a href="javascript:;" onclick="skipToClientInfomation(this)" 
+														   :phone="checkFeedbackRectification.serviceClient.service_client_phone"
 														   :definitionId="checkFeedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
 														{{ checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name }}</a>
 													</td>
