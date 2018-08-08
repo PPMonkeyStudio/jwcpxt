@@ -44,7 +44,7 @@
 							<p>当事人</p>
 					</a></li>
 					<li><a href="javascript:;" onclick="uploadExcel()">
-							<p>上传Excel</p>
+							<p>上传Excel<i id="uploadIcon"style="display: none;" class="fa fa-cog fa-spin"></i></p>
 					</a></li>
 					<script type="text/javascript" src="<%=basePath%>js/user/uploadExcel.js"></script>
 				</s:if>
