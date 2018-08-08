@@ -81,28 +81,28 @@ a:hover {
 															<option value="5">测评中心审核驳回</option>
 													</select></td>
 													<td>查看</td>
-													<td>操作</td>
+													<td style="width:140px;" >
+														<select id="searchHandleState" onchange="changeQuery()" class="form-control">
+															<option value="">办结状态</option>
+															<option value="1">在办</option>
+															<option value="2">办结</option>
+														</select>
+													</td>
 												</tr>
 											</thead>
 											<tbody id="checkTable">
 												<template
 													v-for="checkFeedbackRectification in checkVO.listFeedbackRectificationDTO">
 												<tr>
-													<td>{{
-														checkFeedbackRectification.feedbackRectification.feedback_rectification_no
-														}}</td>
-													<td>{{
-														checkFeedbackRectification.feedbackRectification.feedback_rectification_title
-														}}</td>
-													<td>{{
-														checkFeedbackRectification.feedbackRectification.feedback_rectification_unit_name
-														}}</td>
-													<td><a href="javascript:;"
-														onclick="skipToClientInfomation(this)"
-														:definitionId="checkFeedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
-															{{
-															checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name
-															}}</a></td>
+													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_no}}</td>
+													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_title}}</td>
+													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_unit_name}}</td>
+													<td>
+														<a href="javascript:;" onclick="skipToClientInfomation(this)" 
+														   :phone="checkFeedbackRectification.serviceClient.service_client_phone"
+														   :definitionId="checkFeedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
+														{{ checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name }}</a>
+													</td>
 													<td>{{
 														checkFeedbackRectification.feedbackRectification.feedback_rectification_client_phone
 														}}</td>

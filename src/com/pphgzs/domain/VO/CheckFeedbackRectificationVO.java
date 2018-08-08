@@ -18,6 +18,7 @@ public class CheckFeedbackRectificationVO {
 	private String screenSearch = "";
 	private String screenStartTime = "0000-00-00";
 	private String screenEndTime = "9999-99-99";
+	private String searchHandleState = "%";
 	// 当前页
 	private int currPage = 1;
 	// 总页数
@@ -97,6 +98,18 @@ public class CheckFeedbackRectificationVO {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public String getSearchHandleState() {
+
+		return searchHandleState;
+	}
+
+	public void setSearchHandleState(String searchHandleState) {
+		if ("".equals(searchHandleState) || searchHandleState == null) {
+			this.searchHandleState = "%";
+		} else
+			this.searchHandleState = searchHandleState;
 	}
 
 	@Override

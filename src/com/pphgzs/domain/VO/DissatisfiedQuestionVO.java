@@ -25,6 +25,8 @@ public class DissatisfiedQuestionVO {
 	private int totalCount = 0;
 	// 每页记录数
 	private int pageSize = 10;
+	// 模糊筛选
+	private String searchTitle;
 
 	public List<DissatisfiedQuestionDTO> getListDissatisfiedQuestionDTO() {
 		return listDissatisfiedQuestionDTO;
@@ -88,6 +90,14 @@ public class DissatisfiedQuestionVO {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public String getSearchTitle() {
+		return searchTitle;
+	}
+
+	public void setSearchTitle(String searchTitle) {
+		this.searchTitle = searchTitle;
 	}
 
 	@Override

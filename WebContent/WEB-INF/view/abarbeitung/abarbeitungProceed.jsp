@@ -50,7 +50,7 @@ a:hover {
 											style="display: inline; width: 150px;"> <input
 											id="searchTitle" style="display: inline; width: 250px;"
 											oninput="changeQuery()" class="form-control"
-											placeholder="请输入搜索内容">
+											placeholder="请输入搜索内容(问题,单位,联系方式)">
 									</div>
 									<div id="showDiscontent">
 										<table class="table table-striped" style="text-align: center;">
@@ -79,8 +79,8 @@ a:hover {
 													<td>{{ dissatisfiedQuestionDTO.question.question_describe }}</td>
 													<td>{{ dissatisfiedQuestionDTO.unit.unit_name.replace("江西省萍乡市公安局","") }}</td>
 													<td>
-														<a href="javascript:;" 
-														   onclick="skipToClientInfomation(this)" 
+														<a href="javascript:;"  onclick="skipToClientInfomation(this)"
+														   :phone="dissatisfiedQuestionDTO.serviceClient.service_client_phone"
 														   :definitionId="dissatisfiedQuestionDTO.serviceDefinition.jwcpxt_service_definition_id">
 														{{ dissatisfiedQuestionDTO.serviceClient.service_client_name }}</a>
 													</td>

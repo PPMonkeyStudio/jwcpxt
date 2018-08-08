@@ -98,12 +98,13 @@ a:hover {
 														<span class="label label-primary">未办</span> </template> <template
 															v-else> <span class="label label-success">办结</span>
 														</template></td>
-													<td><a href="javascript:;"
-														onclick="skipToClientInfomation(this)"
-														:definitionId="feedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
-															{{
-															feedbackRectification.feedbackRectification.feedback_rectification_client_name
-															}}</a></td>
+													<td>
+														<a href="javascript:;"  onclick="skipToClientInfomation(this)" 
+														   :phone="feedbackRectification.serviceClient.service_client_phone"
+														   :definitionId="feedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
+														{{ feedbackRectification.feedbackRectification.feedback_rectification_client_name }}</a>
+													
+													</td>
 													<td>{{
 														feedbackRectification.feedbackRectification.feedback_rectification_client_phone
 														}}</td>
