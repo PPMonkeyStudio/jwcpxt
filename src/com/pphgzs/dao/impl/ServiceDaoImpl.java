@@ -267,25 +267,8 @@ public class ServiceDaoImpl implements ServiceDao {
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());
 		query.setMaxResults(clientInfoVO.getPageSize());
 		listClientInfo = query.list();
-		System.out.println("size:"+listClientInfo.size());
 		//
 		session.clear();
-		/*
-		 * for (ClientInfoDTO clientInfoDTO : listClientInfo) { if
-		 * (!clientInfoVO.getSearch().equals("")) { // 当事人姓名
-		 * clientInfoDTO.getServiceClient()
-		 * .setService_client_name(clientInfoDTO.getServiceClient().
-		 * getService_client_name().replaceAll( clientInfoVO.getSearch(),
-		 * "<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>")); //
-		 * 性别 clientInfoDTO.getServiceClient()
-		 * .setService_client_phone(clientInfoDTO.getServiceClient().
-		 * getService_client_phone().replaceAll( clientInfoVO.getSearch(),
-		 * "<span style='color: #ff5063;'>" + clientInfoVO.getSearch() + "</span>")); //
-		 * 单位名称 clientInfoDTO.getUnit()
-		 * .setUnit_name(clientInfoDTO.getUnit().getUnit_name().replaceAll(clientInfoVO.
-		 * getSearch(), "<span style='color: #ff5063;'>" + clientInfoVO.getSearch() +
-		 * "</span>")); } }
-		 */
 		return listClientInfo;
 	}
 
@@ -888,16 +871,24 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " and fatherUnit.unit_num=:organizationCode "// 查出二级单位
 				+ " and grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
 				+ " and grabInstance.grab_instance_organization_code=unit.unit_num "// 抓取实例的机构代码=三级单位的机构代码
+				+ " and grabInstance.grab_instance_client_phone not in("//
+				+ " select "//
+				+ "	t.service_client_phone"//
+				+ " from jwcpxt_service_client t"//
+				+ " where"//
+				+ " t.service_client_gmt_create < :ddd)"//
 				+ " order by rand() "//
 		;
 		Query query = session.createQuery(hql);
 		//
 		String date = TimeUtil.getStringDay_before7();
+		query.setParameter("ddd", date + " 00:00:00");
 		date = date.replaceAll("-", "");
 		//
 		query.setParameter("date", date);
 		query.setParameter("serviceDefinitionID", serviceDefinitionID);
 		query.setParameter("organizationCode", organizationCode);
+
 		//
 		query.setMaxResults(1);
 		//
