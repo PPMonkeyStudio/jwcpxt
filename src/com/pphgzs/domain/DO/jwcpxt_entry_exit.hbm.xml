@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-8-8 15:11:31 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.pphgzs.domain.DO.jwcpxt_entry_exit" table="JWCPXT_ENTRY_EXIT">
+        <id name="entry_exit_id" type="java.lang.String">
+            <column name="ENTRY_EXIT_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="entry_exit_client_name" type="java.lang.String">
+            <column name="ENTRY_EXIT_CLIENT_NAME" />
+        </property>
+        <property name="entry_exit_client_sex" type="java.lang.String">
+            <column name="ENTRY_EXIT_CLIENT_SEX" />
+        </property>
+        <property name="entry_exit_client_phone" type="java.lang.String">
+            <column name="ENTRY_EXIT_CLIENT_PHONE" />
+        </property>
+        <property name="entry_exit_client_data" type="java.lang.String">
+            <column name="ENTRY_EXIT_CLIENT_DATA" />
+        </property>
+        <property name="entry_exit_client_unit" type="java.lang.String">
+            <column name="ENTRY_EXIT_CLIENT_UNIT" />
+        </property>
+        <property name="entry_exit_client_type" type="java.lang.String">
+            <column name="ENTRY_EXIT_CLIENT_TYPE" />
+        </property>
+        <property name="entry_exit_client_id_type" type="java.lang.String">
+            <column name="ENTRY_EXIT_CLIENT_ID_TYPE" />
+        </property>
+        <property name="entry_exit_client_is_distribute" type="int">
+            <column name="ENTRY_EXIT_CLIENT_IS_DISTRIBUTE" />
+        </property>
+        <property name="entry_exit_gmt_create" type="java.lang.String">
+            <column name="ENTRY_EXIT_GMT_CREATE" />
+        </property>
+        <property name="entry_exit_gmt_modify" type="java.lang.String">
+            <column name="ENTRY_EXIT_GMT_MODIFY" />
+        </property>
+    </class>
+</hibernate-mapping>
