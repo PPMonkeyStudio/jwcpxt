@@ -1,5 +1,7 @@
 package com.pphgzs.action;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +22,34 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 	private UserService userService;
 	private HttpServletResponse http_response;
 	private HttpServletRequest http_request;
-
+	private File file;
+	private String fileFileName;
+	private String fileContentType;
 	/* 
 	 * 
 	 */
 	private jwcpxt_user user;
+
+	public void uploadExcel() {
+		http_response.setContentType("text/html;charset=utf-8");
+		try {
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.setPrettyPrinting();// 格式化json数据
+			Gson gson = gsonBuilder.create();
+			//
+			boolean flag = userService.uploadExcel(file,fileFileName,fileContentType);
+			if (flag)
+				http_response.getWriter().write("success");
+			else
+				http_response.getWriter().write("error");
+		} catch (Exception e) {
+			try {
+				http_response.getWriter().write("error");
+			} catch (IOException e1) {
+			}
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * 
@@ -126,6 +151,30 @@ public class UserAction extends ActionSupport implements ServletResponseAware, S
 
 	public void setUser(jwcpxt_user user) {
 		this.user = user;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
 	}
 
 	/*

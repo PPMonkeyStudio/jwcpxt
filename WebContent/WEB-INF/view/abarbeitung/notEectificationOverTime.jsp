@@ -78,7 +78,7 @@ th {
 													<td>{{feedbackRectificationDTO.unit.unit_name}}</td>
 													<td>{{feedbackRectificationDTO.unit.unit_contacts_name}}</td>
 													<td>{{feedbackRectificationDTO.serviceClient.service_client_name}}</td>
-													<td>{{feedbackRectificationDTO.serviceClient.service_client_sex}}</td>
+													<td>{{feedbackRectificationDTO.serviceClient.service_client_sex==1?"男":"女"}}</td>
 													<td>{{feedbackRectificationDTO.serviceClient.service_client_phone}}</td>
 												</tr>
 												</template>

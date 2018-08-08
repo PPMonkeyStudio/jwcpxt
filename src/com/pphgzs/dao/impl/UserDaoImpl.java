@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.UserDao;
+import com.pphgzs.domain.DO.jwcpxt_entry_exit;
 import com.pphgzs.domain.DO.jwcpxt_user;
 
 public class UserDaoImpl implements UserDao {
@@ -91,6 +92,32 @@ public class UserDaoImpl implements UserDao {
 		session.flush();
 		return true;
 
+	}
+
+	@Override
+	public String getUnitCode_ByUnitName(String stringCellValue) {
+		Session session = getSession();
+		String hql = " select unit.unit_num from "//
+				+ " jwcpxt_unit unit"//
+				+ " where "//
+				+ " unit.unit_name = :name ";
+		Query query = session.createQuery(hql);
+		query.setParameter("name", stringCellValue);
+		String num = (String) query.uniqueResult();
+		session.clear();
+		return num;
+	}
+
+	@Override
+	public boolean saveObject(jwcpxt_entry_exit entry_exit) {
+		try {
+			Session session = getSession();
+			session.save(entry_exit);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }
