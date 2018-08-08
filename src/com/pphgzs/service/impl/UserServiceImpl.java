@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -162,6 +163,7 @@ public class UserServiceImpl implements UserService {
 		}
 		for (jwcpxt_entry_exit entry_exit : entryExitList) {
 			if (!userDao.saveObject(entry_exit)) {
+				System.out.println(entry_exit);
 				throw new Exception();
 			}
 		}
@@ -185,7 +187,7 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	private List<jwcpxt_entry_exit> HssUpload(Workbook workbook) throws ParseException {
+	private List<jwcpxt_entry_exit> HssUpload(Workbook workbook) throws ParseException, UnsupportedEncodingException {
 		List<jwcpxt_entry_exit> entryExitList = new LinkedList<jwcpxt_entry_exit>();
 		jwcpxt_entry_exit entry_exit;
 		HSSFSheet sheet = (HSSFSheet) workbook.getSheetAt(0);
@@ -193,7 +195,6 @@ public class UserServiceImpl implements UserService {
 		for (int i = 1, rowNum = sheet.getLastRowNum(); i <= rowNum; i++) {
 			HSSFRow row = sheet.getRow(i);
 			entry_exit = new jwcpxt_entry_exit();
-			String Sex;
 			for (int j = 0; j < 7; j++) {
 				HSSFCell cell = row.getCell(j);
 				switch (j) {
@@ -201,7 +202,7 @@ public class UserServiceImpl implements UserService {
 					entry_exit.setEntry_exit_client_name(cell.getStringCellValue());
 					break;
 				case 1:
-					Sex = cell.getStringCellValue();
+					String Sex = cell.getStringCellValue();
 					if ("男".equals(Sex)) {
 						entry_exit.setEntry_exit_client_sex("1");
 					} else if ("女".equals(Sex)) {
@@ -215,7 +216,11 @@ public class UserServiceImpl implements UserService {
 					entry_exit.setEntry_exit_client_id_type(cell.getStringCellValue());
 					break;
 				case 4:
-					entry_exit.setEntry_exit_client_phone(cell.getStringCellValue());
+					String phone = cell.getStringCellValue().trim();
+					if (phone.length() != 11) {
+						continue;
+					}
+					entry_exit.setEntry_exit_client_phone(cell.getStringCellValue().trim());
 					break;
 				case 5:
 					entry_exit.setEntry_exit_client_data(sdf.format(sdf.parse(cell.getStringCellValue())).toString());
@@ -238,7 +243,7 @@ public class UserServiceImpl implements UserService {
 		return entryExitList;
 	}
 
-	private List<jwcpxt_entry_exit> XssUpload(Workbook workbook) throws ParseException {
+	private List<jwcpxt_entry_exit> XssUpload(Workbook workbook) throws ParseException, UnsupportedEncodingException {
 		List<jwcpxt_entry_exit> entryExitList = new LinkedList<jwcpxt_entry_exit>();
 		jwcpxt_entry_exit entry_exit;
 		XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(0);
@@ -268,10 +273,13 @@ public class UserServiceImpl implements UserService {
 					entry_exit.setEntry_exit_client_id_type(cell.getStringCellValue());
 					break;
 				case 4:
-					entry_exit.setEntry_exit_client_phone(cell.getStringCellValue());
+					String phone = cell.getStringCellValue().trim();
+					if (phone.length() != 11) {
+						continue;
+					}
+					entry_exit.setEntry_exit_client_phone(cell.getStringCellValue().trim());
 					break;
 				case 5:
-					System.out.println(sdf.format(sdf.parse(cell.getStringCellValue())).toString());
 					entry_exit.setEntry_exit_client_data(sdf.format(sdf.parse(cell.getStringCellValue())).toString());
 					break;
 				case 6:
