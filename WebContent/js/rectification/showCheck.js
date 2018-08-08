@@ -9,6 +9,7 @@ var queryTemp = {
 	currPage : '1',
 	screenSearch : '',
 	screenCheckState : '-1',
+	searchHandleState : ''
 }
 
 $(function() {
@@ -32,7 +33,8 @@ function loadData() {
 		'checkFeedbackRectificationVO.screenSearch' : queryTemp.screenSearch,
 		'checkFeedbackRectificationVO.screenStartTime' : queryTemp.screenStartTime,
 		'checkFeedbackRectificationVO.screenEndTime' : queryTemp.screenEndTime,
-		'checkFeedbackRectificationVO.currPage' : queryTemp.currPage
+		'checkFeedbackRectificationVO.currPage' : queryTemp.currPage,
+		'checkFeedbackRectificationVO.searchHandleState' : queryTemp.searchHandleState
 	}
 	$.ajax({
 		url : '/jwcpxt/DissatisfiedFeedback/get_checkFeedbackRectificationVO',
@@ -51,6 +53,7 @@ function changeQuery() {
 	queryTemp.screenEndTime = $('#searchTimeEnd').val();
 	queryTemp.screenSearch = $('#searchTitle').val();
 	queryTemp.screenCheckState = $('#searchAuditState').val();
+	queryTemp.searchHandleState = $('#searchHandleState').val();
 	loadData();
 }
 

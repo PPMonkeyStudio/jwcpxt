@@ -50,7 +50,7 @@ a:hover {
 											style="display: inline; width: 150px;"> <input
 											id="searchTitle" style="display: inline; width: 250px;"
 											oninput="changeQuery()" class="form-control"
-											placeholder="请输入搜索内容">
+											placeholder="请输入搜索内容(问题,单位,联系方式)">
 									</div>
 									<div id="showDiscontent">
 										<table class="table table-striped" style="text-align: center;">

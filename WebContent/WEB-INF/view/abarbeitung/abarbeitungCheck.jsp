@@ -81,7 +81,13 @@ a:hover {
 															<option value="5">测评中心审核驳回</option>
 													</select></td>
 													<td>查看</td>
-													<td>操作</td>
+													<td style="width:140px;" >
+														<select id="searchHandleState" onchange="changeQuery()" class="form-control">
+															<option value="">办结状态</option>
+															<option value="1">在办</option>
+															<option value="2">办结</option>
+														</select>
+													</td>
 												</tr>
 											</thead>
 											<tbody id="checkTable">

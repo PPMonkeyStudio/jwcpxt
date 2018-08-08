@@ -280,6 +280,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " jwcpxt_user _user"//
 				+ " where "//
 				+ " dessatisfiedFeedback.dissatisfied_feedback_answer_choice = choice.jwcpxt_answer_choice_id "//
+				+ " and (question.question_describe like :searchTitle or unit.unit_name like :searchTitle or serviceClient.service_client_name like :searchTitle)"
 				+ " and choice.answer_choice_question = question.jwcpxt_question_id "//
 				+ " and choice.answer_choice_client = serviceClient.jwcpxt_service_client_id "//
 				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
@@ -294,6 +295,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " desc ";
 		Query query = session.createQuery(hql);
 		//
+		if (dissatisfiedQuestionVO.getSearchTitle() == null || "".equals(dissatisfiedQuestionVO.getSearchTitle())) {
+			query.setParameter("searchTitle", "%%");
+		} else {
+			query.setParameter("searchTitle", dissatisfiedQuestionVO.getSearchTitle());
+		}
 		if (dissatisfiedQuestionVO.getScreenState().equals("-1")) {
 			query.setParameter("screenState", "%%");
 		} else {
@@ -572,6 +578,8 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				//
 				+ " and unit.unit_father like :unitID "// 上级单位是传过来的单位
 				//
+				+ " and feedbackRectification.feedback_rectification_handle_state like :searchHandleState "// 办结状态
+
 				+ " and feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
 				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
 				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
@@ -586,7 +594,14 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " feedbackRectification.feedback_rectification_gmt_create "//
 				+ " desc ";
 		Query query = session.createQuery(hql);
-		// 办结情况
+		// 办理情况
+		if ("".equals(checkFeedbackRectificationVO.getSearchHandleState())
+				|| checkFeedbackRectificationVO.getSearchHandleState() == null) {
+			query.setParameter("searchHandleState", "%%");
+		} else {
+			query.setParameter("searchHandleState", checkFeedbackRectificationVO.getSearchHandleState());
+		}
+		// 审核情况
 		if (checkFeedbackRectificationVO.getScreenCheckState().equals("-1")) {
 			query.setParameter("screenCheckState", "%%");
 		} else {
@@ -647,6 +662,8 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				//
 				+ " and unit.unit_father like :unitID "// 上级单位是传过来的单位
 				//
+				+ " and feedbackRectification.feedback_rectification_handle_state like :searchHandleState "// 办结状态
+
 				+ " and feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id "//
 				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice=answerChoice.jwcpxt_answer_choice_id "//
 				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id "//
@@ -658,6 +675,13 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
 				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime ";
 		Query query = session.createQuery(hql);
+		// 办理情况
+		if ("".equals(checkFeedbackRectificationVO.getSearchHandleState())
+				|| checkFeedbackRectificationVO.getSearchHandleState() == null) {
+			query.setParameter("searchHandleState", "%%");
+		} else {
+			query.setParameter("searchHandleState", checkFeedbackRectificationVO.getSearchHandleState());
+		}
 		// 办结情况
 		if (checkFeedbackRectificationVO.getScreenCheckState().equals("-1")) {
 			query.setParameter("screenCheckState", "%%");
