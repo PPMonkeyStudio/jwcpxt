@@ -123,12 +123,19 @@ th {
 										<tbody v-cloak>
 											<template v-for="(ClientInfoDTO,index) in clientInfoVO">
 											<tr style="border-top: 1px solid #ddd;">
-												<th><a href="javascript:;"
-													@click="showClientInfomation($event)"
-													:id="ClientInfoDTO.serviceClient.jwcpxt_service_client_id">
-														<span
-														v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
-												</a></th>
+												<s:if test="#session.unit.unit_grade==1">
+													<th>
+														<a href="javascript:;" @click="showClientInfomation($event)"
+														:id="ClientInfoDTO.serviceClient.jwcpxt_service_client_id">
+														<span v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
+														</a>
+													</th>
+												</s:if>
+												<s:else>
+													<th>
+														<span v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
+													</th>
+												</s:else>
 												<td>{{ClientInfoDTO.serviceClient.service_client_sex=='1'?'男':'女'}}</td>
 												<td
 													v-html="ClientInfoDTO.serviceClient.service_client_phone"></td>

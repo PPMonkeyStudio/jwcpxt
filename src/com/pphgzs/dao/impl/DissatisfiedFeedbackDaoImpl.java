@@ -280,7 +280,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " jwcpxt_user _user"//
 				+ " where "//
 				+ " dessatisfiedFeedback.dissatisfied_feedback_answer_choice = choice.jwcpxt_answer_choice_id "//
-				+ " and (question.question_describe like :searchTitle or unit.unit_name like :searchTitle or serviceClient.service_client_name like :searchTitle)"
+				+ " and (question.question_describe like :searchTitle or unit.unit_name like :searchTitle or serviceClient.service_client_name like :searchTitle or serviceClient.service_client_phone like :searchTitle)"
 				+ " and choice.answer_choice_question = question.jwcpxt_question_id "//
 				+ " and choice.answer_choice_client = serviceClient.jwcpxt_service_client_id "//
 				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
@@ -298,7 +298,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		if (dissatisfiedQuestionVO.getSearchTitle() == null || "".equals(dissatisfiedQuestionVO.getSearchTitle())) {
 			query.setParameter("searchTitle", "%%");
 		} else {
-			query.setParameter("searchTitle", dissatisfiedQuestionVO.getSearchTitle());
+			query.setParameter("searchTitle", "%" + dissatisfiedQuestionVO.getSearchTitle() + "%");
 		}
 		if (dissatisfiedQuestionVO.getScreenState().equals("-1")) {
 			query.setParameter("screenState", "%%");

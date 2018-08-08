@@ -1,5 +1,7 @@
 package com.pphgzs.service;
 
+import java.io.File;
+
 import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.VO.UserVO;
 
@@ -18,5 +20,7 @@ public interface UserService {
 	boolean update_userPassword(jwcpxt_user user);
 
 	jwcpxt_user get_userDO_byRandomAndTypeCP();
+
+	boolean uploadExcel(File file, String fileFileName, String fileContentType) throws Exception;
 
 }

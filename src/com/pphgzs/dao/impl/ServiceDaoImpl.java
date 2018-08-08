@@ -267,6 +267,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());
 		query.setMaxResults(clientInfoVO.getPageSize());
 		listClientInfo = query.list();
+		System.out.println("size:"+listClientInfo.size());
 		//
 		session.clear();
 		/*
@@ -1206,7 +1207,7 @@ public class ServiceDaoImpl implements ServiceDao {
 	@Override
 	public ClientInfoDTO get_clientInfoVO_byClientId(jwcpxt_service_client client) {
 		Session session = getSession();
-		String hql = " select new com.pphgzs.domain.DTO.ClientInfoDTO(serviceClient,serviceInstance,serviceDefinition,user,unit) "
+		String hql = "select new com.pphgzs.domain.DTO.ClientInfoDTO(serviceClient,serviceInstance,serviceDefinition,user,unit) "
 				+ " from jwcpxt_service_client serviceClient,jwcpxt_service_instance serviceInstance,jwcpxt_service_definition serviceDefinition,jwcpxt_user user,jwcpxt_unit unit"
 				+ " where serviceClient.jwcpxt_service_client_id = :clientId "//
 				+ " and serviceInstance.jwcpxt_service_instance_id = serviceClient.service_client_service_instance "//

@@ -43,6 +43,10 @@
 					<li><a href="<%=basePath%>Skip/skipClientInformation">
 							<p>当事人</p>
 					</a></li>
+					<li><a href="javascript:;" onclick="uploadExcel()">
+							<p>上传Excel</p>
+					</a></li>
+					<script type="text/javascript" src="<%=basePath%>js/user/uploadExcel.js"></script>
 				</s:if>
 			</ul>
 		</div>
@@ -85,7 +89,6 @@
 						<li><a href="#" onclick="logout()">退出</a></li>
 					</ul></li>
 			</ul>
-
 		</div>
 	</div>
 	</nav>
