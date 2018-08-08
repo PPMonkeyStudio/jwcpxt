@@ -164,7 +164,7 @@ function randerCrowdFocusChart(res) {
 				data : [
 					{
 						name : null,
-						value : pieData[0].value * 3,
+						value : pieData[0].value * 5,
 					}, ...pieData
 				]
 			} ]

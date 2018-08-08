@@ -77,6 +77,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " jwcpxt_service_instance serviceInstance"//
 				+ " where"//
 				+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " and serviceInstance.service_instance_date >= :startHTime"
+				+ " and serviceInstance.service_instance_date <= :endHTime"//
 				+ " and serviceClient.service_client_gmt_modified >= :beforeDate"//
 				+ " and serviceClient.service_client_gmt_modified <= :afterDate"//
 				+ " and serviceInstance.service_instance_judge like :userId"//
@@ -84,14 +86,24 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		Query query = session.createQuery(hql);
 		// 昨天和今天
 		if ("".equals(returnVisitVO.getStartTime())) {
-			query.setParameter("beforeDate", "0000-00-00");
+			query.setParameter("startHTime", "0000-00-00");
 		} else {
-			query.setParameter("beforeDate", returnVisitVO.getStartTime() + " 00:00:00");
+			query.setParameter("startHTime", returnVisitVO.getStartTime());
 		}
 		if ("".equals(returnVisitVO.getEndTime())) {
+			query.setParameter("endHTime", "9999-99-99");
+		} else {
+			query.setParameter("endHTime", returnVisitVO.getEndTime());
+		}
+		if ("".equals(returnVisitVO.getStartHTime())) {
+			query.setParameter("beforeDate", "0000-00-00");
+		} else {
+			query.setParameter("beforeDate", returnVisitVO.getStartHTime() + " 00:00:00");
+		}
+		if ("".equals(returnVisitVO.getEndHTime())) {
 			query.setParameter("afterDate", "9999-99-99");
 		} else {
-			query.setParameter("afterDate", returnVisitVO.getEndTime() + " 23:59:59");
+			query.setParameter("afterDate", returnVisitVO.getEndHTime() + " 23:59:59");
 		}
 		if ("".equals(returnVisitVO.getUserId())) {
 			query.setParameter("userId", "%%");

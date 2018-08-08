@@ -53,8 +53,8 @@ a:hover {
 											class="mydate form-control"
 											style="display: inline; width: 150px;"> <input
 											id="searchTitle" style="display: inline; width: 250px;"
-											onchange="changeQuery()" class="form-control"
-											placeholder="请输入搜索内容">
+											oninput="changeQuery()" class="form-control"
+											placeholder="请输入问题标题进行搜索">
 
 									</div>
 									<div id="showContent">
@@ -87,10 +87,12 @@ a:hover {
 												<template
 													v-for=" feedbackRectification in rectificationVO.listFeedbackRectificationDTO ">
 												<tr>
-													<td>{{ feedbackRectification.feedbackRectification.feedback_rectification_no
+													<td>{{
+														feedbackRectification.feedbackRectification.feedback_rectification_no
 														}}</td>
 													<td>{{
-														feedbackRectification.feedbackRectification.feedback_rectification_title }}</td>
+														feedbackRectification.feedbackRectification.feedback_rectification_title
+														}}</td>
 													<td><template
 															v-if="feedbackRectification.feedbackRectification.feedback_rectification_handle_state == 1">
 														<span class="label label-primary">未办</span> </template> <template

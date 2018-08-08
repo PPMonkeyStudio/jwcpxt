@@ -137,7 +137,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		listAttentionDTO.add(dissatisfiedDTO);
 		//
 		/**
-		 * 按点数量正序   hy
+		 * 按点数量正序 hy
 		 */
 		Collections.sort(listAttentionDTO, new Comparator<DissatisfiedDTO>() {
 			public int compare(DissatisfiedDTO arg0, DissatisfiedDTO arg1) {
@@ -237,7 +237,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 						+ statisticsDao.getServiceOptionCount("安全感满意度", "请问您对本地公安局、派出所的工作是满意、比较满意、不太满意还是不满意？", "比较满意"));
 		listClientAttentionServiceDTO.add(clientAttentionServiceDTO);
 		/**
-		 * 按点数量正序  hy
+		 * 按点数量正序 hy
 		 */
 		Collections.sort(listClientAttentionServiceDTO, new Comparator<ClientAttentionServiceDTO>() {
 			public int compare(ClientAttentionServiceDTO arg0, ClientAttentionServiceDTO arg1) {
@@ -763,7 +763,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 			// 遍历需要统计的业务，查询这项业务分数
 			for (ServiceGradeDTO serviceGradeDTO : serviceGradeDTOList) {
 				double statisticsGrade;
-
 				// 创建一个业务分数DTO
 				ServiceGradeBelongUnitDTO serviceGradeBelongUnitDTO = new ServiceGradeBelongUnitDTO();
 				// 将业务DO放入到DTO中
@@ -779,6 +778,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 							searchTimeEnd);
 				}
 				totalGrade = totalGrade + statisticsGrade;
+				statisticsGrade = ((int) (statisticsGrade * 10000 + 0.5)) / 10000.0;
+				totalGrade = ((int) (totalGrade * 10000 + 0.5)) / 10000.0;
 				// 将所得分放入到DTO中
 				serviceGradeBelongUnitDTO.setGrade(statisticsGrade);
 				// 将一个业务及他的分数的DTO放入到DTO列表中
