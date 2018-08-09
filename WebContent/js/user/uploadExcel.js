@@ -30,6 +30,7 @@ function uploadExcel() {
 					if (flag) {
 						var formData = new FormData();
 						formData.append("file", uploadExcelConfirm.$content.find('#uploadExcelConfirm input').prop('files')[0])
+						$('#uploadIcon').show();
 						$.ajax({
 							url : '/jwcpxt/User/uploadExcel',
 							type : 'POST',
@@ -42,6 +43,7 @@ function uploadExcel() {
 								} else {
 									toastr.error("上传失败！");
 								}
+								$('#uploadIcon').hide();
 							}
 						})
 					} else {
