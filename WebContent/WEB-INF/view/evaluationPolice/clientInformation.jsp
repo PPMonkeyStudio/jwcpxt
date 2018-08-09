@@ -124,17 +124,18 @@ th {
 										<tbody v-cloak>
 											<template v-for="(ClientInfoDTO,index) in clientInfoVO">
 											<tr style="border-top: 1px solid #ddd;">
-												<s:if test="(#session.unit!=undefinded && #session.unit.unit_grade==1) || (#session.user!=undefinded && #session.loginType=='user')">
-													<th>
-														<a href="javascript:;" @click="showClientInfomation($event)"
+												<s:if
+													test="(#session.unit!=undefinded && #session.unit.unit_grade==1) || (#session.user!=undefinded && #session.loginType=='user')">
+													<th><a href="javascript:;"
+														@click="showClientInfomation($event)"
 														:id="ClientInfoDTO.serviceClient.jwcpxt_service_client_id">
-														<span v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
-														</a>
-													</th>
+															<span
+															v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
+													</a></th>
 												</s:if>
 												<s:else>
-													<th>
-														<span v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
+													<th><span
+														v-html="ClientInfoDTO.serviceClient.service_client_name"></span>
 													</th>
 												</s:else>
 												<td>{{ClientInfoDTO.serviceClient.service_client_sex=='1'?'男':'女'}}</td>
@@ -156,7 +157,11 @@ th {
 													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==7"
 													class="label label-warning">拒访</span> <span
 													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==8"
-													class="label label-warning">其他</span> <span v-else
+													class="label label-warning">其他</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==9"
+													class="label label-warning">关机</span> <span
+													v-else-if="ClientInfoDTO.serviceClient.service_client_visit==10"
+													class="label label-warning">非本人</span> <span v-else
 													class="label label-warning">未定义</span></td>
 												<td>{{ClientInfoDTO.serviceDefinition.service_definition_describe}}</td>
 												<td
