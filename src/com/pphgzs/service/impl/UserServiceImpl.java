@@ -182,7 +182,7 @@ public class UserServiceImpl implements UserService {
 		} else if (unitName.indexOf("莲花") > -1) {
 			return "360321060000";
 		} else if (unitName.indexOf("萍乡市公安局") > -1) {
-			return "360300240000";
+			return "360300240001";
 		}
 		return null;
 	}
