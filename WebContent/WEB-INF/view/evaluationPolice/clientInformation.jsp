@@ -124,7 +124,7 @@ th {
 										<tbody v-cloak>
 											<template v-for="(ClientInfoDTO,index) in clientInfoVO">
 											<tr style="border-top: 1px solid #ddd;">
-												<s:if test="#session.unit.unit_grade==1">
+												<s:if test="(#session.unit!=undefinded && #session.unit.unit_grade==1) || (#session.user!=undefinded && #session.loginType=='user')">
 													<th>
 														<a href="javascript:;" @click="showClientInfomation($event)"
 														:id="ClientInfoDTO.serviceClient.jwcpxt_service_client_id">
