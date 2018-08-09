@@ -23,4 +23,6 @@ public interface UserDao {
 
 	public boolean saveObject(jwcpxt_entry_exit entry_exit);
 
+	public boolean verificationEntryExit(jwcpxt_entry_exit entry_exit);
+
 }
