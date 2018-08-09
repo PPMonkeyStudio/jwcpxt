@@ -176,9 +176,10 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				+ " and feedbackRectification.feedback_rectification_audit_state = 1"//
-				+ " and feedbackRectification.feedback_rectification_gmt_create < DATE_SUB(DATE_FORMAT(CURRENT_TIME(),'%Y-%m-%d %T'),INTERVAL 5 day)";//
+				+ " and feedbackRectification.feedback_rectification_gmt_create < :beforeDate";//
 		//
 		Query query = session.createSQLQuery(hql);
+		query.setParameter("beforeDate", TimeUtil.getDateBefore(new Date(), 5));
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
