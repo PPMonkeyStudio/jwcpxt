@@ -58,6 +58,7 @@ th {
 											<option value="">全部</option>
 											<option value="不太满意">不太满意</option>
 											<option value="不满意">不满意</option>
+											<option value="建议">建议</option>
 										</select>
 										<div style="float: left; margin-left: 10px;">
 											<div class="form-group" style="margin: auto;">
@@ -123,7 +124,7 @@ th {
 										<tbody v-cloak>
 											<template v-for="(ClientInfoDTO,index) in clientInfoVO">
 											<tr style="border-top: 1px solid #ddd;">
-												<s:if test="#session.unit.unit_grade==1">
+												<s:if test="(#session.unit!=undefinded && #session.unit.unit_grade==1) || (#session.user!=undefinded && #session.loginType=='user')">
 													<th>
 														<a href="javascript:;" @click="showClientInfomation($event)"
 														:id="ClientInfoDTO.serviceClient.jwcpxt_service_client_id">
