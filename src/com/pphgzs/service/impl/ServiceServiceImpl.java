@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
-
 import com.pphgzs.dao.ServiceDao;
 import com.pphgzs.domain.DO.jwcpxt_grab_instance;
 import com.pphgzs.domain.DO.jwcpxt_grab_journal;
@@ -95,7 +93,6 @@ public class ServiceServiceImpl implements ServiceService {
 		jwcpxt_service_client client = new jwcpxt_service_client();
 
 		for (String clientId : listClientIdInfo) {
-			System.out.println(clientId);
 			client.setJwcpxt_service_client_id(clientId);
 			listClientInfoDTO.add(serviceDao.get_clientInfoVO_byClientId(client));
 		}
