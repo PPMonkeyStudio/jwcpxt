@@ -21,7 +21,7 @@
 						<p>首页</p>
 				</a></li>
 				<s:if test="#session.loginType=='unit'">
-					<s:if test="#session.unit.unit_grade==3">
+					<s:if test="#session.unit.unit_grade==3 || #session.unit.unit_grade==2">
 						<li><a href="<%=basePath%>Skip/skipAbarbeitungManager">
 								<p>整改</p>
 						</a></li>

@@ -81,13 +81,13 @@ a:hover {
 															<option value="5">测评中心审核驳回</option>
 													</select></td>
 													<td>查看</td>
-													<td style="width:140px;" >
-														<select id="searchHandleState" onchange="changeQuery()" class="form-control">
+													<td style="width: 140px;"><select
+														id="searchHandleState" onchange="changeQuery()"
+														class="form-control">
 															<option value="">办结状态</option>
 															<option value="1">在办</option>
 															<option value="2">办结</option>
-														</select>
-													</td>
+													</select></td>
 												</tr>
 											</thead>
 											<tbody id="checkTable">
@@ -97,12 +97,13 @@ a:hover {
 													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_no}}</td>
 													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_title}}</td>
 													<td>{{checkFeedbackRectification.feedbackRectification.feedback_rectification_unit_name}}</td>
-													<td>
-														<a href="javascript:;" onclick="skipToClientInfomation(this)" 
-														   :phone="checkFeedbackRectification.serviceClient.service_client_phone"
-														   :definitionId="checkFeedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
-														{{ checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name }}</a>
-													</td>
+													<td><a href="javascript:;"
+														onclick="skipToClientInfomation(this)"
+														:phone="checkFeedbackRectification.serviceClient.service_client_phone"
+														:definitionId="checkFeedbackRectification.serviceDefinition.jwcpxt_service_definition_id">
+															{{
+															checkFeedbackRectification.feedbackRectification.feedback_rectification_client_name
+															}}</a></td>
 													<td>{{
 														checkFeedbackRectification.feedbackRectification.feedback_rectification_client_phone
 														}}</td>
@@ -133,7 +134,7 @@ a:hover {
 															<template v-else> 无操作 </template> </template>
 														</s:if> <s:if test="#session.unit.unit_grade == 1">
 															<template
-																v-if="checkFeedbackRectification.feedbackRectification.feedback_rectification_audit_state == 2 || ((checkFeedbackRectification.unit.unit_grade == 2) && (checkFeedbackRectification.feedbackRectification.feedback_rectification_handle_state == 2))">
+																v-if="checkFeedbackRectification.feedbackRectification.feedback_rectification_audit_state == 2 || ((checkFeedbackRectification.unit.unit_grade == 2) && (checkFeedbackRectification.feedbackRectification.feedback_rectification_handle_state == 2) && (checkFeedbackRectification.feedbackRectification.feedback_rectification_audit_state == 1))">
 															<a onclick="checkRectification(this,2)"
 																:id="checkFeedbackRectification.feedbackRectification.jwcpxt_feedback_rectification_id">通过</a>
 															|<a onclick="checkRectification(this,3)"
