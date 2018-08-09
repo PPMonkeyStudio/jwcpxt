@@ -58,7 +58,7 @@ th {
 											<option value="">全部</option>
 											<option value="不太满意">不太满意</option>
 											<option value="不满意">不满意</option>
-											<option value="建议">建议</option>
+											<option value="有建议">建议</option>
 										</select>
 										<div style="float: left; margin-left: 10px;">
 											<div class="form-group" style="margin: auto;">
