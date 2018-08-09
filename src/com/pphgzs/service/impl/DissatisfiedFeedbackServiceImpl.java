@@ -230,11 +230,11 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 							+ "的反馈整改,请在5个自然日内完成整改，并由主管单位进行审核";
 					// 发短信
 					SendMessageUtil sendMessageUtil = new SendMessageUtil(dutyUnit.getUnit_phone(), unitDXNR);
-					try {
+					/*try {
 						sendMessageUtil.send();
 					} catch (IOException e) {
 						e.printStackTrace();
-					}
+					}*/
 					// 通知上级单位
 					jwcpxt_unit dutyUnitFather = new jwcpxt_unit();
 					dutyUnitFather = unitService.get_unitDO_byID(dutyUnit.getUnit_father());
@@ -244,11 +244,11 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 								+ "的反馈整改,请在5个自然日内监督下属单位整改并进行审核";
 						// 发短信
 						sendMessageUtil = new SendMessageUtil(dutyUnitFather.getUnit_phone(), unitDXNR);
-						try {
+						/*try {
 							sendMessageUtil.send();
 						} catch (IOException e) {
 							e.printStackTrace();
-						}
+						}*/
 					}
 				}
 			} else if (unit.getUnit_grade() == 2) {
@@ -262,11 +262,11 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 							+ "的反馈整改,请在5个自然日内完成整改，并由主管单位重新进行审核";
 					// 发短信
 					SendMessageUtil sendMessageUtil = new SendMessageUtil(dutyUnit.getUnit_phone(), unitDXNR);
-					try {
+					/*try {
 						sendMessageUtil.send();
 					} catch (IOException e) {
 						e.printStackTrace();
-					}
+					}*/
 				}
 			}
 			return true;
@@ -365,11 +365,11 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 					+ feeRectification.getFeedback_rectification_no() + "的反馈整改,请尽快对该整改情况进行审核。";
 			// 发短信
 			SendMessageUtil sendMessageUtil = new SendMessageUtil(unitFather.getUnit_phone(), unitDXNR);
-			try {
+			/*try {
 				sendMessageUtil.send();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}*/
 		}
 		return true;
 	}
@@ -458,16 +458,16 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		feedbackRectification
 				.setFeedback_rectification_gmt_modified(feedbackRectification.getFeedback_rectification_gmt_create());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(feedbackRectification);
-		try {
-			/**
+		/*try {
+			*//**
 			 * 推送的时候需要短信通知
-			 */
+			 *//*
 			// 责任单位短信
 			if (unit != null) {
 				String unitDXNR = "单位<" + unit.getUnit_name() + ">接受到一条整改信息,请在5个自然日内对该整改做出反馈,并完成主管部门的审核。";
 				// 发短信
 				SendMessageUtil sendMessageUtil = new SendMessageUtil(unit.getUnit_phone(), unitDXNR);
-				sendMessageUtil.send();
+//				sendMessageUtil.send();
 			}
 			// 根据责任单位获取该责任单位的上级单位
 			unitFather = unitService.get_unitDO_byID(unit.getUnit_father());
@@ -482,7 +482,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		return true;
 	}
 
