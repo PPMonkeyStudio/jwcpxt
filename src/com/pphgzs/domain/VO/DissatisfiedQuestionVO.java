@@ -27,6 +27,8 @@ public class DissatisfiedQuestionVO {
 	private int pageSize = 10;
 	// 模糊筛选
 	private String searchTitle;
+	// 业务id筛选
+	private String searchService;
 
 	public List<DissatisfiedQuestionDTO> getListDissatisfiedQuestionDTO() {
 		return listDissatisfiedQuestionDTO;
@@ -98,6 +100,14 @@ public class DissatisfiedQuestionVO {
 
 	public void setSearchTitle(String searchTitle) {
 		this.searchTitle = searchTitle;
+	}
+
+	public String getSearchService() {
+		return searchService;
+	}
+
+	public void setSearchService(String searchService) {
+		this.searchService = searchService;
 	}
 
 	@Override

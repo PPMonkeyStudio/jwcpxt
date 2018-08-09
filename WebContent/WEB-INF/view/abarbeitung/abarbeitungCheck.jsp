@@ -48,6 +48,7 @@ a:hover {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
+										<select class="selectpicker" title="选择业务..." id="searchService" data-live-search="true" onchange="changeQuery(this)"></select>
 										<label style="color: black;">整改时间</label> <input
 											onchange="changeQuery()" id="searchTimeStart"
 											class="mydate form-control"
@@ -58,7 +59,7 @@ a:hover {
 											style="display: inline; width: 150px;"> <input
 											id="searchTitle" style="display: inline; width: 250px;"
 											oninput="changeQuery()" class="form-control"
-											placeholder="请输入单位名称搜索">
+											placeholder="请输入(编号,单位,问题。。。)">
 
 									</div>
 									<div id="showContent">

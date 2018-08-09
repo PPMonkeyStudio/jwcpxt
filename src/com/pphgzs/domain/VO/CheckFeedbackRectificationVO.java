@@ -27,6 +27,8 @@ public class CheckFeedbackRectificationVO {
 	private int totalCount = 0;
 	// 每页记录数
 	private int pageSize = 10;
+	// 业务筛选
+	private String searchService;
 
 	public List<FeedbackRectificationDTO> getListFeedbackRectificationDTO() {
 		return listFeedbackRectificationDTO;
@@ -110,6 +112,14 @@ public class CheckFeedbackRectificationVO {
 			this.searchHandleState = "%";
 		} else
 			this.searchHandleState = searchHandleState;
+	}
+
+	public String getSearchService() {
+		return searchService;
+	}
+
+	public void setSearchService(String searchService) {
+		this.searchService = searchService;
 	}
 
 	@Override
