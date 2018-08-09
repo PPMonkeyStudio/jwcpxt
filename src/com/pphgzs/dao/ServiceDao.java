@@ -34,6 +34,7 @@ public interface ServiceDao {
 	public ClientInstanceDTO get_notServiceClientDTO_byJudge_revisit(String jwcpxt_user_id);
 
 	public ClientInstanceDTO get_notServiceClientDTO_byJudge_specified(String jwcpxt_service_client_id);
+
 	/**
 	 * 根据业务定义id获取抓取表
 	 * 
@@ -175,9 +176,10 @@ public interface ServiceDao {
 	 * @return
 	 */
 	public int get_clientInfoVOCount_byUserId(ClientInfoVO clientInfoVO);
-	
+
 	/**
 	 * 通过当事人ID获取有关业务实例关联的所有信息，放入ClientInfoDTO内
+	 * 
 	 * @param client
 	 * @return
 	 */
@@ -231,17 +233,22 @@ public interface ServiceDao {
 	 * @param jwcpxt_service_client_id
 	 * @return
 	 */
-	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(
-			jwcpxt_question question, String jwcpxt_service_client_id);
-	
+	public List<jwcpxt_question> get_askQusetionList_ByQuestionAndClientId(jwcpxt_question question,
+			String jwcpxt_service_client_id);
+
 	/**
 	 * 通过当事人ID获取业务实例DO
+	 * 
 	 * @param serviceClient
 	 * @return
 	 */
 	public jwcpxt_service_instance get_serviceInstanceDo_byServiceClientID(jwcpxt_service_client serviceClient);
 
-
-
+	/**
+	 * 判断电话是否在七天内被访问过
+	 * 
+	 * @param grab_instance_client_phone
+	 */
+	public jwcpxt_service_client getClientByPhoneDate(String grab_instance_client_phone);
 
 }

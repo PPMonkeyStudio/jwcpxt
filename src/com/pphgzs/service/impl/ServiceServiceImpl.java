@@ -208,10 +208,7 @@ public class ServiceServiceImpl implements ServiceService {
 		 * 
 		 * 4、在剩下的list中随机选取一个单位业务关联DO，通过这个DO，随机取一个抓取实例分配到业务实例中给这个测评员
 		 * 
-		 * 
-		 * 
 		 */
-
 		// 查询所有单位关联业务表
 		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
 		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
@@ -235,22 +232,12 @@ public class ServiceServiceImpl implements ServiceService {
 				currNum = get_serviceInstanceCount_byServiceDefinitionAndUnit(unitServiceDO.getService_definition_id(),
 						unitServiceDO.getUnit_id());
 			}
-
 			// 分配足够了的就移出列表
 			if (currNum >= wantNum) {
 				iterator.remove();
 				// unitServiceList.remove(unitServiceDO);
 			}
 		}
-		// for (jwcpxt_unit_service unitServiceDO : unitServiceList) {
-		//
-		// }
-		// 遍历一下这个列表
-		/*
-		 * for (jwcpxt_unit_service jwcpxt_unit_service : unitServiceList) {
-		 * System.out.println("单位业务关联表：" + jwcpxt_unit_service); }
-		 */
-
 		// 随机取一个单位业务关联DO作为分配，如果这个单位没有数据，那么就换一个单位
 		jwcpxt_grab_instance grabInstance = null;
 		jwcpxt_unit_service thisUnitService = null;
@@ -267,6 +254,13 @@ public class ServiceServiceImpl implements ServiceService {
 				// 随机此业务，此单位，未被分配的一个抓取实例
 				grabInstance = get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
 						thisUnitService.getService_definition_id(), unit.getUnit_account());
+			}
+			// 判断这个实例是否在七天内出现过
+			if (grabInstance != null && grabInstance.getGrab_instance_client_phone() != null
+					&& !"".equals(grabInstance.getGrab_instance_client_phone())) {
+				if (serviceDao.getClientByPhoneDate(grabInstance.getGrab_instance_client_phone()) != null) {
+					grabInstance = null;
+				}
 			}
 			if (grabInstance != null) {
 				break;
@@ -292,14 +286,6 @@ public class ServiceServiceImpl implements ServiceService {
 		serviceInstance.setService_instance_belong_unit(belongUnit.getJwcpxt_unit_id());
 		serviceInstance.setService_instance_judge(userID);
 		serviceInstance.setService_instance_nid(grabInstance.getGrab_instance_unique_id());
-		/*
-		 * if (grabInstance.getGrab_instance_service_time() == null ||
-		 * "".equals(grabInstance.getGrab_instance_service_time())) {
-		 * serviceInstance.setService_instance_date(TimeUtil.getStringDay()); }else {
-		 * serviceInstance.setService_instance_date(
-		 * TimeUtil.longDateFormatDate(grabInstance. getGrab_instance_service_time()));
-		 * }
-		 */
 		try {
 			serviceInstance.setService_instance_date(
 					TimeUtil.longDateFormatDate(grabInstance.getGrab_instance_service_time()));
@@ -319,8 +305,6 @@ public class ServiceServiceImpl implements ServiceService {
 		newServiceClient.setService_client_gmt_create(TimeUtil.getStringSecond());
 		newServiceClient.setService_client_gmt_modified(newServiceClient.getService_client_gmt_create());
 		serviceDao.saveOrUpdateObject(newServiceClient);
-		//
-
 		// 并且更新抓取实例的状态
 		grabInstance.setGrab_instance_distribution("1");
 		update_grabInstance(grabInstance);
@@ -817,7 +801,6 @@ public class ServiceServiceImpl implements ServiceService {
 		serviceGrabOld.setService_grab_handle_time_field(serviceGrabNew.getService_grab_handle_time_field());
 		serviceGrabOld.setService_grab_connect_one_field(serviceGrabNew.getService_grab_connect_two_field());
 		serviceGrabOld.setService_grab_connect_two_field(serviceGrabNew.getService_grab_connect_two_field());
-
 		//
 		serviceGrabOld.setService_grab_gmt_modified(TimeUtil.getStringSecond());
 		if (serviceDao.update_serviceGrab(serviceGrabOld)) {

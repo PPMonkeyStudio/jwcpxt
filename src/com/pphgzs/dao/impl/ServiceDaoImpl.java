@@ -871,18 +871,14 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " and fatherUnit.unit_num=:organizationCode "// 查出二级单位
 				+ " and grabInstance.grab_instance_service_definition=:serviceDefinitionID "//
 				+ " and grabInstance.grab_instance_organization_code=unit.unit_num "// 抓取实例的机构代码=三级单位的机构代码
-				+ " and grabInstance.grab_instance_client_phone not in("//
-				+ " select "//
-				+ "	t.service_client_phone"//
-				+ " from jwcpxt_service_client t"//
-				+ " where"//
-				+ " t.service_client_gmt_create < :ddd)"//
-				+ " order by rand() "//
-		;
+				/*
+				 * + " and grabInstance.grab_instance_client_phone not in("// + " select "// +
+				 * "	t.service_client_phone"// + " from jwcpxt_service_client t"// +
+				 * " where"// + " t.service_client_gmt_create < :ddd)"//
+				 */ + " order by rand() ";
 		Query query = session.createQuery(hql);
 		//
 		String date = TimeUtil.getStringDay_before7();
-		query.setParameter("ddd", date + " 00:00:00");
 		date = date.replaceAll("-", "");
 		//
 		query.setParameter("date", date);
@@ -1210,6 +1206,20 @@ public class ServiceDaoImpl implements ServiceDao {
 		ClientInfoDTO clientInfoDTO = (ClientInfoDTO) query.uniqueResult();
 		session.clear();
 		return clientInfoDTO;
+	}
+
+	@Override
+	public jwcpxt_service_client getClientByPhoneDate(String grab_instance_client_phone) {
+		Session session = getSession();
+		jwcpxt_service_client jwcpxt_service_client = new jwcpxt_service_client();
+		String hql = "from jwcpxt_service_client where service_client_phone = :phone and service_client_gmt_create<:date";
+		Query query = session.createQuery(hql);
+		String date = TimeUtil.getStringDay_before7();
+		query.setParameter("phone", grab_instance_client_phone);
+		query.setParameter("date", date + " 00:00:00");
+		jwcpxt_service_client = (jwcpxt_service_client) query.uniqueResult();
+		session.clear();
+		return jwcpxt_service_client;
 	}
 
 	/*
