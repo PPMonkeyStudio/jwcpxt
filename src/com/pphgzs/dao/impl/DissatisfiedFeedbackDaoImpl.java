@@ -280,13 +280,21 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " jwcpxt_user _user"//
 				+ " where "//
 				+ " dessatisfiedFeedback.dissatisfied_feedback_answer_choice = choice.jwcpxt_answer_choice_id "//
-				+ " and (question.question_describe like :searchTitle or unit.unit_name like :searchTitle or serviceClient.service_client_name like :searchTitle or serviceClient.service_client_phone like :searchTitle)"
+				+ " and ( "
+				+ " question.question_describe like :searchTitle "
+				+ " or unit.unit_name like :searchTitle "
+				+ " or serviceClient.service_client_name like :searchTitle "
+				+ " or serviceClient.service_client_phone like :searchTitle "
+				+ " )"
 				+ " and choice.answer_choice_question = question.jwcpxt_question_id "//
 				+ " and choice.answer_choice_client = serviceClient.jwcpxt_service_client_id "//
 				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id "//
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id "//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
 				+ " and serviceInstance.service_instance_judge = _user.jwcpxt_user_id "//
+				
+				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService "//
+				
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_state  like :screenState " //
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create >= :screenStartTime "//
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create <= :screenEndTime "//
@@ -294,6 +302,12 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " dessatisfiedFeedback.dissatisfied_feedback_gmt_create "//
 				+ " desc ";
 		Query query = session.createQuery(hql);
+		//
+		if (dissatisfiedQuestionVO.getSearchService() == null || "".equals(dissatisfiedQuestionVO.getSearchService())) {
+			query.setParameter("searchService", "%%");
+		} else {
+			query.setParameter("searchService", "%" + dissatisfiedQuestionVO.getSearchService() + "%");
+		}
 		//
 		if (dissatisfiedQuestionVO.getSearchTitle() == null || "".equals(dissatisfiedQuestionVO.getSearchTitle())) {
 			query.setParameter("searchTitle", "%%");
@@ -572,9 +586,16 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " feedbackRectification.feedback_rectification_audit_state like :screenCheckState "//
 				//
 				+ " and "//
-				+ " ( feedbackRectification.feedback_rectification_title like :screenSearch "//
+				+ " ( "
+				+ " feedbackRectification.feedback_rectification_title like :screenSearch "//
 				+ " or feedbackRectification.feedback_rectification_client_name like :screenSearch "//
-				+ " or feedbackRectification.feedback_rectification_unit_name like :screenSearch ) "//
+				
+				+ " or feedbackRectification.feedback_rectification_no like :screenSearch "//
+				+ " or question.question_describe like :screenSearch "//
+				+ " or serviceClient.service_client_phone like :screenSearch "//
+				
+				+ " or feedbackRectification.feedback_rectification_unit_name like :screenSearch "
+				+ " ) "//
 				//
 				+ " and unit.unit_father like :unitID "// 上级单位是传过来的单位
 				//
@@ -588,12 +609,20 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				//
+				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService "//
+				//
 				+ " and feedbackRectification.feedback_rectification_gmt_create >= :screenStartTime "//
 				+ " and feedbackRectification.feedback_rectification_gmt_create <= :screenEndTime "//
 				+ " order by "//
 				+ " feedbackRectification.feedback_rectification_gmt_create "//
 				+ " desc ";
 		Query query = session.createQuery(hql);
+		//业务
+		if (checkFeedbackRectificationVO.getSearchService() == null || "".equals(checkFeedbackRectificationVO.getSearchService())) {
+			query.setParameter("searchService", "%%");
+		} else {
+			query.setParameter("searchService", "%" + checkFeedbackRectificationVO.getSearchService() + "%");
+		}
 		// 办理情况
 		if ("".equals(checkFeedbackRectificationVO.getSearchHandleState())
 				|| checkFeedbackRectificationVO.getSearchHandleState() == null) {

@@ -40,6 +40,7 @@ a:hover {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
+										<select class="selectpicker" title="选择业务..." id="searchService" data-live-search="true" onchange="changeQuery(this)"></select>
 										<label style="color: black">反馈时间</label> <input
 											onchange="changeQuery()" id="startTime"
 											class="mydate form-control"

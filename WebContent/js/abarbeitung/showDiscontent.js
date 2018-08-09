@@ -8,7 +8,8 @@ var queryTemp = {
 	'searchTimeStart' : '',
 	'searchTimeEnd' : '',
 	'searchStatus' : '-1',
-	'searchTitle' : ''
+	'searchTitle' : '',
+	'searchService' : ''
 }
 
 $(function() {
@@ -21,6 +22,14 @@ $(function() {
 	$('#startTime').val('');
 	$('#endTime').val('');
 	loadData();
+	//获取所有的业务
+	$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
+		let str = `<option value="">全部</option>`;
+		response.forEach(function(elt, i) {
+			str += `<option value="${elt.jwcpxt_service_definition_id}">${elt.service_definition_describe}</option>`;
+		})
+		$('#searchService').html(str).selectpicker('refresh');
+	}, 'json');
 })
 
 function loadData() {
@@ -31,7 +40,8 @@ function loadData() {
 		'dissatisfiedQuestionVO.screenEndTime' : queryTemp.searchTimeEnd,
 		'dissatisfiedQuestionVO.screenState' : queryTemp.searchStatus,
 		'dissatisfiedQuestionVO.currPage' : queryTemp.currPage,
-		'dissatisfiedQuestionVO.searchTitle' : queryTemp.searchTitle
+		'dissatisfiedQuestionVO.searchTitle' : queryTemp.searchTitle,
+		'dissatisfiedQuestionVO.searchService' : queryTemp.searchService
 	}
 	$.ajax({
 		url : '/jwcpxt/DissatisfiedFeedback/get_dissatisfiedQuestionVO',
@@ -50,6 +60,7 @@ function changeQuery() {
 	queryTemp.searchTimeEnd = $('#endTime').val();
 	queryTemp.searchStatus = $('#searchState').val();
 	queryTemp.searchTitle = $('#searchTitle').val();
+	queryTemp.searchService = $('#searchService').val();
 	loadData();
 }
 

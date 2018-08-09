@@ -9,7 +9,8 @@ var queryTemp = {
 	currPage : '1',
 	screenSearch : '',
 	screenCheckState : '-1',
-	searchHandleState : ''
+	searchHandleState : '',
+	searchService : ''
 }
 
 $(function() {
@@ -23,6 +24,14 @@ $(function() {
 	$('#searchTimeEnd').val('');
 	$('#searchTitle').val('');
 	loadData();
+	//获取所有的业务
+	$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
+		let str = `<option value="">全部</option>`;
+		response.forEach(function(elt, i) {
+			str += `<option value="${elt.jwcpxt_service_definition_id}">${elt.service_definition_describe}</option>`;
+		})
+		$('#searchService').html(str).selectpicker('refresh');
+	}, 'json');
 })
 
 function loadData() {
@@ -34,7 +43,8 @@ function loadData() {
 		'checkFeedbackRectificationVO.screenStartTime' : queryTemp.screenStartTime,
 		'checkFeedbackRectificationVO.screenEndTime' : queryTemp.screenEndTime,
 		'checkFeedbackRectificationVO.currPage' : queryTemp.currPage,
-		'checkFeedbackRectificationVO.searchHandleState' : queryTemp.searchHandleState
+		'checkFeedbackRectificationVO.searchHandleState' : queryTemp.searchHandleState,
+		'checkFeedbackRectificationVO.searchService' : queryTemp.searchService
 	}
 	$.ajax({
 		url : '/jwcpxt/DissatisfiedFeedback/get_checkFeedbackRectificationVO',
@@ -54,6 +64,7 @@ function changeQuery() {
 	queryTemp.screenSearch = $('#searchTitle').val();
 	queryTemp.screenCheckState = $('#searchAuditState').val();
 	queryTemp.searchHandleState = $('#searchHandleState').val();
+	queryTemp.searchService = $('#searchService').val();
 	loadData();
 }
 
