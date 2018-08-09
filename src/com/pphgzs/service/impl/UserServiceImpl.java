@@ -147,7 +147,6 @@ public class UserServiceImpl implements UserService {
 	public boolean uploadExcel(File file, String fileFileName, String fileContentType) throws Exception {
 		FileInputStream inputStream = new FileInputStream(file);
 		// 文件的后缀名
-		System.out.println(fileFileName);
 		String suffix = fileFileName.substring(fileFileName.lastIndexOf("."));
 		List<jwcpxt_entry_exit> entryExitList = new LinkedList<jwcpxt_entry_exit>();
 		Workbook workbook = null;
@@ -162,9 +161,10 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 		for (jwcpxt_entry_exit entry_exit : entryExitList) {
-			if (!userDao.saveObject(entry_exit)) {
-				System.out.println(entry_exit);
-				throw new Exception();
+			if (userDao.verificationEntryExit(entry_exit)) {// true为不存在该记录
+				if (!userDao.saveObject(entry_exit)) {
+					throw new Exception();
+				}
 			}
 		}
 		return true;
@@ -182,17 +182,42 @@ public class UserServiceImpl implements UserService {
 		} else if (unitName.indexOf("莲花") > -1) {
 			return "360321060000";
 		} else if (unitName.indexOf("萍乡市公安局") > -1) {
-			return "360300240000";
+			return "360300240001";
 		}
 		return null;
 	}
 
-	private List<jwcpxt_entry_exit> HssUpload(Workbook workbook) throws ParseException, UnsupportedEncodingException {
+	private List<jwcpxt_entry_exit> HssUpload(Workbook workbook) throws Exception {
 		List<jwcpxt_entry_exit> entryExitList = new LinkedList<jwcpxt_entry_exit>();
 		jwcpxt_entry_exit entry_exit;
 		HSSFSheet sheet = (HSSFSheet) workbook.getSheetAt(0);
+
+		boolean flag = true;
+		HSSFRow row0 = sheet.getRow(0);
+		if (row0.getLastCellNum() > 7) {
+			flag = false;
+		} else if (!"中文姓名".equals(row0.getCell(0).getStringCellValue())) {
+			flag = false;
+		} else if (!"性别".equals(row0.getCell(1).getStringCellValue())) {
+			flag = false;
+		} else if (!"办证类别".equals(row0.getCell(2).getStringCellValue())) {
+			flag = false;
+		} else if (!"证件种类".equals(row0.getCell(3).getStringCellValue())) {
+			flag = false;
+		} else if (!"联系电话".equals(row0.getCell(4).getStringCellValue())) {
+			flag = false;
+		} else if (!"受理日期".equals(row0.getCell(5).getStringCellValue())) {
+			flag = false;
+		} else if (!"受理单位".equals(row0.getCell(6).getStringCellValue())) {
+			flag = false;
+		}
+		if (!flag) {
+			System.out.println("表格格式不正确");
+			throw new Exception();
+		}
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		for (int i = 1, rowNum = sheet.getLastRowNum(); i <= rowNum; i++) {
+		cell: for (int i = 1, rowNum = sheet.getLastRowNum(); i <= rowNum; i++) {
 			HSSFRow row = sheet.getRow(i);
 			entry_exit = new jwcpxt_entry_exit();
 			for (int j = 0; j < 7; j++) {
@@ -217,8 +242,8 @@ public class UserServiceImpl implements UserService {
 					break;
 				case 4:
 					String phone = cell.getStringCellValue().trim();
-					if (phone.length() != 11) {
-						continue;
+					if (phone.length() > 11) {
+						continue cell;
 					}
 					entry_exit.setEntry_exit_client_phone(cell.getStringCellValue().trim());
 					break;
@@ -243,12 +268,37 @@ public class UserServiceImpl implements UserService {
 		return entryExitList;
 	}
 
-	private List<jwcpxt_entry_exit> XssUpload(Workbook workbook) throws ParseException, UnsupportedEncodingException {
+	private List<jwcpxt_entry_exit> XssUpload(Workbook workbook) throws Exception {
 		List<jwcpxt_entry_exit> entryExitList = new LinkedList<jwcpxt_entry_exit>();
 		jwcpxt_entry_exit entry_exit;
 		XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(0);
+
+		boolean flag = true;
+		XSSFRow row0 = sheet.getRow(0);
+		if (row0.getLastCellNum() > 7) {
+			flag = false;
+		} else if (!"中文姓名".equals(row0.getCell(0).getStringCellValue())) {
+			flag = false;
+		} else if (!"性别".equals(row0.getCell(1).getStringCellValue())) {
+			flag = false;
+		} else if (!"办证类别".equals(row0.getCell(2).getStringCellValue())) {
+			flag = false;
+		} else if (!"证件种类".equals(row0.getCell(3).getStringCellValue())) {
+			flag = false;
+		} else if (!"联系电话".equals(row0.getCell(4).getStringCellValue())) {
+			flag = false;
+		} else if (!"受理日期".equals(row0.getCell(5).getStringCellValue())) {
+			flag = false;
+		} else if (!"受理单位".equals(row0.getCell(6).getStringCellValue())) {
+			flag = false;
+		}
+		if (!flag) {
+			System.out.println("表格格式不正确");
+			throw new Exception();
+		}
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		for (int i = 1, rowNum = sheet.getLastRowNum(); i <= rowNum; i++) {
+		cell: for (int i = 1, rowNum = sheet.getLastRowNum(); i <= rowNum; i++) {
 			XSSFRow row = sheet.getRow(i);
 			entry_exit = new jwcpxt_entry_exit();
 			String Sex;
@@ -274,10 +324,10 @@ public class UserServiceImpl implements UserService {
 					break;
 				case 4:
 					String phone = cell.getStringCellValue().trim();
-					if (phone.length() != 11) {
-						continue;
-					}
-					entry_exit.setEntry_exit_client_phone(cell.getStringCellValue().trim());
+					if (phone.length() > 11) {
+						continue cell;
+					} else
+						entry_exit.setEntry_exit_client_phone(cell.getStringCellValue().trim());
 					break;
 				case 5:
 					entry_exit.setEntry_exit_client_data(sdf.format(sdf.parse(cell.getStringCellValue())).toString());

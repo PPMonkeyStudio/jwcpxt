@@ -120,4 +120,36 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
+	@Override
+	public boolean verificationEntryExit(jwcpxt_entry_exit entry_exit) {
+		boolean flag = true;
+		Session session = getSession();
+		String hql = " select entry_exit from "//
+				+ " jwcpxt_entry_exit entry_exit "//
+				+ " where "//
+				+ " entry_exit.entry_exit_client_name = :name "//
+				+ " and entry_exit.entry_exit_client_sex = :sex "//
+				+ " and entry_exit.entry_exit_client_phone = :phone "//
+				+ " and entry_exit.entry_exit_client_data = :data " //
+				+ " and entry_exit.entry_exit_client_unit = :unit "//
+				+ " and entry_exit.entry_exit_client_type = :type "//
+				+ " and entry_exit.entry_exit_client_id_type = :id_type "//
+				+ " and entry_exit.entry_exit_client_is_distribute = :distribute ";//
+		Query query = session.createQuery(hql);
+		query.setParameter("name", entry_exit.getEntry_exit_client_name());
+		query.setParameter("sex", entry_exit.getEntry_exit_client_sex());
+		query.setParameter("phone", entry_exit.getEntry_exit_client_phone());
+		query.setParameter("data", entry_exit.getEntry_exit_client_data());
+		query.setParameter("unit", entry_exit.getEntry_exit_client_unit());
+		query.setParameter("type", entry_exit.getEntry_exit_client_type());
+		query.setParameter("id_type", entry_exit.getEntry_exit_client_id_type());
+		query.setParameter("distribute", entry_exit.getEntry_exit_client_is_distribute());
+		List<jwcpxt_entry_exit> list = query.list();
+		if (list.size() > 0) {
+			flag = false;
+		}
+		session.clear();
+		return flag;
+	}
+
 }
