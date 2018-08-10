@@ -85,7 +85,8 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	 */
 	public void get_countExceedTimeFive() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(dissatisfiedFeedbackService.get_countExceedTimeFive() + "");
+		http_response.getWriter()
+				.write(dissatisfiedFeedbackService.get_countExceedTimeFive(feedbackRectificationExceedTimeVO) + "");
 	}
 
 	/**
@@ -118,7 +119,8 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		http_response.setContentType("text/html;charset=utf-8");
 		jwcpxt_unit unit = new jwcpxt_unit();
 		unit = (jwcpxt_unit) ActionContext.getContext().getSession().get("unit");
-		checkFeedbackRectificationVO = dissatisfiedFeedbackService.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
+		checkFeedbackRectificationVO = dissatisfiedFeedbackService
+				.get_checkFeedbackRectificationVO(checkFeedbackRectificationVO, unit);
 		http_response.getWriter().write(gson.toJson(checkFeedbackRectificationVO));
 	}
 

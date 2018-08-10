@@ -94,7 +94,7 @@ public interface DissatisfiedFeedbackService {
 	 * 
 	 * @return
 	 */
-	public int get_countExceedTimeFive();
+	public int get_countExceedTimeFive(FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO);
 
 	/**
 	 * 获取超过五天期限仍然未进行整改整改反馈DTO

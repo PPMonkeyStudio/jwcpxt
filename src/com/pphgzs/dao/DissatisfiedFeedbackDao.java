@@ -131,7 +131,7 @@ public interface DissatisfiedFeedbackDao {
 	 * 
 	 * @return
 	 */
-	public int get_countExceedTimeFive();
+	public int get_countExceedTimeFive(FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO);
 
 	/**
 	 * 获取5天仍然未进行整改的反馈整改记录

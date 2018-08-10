@@ -14,6 +14,12 @@ public class FeedbackRectificationExceedTimeVO {
 	private String search = "";
 	// 当前页
 	private int currPage = 1;
+	// 业务名称
+	private String searchService = "";
+	// 整改的创建时间开始时间
+	private String searchTimeStart = "0000-00-00";
+	// 整改的创建时间结束时间
+	private String searchTimeEnd = "9999-99-99";
 	// 总页数
 	private int totalPage = 1;
 	// 总记录数
@@ -70,18 +76,39 @@ public class FeedbackRectificationExceedTimeVO {
 		this.listFeedbackRectificationDTO = listFeedbackRectificationDTO;
 	}
 
-	@Override
-	public String toString() {
-		return "FeedbackRectificationExceedTimeVO [search=" + search + ", currPage=" + currPage + ", totalPage="
-				+ totalPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize
-				+ ", listFeedbackRectificationDTO=" + listFeedbackRectificationDTO + "]";
+	public String getSearchService() {
+		return searchService;
 	}
 
-	public FeedbackRectificationExceedTimeVO(String search, int currPage, int totalPage, int totalCount, int pageSize,
+	public void setSearchService(String searchService) {
+		this.searchService = searchService;
+	}
+
+	public String getSearchTimeStart() {
+		return searchTimeStart;
+	}
+
+	public void setSearchTimeStart(String searchTimeStart) {
+		this.searchTimeStart = searchTimeStart;
+	}
+
+	public String getSearchTimeEnd() {
+		return searchTimeEnd;
+	}
+
+	public void setSearchTimeEnd(String searchTimeEnd) {
+		this.searchTimeEnd = searchTimeEnd;
+	}
+
+	public FeedbackRectificationExceedTimeVO(String search, int currPage, String searchService, String searchTimeStart,
+			String searchTimeEnd, int totalPage, int totalCount, int pageSize,
 			List<FeedbackRectificationDTO> listFeedbackRectificationDTO) {
 		super();
 		this.search = search;
 		this.currPage = currPage;
+		this.searchService = searchService;
+		this.searchTimeStart = searchTimeStart;
+		this.searchTimeEnd = searchTimeEnd;
 		this.totalPage = totalPage;
 		this.totalCount = totalCount;
 		this.pageSize = pageSize;

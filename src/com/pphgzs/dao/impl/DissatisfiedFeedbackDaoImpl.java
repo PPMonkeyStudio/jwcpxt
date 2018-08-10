@@ -138,10 +138,39 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				+ " and feedbackRectification.feedback_rectification_audit_state = 1"//
 				+ " and feedbackRectification.feedback_rectification_gmt_create < :beforeDate"//
+				+ " and ("//
+				+ " unit.unit_name like :search "// 单位名称
+				+ " or feedbackRectification.feedback_rectification_no like :search"// 编号
+				+ " or feedbackRectification.feedback_rectification_title like :search"// 问题标题
+				+ " or unit.unit_contacts_name like :search"// 联系人姓名
+				+ " )"//
+				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService"// 业务名称
+				+ " and feedbackRectification.feedback_rectification_gmt_create >= :searchTimeStart"// 整改反馈创建时间
+				+ " and feedbackRectification.feedback_rectification_gmt_create <= :searchTimeEnd"
 				+ " order by feedback_rectification_gmt_create asc";//
 		Query query = session.createQuery(hql);
 		// 获取五天前
 		query.setParameter("beforeDate", TimeUtil.getDateBefore(new Date(), 5));
+		if ("".equals(feedbackRectificationExceedTimeVO.getSearch())) {
+			query.setParameter("search", "%");
+		} else {
+			query.setParameter("search", "%" + feedbackRectificationExceedTimeVO.getSearch() + "%");
+		}
+		if ("".equals(feedbackRectificationExceedTimeVO.getSearchService())) {
+			query.setParameter("searchService", "%");
+		} else {
+			query.setParameter("searchService", "%" + feedbackRectificationExceedTimeVO.getSearchService() + "%");
+		}
+		if ("".equals(feedbackRectificationExceedTimeVO.getSearchTimeStart())) {
+			query.setParameter("searchTimeStart", "0000-00-00 00:00:00");
+		} else {
+			query.setParameter("searchTimeStart", feedbackRectificationExceedTimeVO.getSearchTimeStart() + " 00:00:00");
+		}
+		if ("".equals(feedbackRectificationExceedTimeVO.getSearchTimeEnd())) {
+			query.setParameter("searchTimeEnd", "0000-00-00 00:00:00");
+		} else {
+			query.setParameter("searchTimeEnd", feedbackRectificationExceedTimeVO.getSearchTimeEnd() + " 00:00:00");
+		}
 		query.setFirstResult((feedbackRectificationExceedTimeVO.getCurrPage() - 1)
 				* feedbackRectificationExceedTimeVO.getPageSize());
 		query.setMaxResults(feedbackRectificationExceedTimeVO.getPageSize());
@@ -155,7 +184,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	 * 获取超过五天的总记录数
 	 */
 	@Override
-	public int get_countExceedTimeFive() {
+	public int get_countExceedTimeFive(FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO) {
 		Session session = getSession();
 		String hql = "select count(*)"//
 				+ " from "//
@@ -176,10 +205,39 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				+ " and serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
 				+ " and feedbackRectification.feedback_rectification_audit_state = 1"//
-				+ " and feedbackRectification.feedback_rectification_gmt_create < :beforeDate";//
+				+ " and feedbackRectification.feedback_rectification_gmt_create < :beforeDate"//
+				+ " and ("//
+				+ " unit.unit_name like :search "// 单位名称
+				+ " or feedbackRectification.feedback_rectification_no like :search"// 编号
+				+ " or feedbackRectification.feedback_rectification_title like :search"// 问题标题
+				+ " or unit.unit_contacts_name like :search"// 联系人姓名
+				+ " )"//
+				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService"// 业务名称
+				+ " and feedbackRectification.feedback_rectification_gmt_create >= :searchTimeStart"// 整改反馈创建时间
+				+ " and feedbackRectification.feedback_rectification_gmt_create <= :searchTimeEnd";//
 		//
 		Query query = session.createSQLQuery(hql);
 		query.setParameter("beforeDate", TimeUtil.getDateBefore(new Date(), 5));
+		if ("".equals(feedbackRectificationExceedTimeVO.getSearch())) {
+			query.setParameter("search", "%");
+		} else {
+			query.setParameter("search", "%" + feedbackRectificationExceedTimeVO.getSearch() + "%");
+		}
+		if ("".equals(feedbackRectificationExceedTimeVO.getSearchService())) {
+			query.setParameter("searchService", "%");
+		} else {
+			query.setParameter("searchService", "%" + feedbackRectificationExceedTimeVO.getSearchService() + "%");
+		}
+		if ("".equals(feedbackRectificationExceedTimeVO.getSearchTimeStart())) {
+			query.setParameter("searchTimeStart", "0000-00-00 00:00:00");
+		} else {
+			query.setParameter("searchTimeStart", feedbackRectificationExceedTimeVO.getSearchTimeStart() + " 00:00:00");
+		}
+		if ("".equals(feedbackRectificationExceedTimeVO.getSearchTimeEnd())) {
+			query.setParameter("searchTimeEnd", "0000-00-00 00:00:00");
+		} else {
+			query.setParameter("searchTimeEnd", feedbackRectificationExceedTimeVO.getSearchTimeEnd() + " 00:00:00");
+		}
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;

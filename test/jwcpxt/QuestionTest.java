@@ -79,11 +79,6 @@ public class QuestionTest {
 	}
 
 	@Test
-	public void get_countExceedTimeFive() {
-		System.out.println(dissatisfiedFeedbackService.get_countExceedTimeFive());
-	}
-
-	@Test
 	public void get_statisQuestionDataVOTest() {
 		StatisDissaServiceDateVO statisDissaServiceDateVO = new StatisDissaServiceDateVO();
 		statisDissaServiceDateVO.setStartTime("2018-07-10");
