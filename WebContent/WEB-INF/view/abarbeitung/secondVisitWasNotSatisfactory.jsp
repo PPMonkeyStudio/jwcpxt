@@ -31,7 +31,8 @@ th {
 		<s:action name="skipSidebar" namespace="/Skip" executeResult="true" />
 		<div class="main-panel">
 			<!-- 引入导航条  -->
-			<s:action name="skipNavbarIndex" namespace="/Skip" executeResult="true" />
+			<s:action name="skipNavbarIndex" namespace="/Skip"
+				executeResult="true" />
 			<div class="content" id="content">
 				<div class="container-fluid">
 					<!-- 主内容 -->
@@ -43,18 +44,19 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
-										<!-- <label style="color: black;">整改时间</label> <input
-											onchange="changeQuery()" id="searchTimeStart"
+										<select class="selectpicker" title="选择业务..." name="secondDistatisVO.searchService" data-live-search="true" onchange="changeQuery(this)"></select>
+										<label style="color: black;">整改时间</label> <input
+											@change="searchRectification($event)" id="secondDistatisVO.searchTimeStart"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"><label
 											style="color: black;">&nbsp;至&nbsp;</label><input
-											onchange="changeQuery()" id="searchTimeEnd"
+											@change="searchRectification($event)" id="secondDistatisVO.searchTimeEnd"
 											class="mydate form-control"
-											style="display: inline; width: 150px;"> -->
-										<!-- <input name="feedbackRectificationExceedTimeVO.search"
+											style="display: inline; width: 150px;"> <input
+											name="secondDistatisVO.search"
 											style="display: inline; width: 250px;"
 											@keyup="searchRectification($event)" class="form-control"
-											placeholder="请输入搜索内容(全)"> -->
+											placeholder="请输入(单位,业务,问题)">
 									</div>
 									<div id="notRectification" v-cloak>
 										<table class="table table-striped" style="text-align: center;">
@@ -115,5 +117,6 @@ th {
 	/* 处理侧边栏选项 */
 	$('#bellTwiceVisitPage').attr("class", "active");
 </script>
-<script src="<%=basePath%>js/abarbeitung/secondVisitWasNotSatisfactory.js"></script>
+<script
+	src="<%=basePath%>js/abarbeitung/secondVisitWasNotSatisfactory.js"></script>
 </html>
