@@ -151,6 +151,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		Query query = session.createQuery(hql);
 		// 获取五天前
 		query.setParameter("beforeDate", TimeUtil.getDateBefore(new Date(), 5));
+		System.out.println("beforeDate:" + TimeUtil.getDateBefore(new Date(), 5));
 		if ("".equals(feedbackRectificationExceedTimeVO.getSearch())) {
 			query.setParameter("search", "%");
 		} else {
@@ -167,9 +168,9 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			query.setParameter("searchTimeStart", feedbackRectificationExceedTimeVO.getSearchTimeStart() + " 00:00:00");
 		}
 		if ("".equals(feedbackRectificationExceedTimeVO.getSearchTimeEnd())) {
-			query.setParameter("searchTimeEnd", "0000-00-00 00:00:00");
+			query.setParameter("searchTimeEnd", "9999-99-99 23:59:59");
 		} else {
-			query.setParameter("searchTimeEnd", feedbackRectificationExceedTimeVO.getSearchTimeEnd() + " 00:00:00");
+			query.setParameter("searchTimeEnd", feedbackRectificationExceedTimeVO.getSearchTimeEnd() + " 23:59:59");
 		}
 		query.setFirstResult((feedbackRectificationExceedTimeVO.getCurrPage() - 1)
 				* feedbackRectificationExceedTimeVO.getPageSize());
@@ -234,9 +235,9 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			query.setParameter("searchTimeStart", feedbackRectificationExceedTimeVO.getSearchTimeStart() + " 00:00:00");
 		}
 		if ("".equals(feedbackRectificationExceedTimeVO.getSearchTimeEnd())) {
-			query.setParameter("searchTimeEnd", "0000-00-00 00:00:00");
+			query.setParameter("searchTimeEnd", "9999-99-99 23:59:59");
 		} else {
-			query.setParameter("searchTimeEnd", feedbackRectificationExceedTimeVO.getSearchTimeEnd() + " 00:00:00");
+			query.setParameter("searchTimeEnd", feedbackRectificationExceedTimeVO.getSearchTimeEnd() + " 23:59:59");
 		}
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
