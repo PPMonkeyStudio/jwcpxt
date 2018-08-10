@@ -85,6 +85,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	 */
 	public void get_countExceedTimeFive() throws IOException {
 		http_response.setContentType("text/html;charset=utf-8");
+		feedbackRectificationExceedTimeVO = new FeedbackRectificationExceedTimeVO();
 		http_response.getWriter()
 				.write(dissatisfiedFeedbackService.get_countExceedTimeFive(feedbackRectificationExceedTimeVO) + "");
 	}
