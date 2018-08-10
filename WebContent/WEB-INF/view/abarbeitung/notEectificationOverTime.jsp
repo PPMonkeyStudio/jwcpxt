@@ -60,6 +60,7 @@ th {
 											<thead>
 												<tr>
 													<td>编号</td>
+													<td>查看</td>
 													<td>问题标题</td>
 													<td>单位</td>
 													<td>单位负责人</td>
@@ -74,6 +75,9 @@ th {
 													v-for="feedbackRectificationDTO in listFeedbackRectificationDTO">
 												<tr>
 													<td>{{feedbackRectificationDTO.feedbackRectification.feedback_rectification_no}}</td>
+													<td><a
+														:id="feedbackRectificationDTO.feedbackRectification.jwcpxt_feedback_rectification_id"
+														onclick="preview(this)">流转单 </a></td>
 													<td>{{feedbackRectificationDTO.feedbackRectification.feedback_rectification_title}}</td>
 													<td>{{feedbackRectificationDTO.unit.unit_name}}</td>
 													<td>{{feedbackRectificationDTO.unit.unit_contacts_name}}</td>
