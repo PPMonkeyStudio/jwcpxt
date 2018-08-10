@@ -56,7 +56,7 @@ th {
 											name="secondDistatisVO.search"
 											style="display: inline; width: 250px;"
 											@keyup="searchRectification($event)" class="form-control"
-											placeholder="请输入(单位,业务,问题)">
+											placeholder="请输入(单位,问题)">
 									</div>
 									<div id="notRectification" v-cloak>
 										<table class="table table-striped" style="text-align: center;">
