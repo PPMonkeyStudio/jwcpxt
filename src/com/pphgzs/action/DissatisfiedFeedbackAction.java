@@ -58,8 +58,10 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	 * @throws IOException
 	 */
 	public void get_secondDisStatisCountExceedTime() throws IOException {
+		secondDistatisVO = new SecondDistatisVO();
 		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(dissatisfiedFeedbackService.get_secondDisStatisCountExceedTime() + "");
+		http_response.getWriter()
+				.write(dissatisfiedFeedbackService.get_secondDisStatisCountExceedTime(secondDistatisVO) + "");
 	}
 
 	/**

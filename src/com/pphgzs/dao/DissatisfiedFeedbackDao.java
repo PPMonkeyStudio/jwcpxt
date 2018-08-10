@@ -145,7 +145,7 @@ public interface DissatisfiedFeedbackDao {
 	 * 
 	 * @return
 	 */
-	public int get_secondDisStatisCountExceedTime();
+	public int get_secondDisStatisCountExceedTime(SecondDistatisVO secondDistatisVO);
 
 	/**
 	 * 

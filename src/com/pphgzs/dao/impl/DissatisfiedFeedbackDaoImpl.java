@@ -56,15 +56,41 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
 				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
-				+ " "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = 'revisit'"//
 				+ " and question.question_describe like '请问您是否对整改结果满意'"//
 				+ " and _option.option_describe like '不满意'"//
+				+ " and ("//
+				+ " unit.unit_name like :search"//
+				+ " or question.question_describe like :search"//
+				+ " or unit.unit_contacts_name like :search"//
+				+ " )" + " and serviceDefinition.jwcpxt_service_definition_id like :searchService"//
+				+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
+				+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd"//
 				+ " order by "//
 				+ " answerChoice.answer_choice_gmt_create desc";//
 
 		//
 		Query query = session.createQuery(hql);
+		if ("".equals(secondDistatisVO.getSearch())) {
+			query.setParameter("search", "%");
+		} else {
+			query.setParameter("search", "%" + secondDistatisVO.getSearch() + "%");
+		}
+		if ("".equals(secondDistatisVO.getSearchService())) {
+			query.setParameter("searchService", "%");
+		} else {
+			query.setParameter("searchService", "%" + secondDistatisVO.getSearchService() + "%");
+		}
+		if ("".equals(secondDistatisVO.getSearchTimeStart())) {
+			query.setParameter("searchTimeStart", "0000-00-00 00:00:00");
+		} else {
+			query.setParameter("searchTimeStart", secondDistatisVO.getSearchTimeStart() + " 00:00:00");
+		}
+		if ("".equals(secondDistatisVO.getSearchTimeEnd())) {
+			query.setParameter("searchTimeEnd", "0000-00-00 23:59:59");
+		} else {
+			query.setParameter("searchTimeEnd", secondDistatisVO.getSearchTimeEnd() + " 23:59:59");
+		}
 		query.setFirstResult((secondDistatisVO.getCurrPage() - 1) * secondDistatisVO.getPageSize());
 		query.setMaxResults(secondDistatisVO.getPageSize());
 		List<SecondDistatisDTO> list = new ArrayList<>();
@@ -77,7 +103,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	 * 获取对二次整改仍然为不满意
 	 */
 	@Override
-	public int get_secondDisStatisCountExceedTime() {
+	public int get_secondDisStatisCountExceedTime(SecondDistatisVO secondDistatisVO) {
 		Session session = getSession();
 		String hql = "select count(*) from "//
 				+ " jwcpxt_answer_choice answerChoice,"//
@@ -97,9 +123,47 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = 'revisit'"//
 				+ " and question.question_describe like '请问您是否对整改结果满意'"//
-				+ " and _option.option_describe like '不满意'";//
+				+ " and _option.option_describe like '不满意'"//
+				+ " and ("//
+				+ " unit.unit_name like :search"//
+				+ " or question.question_describe like :search"//
+				+ " or unit.unit_contacts_name like :search"//
+				+ " )" + " and serviceDefinition.jwcpxt_service_definition_id like :searchService"//
+				+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
+				+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd";//
+		/*
+		 * System.out.println("hql:" + hql); System.out.println("search:" +
+		 * secondDistatisVO.getSearch()); System.out.println("searchService:" +
+		 * secondDistatisVO.getSearchService()); System.out.println("searchTimeStart:" +
+		 * secondDistatisVO.getSearchTimeStart()); System.out.println("searchTimeEnd:" +
+		 * secondDistatisVO.getSearchTimeEnd());
+		 */
 		//
 		Query query = session.createSQLQuery(hql);
+		if ("".equals(secondDistatisVO.getSearch())) {
+			query.setParameter("search", "%");
+			// System.out.println("1");
+		} else {
+			query.setParameter("search", "%" + secondDistatisVO.getSearch() + "%");
+		}
+		if ("".equals(secondDistatisVO.getSearchService())) {
+			// System.out.println("2");
+			query.setParameter("searchService", "%");
+		} else {
+			query.setParameter("searchService", "%" + secondDistatisVO.getSearchService() + "%");
+		}
+		if ("".equals(secondDistatisVO.getSearchTimeStart())) {
+			// System.out.println("3");
+			query.setParameter("searchTimeStart", "0000-00-00 00:00:00");
+		} else {
+			query.setParameter("searchTimeStart", secondDistatisVO.getSearchTimeStart() + " 00:00:00");
+		}
+		if ("".equals(secondDistatisVO.getSearchTimeEnd())) {
+			// System.out.println("4");
+			query.setParameter("searchTimeEnd", "0000-00-00 23:59:59");
+		} else {
+			query.setParameter("searchTimeEnd", secondDistatisVO.getSearchTimeEnd() + " 23:59:59");
+		}
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
@@ -151,7 +215,6 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		Query query = session.createQuery(hql);
 		// 获取五天前
 		query.setParameter("beforeDate", TimeUtil.getDateBefore(new Date(), 5));
-		System.out.println("beforeDate:" + TimeUtil.getDateBefore(new Date(), 5));
 		if ("".equals(feedbackRectificationExceedTimeVO.getSearch())) {
 			query.setParameter("search", "%");
 		} else {

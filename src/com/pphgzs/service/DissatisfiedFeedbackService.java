@@ -110,7 +110,7 @@ public interface DissatisfiedFeedbackService {
 	 * 
 	 * @return
 	 */
-	public int get_secondDisStatisCountExceedTime();
+	public int get_secondDisStatisCountExceedTime(SecondDistatisVO secondDistatisVO);
 
 	/**
 	 * 第二次回访仍然不满意

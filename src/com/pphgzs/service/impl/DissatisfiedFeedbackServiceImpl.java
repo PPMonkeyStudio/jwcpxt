@@ -40,7 +40,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	@Override
 	public SecondDistatisVO get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO) {
 		List<SecondDistatisDTO> listSecondDistatisDTO = new ArrayList<>();
-		int totalRecords = get_secondDisStatisCountExceedTime();
+		int totalRecords = get_secondDisStatisCountExceedTime(secondDistatisVO);
 		int totalPages = ((totalRecords - 1) / secondDistatisVO.getPageSize()) + 1;
 		listSecondDistatisDTO = dissatisfiedFeedbackDao.get_sercondDisStatisExceedTimeVO(secondDistatisVO);
 		secondDistatisVO.setTotalCount(totalRecords);
@@ -53,8 +53,8 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	 * 二次回访仍然为不满意数量
 	 */
 	@Override
-	public int get_secondDisStatisCountExceedTime() {
-		return dissatisfiedFeedbackDao.get_secondDisStatisCountExceedTime();
+	public int get_secondDisStatisCountExceedTime(SecondDistatisVO secondDistatisVO) {
+		return dissatisfiedFeedbackDao.get_secondDisStatisCountExceedTime(secondDistatisVO);
 	}
 
 	/**
