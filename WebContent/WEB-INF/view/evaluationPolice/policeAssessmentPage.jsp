@@ -121,7 +121,7 @@ th {
 													    <p>车管所:</p>
 													    <p>您好,我们是萍乡市公安局服务群众测评中心,</p>
 													    <p> 您于{{returnedParty.serviceInstance.service_instance_date}}在{{returnedParty.unit.unit_name}}交警大队车管所办理机动车驾驶证业务,请问您是本人办的吗?</p>
-													    <p>(是)为改进公安工作,我们特向您做个回访,大约需要耽误您2纷钟时间,对您回答的问题,我们将严格保密。</p>
+													    <p>(是)为改进公安工作,我们特向您做个回访,大约需要耽误您2分钟时间,对您回答的问题,我们将严格保密。</p>
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('出入境')>-1">
 													    <p>出入境:</p>
@@ -149,7 +149,7 @@ th {
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('安全感满意度')>-1">
 													    <p> 安全感满意度:</p>
-													    <p> 您好,这里是萍乡市公安局服务群众测评中心,我们想对您就当地社会治安状况做个电话调查,需要和说您几分钟时间。</p>
+													    <p> 您好,这里是萍乡市公安局服务群众测评中心,我们想对您就当地社会治安状况做个电话调查,需要和您说几分钟时间。</p>
 												   </template>
 											</p>
 										</div>
