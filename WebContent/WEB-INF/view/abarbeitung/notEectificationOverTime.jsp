@@ -74,7 +74,7 @@ th {
 													v-for="feedbackRectificationDTO in listFeedbackRectificationDTO">
 												<tr>
 													<td>{{feedbackRectificationDTO.feedbackRectification.feedback_rectification_no}}</td>
-													<td>{{feedbackRectificationDTO.question.question_describe}}</td>
+													<td>{{feedbackRectificationDTO.feedbackRectification.feedback_rectification_title}}</td>
 													<td>{{feedbackRectificationDTO.unit.unit_name}}</td>
 													<td>{{feedbackRectificationDTO.unit.unit_contacts_name}}</td>
 													<td>{{feedbackRectificationDTO.unit.unit_phone}}</td>

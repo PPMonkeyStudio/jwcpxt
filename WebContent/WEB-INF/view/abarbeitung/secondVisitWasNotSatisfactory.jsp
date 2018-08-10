@@ -45,7 +45,7 @@ th {
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
 										<select class="selectpicker" title="选择业务..." name="secondDistatisVO.searchService" data-live-search="true" onchange="changeQuery(this)"></select>
-										<label style="color: black;">整改时间</label> <input
+										<label style="color: black;">回访时间</label> <input
 											@change="searchRectification($event)" id="secondDistatisVO.searchTimeStart"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"><label
@@ -56,7 +56,7 @@ th {
 											name="secondDistatisVO.search"
 											style="display: inline; width: 250px;"
 											@keyup="searchRectification($event)" class="form-control"
-											placeholder="请输入(单位,业务,问题)">
+											placeholder="请输入(单位,问题)">
 									</div>
 									<div id="notRectification" v-cloak>
 										<table class="table table-striped" style="text-align: center;">
