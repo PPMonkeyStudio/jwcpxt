@@ -43,18 +43,17 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
-										<!-- <label style="color: black;">整改时间</label> <input
-											onchange="changeQuery()" id="searchTimeStart"
+										 <select class="selectpicker" title="选择业务..." name="feedbackRectificationExceedTimeVO.searchService" data-live-search="true" onchange="changeQuery(this)"></select>
+										 <label style="color: black;">整改时间</label> <input
+											onchange="changeQuery(this)" name="feedbackRectificationExceedTimeVO.searchTimeStart"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"><label
 											style="color: black;">&nbsp;至&nbsp;</label><input
-											onchange="changeQuery()" id="searchTimeEnd"
-											class="mydate form-control"
-											style="display: inline; width: 150px;"> -->
-										<!-- <input name="feedbackRectificationExceedTimeVO.search"
-											style="display: inline; width: 250px;"
-											@keyup="searchRectification($event)" class="form-control"
-											placeholder="请输入搜索内容(全)"> -->
+											onchange="changeQuery(this)" name="feedbackRectificationExceedTimeVO.searchTimeEnd"
+											class="mydate form-control" style="display: inline; width: 150px;">
+										    <input name="feedbackRectificationExceedTimeVO.search"
+											style="display: inline; width: 250px;" placeholder="请输入(编号,标题,单位,负责人)"
+											@keyup="searchRectification($event)" class="form-control"> 
 									</div>
 									<div id="notRectification" v-cloak>
 										<table class="table table-striped" style="text-align: center;">
@@ -64,8 +63,9 @@ th {
 													<td>问题标题</td>
 													<td>单位</td>
 													<td>单位负责人</td>
+													<td>负责人电话</td>
 													<td>当事人姓名</td>
-													<td>当事人性别</td>
+													<!-- <td>当事人性别</td> -->
 													<td>当事人电话</td>
 												</tr>
 											</thead>
@@ -77,8 +77,9 @@ th {
 													<td>{{feedbackRectificationDTO.question.question_describe}}</td>
 													<td>{{feedbackRectificationDTO.unit.unit_name}}</td>
 													<td>{{feedbackRectificationDTO.unit.unit_contacts_name}}</td>
+													<td>{{feedbackRectificationDTO.unit.unit_phone}}</td>
 													<td>{{feedbackRectificationDTO.serviceClient.service_client_name}}</td>
-													<td>{{feedbackRectificationDTO.serviceClient.service_client_sex==1?"男":"女"}}</td>
+													<!-- <td>{{feedbackRectificationDTO.serviceClient.service_client_sex==1?"男":"女"}}</td> -->
 													<td>{{feedbackRectificationDTO.serviceClient.service_client_phone}}</td>
 												</tr>
 												</template>
