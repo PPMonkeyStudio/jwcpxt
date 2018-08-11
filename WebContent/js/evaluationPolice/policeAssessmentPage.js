@@ -9,21 +9,19 @@ $(function() {
 		serviceDefinition : {},
 		questionData : [],
 		returnedParty : { //数据只作为初始化用
-			returnedParty : {
-				serviceInstance : {
-					service_client_name : '',
-					service_instance_date : ''
-				},
-				serviceClient : {
-					service_client_sex : '',
-					service_client_phone : ''
-				},
-				serviceDefinition : {
-					service_definition_describe : ''
-				},
-				unit : {
-					unit_name : ''
-				}
+			serviceInstance : {
+				service_client_name : '',
+				service_instance_date : ''
+			},
+			serviceClient : {
+				service_client_sex : '',
+				service_client_phone : ''
+			},
+			serviceDefinition : {
+				service_definition_describe : ''
+			},
+			unit : {
+				unit_name : ''
 			}
 		}
 	};
