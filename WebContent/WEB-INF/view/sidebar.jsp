@@ -142,19 +142,21 @@ td .label {
 <script type="text/javascript" src="<%=basePath%>js/user/login.js"></script>
 <script type="text/javascript"
 	src="<%=basePath%>js/user/updatePassword.js"></script>
-<script type="text/javascript">
-	//页面初始化时获取数量
-	countInit();
-	function countInit() {
-		$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
-			$('#bellNotEectificationPage .badge').text(response);
-		}, 'text');
-		$.post('/jwcpxt/DissatisfiedFeedback/get_secondDisStatisCountExceedTime', {}, response => {
-			$('#bellTwiceVisitPage .badge').text(response);
-		}, 'text')
-		setTimeout(function() {
-			countInit();
-		}, 7000)
-	}
-</script>
+<s:if test="#session.loginType=='unit' && #session.unit.unit_grade==1 ">
+	<script type="text/javascript">
+		//页面初始化时获取数量
+		countInit();
+		function countInit() {
+			$.post('/jwcpxt/DissatisfiedFeedback/get_countExceedTimeFive', {}, response => {
+				$('#bellNotEectificationPage .badge').text(response);
+			}, 'text');
+			$.post('/jwcpxt/DissatisfiedFeedback/get_secondDisStatisCountExceedTime', {}, response => {
+				$('#bellTwiceVisitPage .badge').text(response);
+			}, 'text')
+			setTimeout(function() {
+				countInit();
+			}, 7000)
+		}
+	</script>
+</s:if>
 </html>
