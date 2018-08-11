@@ -1209,17 +1209,18 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	@Override
-	public jwcpxt_service_client getClientByPhoneDate(String grab_instance_client_phone) {
+	public List<jwcpxt_service_client> getClientByPhoneDate(String grab_instance_client_phone) {
 		Session session = getSession();
 		jwcpxt_service_client jwcpxt_service_client = new jwcpxt_service_client();
-		String hql = "from jwcpxt_service_client where service_client_phone = :phone and service_client_gmt_create<:date";
+		List<jwcpxt_service_client> listServiceClient = new ArrayList<>();
+		String hql = "from jwcpxt_service_client where service_client_phone = :phone and service_client_gmt_create > :date";
 		Query query = session.createQuery(hql);
 		String date = TimeUtil.getStringDay_before7();
 		query.setParameter("phone", grab_instance_client_phone);
 		query.setParameter("date", date + " 00:00:00");
-		jwcpxt_service_client = (jwcpxt_service_client) query.uniqueResult();
+		listServiceClient = query.list();
 		session.clear();
-		return jwcpxt_service_client;
+		return listServiceClient;
 	}
 
 	/*

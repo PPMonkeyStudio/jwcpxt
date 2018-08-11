@@ -249,6 +249,6 @@ public interface ServiceDao {
 	 * 
 	 * @param grab_instance_client_phone
 	 */
-	public jwcpxt_service_client getClientByPhoneDate(String grab_instance_client_phone);
+	public List<jwcpxt_service_client> getClientByPhoneDate(String grab_instance_client_phone);
 
 }

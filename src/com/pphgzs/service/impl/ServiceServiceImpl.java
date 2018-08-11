@@ -258,7 +258,7 @@ public class ServiceServiceImpl implements ServiceService {
 			// 判断这个实例是否在七天内出现过
 			if (grabInstance != null && grabInstance.getGrab_instance_client_phone() != null
 					&& !"".equals(grabInstance.getGrab_instance_client_phone())) {
-				if (serviceDao.getClientByPhoneDate(grabInstance.getGrab_instance_client_phone()) != null) {
+				if ((serviceDao.getClientByPhoneDate(grabInstance.getGrab_instance_client_phone())).size() > 0) {
 					grabInstance = null;
 				}
 			}
