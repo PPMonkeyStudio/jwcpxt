@@ -42,6 +42,59 @@ public class ServiceDaoImpl implements ServiceDao {
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	public jwcpxt_grab_instance getGrabInstanceDo_id(String id) {
+		jwcpxt_grab_instance jwcpxt_grab_instance = new jwcpxt_grab_instance();
+		Session session = getSession();
+		String hql = "from jwcpxt_grab_instance where jwcpxt_grab_instance_id = :id";
+		Query query = session.createQuery(hql);
+		query.setParameter("id", id);
+		jwcpxt_grab_instance = (jwcpxt_grab_instance) query.uniqueResult();
+		return jwcpxt_grab_instance;
+	}
+
+	/**
+	 * 获取抓取实例
+	 */
+	@Override
+	public String getGrabInstance() {
+		Session session = getSession();
+		StringBuilder hql = new StringBuilder();
+		hql.append("SELECT grabA.jwcpxt_grab_instance_id FROM ( ")
+				.append(" SELECT str2.jwcpxt_grab_instance_id,str2.grab_instance_client_phone FROM")
+				.append(" (SELECT t.UNIT_NUM,t.EVALUATION_COUNT,t.SERVICE_DEFINITION_ID FROM (")
+				.append(" SELECT unitFather.JWCPXT_UNIT_ID,unitService.SERVICE_DEFINITION_ID,unitService.EVALUATION_COUNT,unitFather.UNIT_NUM FROM")
+				.append(" jwcpxt_unit unitFather INNER JOIN jwcpxt_unit_service unitService ON unitService.UNIT_ID = unitFather.JWCPXT_UNIT_ID")
+				.append(" INNER JOIN jwcpxt_service_definition serviceDefinition ON serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID = unitService.SERVICE_DEFINITION_ID")
+				.append(" UNION ALL SELECT unit.JWCPXT_UNIT_ID,unitServiceA.SERVICE_DEFINITION_ID,unitServiceA.EVALUATION_COUNT,unit.UNIT_NUM FROM")
+				.append(" jwcpxt_unit unit INNER JOIN jwcpxt_unit_service unitServiceA ON unit.UNIT_FATHER = unitServiceA.UNIT_ID")
+				.append(" INNER JOIN jwcpxt_service_definition serviceDefinitionC ON serviceDefinitionC.JWCPXT_SERVICE_DEFINITION_ID = unitServiceA.SERVICE_DEFINITION_ID ) t")
+				.append(" LEFT JOIN ( SELECT serviceInstance.SERVICE_INSTANCE_BELONG_UNIT, serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION FROM")
+				.append(" jwcpxt_service_instance serviceInstance WHERE serviceInstance.SERVICE_INSTANCE_GMT_CREATE >= :dayStartTime AND serviceInstance.SERVICE_INSTANCE_GMT_CREATE <= :dayEndTime")
+				.append(" ) t2 ON t.JWCPXT_UNIT_ID = t2.SERVICE_INSTANCE_BELONG_UNIT AND t2.SERVICE_INSTANCE_SERVICE_DEFINITION = t.SERVICE_DEFINITION_ID")
+				.append(" GROUP BY t.JWCPXT_UNIT_ID, t.SERVICE_DEFINITION_ID HAVING count(*) < t.EVALUATION_COUNT ) str1 INNER JOIN ( SELECT")
+				.append(" grabInstance.grab_instance_distribution, grabInstance.grab_instance_organization_code, grabInstance.grab_instance_service_definition, grabInstance.grab_instance_service_time,grabInstance.grab_instance_client_phone, grabInstance.jwcpxt_grab_instance_id FROM")
+				.append(" jwcpxt_grab_instance grabInstance WHERE grabInstance.grab_instance_service_time >= :daySevenTime")
+				.append(" ) str2 ON str1.UNIT_NUM = str2.grab_instance_organization_code AND str1.SERVICE_DEFINITION_ID = str2.grab_instance_service_definition")
+				.append(" AND str2.grab_instance_distribution = '2' ) grabA LEFT JOIN (")
+				.append(" SELECT serviceClient.SERVICE_CLIENT_PHONE FROM jwcpxt_service_client serviceClient WHERE")
+				.append(" serviceClient.SERVICE_CLIENT_GMT_CREATE >= :sevenDay")
+				.append(" AND serviceClient.SERVICE_CLIENT_GMT_CREATE <= :dayEndTime")
+				.append(" ) grabB ON grabA.grab_instance_client_phone = grabB.SERVICE_CLIENT_PHONE")
+				.append(" AND grabB.SERVICE_CLIENT_PHONE IS NULL ORDER BY RAND() LIMIT 1");
+		Query query = session.createSQLQuery(hql.toString());
+		String today = TimeUtil.getStringDay();
+		String seavenToday = TimeUtil.getStringDay_before7();
+		query.setParameter("dayStartTime", today + " 00:00:00");
+		query.setParameter("dayEndTime", today + " 23:59:59");
+		query.setParameter("daySevenTime", seavenToday.replaceAll("-", "") + "000000");
+		query.setParameter("sevenDay", seavenToday + " 00:00:00");
+		return (String) query.uniqueResult();
+	}
+
+	/**
 	 * 测评员列表
 	 */
 	@Override

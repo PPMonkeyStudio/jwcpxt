@@ -251,4 +251,19 @@ public interface ServiceDao {
 	 */
 	public List<jwcpxt_service_client> getClientByPhoneDate(String grab_instance_client_phone);
 
+	/**
+	 * 获取抓取实例
+	 * 
+	 * @return
+	 */
+	public String getGrabInstance();
+
+	/**
+	 * 根据id获取
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public jwcpxt_grab_instance getGrabInstanceDo_id(String id);
+
 }

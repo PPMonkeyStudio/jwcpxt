@@ -197,81 +197,14 @@ public class ServiceServiceImpl implements ServiceService {
 
 	@Override
 	public boolean distributionNewServiceInstance_toUser(String userID) {
-		/*
-		 * 最后分配新的实例给测评人员
-		 * 
-		 * 1、查询所有单位关联业务表
-		 * 
-		 * 2、当天的抓取实例中，属于这个单位的，且属于这个业务定义的数量
-		 * 
-		 * 3、对比数量和单位关联业务表中填写的需求数量，数量大于需求数量的，就移出list
-		 * 
-		 * 4、在剩下的list中随机选取一个单位业务关联DO，通过这个DO，随机取一个抓取实例分配到业务实例中给这个测评员
-		 * 
-		 */
-		// 查询所有单位关联业务表
-		List<jwcpxt_unit_service> unitServiceList = unitService.list_unitServiceDO_all();
-		// 当天业务实例中，属于这个单位的，且属于这个业务定义的数量
-		Iterator<jwcpxt_unit_service> iterator = unitServiceList.iterator();
-		while (iterator.hasNext()) {
-			jwcpxt_unit_service unitServiceDO = iterator.next();
-			// 需求数量
-			int wantNum = unitServiceDO.getEvaluation_count();
-			/*
-			 * 如果这个单位是二级单位，那么就查出他所有子单位已分配的实例数量
-			 * 
-			 */
-			int currNum = 0;
-			jwcpxt_unit unit = unitService.get_unitDO_byID(unitServiceDO.getUnit_id());
-			if (unit.getUnit_grade() == 2) {
-				// 二级单位
-				currNum = get_serviceInstanceCount_byServiceDefinitionAndFatherUnitID(
-						unitServiceDO.getService_definition_id(), unitServiceDO.getUnit_id());
-			} else {
-				// 已分配数量：获取当天该单位该业务的业务实例的数量
-				currNum = get_serviceInstanceCount_byServiceDefinitionAndUnit(unitServiceDO.getService_definition_id(),
-						unitServiceDO.getUnit_id());
-			}
-			// 分配足够了的就移出列表
-			if (currNum >= wantNum) {
-				iterator.remove();
-				// unitServiceList.remove(unitServiceDO);
-			}
-		}
-		// 随机取一个单位业务关联DO作为分配，如果这个单位没有数据，那么就换一个单位
-		jwcpxt_grab_instance grabInstance = null;
-		jwcpxt_unit_service thisUnitService = null;
-		jwcpxt_unit unit = null;
-		while (unitServiceList.size() > 0) {
-			int random = (int) (Math.random() * unitServiceList.size());
-			thisUnitService = unitServiceList.get(random);
-			unit = unitService.get_unitDO_byID(thisUnitService.getUnit_id());
-			if (unit.getUnit_grade() == 2) {
-				// 二级单位
-				grabInstance = get_grabInstance_byServiceDefinitionIDAndFatherOrganizationCode_notDistribution_random(
-						thisUnitService.getService_definition_id(), unit.getUnit_account());
-			} else {
-				// 随机此业务，此单位，未被分配的一个抓取实例
-				grabInstance = get_grabInstance_byServiceDefinitionIDAndOrganizationCode_notDistribution_random(
-						thisUnitService.getService_definition_id(), unit.getUnit_account());
-			}
-			// 判断这个实例是否在七天内出现过
-			if (grabInstance != null && grabInstance.getGrab_instance_client_phone() != null
-					&& !"".equals(grabInstance.getGrab_instance_client_phone())) {
-				if ((serviceDao.getClientByPhoneDate(grabInstance.getGrab_instance_client_phone())).size() > 0) {
-					grabInstance = null;
-				}
-			}
-			if (grabInstance != null) {
-				break;
-			} else {
-				unitServiceList.remove(random);
-			}
-		}
+		//
+		jwcpxt_grab_instance grabInstance = new jwcpxt_grab_instance();
+		String id = "";
+		id = serviceDao.getGrabInstance();
+		if (id == null || "".equals(id))
+			return true;
+		grabInstance = serviceDao.getGrabInstanceDo_id(id);
 		if (grabInstance == null) {
-			/*
-			 * 说明没有东西可以分配，今天就这样不分配了，明天上线再说
-			 */
 			return true;
 		}
 		jwcpxt_unit belongUnit = new jwcpxt_unit();
