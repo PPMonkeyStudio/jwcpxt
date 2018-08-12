@@ -17,10 +17,12 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
+import com.pphgzs.domain.DTO.MonthDayMountDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
+import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -54,6 +56,9 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private ReturnVisitVO returnVisitVO;
 	private ClientAttentionServiceVO clientAttentionServiceVO;
 	private DissatisfiedVO dissatisfiedVO;
+	private MonthDayMountVO monthDayMountVO;
+	private String startTime = "0000-01-01";
+	private String endTime = "9999-12-31";
 	/*
 	 * 
 	 */
@@ -62,6 +67,36 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	/**
+	 * 获取当月满意数量以及当月总数量以及当日的数量
+	 * 
+	 * @throws IOException
+	 */
+	public void downloadData() throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		if (monthDayMountVO == null) {
+			monthDayMountVO = new MonthDayMountVO();
+		}
+		if (startTime == null || "".equals(startTime)) {
+			startTime = "0000-01-01";
+		}
+		if (endTime == null || "".equals(endTime)) {
+			endTime = "9999-12-31";
+		}
+		if (!TimeUtil.validate(startTime, endTime)) {
+			response.getWriter().write("参数格式错误!");
+			return;
+		}
+		monthDayMountVO.setEndTime(endTime);
+		monthDayMountVO.setStartTime(startTime);
+		monthDayMountVO = statisticsService.get_dataMonthDayMount(monthDayMountVO);
+		response.getWriter().write(gson.toJson(monthDayMountVO.getMonthDayMountDTO()));
+	}
 
 	/**
 	 * 群众最不满意业务
@@ -446,6 +481,30 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public void setDissatisfiedVO(DissatisfiedVO dissatisfiedVO) {
 		this.dissatisfiedVO = dissatisfiedVO;
+	}
+
+	public MonthDayMountVO getMonthDayMountVO() {
+		return monthDayMountVO;
+	}
+
+	public void setMonthDayMountVO(MonthDayMountVO monthDayMountVO) {
+		this.monthDayMountVO = monthDayMountVO;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
 }

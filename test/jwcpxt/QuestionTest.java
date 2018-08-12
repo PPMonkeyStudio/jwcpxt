@@ -18,6 +18,7 @@ import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.ClientInfoVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
+import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.SecondDistatisVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
@@ -45,6 +46,13 @@ public class QuestionTest {
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 	@Resource
 	private StatisticsService statisticsService;
+
+	@Test
+	public void ggg() {
+		MonthDayMountVO monthDayMountVO = new MonthDayMountVO();
+		System.out.println(statisticsService.get_dataMonthDayMount(monthDayMountVO));
+
+	}
 
 	@Test
 	public void get_clientDissatisfiedServiceTest() {

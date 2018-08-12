@@ -10,6 +10,7 @@ import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
+import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -126,5 +127,14 @@ public interface StatisticsDao {
 	 * @return
 	 */
 	public int getServiceOptionCount(String string, String string2, String string3);
+
+	/**
+	 * 获取对应的数量
+	 * 
+	 * @param monthDayMountVO
+	 * @param i
+	 * @return
+	 */
+	public int get_dataMonthDayMount(MonthDayMountVO monthDayMountVO, int i);
 
 }

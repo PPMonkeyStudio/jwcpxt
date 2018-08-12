@@ -19,6 +19,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.ClientAttentionServiceDTO;
 import com.pphgzs.domain.DTO.DissatisfiedDTO;
+import com.pphgzs.domain.DTO.MonthDayMountDTO;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeBelongUnitDTO;
@@ -34,6 +35,7 @@ import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
+import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -50,6 +52,32 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private StatisticsDao statisticsDao;
 	private UnitDao unitDao;
 	private ServiceService serviceService;
+
+	/**
+	 * 获取对应的数量
+	 */
+	@Override
+	public MonthDayMountVO get_dataMonthDayMount(MonthDayMountVO monthDayMountVO) {
+		// 总数
+		int totalCount = 0;
+		// 成功访问数
+		int totalSuccessCount = 0;
+		// 不满意数
+		int totalNotStatisCount = 0;
+		//
+		MonthDayMountDTO monthDayMountDTO = new MonthDayMountDTO();
+		//
+		totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 0);
+		totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 1);
+		totalNotStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
+		monthDayMountDTO.setTotalCount(totalCount);
+		monthDayMountDTO.setTotalSuccessCount(totalSuccessCount);
+		int totalStaticCount = (totalSuccessCount - totalNotStatisCount) <= 0 ? 0
+				: totalSuccessCount - totalNotStatisCount;
+		monthDayMountDTO.setTotalStatisCount(totalStaticCount);
+		monthDayMountVO.setMonthDayMountDTO(monthDayMountDTO);
+		return monthDayMountVO;
+	}
 
 	/**
 	 * 群众最不满意的项目

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
@@ -144,4 +146,45 @@ public class TimeUtil {
 		}
 		return lDate;
 	}
+
+	@Test
+	public void gg() {
+		System.out.println(validate("0000-01-01", "9999-12-31"));
+	}
+
+	/**
+	 * 验证开始和结束时间，格式必须为yyyy-MM-dd或者yyyy/MM/dd，且开始时间要小于结束时间
+	 */
+	public static boolean validate(String start, String end) {
+		// 这个正则匹配的是日期格式为:yyyy/MM/dd或者yyyy-MM-dd
+		String rexp = "^(((\\d{2}(([02468][048])|([13579][26]))[\\-]((((0?[13578])|(1[02]))[\\-]((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-]((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-]((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-]((((0?[13578])|(1[02]))[\\-]((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-]((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-]((0?[1-9])|(1[0-9])|(2[0-8]))))))|"
+				+ "((\\d{2}(([02468][048])|([13579][26]))[\\/]((((0?[13578])|(1[02]))[\\/]((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\/]((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\/]((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\/]((((0?[13578])|(1[02]))[\\/]((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\/]((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\/]((0?[1-9])|(1[0-9])|(2[0-8])))))))";
+		Pattern p = Pattern.compile(rexp);
+		Matcher startM = p.matcher(start);
+		Matcher endM = p.matcher(end);
+
+		if (startM.matches() == false || endM.matches() == false) {
+			return false;
+
+		} else {
+			String sfh = start.charAt(4) + "";
+			String efh = end.charAt(4) + "";
+			String[] startTime = start.split(sfh);
+			String[] endTime = end.split(efh);
+
+			Calendar startC = Calendar.getInstance();
+			startC.set(Integer.parseInt(startTime[0]), Integer.parseInt(startTime[1]), Integer.parseInt(startTime[2]));
+
+			Calendar endC = Calendar.getInstance();
+			endC.set(Integer.parseInt(endTime[0]), Integer.parseInt(endTime[1]), Integer.parseInt(endTime[2]));
+
+			boolean b = startC.before(endC);
+			if (b) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
 }

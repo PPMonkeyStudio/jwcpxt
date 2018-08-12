@@ -12,6 +12,7 @@ import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -30,6 +31,62 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public int get_dataMonthDayMount(MonthDayMountVO monthDayMountVO, int i) {
+		Session session = getSession();
+		String hql = "";
+		hql = hql + "select"//
+				+ " count(*)"//
+				+ " from"//
+				+ " jwcpxt_service_client serviceClient"//
+				+ " where"//
+				+ " serviceClient.service_client_gmt_modified >= :startTime"//
+				+ " and serviceClient.service_client_gmt_modified <= :endTime";
+		if (i != 0) {
+			hql = hql + " AND serviceClient.service_client_visit = '1'";
+		}
+		if (i == 2) {
+			hql = hql + " AND serviceClient.jwcpxt_service_client_id IN (" + " SELECT"//
+					+ " client.jwcpxt_service_client_id"//
+					+ " FROM"//
+					+ " jwcpxt_answer_choice choice,"//
+					+ " jwcpxt_option _option,"//
+					+ " jwcpxt_service_client client"//
+					+ " WHERE"//
+					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
+					+ " AND choice.answer_choice_option = _option.jwcpxt_option_id"//
+					+ " AND ("//
+					+ " _option.option_describe LIKE '不满意'"//
+					+ " OR _option.option_describe LIKE '不太满意'"//
+					+ " )"//
+					+ " group by"//
+					+ " client.jwcpxt_service_client_id"//
+					+ " )";
+		}
+		Query query = session.createQuery(hql);
+		if ("".equals(monthDayMountVO.getStartTime())) {
+			query.setParameter("startTime", "0000-00-00 00:00:00");
+		} else {
+			query.setParameter("startTime", monthDayMountVO.getStartTime() + " 00:00:00");
+		}
+		if ("".equals(monthDayMountVO.getEndTime())) {
+			query.setParameter("endTime", "9999-99-99 23:59:59");
+		} else {
+			query.setParameter("endTime", monthDayMountVO.getEndTime() + " 23:59:59");
+		}
+		try {
+			int count = ((Number) query.uniqueResult()).intValue();
+			return count;
+		} catch (ClassCastException e) {
+			return 0;
+		} finally {
+			session.clear();
+		}
 	}
 
 	/**

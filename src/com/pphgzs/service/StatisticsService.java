@@ -7,6 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
+import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
@@ -83,5 +84,12 @@ public interface StatisticsService {
 	 * @return
 	 */
 	public DissatisfiedVO get_clientDissatisfiedService(DissatisfiedVO dissatisfiedVO);
+
+	/**
+	 * 获取对应的数量
+	 * 
+	 * @return
+	 */
+	public MonthDayMountVO get_dataMonthDayMount(MonthDayMountVO monthDayMountVO);
 
 }
