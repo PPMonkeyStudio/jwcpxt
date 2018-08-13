@@ -140,6 +140,9 @@ $(function() {
 								text : '确认',
 								btnClass : 'btn-red',
 								action : function() {
+									//控制按钮不能再使用
+									$($event.target).attr("disabled", "disabled");
+
 									/* 数据格式转换,方便存入到后台的DTO中*/
 									let params = {
 										"serviceClient.jwcpxt_service_client_id" : myData.serviceClientId
@@ -164,13 +167,13 @@ $(function() {
 									//
 									$.post('/jwcpxt/Question/save_answer', params, response => {
 										if (response == "1") {
-											$($event.target).attr("disabled", "disabled");
 											toastr.success("回访结束");
 											if (myData.definitionId == "revisit") {
 												window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
 											} else
 												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
 										} else if (response == "-1") {
+											$($event.target).removeAttr("disabled");
 											toastr.error("结束失败");
 										}
 									}, 'text');

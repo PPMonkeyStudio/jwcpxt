@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
+import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.ServiceService;
@@ -102,6 +103,13 @@ public class MyTest {
 		for (long time = time1; time <= time2; time = time + 86400000) {
 			System.out.println(simpleDateFormat.format(new Date(time)));
 		}
+	}
+
+	@Test
+	public void tese3() {
+		jwcpxt_service_client client = new jwcpxt_service_client();
+		client.setJwcpxt_service_client_id("aac515ec-0a46-4f65-8580-7c07b35bda43");
+		System.out.println(serviceService.get_AllInformation_ByClientId(client));
 	}
 
 }
