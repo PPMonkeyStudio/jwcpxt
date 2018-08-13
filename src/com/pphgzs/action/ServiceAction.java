@@ -224,9 +224,9 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		List<jwcpxt_service_definition> serviceDefinitionList = serviceService.list_serviceDefinitionDO_all();
 		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
 		//
-		serviceDefinition.setJwcpxt_service_definition_id("revisit");
+		/*serviceDefinition.setJwcpxt_service_definition_id("revisit");
 		serviceDefinition.setService_definition_describe("整改情况");
-		serviceDefinitionList.add(0, serviceDefinition);
+		serviceDefinitionList.add(0, serviceDefinition);*/
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据

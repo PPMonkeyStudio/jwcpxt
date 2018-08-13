@@ -35,14 +35,17 @@ import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
+import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
+import com.pphgzs.domain.VO.SecondDistatisVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
+import com.pphgzs.service.DissatisfiedFeedbackService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.StatisticsService;
 import com.pphgzs.util.TimeUtil;
@@ -52,6 +55,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private StatisticsDao statisticsDao;
 	private UnitDao unitDao;
 	private ServiceService serviceService;
+	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 
 	/**
 	 * 获取对应的数量
@@ -762,6 +766,24 @@ public class StatisticsServiceImpl implements StatisticsService {
 					statisticsGrade = statisticsDao.geteStatisticsGrade(serviceGradeDTO, unitIds[i], searchTimeStart,
 							searchTimeEnd);
 				}
+				int cout = 0;
+				if ("revisit"
+						.equals(serviceGradeBelongUnitDTO.getServiceDefinition().getJwcpxt_service_definition_id())) {
+					// 获取改单位的整改超时数量
+					// 对应单位的数量
+					FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO = new FeedbackRectificationExceedTimeVO();
+					feedbackRectificationExceedTimeVO.setSearch(unit.getUnit_name());
+					feedbackRectificationExceedTimeVO.setSearchTimeStart(searchTimeStart);
+					feedbackRectificationExceedTimeVO.setSearchTimeEnd(searchTimeEnd);
+					/*
+					 * SecondDistatisVO secondDistatisVO = new SecondDistatisVO();
+					 * secondDistatisVO.setSearch(unit.getUnit_name());
+					 * secondDistatisVO.setSearchTimeStart(searchTimeStart);
+					 * secondDistatisVO.setSearchTimeEnd(searchTimeEnd);
+					 */
+					cout = dissatisfiedFeedbackService.get_countExceedTimeFive(feedbackRectificationExceedTimeVO);
+					statisticsGrade = (statisticsGrade - cout * 3) < 0 ? 0 : (statisticsGrade - cout * 3);
+				}
 				totalGrade = totalGrade + statisticsGrade;
 				statisticsGrade = ((int) (statisticsGrade * 10000 + 0.5)) / 10000.0;
 				totalGrade = ((int) (totalGrade * 10000 + 0.5)) / 10000.0;
@@ -825,6 +847,14 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 	public void setServiceService(ServiceService serviceService) {
 		this.serviceService = serviceService;
+	}
+
+	public DissatisfiedFeedbackService getDissatisfiedFeedbackService() {
+		return dissatisfiedFeedbackService;
+	}
+
+	public void setDissatisfiedFeedbackService(DissatisfiedFeedbackService dissatisfiedFeedbackService) {
+		this.dissatisfiedFeedbackService = dissatisfiedFeedbackService;
 	}
 
 }
