@@ -87,7 +87,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			query.setParameter("searchTimeStart", secondDistatisVO.getSearchTimeStart() + " 00:00:00");
 		}
 		if ("".equals(secondDistatisVO.getSearchTimeEnd())) {
-			query.setParameter("searchTimeEnd", "0000-00-00 23:59:59");
+			query.setParameter("searchTimeEnd", "9999-99-99 23:59:59");
 		} else {
 			query.setParameter("searchTimeEnd", secondDistatisVO.getSearchTimeEnd() + " 23:59:59");
 		}
@@ -160,7 +160,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		}
 		if ("".equals(secondDistatisVO.getSearchTimeEnd())) {
 			// System.out.println("4");
-			query.setParameter("searchTimeEnd", "0000-00-00 23:59:59");
+			query.setParameter("searchTimeEnd", "9999-99-99 23:59:59");
 		} else {
 			query.setParameter("searchTimeEnd", secondDistatisVO.getSearchTimeEnd() + " 23:59:59");
 		}
