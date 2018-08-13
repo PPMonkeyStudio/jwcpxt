@@ -73,8 +73,8 @@ th {
 												<button type="button" onclick="checkTimeType(this)" time-type="3" class="btn btn-info btn-xs timeType">月统计</button>
 											</p>
 										</div>
-										<div id="allDissatisfaction" style="width: 100%;height:600px; margin-top: 20px;"></div>
-										<div style="width: 100%; height:650px; margin-top: 50px;">
+										<div id="allDissatisfaction" style="width: 100%;height:1000px; margin-top: 20px;"></div>
+										<div style="width: 100%; height:600px; margin-top: 50px;">
 											<div id="dissatisfiedService" style="width: 50%;height:600px; float: left;"></div>
 											<div id="dissatisfactionProblem" style="width: 50%;height:600px; float: right;"></div>
 										</div>

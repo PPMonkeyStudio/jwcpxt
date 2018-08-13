@@ -170,6 +170,8 @@ function randerCrowdFocusChart(res) {
 			} ]
 		};
 		crowdFocusChart.setOption(option);
+
+
 		//画条形图
 		let option_bar = {
 			tooltip : {
@@ -210,7 +212,7 @@ function randerCrowdFocusChart(res) {
 							label : {
 								show : true,
 								position : 'top',
-								formatter : '{b}\n{c}'
+							//								formatter : '{b}\n{c}'
 							}
 						}
 					},
@@ -296,6 +298,16 @@ function renderCrowdNotSatisfiedChart(res) {
 			xAxis : [ {
 				type : 'category',
 				data : name,
+				//设置字体倾斜
+//				axisLabel : {
+//					interval : 0,
+//					rotate : 45, //倾斜度 -90 至 90 默认为0
+//					margin : 2,
+//					textStyle : {
+//						fontWeight : "bolder",
+//						color : "#000000"
+//					}
+//				},
 				axisTick : {
 					alignWithLabel : true
 				}
@@ -319,7 +331,7 @@ function renderCrowdNotSatisfiedChart(res) {
 							label : {
 								show : true,
 								position : 'top',
-								formatter : '{b}\n{c}'
+							//								formatter : '{b}\n{c}'
 							}
 						}
 					},
@@ -543,10 +555,12 @@ function randerDissatisfiedServiceChart(res, title) {
 	setTimeout(function() {
 		let option = {
 			title : {
-				text : "群从满意业务分布图",
+				text : "群众满意业务分布图",
 				subtext : ''
 			},
-			legend : {},
+			legend : {
+				padding : [ 40, 20, 20, 20 ], //设置标题内边距,上，右，下，左
+			},
 			tooltip : {
 				trigger : 'axis',
 				axisPointer : {

@@ -142,7 +142,6 @@ $(function() {
 								action : function() {
 									//控制按钮不能再使用
 									$($event.target).attr("disabled", "disabled");
-
 									/* 数据格式转换,方便存入到后台的DTO中*/
 									let params = {
 										"serviceClient.jwcpxt_service_client_id" : myData.serviceClientId
