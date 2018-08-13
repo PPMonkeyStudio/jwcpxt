@@ -74,9 +74,9 @@ th {
 											</p>
 										</div>
 										<div id="allDissatisfaction" style="width: 100%;height:1000px; margin-top: 20px;"></div>
-										<div style="width: 100%; height:600px; margin-top: 50px;">
-											<div id="dissatisfiedService" style="width: 50%;height:600px; float: left;"></div>
-											<div id="dissatisfactionProblem" style="width: 50%;height:600px; float: right;"></div>
+										<div style="width: 100%; height:700px; margin-top: 50px;">
+											<div id="dissatisfiedService" style="width: 50%;height:700px; float: left;"></div>
+											<div id="dissatisfactionProblem" style="width: 50%;height:700px; float: right;"></div>
 										</div>
 										<!-- <div id="main" style="width: 100%;height:400px; margin-top: 50px;"></div> -->
 										<!-- <div id="main2" style="width: 100%;height:400px; margin-top: 50px;"></div> -->

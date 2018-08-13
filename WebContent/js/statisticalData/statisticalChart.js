@@ -541,7 +541,7 @@ function randerDissatisfiedServiceChart(res, title) {
 		type : 'pie',
 		id : 'pie',
 		radius : '30%',
-		center : [ '50%', '25%' ],
+		center : [ '50%', '30%' ],
 		label : {
 			formatter : `{b}: {@${_source[0][1]}} ({d}%)`
 		},
@@ -559,7 +559,7 @@ function randerDissatisfiedServiceChart(res, title) {
 				subtext : ''
 			},
 			legend : {
-				padding : [ 40, 20, 20, 20 ], //设置标题内边距,上，右，下，左
+				padding : [ 30, 20, 20, 20 ], //设置标题内边距,上，右，下，左
 			},
 			tooltip : {
 				trigger : 'axis',
@@ -675,7 +675,7 @@ function randerDissatisfactionProblem(res, title) {
 		type : 'pie',
 		id : 'pie',
 		radius : '30%',
-		center : [ '50%', '25%' ],
+		center : [ '50%', '30%' ],
 		label : {
 			formatter : `{b}: {@${_source[0][1]}} ({d}%)`
 		},
