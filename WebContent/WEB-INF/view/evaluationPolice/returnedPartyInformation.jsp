@@ -66,7 +66,7 @@ th {
 								</div>
 							</div>
 							<div style="" v-else>
-								<div class="form-group" style="">
+								<div class="form-group" style="text-align: center;">
 									<label class="">今日业务已回访完毕 </label> 
 								</div>
 							</div>

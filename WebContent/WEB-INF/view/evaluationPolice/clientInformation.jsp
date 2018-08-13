@@ -56,6 +56,8 @@ th {
 											@change="queryClient" name="clientInfoVO.screenClientState"
 											class="form-control">
 											<option value="">全部</option>
+											<option value="满意">满意</option>
+											<option value="比较满意">比较满意</option>
 											<option value="不太满意">不太满意</option>
 											<option value="不满意">不满意</option>
 											<option value="有建议">建议</option>
@@ -190,6 +192,7 @@ th {
 									</table>
 									<!-- 分页 -->
 									<div id="bottomPage" style="padding: 20px;" v-cloak>
+										<span>总记录数:<span id="currPage">{{page.totalCount}}</span></span>
 										<span>当前页数:<span id="currPage">{{page.currPage}}</span></span>
 										<span>共:<span id="totalPage">{{page.totalPage}}</span>页
 										</span> <span class="pageOperation" @click="firstPage">首页</span> <span

@@ -166,12 +166,10 @@ $(function() {
 										if (response == "1") {
 											$($event.target).attr("disabled", "disabled");
 											toastr.success("回访结束");
-											setTimeout(function() {
-												if (myData.definitionId == "revisit") {
-													window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
-												} else
-													window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
-											}, 0);
+											if (myData.definitionId == "revisit") {
+												window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
+											} else
+												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
 										} else if (response == "-1") {
 											toastr.error("结束失败");
 										}
@@ -210,12 +208,11 @@ $(function() {
 									if (response == "1") {
 										$(event.target).attr("disabled", "disabled");
 										toastr.success("回访被终止");
-										setTimeout(function() {
-											if (myData.definitionId == "revisit") {
-												window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
-											} else
-												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
-										}, 0);
+										if (myData.definitionId == "revisit") {
+											window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
+										} else {
+											window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
+										}
 									} else if (response == "-1") {
 										toastr.error("回访终止失败");
 									}
