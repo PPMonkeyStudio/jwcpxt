@@ -152,4 +152,12 @@ public interface DissatisfiedFeedbackDao {
 	 * @return
 	 */
 	public List<SecondDistatisDTO> get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO);
+
+	/**
+	 * 直接更改同一当事人在统一单位的其他不满意反馈
+	 * 
+	 * @param jwcpxt_service_client_id
+	 * @param jwcpxt_unit_id
+	 */
+	public void updateDissatisfiedClient(String jwcpxt_service_client_id, String jwcpxt_unit_id);
 }

@@ -935,4 +935,28 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		return unitFather;
 	}
 
+	@Override
+	public void updateDissatisfiedClient(String jwcpxt_service_client_id, String jwcpxt_unit_id) {
+		Session session = getSession();
+		String hql = "UPDATE"//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
+				+ " jwcpxt_answer_choice answerAnswer,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance"//
+				+ " SET dissatisfiedFeedback.dissatisfied_feedback_state = '3',"//
+				+ " dissatisfiedFeedback.dissatisfied_feedback_audit_opinion = '同一当事人，与上条合并推送'"//
+				+ " WHERE"//
+				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerAnswer.JWCPXT_ANSWER_CHOICE_ID"//
+				+ " AND answerAnswer.ANSWER_CHOICE_CLIENT = serviceClient.JWCPXT_SERVICE_CLIENT_ID"//
+				+ " AND serviceClient.SERVICE_CLIENT_SERVICE_INSTANCE = serviceInstance.JWCPXT_SERVICE_INSTANCE_ID"//
+				+ " AND dissatisfiedFeedback.dissatisfied_feedback_state = '1'"//
+				+ " AND serviceClient.JWCPXT_SERVICE_CLIENT_ID = :clientId"//
+				+ " AND serviceInstance.SERVICE_INSTANCE_BELONG_UNIT = :unitId";
+		Query query = session.createSQLQuery(hql);
+		query.setParameter("clientId", jwcpxt_service_client_id);
+		query.setParameter("unitId", jwcpxt_unit_id);
+		query.executeUpdate();
+		session.clear();
+	}
+
 }

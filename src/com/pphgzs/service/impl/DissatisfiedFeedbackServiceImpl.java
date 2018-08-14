@@ -413,7 +413,6 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		jwcpxt_dissatisfied_feedback disFeedback = new jwcpxt_dissatisfied_feedback();
 		jwcpxt_service_client serviceClient = new jwcpxt_service_client();
 		jwcpxt_unit unit = new jwcpxt_unit();
-		jwcpxt_unit unitFather = new jwcpxt_unit();
 		// 更改不满意反馈表的状态
 		if (dissatisfiedFeedback != null && dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id() != null
 				&& dissatisfiedFeedback.getJwcpxt_dissatisfied_feedback_id().trim().length() > 0) {
@@ -453,6 +452,9 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		feedbackRectification
 				.setFeedback_rectification_gmt_modified(feedbackRectification.getFeedback_rectification_gmt_create());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(feedbackRectification);
+		// 直接更改同一当事人在统一单位的其他不满意反馈
+		dissatisfiedFeedbackDao.updateDissatisfiedClient(serviceClient.getJwcpxt_service_client_id(),
+				unit.getJwcpxt_unit_id());
 		/*
 		 * try {
 		 *//**
