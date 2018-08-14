@@ -67,17 +67,17 @@ th {
 												<label>办理时间</label> <input name="clientInfoVO.startTime"
 													@blur="queryClient" class="mydate form-control"
 													id="beginTime" placeholder="起始时间"
-													style="display: inline; width: 150px;"> <label>到</label>
+													style="display: inline; width: 140px;"> <label>到</label>
 												<input name="clientInfoVO.endTime" @blur="queryClient"
 													id="endTime" placeholder="结束时间" class="mydate form-control"
-													style="display: inline; width: 150px;"> <label>回访时间</label>
+													style="display: inline; width: 140px;"> <label>回访时间</label>
 												<input name="clientInfoVO.startHTime" @blur="queryClient"
 													class="mydate form-control" id="beginTime"
-													placeholder="起始时间" style="display: inline; width: 150px;">
+													placeholder="起始时间" style="display: inline; width: 140px;">
 												<label>到</label> <input name="clientInfoVO.endHTime"
 													@blur="queryClient" id="endTime" placeholder="结束时间"
 													class="mydate form-control"
-													style="display: inline; width: 150px;">
+													style="display: inline; width: 140px;">
 
 												<button type="button" class="btn btn-default"
 													@click="previewChart">
