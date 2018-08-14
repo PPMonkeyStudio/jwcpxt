@@ -196,19 +196,19 @@ function randerCrowdFocusChart(res) {
 					rotate : 65,
 					margin : 2,
 					textStyle : {
-//						fontWeight : "bolder",
+						//						fontWeight : "bolder",
 						color : "#000000"
 					}
-//					formatter : function(val) {
-//						var strs = val.split(''); //字符串数组
-//						var str = ''
-//						for (var i = 0, s; s = strs[i++];) { //遍历字符串数组
-//							str += s;
-//							if (!(i % 2))
-//								str += '\n'; //按需要求余
-//						}
-//						return str
-//					}
+				//					formatter : function(val) {
+				//						var strs = val.split(''); //字符串数组
+				//						var str = ''
+				//						for (var i = 0, s; s = strs[i++];) { //遍历字符串数组
+				//							str += s;
+				//							if (!(i % 2))
+				//								str += '\n'; //按需要求余
+				//						}
+				//						return str
+				//					}
 				}
 			} ],
 			yAxis : [ {
@@ -322,7 +322,7 @@ function renderCrowdNotSatisfiedChart(res) {
 					rotate : 65, //倾斜度 -90 至 90 默认为0
 					margin : 2,
 					textStyle : {
-//						fontWeight : "bolder",
+						//						fontWeight : "bolder",
 						color : "#000000"
 					}
 				},
@@ -396,9 +396,12 @@ function randerDissatisfactionChart(res) {
 		type : 'pie',
 		id : 'pie',
 		radius : '30%',
-		center : [ '50%', '25%' ],
+		center : [ '50%', '33%' ],
 		label : {
-			formatter : `{b}: {@${_source[0][1]}} ({d}%)`
+			formatter : `{b}: {@${_source[0][1]}} ({d}%)`,
+			textStyle: {
+                fontSize: 15
+            }
 		},
 		encode : {
 			itemName : 'time',
@@ -413,7 +416,9 @@ function randerDissatisfactionChart(res) {
 				text : '测评数据统计分析图',
 				subtext : ''
 			},
-			legend : {},
+			legend : {
+				padding : [ 30, 20, 20, 20 ], //设置标题内边距,上，右，下，左
+			},
 			tooltip : {
 				trigger : 'axis',
 				axisPointer : {
@@ -445,7 +450,10 @@ function randerDissatisfactionChart(res) {
 					series : {
 						id : 'pie',
 						label : {
-							formatter : '{b}: {@[' + dimension + ']} ({d}%)'
+							formatter : '{b}: {@[' + dimension + ']} ({d}%)',
+							textStyle: {
+		                        fontSize: 15
+		                    }
 						},
 						encode : {
 							value : dimension,
@@ -561,7 +569,10 @@ function randerDissatisfiedServiceChart(res, title) {
 		radius : '30%',
 		center : [ '50%', '30%' ],
 		label : {
-			formatter : `{b}: {@${_source[0][1]}} ({d}%)`
+			formatter : `{b}: {@${_source[0][1]}} ({d}%)`,
+			textStyle : {
+				fontSize : 15
+			}
 		},
 		encode : {
 			itemName : 'time',
@@ -610,7 +621,10 @@ function randerDissatisfiedServiceChart(res, title) {
 					series : {
 						id : 'pie',
 						label : {
-							formatter : '{b}: {@[' + dimension + ']} ({d}%)'
+							formatter : '{b}: {@[' + dimension + ']} ({d}%)',
+							textStyle: {
+		                        fontSize: 15
+		                    }
 						},
 						encode : {
 							value : dimension,
@@ -695,7 +709,10 @@ function randerDissatisfactionProblem(res, title) {
 		radius : '30%',
 		center : [ '50%', '30%' ],
 		label : {
-			formatter : `{b}: {@${_source[0][1]}} ({d}%)`
+			formatter : `{b}: {@${_source[0][1]}} ({d}%)`,
+			textStyle: {
+//                fontSize: 15
+            }
 		},
 		encode : {
 			itemName : 'time',

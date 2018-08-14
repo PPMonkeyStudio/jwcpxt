@@ -45,7 +45,7 @@ th {
 									<%-- <select v-if="isUnit" style="width:120px; float: left;" --%>
 									<s:if
 										test="(#session.unit!=undefined && #session.unit.unit_grade==1) ||  (#session.user!=undefined &&(#session.user.user_type==2 || #session.user.user_type==1))">
-										<select style="width: 120px; float: left;"
+										<select style="width: 140px; float: left;"
 											class="form-control" name="clientInfoVO.screenUser"
 											@change="queryClient">
 											<option value="">选择测评员</option>
@@ -87,7 +87,7 @@ th {
 										</div>
 										<input @keyup="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
 											name="clientInfoVO.search" class="form-control"
-											style="float: right; width: 250px;">
+											style="float: right; width: 260px;">
 									</s:if>
 									<table class="table" style="text-align: center; width: 100%;">
 										<thead>
