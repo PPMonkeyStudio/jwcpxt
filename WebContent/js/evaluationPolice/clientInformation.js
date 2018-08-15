@@ -178,12 +178,26 @@ $(function() {
 					  		<tr>
 					  			<th colspan="8">办理业务信息</th>
 					  		</tr>
-					  		<tr>
-					  			<td>业务名称</td>
-								<td colspan="3">{{DTO.definition.service_definition_describe}}</td>
-								<td colspan="2">办理时间</td>
-								<td colspan="2">{{DTO.instance.service_instance_date}}</td>
-					  		</tr>
+					  		<template v-if="DTO.instance.service_instance_service_definition == 'revisit'">
+						  		<tr>
+						  			<td>业务名称</td>
+									<td>{{DTO.definition.service_definition_describe}}</td>
+									<td>原整改编号</td>
+									<td>{{DTO.instance.service_instance_nid}}</td>
+									<td>原业务名称</td>
+									<td>{{DTO.instance.service_instance_old_service_name}}</td>
+									<td>原整改时间</td>
+									<td>{{DTO.instance.service_instance_date}}</td>
+						  		</tr>
+					  		</template>
+					  		<template v-else>
+						  		<tr>
+						  			<td>业务名称</td>
+									<td colspan="3">{{DTO.definition.service_definition_describe}}</td>
+									<td colspan="2">办理时间</td>
+									<td colspan="2">{{DTO.instance.service_instance_date}}</td>
+						  		</tr>
+					  		</template>
 					  		<tr>
 					  			<th colspan="8">办理单位信息</th>
 					  		</tr>

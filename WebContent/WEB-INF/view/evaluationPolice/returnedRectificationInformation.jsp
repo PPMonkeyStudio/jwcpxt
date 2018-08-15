@@ -54,7 +54,7 @@ th {
 								</div>
 								<div class="form-group">
 									<label class="">原办理业务:</label> 
-									<span class="form-control-static">{{returnedParty.serviceInstance.service_instance_nid}}</span>
+									<span class="form-control-static">{{returnedParty.serviceInstance.service_instance_old_service_name}}</span>
 								</div>
 								<div class="form-group">
 									<label class="">回访业务:</label> 

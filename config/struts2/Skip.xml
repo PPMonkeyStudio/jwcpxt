@@ -51,12 +51,16 @@
 			<result name="skipEvaluationPoliceIndex">
 				/WEB-INF/view/evaluationPolice/evaluationPoliceIndex.jsp
 			</result>
+			
 			<result name="skipReturnedPartyInformation">
-				/WEB-INF/view/evaluationPolice/returnedPartyInformation.jsp
+				<param name="location">/WEB-INF/view/evaluationPolice/returnedPartyInformation.jsp</param>
+				<param name="type">${type}</param>
 			</result>
 			<result name="skipReturnedRectificationInformation">
-				/WEB-INF/view/evaluationPolice/returnedRectificationInformation.jsp
+				<param name="location">/WEB-INF/view/evaluationPolice/returnedRectificationInformation.jsp</param>
+				<param name="type">${type}</param>
 			</result>
+			
 			<result name="skipPoliceAssessmentPage" type="redirectAction">
 				skipPoliceAssessmentPageJsp?type=${type}&amp;definitionId=${definitionId}&amp;serviceClientId=${serviceClientId}
 			</result>

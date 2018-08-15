@@ -168,9 +168,9 @@ $(function() {
 										if (response == "1") {
 											toastr.success("回访结束");
 											if (myData.type == "revisit") {
-												window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
+												window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation?type=revisit";
 											} else
-												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
+												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation?type=general";
 										} else if (response == "-1") {
 											$($event.target).removeAttr("disabled");
 											toastr.error("结束失败");
@@ -212,9 +212,9 @@ $(function() {
 									if (response == "1") {
 										toastr.success("终止回访");
 										if (myData.type == "revisit") {
-											window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
+											window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation?type=revisit";
 										} else {
-											window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
+											window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation?type=general";
 										}
 									} else if (response == "-1") {
 										$($event.target).removeAttr("disabled");

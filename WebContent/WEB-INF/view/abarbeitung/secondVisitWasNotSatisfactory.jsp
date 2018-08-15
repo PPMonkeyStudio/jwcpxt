@@ -63,6 +63,7 @@ th {
 											<thead>
 												<tr>
 													<td>单位</td>
+													<td>原业务流转单</td>
 													<td>单位负责人</td>
 													<td>单位号码</td>
 													<td>业务名称</td>
@@ -75,6 +76,9 @@ th {
 												<template v-for="SecondDistatisDTO in listSecondDistatisDTO">
 												<tr>
 													<td>{{SecondDistatisDTO.unit.unit_name}}</td>
+													<td><a
+														:id="SecondDistatisDTO.serviceInstance.service_instance_belong_feedback"
+														onclick="preview(this)">流转单 </a></td>
 													<td>{{SecondDistatisDTO.unit.unit_contacts_name}}</td>
 													<td>{{SecondDistatisDTO.unit.unit_phone}}</td>
 													<td>{{SecondDistatisDTO.serviceDefinition.service_definition_describe}}</td>
