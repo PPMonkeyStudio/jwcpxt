@@ -168,5 +168,5 @@ public interface DissatisfiedFeedbackDao {
 	 * @param jwcpxt_feedback_rectification_id
 	 * @return
 	 */
-	public jwcpxt_service_definition getServiceDefinitionByFeedbackId(String jwcpxt_feedback_rectification_id);
+	public String getServiceDefinitionByFeedbackId(String jwcpxt_feedback_rectification_id);
 }

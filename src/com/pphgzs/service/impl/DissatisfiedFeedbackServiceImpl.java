@@ -128,8 +128,14 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				dissatisfiedFeedbackDao.saveOrUpdateObject(checkFeedbackRectification);
 				// 如果业务本身就是整改就不再生成整改回访
 				jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
-				serviceDefinition = dissatisfiedFeedbackDao.getServiceDefinitionByFeedbackId(
+				// serviceDefinition =
+				String serviceDefinitionId = dissatisfiedFeedbackDao.getServiceDefinitionByFeedbackId(
 						checkFeedbackRectification.getJwcpxt_feedback_rectification_id());
+				if (serviceDefinitionId == null || "".equals(serviceDefinitionId)) {
+					return false;
+				}
+				//
+				serviceDefinition = serviceService.get_serviceDefinitionDO_byServiceDefinitionID(serviceDefinitionId);
 				if (serviceDefinition == null) {
 					return false;
 				}

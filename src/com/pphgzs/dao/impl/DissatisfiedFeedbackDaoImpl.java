@@ -39,27 +39,26 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	 * 
 	 */
 	@Override
-	public jwcpxt_service_definition getServiceDefinitionByFeedbackId(String feedbackRectificationId) {
+	public String getServiceDefinitionByFeedbackId(String feedbackRectificationId) {
 		Session session = getSession();
 		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
-		String hql = "SELECT"//
-				+ " serviceDefinition"//
-				+ " FROM"//
-				+ " jwcpxt_feedback_rectification feedbackRectification,"//
-				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
-				+ " jwcpxt_answer_choice answerChoice,"//
+		String hql = "select"//
+				+ " servicedefinition.jwcpxt_service_definition_id"//
+				+ " from"//
+				+ " jwcpxt_feedback_rectification feedbackrectification,"//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedfeedback,"//
+				+ " jwcpxt_answer_choice answerchoice,"//
 				+ " jwcpxt_question question,"//
-				+ " jwcpxt_service_definition serviceDefinition"//
-				+ " WHERE"//
-				+ " feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id"//
-				+ " AND dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.JWCPXT_ANSWER_CHOICE_ID"//
-				+ " AND answerChoice.ANSWER_CHOICE_QUESTION = question.JWCPXT_QUESTION_ID"//
-				+ " AND question.QUESTION_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID"//
-				+ " AND feedbackRectification.jwcpxt_feedback_rectification_id = :feedbackRectificationId";
+				+ " jwcpxt_service_definition servicedefinition"//
+				+ " where"//
+				+ " feedbackrectification.feedback_rectification_dissatisfied_feedback = dissatisfiedfeedback.jwcpxt_dissatisfied_feedback_id"//
+				+ " and dissatisfiedfeedback.dissatisfied_feedback_answer_choice = answerchoice.jwcpxt_answer_choice_id"//
+				+ " and answerchoice.answer_choice_question = question.jwcpxt_question_id"//
+				+ " and question.question_service_definition = servicedefinition.jwcpxt_service_definition_id"//
+				+ " and feedbackrectification.jwcpxt_feedback_rectification_id = :feedbackRectificationId";
 		Query query = session.createQuery(hql);
 		query.setParameter("feedbackRectificationId", feedbackRectificationId);
-		serviceDefinition = (jwcpxt_service_definition) query.uniqueResult();
-		return serviceDefinition;
+		return (String) query.uniqueResult();
 	}
 
 	/**
