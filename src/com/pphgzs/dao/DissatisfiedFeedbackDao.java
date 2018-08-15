@@ -5,6 +5,7 @@ import java.util.List;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
@@ -152,4 +153,20 @@ public interface DissatisfiedFeedbackDao {
 	 * @return
 	 */
 	public List<SecondDistatisDTO> get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO);
+
+	/**
+	 * 直接更改同一当事人在统一单位的其他不满意反馈
+	 * 
+	 * @param jwcpxt_service_client_id
+	 * @param jwcpxt_unit_id
+	 */
+	public void updateDissatisfiedClient(String jwcpxt_service_client_id, String jwcpxt_unit_id);
+
+	/**
+	 * 根据反馈整改表获取业务定义
+	 * 
+	 * @param jwcpxt_feedback_rectification_id
+	 * @return
+	 */
+	public jwcpxt_service_definition getServiceDefinitionByFeedbackId(String jwcpxt_feedback_rectification_id);
 }

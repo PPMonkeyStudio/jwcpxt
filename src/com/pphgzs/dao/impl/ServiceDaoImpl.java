@@ -83,10 +83,11 @@ public class ServiceDaoImpl implements ServiceDao {
 				.append(" serviceClient.SERVICE_CLIENT_GMT_CREATE >= :sevenDay")
 				.append(" AND serviceClient.SERVICE_CLIENT_GMT_CREATE <= :dayEndTime")
 				.append(" ) grabB ON grabA.grab_instance_client_phone = grabB.SERVICE_CLIENT_PHONE")
-				.append(" AND grabB.SERVICE_CLIENT_PHONE IS NULL ORDER BY RAND() LIMIT 1");
+				.append(" WHERE grabB.SERVICE_CLIENT_PHONE IS NULL ORDER BY RAND() LIMIT 1");
 		Query query = session.createSQLQuery(hql.toString());
 		String today = TimeUtil.getStringDay();
 		String seavenToday = TimeUtil.getStringDay_before7();
+		//
 		query.setParameter("dayStartTime", today + " 00:00:00");
 		query.setParameter("dayEndTime", today + " 23:59:59");
 		query.setParameter("daySevenTime", seavenToday.replaceAll("-", "") + "000000");
