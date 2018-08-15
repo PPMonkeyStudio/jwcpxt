@@ -152,11 +152,10 @@ a:hover {
 										</div>
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;">
-											<span>当前页数:<span id="currPage"></span>{{
-												checkVO.currPage }}
-											</span> <span>共:<span id="totalPage">{{
-													checkVO.totalPage }}</span>页
-											</span> <span onclick="skipToIndexPage()" id="indexPage"
+											<span>总记录数:<span id="currPage">{{checkVO.totalCount}}</span></span>
+											<span>当前页数:<span id="currPage"></span>{{checkVO.currPage }}</span>
+											<span>共:<span id="totalPage">{{checkVO.totalPage }}</span>页</span> 
+											<span onclick="skipToIndexPage()" id="indexPage"
 												class="pageOperation">首页</span> <span
 												onclick="skipToPrimaryPage()" id="previousPage"
 												class="pageOperation">上一页</span> <span
