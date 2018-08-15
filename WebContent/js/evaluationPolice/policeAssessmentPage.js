@@ -167,7 +167,7 @@ $(function() {
 									$.post('/jwcpxt/Question/save_answer', params, response => {
 										if (response == "1") {
 											toastr.success("回访结束");
-											if (myData.definitionId == "revisit") {
+											if (myData.type == "revisit") {
 												window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
 											} else
 												window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
@@ -200,6 +200,8 @@ $(function() {
 							text : '确认',
 							btnClass : 'btn-red',
 							action : function() {
+								$(event.target).attr("disabled", "disabled");
+								
 								/* 数据格式转换,方便存入到后台的DTO中*/
 								let params = {
 									"serviceClient.jwcpxt_service_client_id" : myData.serviceClientId,
@@ -208,14 +210,14 @@ $(function() {
 								//
 								$.post('/jwcpxt/Service/update_serviceClient_byId', params, response => {
 									if (response == "1") {
-										$(event.target).attr("disabled", "disabled");
-										toastr.success("回访被终止");
-										if (myData.definitionId == "revisit") {
+										toastr.success("终止回访");
+										if (myData.type == "revisit") {
 											window.location.href = "/jwcpxt/Skip/skipReturnedRectificationInformation";
 										} else {
 											window.location.href = "/jwcpxt/Skip/skipReturnedPartyInformation";
 										}
 									} else if (response == "-1") {
+										$($event.target).removeAttr("disabled");
 										toastr.error("回访终止失败");
 									}
 								}, 'text');
