@@ -17,7 +17,12 @@
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<ul id="changeNavbar" class="nav navbar-nav navbar-left">
-				<li><a href="#">
+				
+				<li><a href="javascript:;" onclick="toggleSidbar(this)">
+						<p><i class="fa fa-outdent"  style="top:4px;"></i></p>
+				</a></li>
+				
+				<li><a href="<%=basePath%>Skip/skipEvaluationPoliceIndex">
 						<p>首页</p>
 				</a></li>
 				<li>

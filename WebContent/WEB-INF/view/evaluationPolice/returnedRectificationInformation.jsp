@@ -53,6 +53,10 @@ th {
 									<span class="form-control-static">{{returnedParty.serviceClient.service_client_phone}}</span>
 								</div>
 								<div class="form-group">
+									<label class="">原办理业务:</label> 
+									<span class="form-control-static">{{returnedParty.serviceInstance.service_instance_nid}}</span>
+								</div>
+								<div class="form-group">
 									<label class="">回访业务:</label> 
 									<span class="form-control-static">{{returnedParty.serviceDefinition.service_definition_describe}}</span>
 								</div>

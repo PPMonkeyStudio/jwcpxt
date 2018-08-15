@@ -138,10 +138,30 @@ td button i {
 td .label {
 	line-height: 33px !important;
 }
+/* 动画 */
+.main-panel {
+	transition: all .5s;
+}	
+.main-open {
+	width: 100% !important;
+	transition: all .5s;
+}
 </style>
 <script type="text/javascript" src="<%=basePath%>js/user/login.js"></script>
 <script type="text/javascript"
 	src="<%=basePath%>js/user/updatePassword.js"></script>
+<script type="text/javascript" >
+	function toggleSidbar(a){
+		let i = $(a).find('i');
+		if(i.hasClass('fa-outdent')) {
+			i.removeClass('fa-outdent').addClass('fa-indent');
+			$('.main-panel').addClass('main-open');
+		} else if(i.hasClass('fa-indent')) {
+			i.removeClass('fa-indent').addClass('fa-outdent');
+			$('.main-panel').removeClass('main-open');
+		}
+	}
+</script>
 <s:if test="#session.loginType=='unit' && #session.unit.unit_grade==1 ">
 	<script type="text/javascript">
 		//页面初始化时获取数量

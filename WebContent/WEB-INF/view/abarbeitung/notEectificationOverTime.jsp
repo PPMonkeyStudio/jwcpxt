@@ -91,9 +91,10 @@ th {
 										</table>
 										<!-- 分页 -->
 										<div id="bottomPage" style="padding: 20px;" v-cloak>
+											<span>总记录数:<span id="currPage">{{page.totalCount}}</span></span>
 											<span>当前页数:<span id="currPage">{{page.currPage}}</span></span>
-											<span>共:<span id="totalPage">{{page.totalPage}}</span>页
-											</span> <span class="pageOperation" @click="firstPage">首页</span> <span
+											<span>共:<span id="totalPage">{{page.totalPage}}</span>页 </span>
+											<span class="pageOperation" @click="firstPage">首页</span> <span
 												class="pageOperation" @click="prePage">上一页</span> <span
 												class="pageOperation" @click="nextPage">下一页</span> <span
 												class="pageOperation" @click="lastPage">末页</span> <span><input
