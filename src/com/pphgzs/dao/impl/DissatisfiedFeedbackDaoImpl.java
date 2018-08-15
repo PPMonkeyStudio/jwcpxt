@@ -12,6 +12,7 @@ import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
@@ -32,6 +33,33 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public jwcpxt_service_definition getServiceDefinitionByFeedbackId(String feedbackRectificationId) {
+		Session session = getSession();
+		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
+		String hql = "SELECT"//
+				+ " serviceDefinition"//
+				+ " FROM"//
+				+ " jwcpxt_feedback_rectification feedbackRectification,"//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_question question,"//
+				+ " jwcpxt_service_definition serviceDefinition"//
+				+ " WHERE"//
+				+ " feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id"//
+				+ " AND dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.JWCPXT_ANSWER_CHOICE_ID"//
+				+ " AND answerChoice.ANSWER_CHOICE_QUESTION = question.JWCPXT_QUESTION_ID"//
+				+ " AND question.QUESTION_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID"//
+				+ " AND feedbackRectification.jwcpxt_feedback_rectification_id = :feedbackRectificationId";
+		Query query = session.createQuery(hql);
+		query.setParameter("feedbackRectificationId", feedbackRectificationId);
+		serviceDefinition = (jwcpxt_service_definition) query.uniqueResult();
+		return serviceDefinition;
 	}
 
 	/**
