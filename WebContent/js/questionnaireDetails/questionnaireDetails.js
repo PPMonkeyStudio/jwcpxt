@@ -147,8 +147,41 @@ $(function() {
 			},
 			deleteQuestion (index) {
 				//使用删除接口
-				deleteInterface('/jwcpxt/Question/delete_question', {
-					"question.jwcpxt_question_id" : myData.questionVO.questionList[index].jwcpxt_question_id
+//				deleteInterface('/jwcpxt/Question/delete_question', {
+//					"question.jwcpxt_question_id" : myData.questionVO.questionList[index].jwcpxt_question_id
+//				},function(){});
+				$.confirm({
+					title : "确定删除？",
+					icon : 'fa fa-warning',
+					type : "red",
+					autoClose : 'close|10000',
+					smoothContent : false,
+					content : false,
+					buttons : {
+						tryAgain : {
+							text : '确认',
+							btnClass : 'btn-red',
+							action : function() {
+								$.post('/jwcpxt/Question/delete_question', {
+									"question.jwcpxt_question_id" : myData.questionVO.questionList[index].jwcpxt_question_id
+								}, response => {
+									if (response == "1") {
+										toastr.success("删除成功");
+										queryData["questionVO.currPage"] = 1;
+										vm.getInfo(queryData);
+									} else if (response == "-1") {
+										toastr.error("删除失败");
+									}
+								}, 'text');
+							}
+						},
+						close : {
+							text : '取消',
+							btnClass : 'btn-default',
+							keys : [ 'esc' ],
+							action : function() {}
+						}
+					}
 				});
 			},
 			queryQuestion ($event) {
