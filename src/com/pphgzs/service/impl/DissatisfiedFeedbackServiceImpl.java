@@ -151,8 +151,13 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 					jwcpxt_user user = userService.get_userDO_byRandomAndTypeCP();
 					serviceInstance.setService_instance_judge(user.getJwcpxt_user_id());
 					// 业务唯一识别编号，存反馈整改表的编号
-					serviceInstance.setService_instance_nid(serviceDefinition.getService_definition_describe());
-
+					serviceInstance.setService_instance_nid(checkFeedbackRectification.getFeedback_rectification_no());
+					// 所属整改反馈
+					serviceInstance.setService_instance_belong_feedback(
+							checkFeedbackRectification.getJwcpxt_feedback_rectification_id());
+					// 所属业务名称
+					serviceInstance
+							.setService_instance_old_service_name(serviceDefinition.getService_definition_describe());
 					// 业务办理时间，用反馈最后修改的时间
 					serviceInstance.setService_instance_date(
 							checkFeedbackRectification.getFeedback_rectification_gmt_modified());
