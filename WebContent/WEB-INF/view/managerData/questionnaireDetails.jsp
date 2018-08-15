@@ -143,10 +143,10 @@ th {
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">取消</button>
 									<button type="button" class="btn btn-primary"
 										@click="addQuestion">保存</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">取消</button>
 								</div>
 							</div>
 							<!-- /.modal-content -->
