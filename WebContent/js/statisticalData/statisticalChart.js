@@ -12,14 +12,14 @@ function getAllUnit() {
 
 //let lineChart = echarts.init(document.getElementById('main'), 'light');
 //var paiChart = echarts.init(document.getElementById('main2'), 'light');
-var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'light'); //所有不满意
-var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'light'); //不满意或满意业务
-var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'light'); //问题
+var dissatisfactionChart = echarts.init(document.getElementById('allDissatisfaction'), 'default'); //所有不满意
+var dissatisfiedServiceChart = echarts.init(document.getElementById('dissatisfiedService'), 'default'); //不满意或满意业务
+var dissatisfactionProblemChart = echarts.init(document.getElementById('dissatisfactionProblem'), 'default'); //问题
 
-var crowdFocusChart = echarts.init(document.getElementById('crowdFocus'), 'light'); //群众关注
-var crowdFocusChart_bar = echarts.init(document.getElementById('crowdFocus_bar'), 'light'); //群众关注-条形图
-var crowdNotSatisfiedChart = echarts.init(document.getElementById('crowdNotSatisfied'), 'light'); //群众不满意
-var crowdNotSatisfiedChart_bar = echarts.init(document.getElementById('crowdNotSatisfied_bar'), 'light'); //群众不满意
+var crowdFocusChart = echarts.init(document.getElementById('crowdFocus'), 'default'); //群众关注
+var crowdFocusChart_bar = echarts.init(document.getElementById('crowdFocus_bar'), 'default'); //群众关注-条形图
+var crowdNotSatisfiedChart = echarts.init(document.getElementById('crowdNotSatisfied'), 'default'); //群众不满意
+var crowdNotSatisfiedChart_bar = echarts.init(document.getElementById('crowdNotSatisfied_bar'), 'default'); //群众不满意
 var definitionId = '';
 
 function getDate() {
