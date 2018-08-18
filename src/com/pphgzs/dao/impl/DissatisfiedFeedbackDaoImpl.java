@@ -84,7 +84,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = 'revisit'"//
-				+ " and question.question_describe like '请问您是否对整改结果满意'"//
+				+ " and question.question_describe like '%整改结果%满意%'"//
 				+ " and _option.option_describe like '不满意'"//
 				+ " and ("//
 				+ " unit.unit_name like :search"//
@@ -149,7 +149,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ " "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = 'revisit'"//
-				+ " and question.question_describe like '请问您是否对整改结果满意'"//
+				+ " and question.question_describe like '%整改结果%满意%'"//
 				+ " and _option.option_describe like '不满意'"//
 				+ " and ("//
 				+ " unit.unit_name like :search"//

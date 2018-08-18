@@ -22,6 +22,8 @@ import com.pphgzs.domain.DTO.AnswerDTO;
 import com.pphgzs.domain.DTO.QuestionDTO;
 import com.pphgzs.domain.VO.QuestionVO;
 import com.pphgzs.service.QuestionService;
+import com.pphgzs.thread.SendPhoneThread;
+import com.pphgzs.util.TimeUtil;
 
 @SuppressWarnings("serial")
 public class QuestionAction extends ActionSupport implements ServletResponseAware, ServletRequestAware {
@@ -44,6 +46,35 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private jwcpxt_service_client serviceClient;
 	// 回答
 	private List<AnswerDTO> listAnswerDTO;
+	// 电话
+	private String phone;
+
+	/**
+	 * @throws IOException
+	 * 
+	 */
+	public void sendPhone() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		// phone测试
+		if (phone == null || "".equals(phone) || (!TimeUtil.isMobile(phone) && !TimeUtil.isPhone(phone))) {
+			http_response.getWriter().write("电话号码异常");
+			return;
+		} else {
+			// 获取ip
+			String ip = http_request.getRemoteAddr();
+			System.out.println("ip:" + ip);
+			SendPhoneThread sendPhone = new SendPhoneThread();
+			sendPhone.testSend(ip, phone);
+			System.out.println("在打电话");
+			http_response.getWriter().write("正在打电话");
+		}
+
+	}
 
 	/**
 	 * 根据业务定义Id 获取所有该业务的所有问题
@@ -74,6 +105,14 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 		} else {
 			http_response.getWriter().write("-1");
 		}
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	/**
@@ -343,8 +382,8 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	/*
 	 * public int getMoveOptionAction() { return moveOptionAction; }
 	 * 
-	 * public void setMoveOptionAction(int moveOptionAction) {
-	 * this.moveOptionAction = moveOptionAction; }
+	 * public void setMoveOptionAction(int moveOptionAction) { this.moveOptionAction
+	 * = moveOptionAction; }
 	 * 
 	 * public int getMoveQuestionAction() { return moveQuestionAction; }
 	 * 
