@@ -30,7 +30,7 @@
 								<h1>服务群众测评系统</h1>
 								<h3>欢迎来到服务群众测评系统</h3>
 								<div class="content table-responsive table-full-width">
-									<img alt="" src="<%=basePath%>img/process.png">
+									<img alt="" src="<%=basePath%>img/process.svg">
 									<!-- <div style="width: 100%">
 										<div class="form-group" style="margin: auto; padding-left: 20px;">
 											<label>起始时间</label> 

@@ -70,8 +70,9 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 			SendPhoneThread sendPhone = new SendPhoneThread();
 			sendPhone.testSend(ip, phone);
 			http_response.getWriter().write("calling");
+			http_response.getWriter().write("电话号码异常");
+			return;
 		}
-
 	}
 
 	/**
