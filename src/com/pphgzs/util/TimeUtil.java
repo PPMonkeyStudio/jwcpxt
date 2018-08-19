@@ -29,6 +29,27 @@ public class TimeUtil {
 		return formatter.format(now.getTime());
 	}
 
+	/**
+	 * 获取刘伟随机数
+	 * 
+	 * @return
+	 */
+	public static String sixRandom() {
+		String str = String.valueOf(Math.ceil(Math.random() * 500000 + 500000));
+		return str.substring(0, str.indexOf("."));
+
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getDateBy() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+		formatter.setLenient(false);
+		return formatter.format(new Date());
+	}
+
 	public static String longDateFormatDate(String time) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		formatter.setLenient(false);
@@ -185,6 +206,32 @@ public class TimeUtil {
 				return false;
 			}
 		}
+	}
+
+	public static boolean isMobile(String phone) {
+		Pattern p = null;
+		Matcher m = null;
+		boolean b = false;
+		p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
+		m = p.matcher(phone);
+		b = m.matches();
+		return b;
+	}
+
+	public static boolean isPhone(String phone) {
+		Pattern p1 = null, p2 = null;
+		Matcher m = null;
+		boolean b = false;
+		p1 = Pattern.compile("^[0][1-9]{2,3}-[0-9]{5,10}$");
+		p2 = Pattern.compile("^[1-9]{1}[0-9]{5,8}$");
+		if (phone.length() > 0) {
+			m = p1.matcher(phone);
+			b = m.matches();
+		} else {
+			m = p2.matcher(phone);
+			b = m.matches();
+		}
+		return b;
 	}
 
 }

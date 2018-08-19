@@ -103,7 +103,6 @@ th {
 											<p>今天回访成功数量为:<span style="color:green;">{{todaySuccessCount}}</span></p>
 											<br>
 											<br>
-											<br>
 											<p class="form-control-static">
 												   <template v-if="serviceDefinition.service_definition_describe.indexOf('110')>-1">
 													   <p>110报警:</p>
@@ -156,6 +155,11 @@ th {
 													    <p> 您好,这里是萍乡市公安局服务群众测评中心,我们之前对您进行过访问，并已将您反映的问题反馈给相关部门。</p>
 												   </template>
 											</p>
+											<br>
+											<br>
+											<button type="button" @click="makingCall($event)"  style="float: left;" class="btn btn-primary"><i class='fa fa-phone'></i>拨打当事人电话</button>
+											<br>
+											<!-- <p style="margin-top:5px;" id="callMsg"></p> -->
 										</div>
 										</div>
 										<div style="padding: 20px">
@@ -202,7 +206,7 @@ th {
 									</div>
 <!-- 								</div> -->
 							</div>
-							<button type="button" @click="finishReturned($event)"  style="float: left;" class="btn btn-primary">结束回访</button>
+							<button type="button" @click="finishReturned($event)"  style="float: left; width: 150px;" class="btn btn-primary">结束回访</button>
 						</div>
 					</div>
 				</div>

@@ -231,6 +231,20 @@ $(function() {
 						}
 					}
 				});
+			},
+			makingCall(event){
+				$(event.target).attr("disabled", "disabled");
+				$.post('/jwcpxt/Question/sendPhone',{
+					"phone":myData.returnedParty.serviceClient.service_client_phone
+				},response=>{
+					if(response=='calling'){
+						toastr.success("正在拨打电话");
+//						$("#callMsg").html("<i class='fa fa-cog fa-spin'></i>拨打电话..");
+					}else if(response=='phoneError'){
+						toastr.error("电话异常");
+//						$("#callMsg").html("<i class='fa fa-check'></i>电话号码异常");
+					}
+				},'text')
 			}
 		},
 		mounted () {
