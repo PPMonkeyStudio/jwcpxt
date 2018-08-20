@@ -198,8 +198,7 @@ public class TimeUtil {
 
 			Calendar endC = Calendar.getInstance();
 			endC.set(Integer.parseInt(endTime[0]), Integer.parseInt(endTime[1]), Integer.parseInt(endTime[2]));
-
-			boolean b = startC.before(endC);
+			boolean b = startC.before(endC) || startC.equals(endC);
 			if (b) {
 				return true;
 			} else {
