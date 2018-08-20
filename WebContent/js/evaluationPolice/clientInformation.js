@@ -50,8 +50,8 @@ $(function() {
 					$('input[name="clientInfoVO.search"]').val(unitText);
 					queryData["clientInfoVO.search"] = unitText;
 				}
-				
-				
+
+
 				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
@@ -103,6 +103,14 @@ $(function() {
 			},
 			pageTo (definition_id, client_id) {
 				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=specified&definitionId=${definition_id}&serviceClientId=${client_id}`;
+			},
+			reviewSituation ($event) {
+				$.post('/jwcpxt/Statistics/downloadData', {
+					"startTime" : queryData["clientInfoVO.startHTime"],
+					"endTime" : queryData["clientInfoVO.endHTime"]
+				}, response => {
+					$($event.target).siblings('p').html("回访总数:"+response.totalCount+",整改总数:"+response.totalStatisCount+",成功总数:"+response.totalSuccessCount);
+				}, 'json');
 			},
 			firstPage () {
 				if (myData.page.isFirstPage) {

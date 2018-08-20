@@ -194,17 +194,23 @@ th {
 									<div id="bottomPage" style="padding: 20px;" v-cloak>
 										<span>总记录数:<span id="currPage">{{page.totalCount}}</span></span>
 										<span>当前页数:<span id="currPage">{{page.currPage}}</span></span>
-										<span>共:<span id="totalPage">{{page.totalPage}}</span>页
-										</span> <span class="pageOperation" @click="firstPage">首页</span> <span
-											class="pageOperation" @click="prePage">上一页</span> <span
-											class="pageOperation" @click="nextPage">下一页</span> <span
-											class="pageOperation" @click="lastPage">末页</span> <span><input
-											type="text" id="toPageInput"
-											style="text-align: center; width: 60px; height: 30px;"
-											onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
-											onblur="this.v();">
-											<button class="btn btn-default" @click="toPage"
-												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
+										<span>共:<span id="totalPage">{{page.totalPage}}</span>页</span> 
+										<span class="pageOperation" @click="firstPage">首页</span> 
+										<span class="pageOperation" @click="prePage">上一页</span> 
+										<span class="pageOperation" @click="nextPage">下一页</span> 
+										<span class="pageOperation" @click="lastPage">末页</span> 
+										<span>
+											<input type="text" id="toPageInput"
+												style="text-align: center; width: 60px; height: 30px;"
+												onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
+												onblur="this.v();">
+												<button class="btn btn-default" @click="toPage"
+													style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
+										</span>
+										<span>
+											<button class="btn btn-default" @click="reviewSituation($event)"
+													style="height: 30px; vertical-align: middle; margin-bottom: 3px;">回访信息</button>
+											<P></P>
 										</span>
 									</div>
 								</div>
