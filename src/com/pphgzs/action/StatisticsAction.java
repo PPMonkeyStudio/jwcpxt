@@ -59,6 +59,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private MonthDayMountVO monthDayMountVO;
 	private String startTime = "0000-01-01";
 	private String endTime = "9999-12-31";
+	private String userId = "";
 	/*
 	 * 
 	 */
@@ -92,6 +93,10 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 			response.getWriter().write("参数格式错误!");
 			return;
 		}
+		if (userId == null || "".equals(userId)) {
+			userId = "";
+		}
+		monthDayMountVO.setUserId(userId);
 		monthDayMountVO.setEndTime(endTime);
 		monthDayMountVO.setStartTime(startTime);
 		monthDayMountVO = statisticsService.get_dataMonthDayMount(monthDayMountVO);
@@ -505,6 +510,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

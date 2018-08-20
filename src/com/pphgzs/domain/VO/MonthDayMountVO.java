@@ -10,6 +10,8 @@ public class MonthDayMountVO {
 	// 结束时间
 	private String endTime = "9999-99-99";
 
+	private String userId = "";
+
 	public MonthDayMountDTO getMonthDayMountDTO() {
 		return monthDayMountDTO;
 	}
@@ -20,6 +22,14 @@ public class MonthDayMountVO {
 
 	public String getStartTime() {
 		return startTime;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public void setStartTime(String startTime) {

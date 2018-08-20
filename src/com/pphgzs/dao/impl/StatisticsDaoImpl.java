@@ -52,7 +52,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " and serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID"//
 					+ " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'"//
 					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
-					+ " and serviceClient.service_client_gmt_modified <= :endTime";
+					+ " and serviceClient.service_client_gmt_modified <= :endTime"//
+					+ " and serviceInstance.service_instance_judge like :userId";
 			if (i != 0) {
 				hql = hql + " AND serviceClient.service_client_visit = '1'";
 			}
@@ -74,6 +75,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'"//
 					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
 					+ " and serviceClient.service_client_gmt_modified <= :endTime"
+					+ " and serviceInstance.service_instance_judge like :userId"//
 					+ " and serviceClient.service_client_visit='1'"//
 					+ " ) t1"//
 					+ " left join"//
@@ -98,6 +100,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " t2.jwcpxt_service_client_id IS NOT NULL";
 		}
 		Query query = session.createSQLQuery(hql);
+		if ("".equals(monthDayMountVO.getUserId())) {
+			query.setParameter("userId", "%");
+		} else {
+			query.setParameter("userId", monthDayMountVO.getUserId());
+		}
 		if ("".equals(monthDayMountVO.getStartTime())) {
 			query.setParameter("startTime", "0000-00-00 00:00:00");
 		} else {

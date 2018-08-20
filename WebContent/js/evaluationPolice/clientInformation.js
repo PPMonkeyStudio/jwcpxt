@@ -107,7 +107,8 @@ $(function() {
 			reviewSituation ($event) {
 				$.post('/jwcpxt/Statistics/downloadData', {
 					"startTime" : queryData["clientInfoVO.startHTime"],
-					"endTime" : queryData["clientInfoVO.endHTime"]
+					"endTime" : queryData["clientInfoVO.endHTime"],
+					"userId" : queryData["clientInfoVO.screenUser"]
 				}, response => {
 					function toPercent(point){
 					    var str=Number(point*100).toFixed(2);
