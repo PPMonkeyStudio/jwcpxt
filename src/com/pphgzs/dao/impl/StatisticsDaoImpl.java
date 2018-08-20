@@ -44,9 +44,14 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			hql = hql + "select"//
 					+ " count(*)"//
 					+ " from"//
-					+ " jwcpxt_service_client serviceClient"//
+					+ " jwcpxt_service_client serviceClient,"//
+					+ " jwcpxt_service_instance serviceInstance,"//
+					+ " jwcpxt_service_definition serviceDefinition"//
 					+ " where"//
-					+ " serviceClient.service_client_gmt_modified >= :startTime"//
+					+ " serviceClient.SERVICE_CLIENT_SERVICE_INSTANCE = serviceInstance.JWCPXT_SERVICE_INSTANCE_ID"
+					+ " and serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID"//
+					+ " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'"//
+					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
 					+ " and serviceClient.service_client_gmt_modified <= :endTime";
 			if (i != 0) {
 				hql = hql + " AND serviceClient.service_client_visit = '1'";
@@ -60,9 +65,14 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " select"//
 					+ " serviceClient.jwcpxt_service_client_id"//
 					+ " from"//
-					+ " jwcpxt_service_client serviceClient"//
+					+ " jwcpxt_service_client serviceClient,"//
+					+ " jwcpxt_service_instance serviceInstance,"//
+					+ " jwcpxt_service_definition serviceDefinition"//
 					+ " where"//
-					+ " serviceClient.service_client_gmt_modified >= :startTime"//
+					+ " serviceClient.SERVICE_CLIENT_SERVICE_INSTANCE = serviceInstance.JWCPXT_SERVICE_INSTANCE_ID"
+					+ " and serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID"//
+					+ " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'"//
+					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
 					+ " and serviceClient.service_client_gmt_modified <= :endTime"
 					+ " and serviceClient.service_client_visit='1'"//
 					+ " ) t1"//
