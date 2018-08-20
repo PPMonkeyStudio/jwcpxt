@@ -40,35 +40,54 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	public int get_dataMonthDayMount(MonthDayMountVO monthDayMountVO, int i) {
 		Session session = getSession();
 		String hql = "";
-		hql = hql + "select"//
-				+ " count(*)"//
-				+ " from"//
-				+ " jwcpxt_service_client serviceClient"//
-				+ " where"//
-				+ " serviceClient.service_client_gmt_modified >= :startTime"//
-				+ " and serviceClient.service_client_gmt_modified <= :endTime";
-		if (i != 0) {
-			hql = hql + " AND serviceClient.service_client_visit = '1'";
+		if (i != 2) {
+			hql = hql + "select"//
+					+ " count(*)"//
+					+ " from"//
+					+ " jwcpxt_service_client serviceClient"//
+					+ " where"//
+					+ " serviceClient.service_client_gmt_modified >= :startTime"//
+					+ " and serviceClient.service_client_gmt_modified <= :endTime";
+			if (i != 0) {
+				hql = hql + " AND serviceClient.service_client_visit = '1'";
+			}
 		}
 		if (i == 2) {
-			hql = hql + " AND serviceClient.jwcpxt_service_client_id IN (" + " SELECT"//
+			hql = hql + "select"//
+					+ " count(*)"//
+					+ " from"//
+					+ " ("//
+					+ " select"//
+					+ " serviceClient.jwcpxt_service_client_id"//
+					+ " from"//
+					+ " jwcpxt_service_client serviceClient"//
+					+ " where"//
+					+ " serviceClient.service_client_gmt_modified >= :startTime"//
+					+ " and serviceClient.service_client_gmt_modified <= :endTime"
+					+ " and serviceClient.service_client_visit='1'"//
+					+ " ) t1"//
+					+ " left join"//
+					+ " ("//
+					+ " select"//
 					+ " client.jwcpxt_service_client_id"//
-					+ " FROM"//
+					+ " from"//
 					+ " jwcpxt_answer_choice choice,"//
 					+ " jwcpxt_option _option,"//
 					+ " jwcpxt_service_client client"//
-					+ " WHERE"//
+					+ " where"//
 					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
 					+ " AND choice.answer_choice_option = _option.jwcpxt_option_id"//
 					+ " AND ("//
 					+ " _option.option_describe LIKE '不满意'"//
 					+ " OR _option.option_describe LIKE '不太满意'"//
 					+ " )"//
-					+ " group by"//
-					+ " client.jwcpxt_service_client_id"//
-					+ " )";
+					+ " GROUP BY"//
+					+ " client.JWCPXT_SERVICE_CLIENT_ID"//
+					+ " ) t2 ON t1.JWCPXT_SERVICE_CLIENT_ID = t2.jwcpxt_service_client_id"//
+					+ " WHERE"//
+					+ " t2.jwcpxt_service_client_id IS NOT NULL";
 		}
-		Query query = session.createQuery(hql);
+		Query query = session.createSQLQuery(hql);
 		if ("".equals(monthDayMountVO.getStartTime())) {
 			query.setParameter("startTime", "0000-00-00 00:00:00");
 		} else {
