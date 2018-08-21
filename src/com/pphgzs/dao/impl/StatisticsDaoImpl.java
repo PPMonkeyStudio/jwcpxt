@@ -90,8 +90,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
 					+ " AND choice.answer_choice_option = _option.jwcpxt_option_id"//
 					+ " AND ("//
-					+ " _option.option_describe LIKE '不满意'"//
-					+ " OR _option.option_describe LIKE '不太满意'"//
+					+ " _option.option_describe LIKE '满意'"//
+					+ " OR _option.option_describe LIKE '比较满意'"//
 					+ " )"//
 					+ " GROUP BY"//
 					+ " client.JWCPXT_SERVICE_CLIENT_ID"//

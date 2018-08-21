@@ -67,18 +67,20 @@ public class StatisticsServiceImpl implements StatisticsService {
 		// 成功访问数
 		int totalSuccessCount = 0;
 		// 不满意数
-		int totalNotStatisCount = 0;
-		//
+		// int totalNotStatisCount = 0;
+		// //
 		MonthDayMountDTO monthDayMountDTO = new MonthDayMountDTO();
-		//
+		int totalStaticCount = 0;
+		// //
 		totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 0);
 		totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 1);
-		totalNotStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
+		totalStaticCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
 		monthDayMountDTO.setTotalCount(totalCount);
 		monthDayMountDTO.setTotalSuccessCount(totalSuccessCount);
-		int totalStaticCount = (totalSuccessCount - totalNotStatisCount) <= 0 ? 0
-				: totalSuccessCount - totalNotStatisCount;
 		monthDayMountDTO.setTotalStatisCount(totalStaticCount);
+		// int totalStaticCount = (totalSuccessCount - totalNotStatisCount) <= 0 ? 0
+		// : totalSuccessCount - totalNotStatisCount;
+		// monthDayMountDTO.setTotalStatisCount(totalStaticCount);
 		monthDayMountVO.setMonthDayMountDTO(monthDayMountDTO);
 		return monthDayMountVO;
 	}
