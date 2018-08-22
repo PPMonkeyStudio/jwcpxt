@@ -107,9 +107,19 @@ $(function() {
 			reviewSituation ($event) {
 				$.post('/jwcpxt/Statistics/downloadData', {
 					"startTime" : queryData["clientInfoVO.startHTime"],
-					"endTime" : queryData["clientInfoVO.endHTime"]
+					"endTime" : queryData["clientInfoVO.endHTime"],
+					"userId" : queryData["clientInfoVO.screenUser"]
 				}, response => {
-					$($event.target).siblings('p').html("回访总数:"+response.totalCount+",整改总数:"+response.totalStatisCount+",成功总数:"+response.totalSuccessCount);
+					function toPercent(point){
+					    var str=Number(point*100).toFixed(2);
+					    str+="%";
+					    return str;
+					}
+					let sucess = toPercent(response.totalSuccessCount/response.totalCount);
+					let statis = toPercent(response.totalStatisCount/response.totalSuccessCount);
+					$($event.target)
+					.siblings('p')
+					.html("回访总数:"+response.totalCount+",成功总数:"+response.totalSuccessCount+",满意总数:"+response.totalStatisCount+",回访成功率为:"+sucess+",满意率为:"+statis);
 				}, 'json');
 			},
 			firstPage () {

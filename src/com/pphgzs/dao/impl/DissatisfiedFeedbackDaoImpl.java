@@ -13,6 +13,7 @@ import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
@@ -33,6 +34,20 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public jwcpxt_service_instance getServiceInstanceById(String jwcpxt_service_instance_id) {
+		Session session = getSession();
+		jwcpxt_service_instance jwcpxt_service_instance = new jwcpxt_service_instance();
+		String hql = "from jwcpxt_service_instance where jwcpxt_service_instance_id = :jwcpxt_service_instance_id";
+		Query query = session.createQuery(hql);
+		query.setParameter("jwcpxt_service_instance_id", jwcpxt_service_instance_id);
+		jwcpxt_service_instance = (jwcpxt_service_instance) query.uniqueResult();
+		return jwcpxt_service_instance;
 	}
 
 	/**
@@ -91,6 +106,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " or question.question_describe like :search"//
 				+ " or unit.unit_contacts_name like :search"//
 				+ " )" + " and serviceDefinition.jwcpxt_service_definition_id like :searchService"//
+				+ " and serviceInstance.service_instance_feedback_state like :feedbackState"//
 				+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
 				+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd"//
 				+ " order by "//
@@ -102,6 +118,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			query.setParameter("search", "%");
 		} else {
 			query.setParameter("search", "%" + secondDistatisVO.getSearch() + "%");
+		}
+		if ("".equals(secondDistatisVO.getFeedbackState())) {
+			query.setParameter("feedbackState", "%");
+		} else {
+			query.setParameter("feedbackState", secondDistatisVO.getFeedbackState());
 		}
 		if ("".equals(secondDistatisVO.getSearchService())) {
 			query.setParameter("searchService", "%");
@@ -155,16 +176,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " unit.unit_name like :search"//
 				+ " or question.question_describe like :search"//
 				+ " or unit.unit_contacts_name like :search"//
-				+ " )" + " and serviceDefinition.jwcpxt_service_definition_id like :searchService"//
+				+ " )"//
+				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService"
+				+ " and serviceInstance.service_instance_feedback_state like :feedbackState"//
 				+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
 				+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd";//
-		/*
-		 * System.out.println("hql:" + hql); System.out.println("search:" +
-		 * secondDistatisVO.getSearch()); System.out.println("searchService:" +
-		 * secondDistatisVO.getSearchService()); System.out.println("searchTimeStart:" +
-		 * secondDistatisVO.getSearchTimeStart()); System.out.println("searchTimeEnd:" +
-		 * secondDistatisVO.getSearchTimeEnd());
-		 */
 		//
 		Query query = session.createSQLQuery(hql);
 		if ("".equals(secondDistatisVO.getSearch())) {
@@ -172,6 +188,11 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			// System.out.println("1");
 		} else {
 			query.setParameter("search", "%" + secondDistatisVO.getSearch() + "%");
+		}
+		if ("".equals(secondDistatisVO.getFeedbackState())) {
+			query.setParameter("feedbackState", "%");
+		} else {
+			query.setParameter("feedbackState", secondDistatisVO.getFeedbackState());
 		}
 		if ("".equals(secondDistatisVO.getSearchService())) {
 			// System.out.println("2");
@@ -415,6 +436,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_judge = _user.jwcpxt_user_id "//
 
 				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id not like 'revisit'"//
 
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_state  like :screenState " //
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create >= :screenStartTime "//
@@ -481,6 +503,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_judge = _user.jwcpxt_user_id "//
 
 				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id not like 'revisit' "//
 
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_state  like :screenState " //
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create >= :screenStartTime "//

@@ -205,7 +205,8 @@ public class ServiceDaoImpl implements ServiceDao {
 			query.setParameter("search", "%" + clientInfoVO.getSearch() + "%");
 		}
 		if (!clientInfoVO.getScreenClientState().equals("")) {
-			query.setParameter("screenClientState", "%" + clientInfoVO.getScreenClientState() + "%");
+			query.setParameter("screenClientState", clientInfoVO.getScreenClientState());
+			query.setParameter("screenVisit", "1");
 		}
 		if (query.uniqueResult() == null) {
 			return 0;
@@ -274,6 +275,19 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ " t1.service_client_visit DESC,"//
 					+ " t1.service_client_gmt_modified DESC";
 		}
+		/*
+		 * System.out.println("hql:" + hql); System.out.println("startTime:" +
+		 * clientInfoVO.getStartTime()); System.out.println("endTime:" +
+		 * clientInfoVO.getEndTime()); System.out.println("startHTime:" +
+		 * clientInfoVO.getStartHTime() + " 00:00:00"); System.out.println("endHTime:" +
+		 * clientInfoVO.getEndHTime() + " 23:59:59");
+		 * System.out.println("screenService:" + clientInfoVO.getScreenService());
+		 * System.out.println("screenVisit:" + clientInfoVO.getScreenVisit());
+		 * System.out.println("screenUser:" + clientInfoVO.getScreenUser());
+		 * System.out.println("search:" + "%" + clientInfoVO.getSearch() + "%");
+		 * System.out.println("screenClientState:" +
+		 * clientInfoVO.getScreenClientState());
+		 */
 		Query query = session.createSQLQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
@@ -316,7 +330,8 @@ public class ServiceDaoImpl implements ServiceDao {
 			query.setParameter("search", "%" + clientInfoVO.getSearch() + "%");
 		}
 		if (!clientInfoVO.getScreenClientState().equals("")) {
-			query.setParameter("screenClientState", "%" + clientInfoVO.getScreenClientState() + "%");
+			query.setParameter("screenVisit", "1");
+			query.setParameter("screenClientState", clientInfoVO.getScreenClientState());
 		}
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());
 		query.setMaxResults(clientInfoVO.getPageSize());

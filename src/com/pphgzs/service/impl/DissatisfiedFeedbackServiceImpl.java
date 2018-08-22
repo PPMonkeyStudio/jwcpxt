@@ -39,6 +39,50 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	 * 
 	 */
 	@Override
+	public boolean update_ServiceInstance_State(jwcpxt_service_instance serviceInstance) {
+		jwcpxt_service_instance service_instance = new jwcpxt_service_instance();
+		//
+		if (serviceInstance != null && serviceInstance.getJwcpxt_service_instance_id() != null
+				&& !"".equals(serviceInstance.getJwcpxt_service_instance_id())) {
+			//
+			service_instance = dissatisfiedFeedbackDao
+					.getServiceInstanceById(serviceInstance.getJwcpxt_service_instance_id());
+		}
+		if (service_instance == null) {
+			return false;
+		}
+		service_instance.setService_instance_feedback_state("2");
+		service_instance.setService_instance_gmt_modified(TimeUtil.getStringSecond());
+		dissatisfiedFeedbackDao.saveOrUpdateObject(service_instance);
+		return true;
+	}
+
+	/**
+	 * 更新反馈整改的状态
+	 */
+	@Override
+	public boolean update_FeedbackRectificationState_byFeedbackId(jwcpxt_feedback_rectification feedbackRectification) {
+		jwcpxt_feedback_rectification feedbackRecti = new jwcpxt_feedback_rectification();
+		// 根据id获取反馈整改表
+		if (feedbackRectification.getJwcpxt_feedback_rectification_id() != null
+				&& !"".equals(feedbackRectification.getJwcpxt_feedback_rectification_id())) {
+			feedbackRecti = dissatisfiedFeedbackDao
+					.get_feedbackRectficationDO_byId(feedbackRectification.getJwcpxt_feedback_rectification_id());
+		}
+		if (feedbackRecti == null) {
+			return false;
+		}
+		feedbackRecti
+				.setFeedback_rectification_audit_state(feedbackRectification.getFeedback_rectification_audit_state());
+		feedbackRecti.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+		dissatisfiedFeedbackDao.saveOrUpdateObject(feedbackRecti);
+		return true;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
 	public SecondDistatisVO get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO) {
 		List<SecondDistatisDTO> listSecondDistatisDTO = new ArrayList<>();
 		int totalRecords = get_secondDisStatisCountExceedTime(secondDistatisVO);
@@ -165,8 +209,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 					serviceInstance
 							.setService_instance_old_service_name(serviceDefinition.getService_definition_describe());
 					// 业务办理时间，用反馈最后修改的时间
-					serviceInstance.setService_instance_date(
-							checkFeedbackRectification.getFeedback_rectification_gmt_modified());
+					serviceInstance.setService_instance_date(TimeUtil.getStringDay());
 					// 时间和ID
 					serviceInstance.setJwcpxt_service_instance_id(uuidUtil.getUuid());
 					serviceInstance.setService_instance_gmt_create(TimeUtil.getStringSecond());
@@ -448,6 +491,8 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				.setDissatisfied_feedback_audit_opinion(dissatisfiedFeedback.getDissatisfied_feedback_audit_opinion());
 		disFeedback.setDissatisfied_feedback_gmt_modified(TimeUtil.getStringSecond());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(disFeedback);
+		// 如果原来就是整改回访
+
 		// 生成反馈整改表
 		feedbackRectification.setJwcpxt_feedback_rectification_id(uuidUtil.getUuid());
 		feedbackRectification

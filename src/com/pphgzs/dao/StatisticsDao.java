@@ -24,7 +24,7 @@ public interface StatisticsDao {
 			String searchTimeEnd);
 
 	double geteStatisticsGrade_byFatherUnit(ServiceGradeDTO serviceGradeDTO, String fatherUnitId,
-			String searchTimeStart, String searchTimeEnd);
+			String searchTimeStart, String searchTimeEnd,int i);
 
 	int get_dayNum_byServiceDefinitionIDAndDate(String jwcpxt_service_definition_id, String jwcpxt_unit_id, String day);
 

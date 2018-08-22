@@ -52,7 +52,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " and serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID"//
 					+ " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'"//
 					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
-					+ " and serviceClient.service_client_gmt_modified <= :endTime";
+					+ " and serviceClient.service_client_gmt_modified <= :endTime"//
+					+ " and serviceInstance.service_instance_judge like :userId";
 			if (i != 0) {
 				hql = hql + " AND serviceClient.service_client_visit = '1'";
 			}
@@ -74,6 +75,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'"//
 					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
 					+ " and serviceClient.service_client_gmt_modified <= :endTime"
+					+ " and serviceInstance.service_instance_judge like :userId"//
 					+ " and serviceClient.service_client_visit='1'"//
 					+ " ) t1"//
 					+ " left join"//
@@ -88,8 +90,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
 					+ " AND choice.answer_choice_option = _option.jwcpxt_option_id"//
 					+ " AND ("//
-					+ " _option.option_describe LIKE '不满意'"//
-					+ " OR _option.option_describe LIKE '不太满意'"//
+					+ " _option.option_describe LIKE '满意'"//
+					+ " OR _option.option_describe LIKE '比较满意'"//
 					+ " )"//
 					+ " GROUP BY"//
 					+ " client.JWCPXT_SERVICE_CLIENT_ID"//
@@ -98,6 +100,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " t2.jwcpxt_service_client_id IS NOT NULL";
 		}
 		Query query = session.createSQLQuery(hql);
+		if ("".equals(monthDayMountVO.getUserId())) {
+			query.setParameter("userId", "%");
+		} else {
+			query.setParameter("userId", monthDayMountVO.getUserId());
+		}
 		if ("".equals(monthDayMountVO.getStartTime())) {
 			query.setParameter("startTime", "0000-00-00 00:00:00");
 		} else {
@@ -729,30 +736,119 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
 	@Override
 	public double geteStatisticsGrade_byFatherUnit(ServiceGradeDTO serviceGradeDTO, String fatherUnitId,
-			String searchTimeStart, String searchTimeEnd) {
+			String searchTimeStart, String searchTimeEnd, int i) {
 		Session session = getSession();
-		String hql = " select "//
-				+ " ((count(distinct serviceClient)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient)  "//
-				+ " from "//
-				+ " jwcpxt_unit unit , "//
-				+ " jwcpxt_service_instance serviceInstance , "//
-				+ " jwcpxt_service_client serviceClient , "//
-				+ " jwcpxt_answer_choice answerChoice , "//
-				+ " jwcpxt_option _option "//
-				//
-				+ " where "
-				+ " serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id"//
-				+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id"//
-				+ " and answerChoice.answer_choice_option=_option.jwcpxt_option_id"//
-				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "// 业务实例关联到三级单位
-				//
-				+ " and (unit.unit_father = :fatherUnitId or unit.jwcpxt_unit_id= :fatherUnitId)" // 二级单位ID等于传过来的单位ID
-				+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
-				//
-				+ " and serviceInstance.service_instance_date >= :searchTimeStart "//
-				+ " and serviceInstance.service_instance_date <= :searchTimeEnd "//
-		;
-		Query query = session.createQuery(hql);
+		String hql = "";
+		if (i == 1) {
+			hql = hql + " select "//
+					+ " ((count(distinct serviceClient.JWCPXT_SERVICE_CLIENT_ID)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient.JWCPXT_SERVICE_CLIENT_ID)  "//
+					+ " from "//
+					+ " jwcpxt_unit unit , "//
+					+ " jwcpxt_service_instance serviceInstance , "//
+					+ " jwcpxt_service_client serviceClient , "//
+					+ " jwcpxt_answer_choice answerChoice , "//
+					+ " jwcpxt_option _option "//
+					//
+					+ " where "
+					+ " serviceClient.service_client_service_instance=serviceInstance.jwcpxt_service_instance_id"//
+					+ " and answerChoice.answer_choice_client=serviceClient.jwcpxt_service_client_id"//
+					+ " and answerChoice.answer_choice_option=_option.jwcpxt_option_id"//
+					+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "// 业务实例关联到三级单位
+					//
+					+ " and (unit.unit_father = :fatherUnitId or unit.jwcpxt_unit_id= :fatherUnitId)" // 二级单位ID等于传过来的单位ID
+					+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
+					//
+					+ " and serviceInstance.service_instance_date >= :searchTimeStart "//
+					+ " and serviceInstance.service_instance_date <= :searchTimeEnd ";
+		}
+		if (i == 2) {
+			hql = hql + "SELECT"//
+					+ " ("//
+					+ " (t1.total * 100) - sum(t1.option_grade)"//
+					+ " ) / t1.total"//
+					+ " FROM"//
+					+ " ("//
+					+ " SELECT"//
+					+ " serviceClient.JWCPXT_SERVICE_CLIENT_ID,"//
+					+ " serviceInstance.SERVICE_INSTANCE_BELONG_FEEDBACK,"//
+					+ " _option.option_grade,"//
+					+ " serviceClient.SERVICE_CLIENT_PHONE,"//
+					+ " coun.total"//
+					+ " FROM"//
+					+ " jwcpxt_unit unit,"//
+					+ " jwcpxt_service_instance serviceInstance,"//
+					+ " jwcpxt_service_client serviceClient,"//
+					+ " jwcpxt_answer_choice answerChoice,"//
+					+ " jwcpxt_option _option,"//
+					+ "	("//
+					+ " SELECT"//
+					+ " count("//
+					+ " DISTINCT serviceClient.JWCPXT_SERVICE_CLIENT_ID"//
+					+ " ) AS total"//
+					+ " FROM"//
+					+ " jwcpxt_unit unit,"//
+					+ " jwcpxt_service_instance serviceInstance,"//
+					+ " jwcpxt_service_client serviceClient,"//
+					+ " jwcpxt_answer_choice answerChoice,"//
+					+ " jwcpxt_option _option"//
+					+ " WHERE"//
+					+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+					+ " AND answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+					+ " AND answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
+					+ " AND serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+					+ " AND ("//
+					+ " unit.unit_father = :fatherUnitId"//
+					+ " OR unit.jwcpxt_unit_id = :fatherUnitId"//
+					+ " )"//
+					+ " AND serviceInstance.service_instance_service_definition = :serviceDefinitionID"//
+					+ " AND serviceInstance.service_instance_date >= :searchTimeStart"//
+					+ " AND serviceInstance.service_instance_date <= :searchTimeEnd"//
+					+ " ) coun"//
+					+ " WHERE"//
+					+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+					+ " AND answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+					+ " AND answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
+					+ " AND serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+					+ " AND ("//
+					+ " unit.unit_father = :fatherUnitId"//
+					+ " OR unit.jwcpxt_unit_id = :fatherUnitId"//
+					+ " )"//
+					+ " AND serviceInstance.service_instance_service_definition = :serviceDefinitionID"//
+					+ " AND serviceInstance.service_instance_date >= :searchTimeStart"//
+					+ " AND serviceInstance.service_instance_date <= :searchTimeEnd"//
+					+ " ) t1"//
+					+ " LEFT JOIN ("//
+					+ " SELECT"//
+					+ " feedbackRectification.jwcpxt_feedback_rectification_id"//
+					+ " FROM"//
+					+ " jwcpxt_feedback_rectification feedbackRectification,"//
+					+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
+					+ " jwcpxt_answer_choice answerChoice,"//
+					+ " jwcpxt_option _option,"//
+					+ " jwcpxt_service_client serviceClient,"//
+					+ " jwcpxt_service_instance serviceInstance,"//
+					+ " jwcpxt_unit unit"//
+					+ " WHERE"//
+					+ " feedbackRectification.feedback_rectification_dissatisfied_feedback = dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id"//
+					+ " AND dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.JWCPXT_ANSWER_CHOICE_ID"//
+					+ " AND answerChoice.ANSWER_CHOICE_OPTION = _option.JWCPXT_OPTION_ID"//
+					+ " AND answerChoice.ANSWER_CHOICE_CLIENT = serviceClient.JWCPXT_SERVICE_CLIENT_ID"//
+					+ " AND serviceClient.SERVICE_CLIENT_SERVICE_INSTANCE = serviceInstance.JWCPXT_SERVICE_INSTANCE_ID"//
+					+ " AND serviceInstance.SERVICE_INSTANCE_BELONG_UNIT = unit.JWCPXT_UNIT_ID"//
+					+ " AND ("//
+					+ " unit.unit_father = :fatherUnitId" + " OR unit.jwcpxt_unit_id = :fatherUnitId" + " )"
+					+ " AND _option.OPTION_GRADE > 0"//
+					+ " AND serviceInstance.service_instance_date <= :searchTimeEnd"//
+					+ " ) t2 ON t2.jwcpxt_feedback_rectification_id = t1.SERVICE_INSTANCE_BELONG_FEEDBACK"//
+					+ " WHERE"//
+					+ " t2.jwcpxt_feedback_rectification_id IS NOT NULL";
+		}
+//		System.out.println("hql:" + hql);
+//		System.out.println("searchTimeStart：" + searchTimeStart + " 00:00:00");
+//		System.out.println("searchTimeEnd：" + searchTimeEnd + " 23:59:59");
+//		System.out.println("fatherUnitId：" + fatherUnitId);
+//		System.out.println("serviceDefinitionID：" + serviceGradeDTO.getService_id());
+		Query query = session.createSQLQuery(hql);
 		query.setParameter("fatherUnitId", fatherUnitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
 		//

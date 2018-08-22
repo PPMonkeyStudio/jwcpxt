@@ -2,6 +2,7 @@ package com.pphgzs.service;
 
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
@@ -119,5 +120,20 @@ public interface DissatisfiedFeedbackService {
 	 * @return
 	 */
 	public SecondDistatisVO get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO);
+
+	/**
+	 * 更新反馈整改表里面的数据
+	 * 
+	 * @param feedbackRectification
+	 * @return
+	 */
+	public boolean update_FeedbackRectificationState_byFeedbackId(jwcpxt_feedback_rectification feedbackRectification);
+
+	/**
+	 * 
+	 * @param serviceInstance
+	 * @return
+	 */
+	public boolean update_ServiceInstance_State(jwcpxt_service_instance serviceInstance);
 
 }

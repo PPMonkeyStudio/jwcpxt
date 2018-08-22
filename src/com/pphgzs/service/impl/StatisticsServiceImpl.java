@@ -67,18 +67,20 @@ public class StatisticsServiceImpl implements StatisticsService {
 		// 成功访问数
 		int totalSuccessCount = 0;
 		// 不满意数
-		int totalNotStatisCount = 0;
-		//
+		// int totalNotStatisCount = 0;
+		// //
 		MonthDayMountDTO monthDayMountDTO = new MonthDayMountDTO();
-		//
+		int totalStaticCount = 0;
+		// //
 		totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 0);
 		totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 1);
-		totalNotStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
+		totalStaticCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
 		monthDayMountDTO.setTotalCount(totalCount);
 		monthDayMountDTO.setTotalSuccessCount(totalSuccessCount);
-		int totalStaticCount = (totalSuccessCount - totalNotStatisCount) <= 0 ? 0
-				: totalSuccessCount - totalNotStatisCount;
 		monthDayMountDTO.setTotalStatisCount(totalStaticCount);
+		// int totalStaticCount = (totalSuccessCount - totalNotStatisCount) <= 0 ? 0
+		// : totalSuccessCount - totalNotStatisCount;
+		// monthDayMountDTO.setTotalStatisCount(totalStaticCount);
 		monthDayMountVO.setMonthDayMountDTO(monthDayMountDTO);
 		return monthDayMountVO;
 	}
@@ -751,24 +753,19 @@ public class StatisticsServiceImpl implements StatisticsService {
 			List<ServiceGradeBelongUnitDTO> serviceGradeBelongUnitDTOList = new ArrayList<ServiceGradeBelongUnitDTO>();
 			// 遍历需要统计的业务，查询这项业务分数
 			for (ServiceGradeDTO serviceGradeDTO : serviceGradeDTOList) {
-				double statisticsGrade;
+				double statisticsGrade = 0;
+				int cout = 0;
 				// 创建一个业务分数DTO
 				ServiceGradeBelongUnitDTO serviceGradeBelongUnitDTO = new ServiceGradeBelongUnitDTO();
 				// 将业务DO放入到DTO中
 				serviceGradeBelongUnitDTO.setServiceDefinition(
 						serviceService.get_serviceDefinitionDO_byServiceDefinitionID(serviceGradeDTO.getService_id()));
-				// 统计这个单位下这个业务所得分
-
-				if (unit.getUnit_grade() == 2) {
-					statisticsGrade = statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
-							searchTimeStart, searchTimeEnd);
-				} else {
-					statisticsGrade = statisticsDao.geteStatisticsGrade(serviceGradeDTO, unitIds[i], searchTimeStart,
-							searchTimeEnd);
-				}
-				int cout = 0;
+				// 整改回访
 				if ("revisit"
 						.equals(serviceGradeBelongUnitDTO.getServiceDefinition().getJwcpxt_service_definition_id())) {
+					statisticsGrade = statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
+							searchTimeStart, searchTimeEnd, 2);
+//					System.out.println("statisticsGrade:" + statisticsGrade);
 					// 获取改单位的整改超时数量
 					// 对应单位的数量
 					FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO = new FeedbackRectificationExceedTimeVO();
@@ -782,7 +779,29 @@ public class StatisticsServiceImpl implements StatisticsService {
 					 * secondDistatisVO.setSearchTimeEnd(searchTimeEnd);
 					 */
 					cout = dissatisfiedFeedbackService.get_countExceedTimeFive(feedbackRectificationExceedTimeVO);
+					// System.out.println("cout:" + cout);
 					statisticsGrade = (statisticsGrade - cout * 3) < 0 ? 0 : (statisticsGrade - cout * 3);
+					// System.out.println("statisticsGrade:" + statisticsGrade);
+				} else {
+					statisticsGrade = statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
+							searchTimeStart, searchTimeEnd, 1);
+				}
+
+				// 统计这个单位下这个业务所得分
+				//
+				// if (unit.getUnit_grade() == 2) {
+				// statisticsGrade =
+				// statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
+				// searchTimeStart, searchTimeEnd);
+				// } else {
+				// statisticsGrade = statisticsDao.geteStatisticsGrade(serviceGradeDTO,
+				// unitIds[i], searchTimeStart,
+				// searchTimeEnd);
+				// }
+
+				if ("revisit"
+						.equals(serviceGradeBelongUnitDTO.getServiceDefinition().getJwcpxt_service_definition_id())) {
+
 				}
 				totalGrade = totalGrade + statisticsGrade;
 				statisticsGrade = ((int) (statisticsGrade * 10000 + 0.5)) / 10000.0;
