@@ -14,15 +14,12 @@
 [v-cloak] {
 	display: none;
 }
-
 a:hover {
 	cursor: pointer;
 }
-
 .pageOperation:hover {
 	cursor: pointer;
 }
-
 .hideALl {
 	display: none;
 }
