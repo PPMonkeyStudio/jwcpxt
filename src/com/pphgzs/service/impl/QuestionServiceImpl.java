@@ -607,12 +607,12 @@ public class QuestionServiceImpl implements QuestionService {
 		jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
 		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
 		jwcpxt_dissatisfied_feedback dissatisfiedFeedback = new jwcpxt_dissatisfied_feedback();
-		
+
 		/**
 		 * hy
 		 */
 		jwcpxt_service_instance serviceInstance = serviceService.get_serviceInstanceDo_byServiceClientID(serviceClient);
-		
+
 		// 根据当事人id获取当事人信息 确保当事人信息正确
 		jwcpxt_service_client client = new jwcpxt_service_client();
 		if (serviceClient != null && serviceClient.getJwcpxt_service_client_id() != null
@@ -624,8 +624,6 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		// 遍历回答列表
 		for (AnswerDTO answerDTO : listAnswerDTO) {
-			
-			
 			listQuestionDTO = new ArrayList<>();
 			serviceDefinition = new jwcpxt_service_definition();
 			// 定义
@@ -662,6 +660,26 @@ public class QuestionServiceImpl implements QuestionService {
 				answerChoice.setAnswer_choice_gmt_create(TimeUtil.getStringSecond());
 				answerChoice.setAnswer_choice_gmt_modified(answerChoice.getAnswer_choice_gmt_create());
 				questionDao.saveOrUpdateObject(answerChoice);
+				switch (option.getOption_describe()) {
+				case "莲花县":
+					serviceInstance.setService_instance_belong_unit("4e7eeff7-dd32-448b-a5a0-e2156ae52a00");
+					break;
+				case "芦溪县":
+					serviceInstance.setService_instance_belong_unit("21633c56-9ad8-45e3-bb50-0a08e966207d");
+					break;
+				case "湘东区":
+					serviceInstance.setService_instance_belong_unit("cb826bb7-8220-44fe-ae4b-94c4577f72fe");
+					break;
+				case "开发区":
+					serviceInstance.setService_instance_belong_unit("8d37c1b5-735f-4f76-988e-fa213c277932");
+					break;
+				case "安源区":
+					serviceInstance.setService_instance_belong_unit("68b4ca31-cd37-4fb7-9af1-7f0f74258075");
+					break;
+				case "上栗县":
+					serviceInstance.setService_instance_belong_unit("e8103db3-ae60-477d-aa0e-80df7f137f0f");
+					break;
+				}
 				// 如果属于需要推送的选项，则生成
 				// 1.是不是推送？
 				// 2.如果不是 如果他的开放题追问被回答就推送
@@ -733,7 +751,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// serviceService.distributionNewServiceInstance_toUser(user.getJwcpxt_user_id());
 
 		/*
-		 *处理 当事人回访时候，在当事人业务回访记录还是刚开始分配的测评员的问题，由另一个测评员回访，则需要改变分配的测评员 
+		 * 处理 当事人回访时候，在当事人业务回访记录还是刚开始分配的测评员的问题，由另一个测评员回访，则需要改变分配的测评员
 		 */
 		serviceInstance.setService_instance_judge(user.getJwcpxt_user_id());
 		questionDao.saveOrUpdateObject(serviceInstance);
