@@ -161,6 +161,40 @@ function checkRectification(event, state) {
 	})
 }
 
+function abnormalNumber(event, state) {
+	$.confirm({
+		title : '异常',
+		type : 'dark',
+		useBootstrap : false,
+		content : '确定标记为异常?',
+		buttons : {
+			cancel : {
+				text : '关闭',
+				btnClass : 'btn-red',
+				action : function() {}
+			},
+			save : {
+				text : '确定',
+				btnClass : 'btn-blue',
+				action : function() {
+					$.post('/jwcpxt/DissatisfiedFeedback/update_FeedbackRectificationState_byFeedbackId',
+						{
+							"feedbackRectification.jwcpxt_feedback_rectification_id" : event.id,
+							"feedbackRectification.feedback_rectification_audit_state" : state
+						}, response => {
+							if (response == "success") {
+								toastr.success("标记成功！");
+								loadData();
+							} else {
+								toastr.error("标记失败！");
+							}
+						}, 'text');
+				}
+			}
+		},
+	})
+}
+
 var transferListVue;
 
 function preview(event) {

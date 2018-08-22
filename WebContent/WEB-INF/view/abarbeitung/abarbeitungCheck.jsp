@@ -80,6 +80,7 @@ a:hover {
 															<option value="3">主管部门审核驳回</option>
 															<option value="4">测评中心审核通过</option>
 															<option value="5">测评中心审核驳回</option>
+															<option value="6">异常</option>
 													</select></td>
 													<td>查看</td>
 													<td style="width: 140px;"><select
@@ -140,6 +141,8 @@ a:hover {
 																:id="checkFeedbackRectification.feedbackRectification.jwcpxt_feedback_rectification_id">通过</a>
 															|<a onclick="checkRectification(this,3)"
 																:id="checkFeedbackRectification.feedbackRectification.jwcpxt_feedback_rectification_id">驳回</a>
+															|<a onclick="abnormalNumber(this,6)"
+																:id="checkFeedbackRectification.feedbackRectification.jwcpxt_feedback_rectification_id">异常</a>
 															</template>
 															<template v-else> 无操作 </template>
 														</s:if></td>
