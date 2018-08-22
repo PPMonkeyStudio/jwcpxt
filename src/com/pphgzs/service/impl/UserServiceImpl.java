@@ -182,6 +182,16 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	private boolean removeDuplicate(List<jwcpxt_entry_exit> list, String phone) {
+		boolean flag = true;
+		for (jwcpxt_entry_exit exit : list) {
+			if (exit.getEntry_exit_client_phone().equals(phone)) {
+				flag = false;
+			}
+		}
+		return flag;
+	}
+
 	private List<jwcpxt_entry_exit> HssUpload(Workbook workbook) throws Exception {
 		List<jwcpxt_entry_exit> entryExitList = new LinkedList<jwcpxt_entry_exit>();
 		jwcpxt_entry_exit entry_exit;
@@ -239,8 +249,14 @@ public class UserServiceImpl implements UserService {
 					String phone = cell.getStringCellValue().trim();
 					if (phone.length() > 11) {
 						continue cell;
+					} else {
+						if (removeDuplicate(entryExitList, phone)) {
+							entry_exit.setEntry_exit_client_phone(phone);
+						} else {
+							continue cell;
+						}
 					}
-					entry_exit.setEntry_exit_client_phone(cell.getStringCellValue().trim());
+					// entry_exit.setEntry_exit_client_phone(cell.getStringCellValue().trim());
 					break;
 				case 5:
 					entry_exit.setEntry_exit_client_data(sdf.format(sdf.parse(cell.getStringCellValue())).toString());
@@ -321,8 +337,13 @@ public class UserServiceImpl implements UserService {
 					String phone = cell.getStringCellValue().trim();
 					if (phone.length() > 11) {
 						continue cell;
-					} else
-						entry_exit.setEntry_exit_client_phone(cell.getStringCellValue().trim());
+					} else {
+						if (removeDuplicate(entryExitList, phone)) {
+							entry_exit.setEntry_exit_client_phone(phone);
+						} else {
+							continue cell;
+						}
+					}
 					break;
 				case 5:
 					entry_exit.setEntry_exit_client_data(sdf.format(sdf.parse(cell.getStringCellValue())).toString());
