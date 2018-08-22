@@ -165,8 +165,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 					serviceInstance
 							.setService_instance_old_service_name(serviceDefinition.getService_definition_describe());
 					// 业务办理时间，用反馈最后修改的时间
-					serviceInstance.setService_instance_date(
-							checkFeedbackRectification.getFeedback_rectification_gmt_modified());
+					serviceInstance.setService_instance_date(TimeUtil.getStringDay());
 					// 时间和ID
 					serviceInstance.setJwcpxt_service_instance_id(uuidUtil.getUuid());
 					serviceInstance.setService_instance_gmt_create(TimeUtil.getStringSecond());
@@ -448,6 +447,11 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				.setDissatisfied_feedback_audit_opinion(dissatisfiedFeedback.getDissatisfied_feedback_audit_opinion());
 		disFeedback.setDissatisfied_feedback_gmt_modified(TimeUtil.getStringSecond());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(disFeedback);
+		//如果原来就是整改回访
+		
+		
+		
+		
 		// 生成反馈整改表
 		feedbackRectification.setJwcpxt_feedback_rectification_id(uuidUtil.getUuid());
 		feedbackRectification
