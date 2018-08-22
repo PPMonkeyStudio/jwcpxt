@@ -19,7 +19,8 @@ let queryData = {
 	"secondDistatisVO.search" : '',
 	"secondDistatisVO.searchService" : '',
 	"secondDistatisVO.searchTimeStart" : '',
-	"secondDistatisVO.searchTimeEnd" : ''
+	"secondDistatisVO.searchTimeEnd" : '',
+	"secondDistatisVO.feedbackState" : ''
 }
 
 let MyVm = new Vue({

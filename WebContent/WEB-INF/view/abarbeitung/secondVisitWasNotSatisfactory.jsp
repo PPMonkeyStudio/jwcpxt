@@ -70,7 +70,13 @@ th {
 													<td>问题标题</td>
 													<td>当事人姓名</td>
 													<td>当事人电话</td>
-													<td>状态</td>
+													<td>
+														<select style="width:100px;" class="form-control" id="secondDistatisVO.feedbackState" @change="searchRectification($event)">
+															<option value="">全部</option>
+															<option value="1">未处理</option>
+															<option value="2">已处理</option>
+														</select>
+													</td>
 													<td>操作</td>
 												</tr>
 											</thead>
