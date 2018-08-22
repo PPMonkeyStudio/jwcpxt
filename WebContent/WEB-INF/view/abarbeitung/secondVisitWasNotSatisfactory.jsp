@@ -70,6 +70,8 @@ th {
 													<td>问题标题</td>
 													<td>当事人姓名</td>
 													<td>当事人电话</td>
+													<td>状态</td>
+													<td>操作</td>
 												</tr>
 											</thead>
 											<tbody>
@@ -85,6 +87,22 @@ th {
 													<td>{{SecondDistatisDTO.question.question_describe}}</td>
 													<td>{{SecondDistatisDTO.serviceClient.service_client_name}}</td>
 													<td>{{SecondDistatisDTO.serviceClient.service_client_phone}}</td>
+													<td>
+														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='1'">
+															<span class="label label-warning">未处理</span>
+														</template>
+														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='2'">
+															<span class="label label-info">已处理</span>
+														</template>
+													</td>
+													<td>
+														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='1'">
+															<a href="javascript:;" :id="SecondDistatisDTO.serviceInstance.service_instance_belong_feedback" onclick="changeState(this)"></a>
+														</template>
+														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='2'">
+															无操作
+														</template>
+													</td>
 												</tr>
 												</template>
 											</tbody>

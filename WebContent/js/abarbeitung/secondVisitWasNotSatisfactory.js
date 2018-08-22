@@ -96,7 +96,6 @@ let MyVm = new Vue({
 	mounted () {
 		this.getInfo(queryData);
 
-
 		//获取所有的业务
 		$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
 			let str = `<option value="">全部</option>`;
@@ -112,6 +111,40 @@ function changeQuery(event) {
 	queryData[$(event).attr('name')] = $(event).val();
 	MyVm.getInfo(queryData);
 }
+
+function changeState(that) {
+	$.confirm({
+		title : '修改',
+		type : 'dark',
+		useBootstrap : false,
+		content : '确定修改为已处理状态?',
+		buttons : {
+			update : {
+				text : '确定',
+				btnClass : 'btn-blue',
+				action : function() {
+					$.post('/jwcpxt/DissatisfiedFeedback/update_ServiceInstance_State', {
+						"localserviceInstance.jwcpxt_service_instance_id" : $(that).attr('id'),
+						"serviceInstance.service_instance_feedback_state" : 2
+					}, response => {
+						if (response == "success") {
+							toastr.success('修改成功！');
+							MyVm.getInfo(queryData);
+						} else {
+							toastr.success('修改失败！');
+						}
+					}, 'text');
+				}
+			},
+			cancel : {
+				text : '关闭',
+				btnClass : 'btn-default',
+				action : function() {}
+			}
+		},
+	})
+}
+
 
 $.datetimepicker.setLocale('ch');
 $('.mydate').datetimepicker({
