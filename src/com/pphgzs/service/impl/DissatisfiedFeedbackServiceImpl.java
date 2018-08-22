@@ -36,6 +36,28 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private UserService userService;
 
 	/**
+	 * 更新反馈整改的状态
+	 */
+	@Override
+	public boolean update_FeedbackRectificationState_byFeedbackId(jwcpxt_feedback_rectification feedbackRectification) {
+		jwcpxt_feedback_rectification feedbackRecti = new jwcpxt_feedback_rectification();
+		// 根据id获取反馈整改表
+		if (feedbackRectification.getJwcpxt_feedback_rectification_id() != null
+				&& "".equals(feedbackRectification.getJwcpxt_feedback_rectification_id())) {
+			feedbackRecti = dissatisfiedFeedbackDao
+					.get_feedbackRectficationDO_byId(feedbackRectification.getJwcpxt_feedback_rectification_id());
+		}
+		if (feedbackRecti == null) {
+			return false;
+		}
+		feedbackRecti
+				.setFeedback_rectification_audit_state(feedbackRectification.getFeedback_rectification_audit_state());
+		feedbackRecti.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
+		dissatisfiedFeedbackDao.saveOrUpdateObject(feedbackRecti);
+		return true;
+	}
+
+	/**
 	 * 
 	 */
 	@Override
@@ -447,11 +469,8 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 				.setDissatisfied_feedback_audit_opinion(dissatisfiedFeedback.getDissatisfied_feedback_audit_opinion());
 		disFeedback.setDissatisfied_feedback_gmt_modified(TimeUtil.getStringSecond());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(disFeedback);
-		//如果原来就是整改回访
-		
-		
-		
-		
+		// 如果原来就是整改回访
+
 		// 生成反馈整改表
 		feedbackRectification.setJwcpxt_feedback_rectification_id(uuidUtil.getUuid());
 		feedbackRectification

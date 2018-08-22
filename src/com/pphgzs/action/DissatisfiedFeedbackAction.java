@@ -37,6 +37,21 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private SecondDistatisVO secondDistatisVO;
 
 	/**
+	 * 更改反馈整改的状态电话异常或者出现什么故障的时候使用
+	 * 
+	 * @throws IOException
+	 */
+	public void update_FeedbackRectificationState_byFeedbackId() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_FeedbackRectificationState_byFeedbackId(feedbackRectification)) {
+			http_response.getWriter().write("success");
+		} else {
+			http_response.getWriter().write("error");
+		}
+
+	}
+
+	/**
 	 * 获取二次回访还是不满意的VO
 	 * 
 	 * @throws IOException

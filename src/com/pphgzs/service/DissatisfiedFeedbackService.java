@@ -120,4 +120,12 @@ public interface DissatisfiedFeedbackService {
 	 */
 	public SecondDistatisVO get_sercondDisStatisExceedTimeVO(SecondDistatisVO secondDistatisVO);
 
+	/**
+	 * 更新反馈整改表里面的数据
+	 * 
+	 * @param feedbackRectification
+	 * @return
+	 */
+	public boolean update_FeedbackRectificationState_byFeedbackId(jwcpxt_feedback_rectification feedbackRectification);
+
 }
