@@ -415,6 +415,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_judge = _user.jwcpxt_user_id "//
 
 				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id not like 'revisit'"//
 
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_state  like :screenState " //
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create >= :screenStartTime "//
@@ -481,6 +482,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_judge = _user.jwcpxt_user_id "//
 
 				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService "//
+				+ " and serviceDefinition.jwcpxt_service_definition_id not like 'revisit' "//
 
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_state  like :screenState " //
 				+ " and dessatisfiedFeedback.dissatisfied_feedback_gmt_create >= :screenStartTime "//
