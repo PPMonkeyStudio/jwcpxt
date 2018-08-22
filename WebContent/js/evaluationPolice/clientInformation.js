@@ -237,7 +237,9 @@ $(function() {
 						  			<td colspan="4">{{QusetionAndOption.question.question_describe}}</td>
 									<td colspan="3">{{QusetionAndOption.answer}}</td>
 									<td>
-										<a v-if="QusetionAndOption.askQusetionAndOptionDTO" href="javascript:;" @click="showAskQuestion(index)">查看追问</a>
+										<template v-if="QusetionAndOption.askQusetionAndOptionDTO">
+										<a v-if="QusetionAndOption.askQusetionAndOptionDTO.length>0" href="javascript:;" @click="showAskQuestion(index)">查看追问</a>
+										</template>
 									</td>
 						  		</tr>
 					  		</template>
