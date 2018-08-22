@@ -26,6 +26,16 @@ public class SecondDistatisVO {
 	// 当事人表修改时间——也就是回访时间
 	private String searchTimeStart = "0000-00-00";
 	private String searchTimeEnd = "9999-99-99";
+	// 处理状态
+	private String feedbackState = "1";
+
+	public String getFeedbackState() {
+		return feedbackState;
+	}
+
+	public void setFeedbackState(String feedbackState) {
+		this.feedbackState = feedbackState;
+	}
 
 	public List<SecondDistatisDTO> getListSecondDistatisDTO() {
 		return listSecondDistatisDTO;
@@ -104,11 +114,12 @@ public class SecondDistatisVO {
 		return "SecondDistatisVO [listSecondDistatisDTO=" + listSecondDistatisDTO + ", currPage=" + currPage
 				+ ", totalPage=" + totalPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize + ", search="
 				+ search + ", searchService=" + searchService + ", searchTimeStart=" + searchTimeStart
-				+ ", searchTimeEnd=" + searchTimeEnd + "]";
+				+ ", searchTimeEnd=" + searchTimeEnd + ", feedbackState=" + feedbackState + "]";
 	}
 
 	public SecondDistatisVO(List<SecondDistatisDTO> listSecondDistatisDTO, int currPage, int totalPage, int totalCount,
-			int pageSize, String search, String searchService, String searchTimeStart, String searchTimeEnd) {
+			int pageSize, String search, String searchService, String searchTimeStart, String searchTimeEnd,
+			String feedbackState) {
 		super();
 		this.listSecondDistatisDTO = listSecondDistatisDTO;
 		this.currPage = currPage;
@@ -119,6 +130,7 @@ public class SecondDistatisVO {
 		this.searchService = searchService;
 		this.searchTimeStart = searchTimeStart;
 		this.searchTimeEnd = searchTimeEnd;
+		this.feedbackState = feedbackState;
 	}
 
 	public SecondDistatisVO() {

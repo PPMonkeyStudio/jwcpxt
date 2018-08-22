@@ -6,6 +6,7 @@ import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.DissatisfiedQuestionDTO;
 import com.pphgzs.domain.DTO.FeedbackRectificationDTO;
@@ -169,4 +170,11 @@ public interface DissatisfiedFeedbackDao {
 	 * @return
 	 */
 	public String getServiceDefinitionByFeedbackId(String jwcpxt_feedback_rectification_id);
+
+	/**
+	 * 
+	 * @param jwcpxt_service_instance_id
+	 * @return
+	 */
+	public jwcpxt_service_instance getServiceInstanceById(String jwcpxt_service_instance_id);
 }

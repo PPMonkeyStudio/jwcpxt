@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.VO.CheckFeedbackRectificationVO;
 import com.pphgzs.domain.VO.DissatisfiedQuestionVO;
@@ -35,6 +36,21 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	private CheckFeedbackRectificationVO checkFeedbackRectificationVO;
 	private FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO;
 	private SecondDistatisVO secondDistatisVO;
+	private jwcpxt_service_instance serviceInstance;
+
+	/**
+	 * 更改业务实例的状态
+	 * 
+	 * @throws IOException
+	 */
+	public void update_ServiceInstance_State() throws IOException {
+		http_response.setContentType("text/html;charset=utf-8");
+		if (dissatisfiedFeedbackService.update_ServiceInstance_State(serviceInstance)) {
+			http_response.getWriter().write("success");
+		} else {
+			http_response.getWriter().write("error");
+		}
+	}
 
 	/**
 	 * 更改反馈整改的状态电话异常或者出现什么故障的时候使用
@@ -74,6 +90,7 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 	 */
 	public void get_secondDisStatisCountExceedTime() throws IOException {
 		secondDistatisVO = new SecondDistatisVO();
+		secondDistatisVO.setFeedbackState("1");
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter()
 				.write(dissatisfiedFeedbackService.get_secondDisStatisCountExceedTime(secondDistatisVO) + "");
@@ -342,6 +359,14 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 
 	public void setHttp_request(HttpServletRequest http_request) {
 		this.http_request = http_request;
+	}
+
+	public jwcpxt_service_instance getServiceInstance() {
+		return serviceInstance;
+	}
+
+	public void setServiceInstance(jwcpxt_service_instance serviceInstance) {
+		this.serviceInstance = serviceInstance;
 	}
 
 }

@@ -36,6 +36,28 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 	private UserService userService;
 
 	/**
+	 * 
+	 */
+	@Override
+	public boolean update_ServiceInstance_State(jwcpxt_service_instance serviceInstance) {
+		jwcpxt_service_instance service_instance = new jwcpxt_service_instance();
+		//
+		if (serviceInstance != null && serviceInstance.getJwcpxt_service_instance_id() != null
+				&& !"".equals(serviceInstance.getJwcpxt_service_instance_id())) {
+			//
+			service_instance = dissatisfiedFeedbackDao
+					.getServiceInstanceById(serviceInstance.getJwcpxt_service_instance_id());
+		}
+		if (service_instance == null) {
+			return false;
+		}
+		service_instance.setService_instance_feedback_state("2");
+		service_instance.setService_instance_gmt_modified(TimeUtil.getStringSecond());
+		dissatisfiedFeedbackDao.saveOrUpdateObject(service_instance);
+		return true;
+	}
+
+	/**
 	 * 更新反馈整改的状态
 	 */
 	@Override
@@ -43,7 +65,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		jwcpxt_feedback_rectification feedbackRecti = new jwcpxt_feedback_rectification();
 		// 根据id获取反馈整改表
 		if (feedbackRectification.getJwcpxt_feedback_rectification_id() != null
-				&& "".equals(feedbackRectification.getJwcpxt_feedback_rectification_id())) {
+				&& !"".equals(feedbackRectification.getJwcpxt_feedback_rectification_id())) {
 			feedbackRecti = dissatisfiedFeedbackDao
 					.get_feedbackRectficationDO_byId(feedbackRectification.getJwcpxt_feedback_rectification_id());
 		}
