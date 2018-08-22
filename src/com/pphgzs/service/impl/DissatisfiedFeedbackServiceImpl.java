@@ -53,6 +53,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		}
 		service_instance.setService_instance_feedback_state("2");
 		service_instance.setService_instance_gmt_modified(TimeUtil.getStringSecond());
+		System.out.println("service_instance:" + service_instance);
 		dissatisfiedFeedbackDao.saveOrUpdateObject(service_instance);
 		return true;
 	}
@@ -74,6 +75,7 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 		}
 		feedbackRecti
 				.setFeedback_rectification_audit_state(feedbackRectification.getFeedback_rectification_audit_state());
+		feedbackRecti.setFeedback_rectification_cpzx_opinion("电话号码异常!");
 		feedbackRecti.setFeedback_rectification_gmt_modified(TimeUtil.getStringSecond());
 		dissatisfiedFeedbackDao.saveOrUpdateObject(feedbackRecti);
 		return true;

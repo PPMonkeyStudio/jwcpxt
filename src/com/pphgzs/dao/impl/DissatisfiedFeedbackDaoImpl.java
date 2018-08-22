@@ -40,12 +40,14 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 	 * 
 	 */
 	@Override
-	public jwcpxt_service_instance getServiceInstanceById(String jwcpxt_service_instance_id) {
+	public jwcpxt_service_instance getServiceInstanceById(String id) {
 		Session session = getSession();
 		jwcpxt_service_instance jwcpxt_service_instance = new jwcpxt_service_instance();
-		String hql = "from jwcpxt_service_instance where jwcpxt_service_instance_id = :jwcpxt_service_instance_id";
+		String hql = "from jwcpxt_service_instance where jwcpxt_service_instance_id = :id";
+		System.out.println("hql:"+hql);
+		System.out.println("id:"+id);
 		Query query = session.createQuery(hql);
-		query.setParameter("jwcpxt_service_instance_id", jwcpxt_service_instance_id);
+		query.setParameter("id", id);
 		jwcpxt_service_instance = (jwcpxt_service_instance) query.uniqueResult();
 		return jwcpxt_service_instance;
 	}

@@ -117,6 +117,7 @@ function changeState(that) {
 	$.confirm({
 		title : '修改',
 		type : 'dark',
+		boxWidth : '300px',
 		useBootstrap : false,
 		content : '确定修改为已处理状态?',
 		buttons : {
@@ -125,7 +126,7 @@ function changeState(that) {
 				btnClass : 'btn-blue',
 				action : function() {
 					$.post('/jwcpxt/DissatisfiedFeedback/update_ServiceInstance_State', {
-						"localserviceInstance.jwcpxt_service_instance_id" : $(that).attr('id'),
+						"serviceInstance.jwcpxt_service_instance_id" : $(that).attr('id'),
 						"serviceInstance.service_instance_feedback_state" : 2
 					}, response => {
 						if (response == "success") {

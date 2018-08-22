@@ -165,14 +165,10 @@ function abnormalNumber(event, state) {
 	$.confirm({
 		title : '异常',
 		type : 'dark',
+		boxWidth : '300px',
 		useBootstrap : false,
 		content : '确定标记为异常?',
 		buttons : {
-			cancel : {
-				text : '关闭',
-				btnClass : 'btn-red',
-				action : function() {}
-			},
 			save : {
 				text : '确定',
 				btnClass : 'btn-blue',
@@ -190,6 +186,11 @@ function abnormalNumber(event, state) {
 							}
 						}, 'text');
 				}
+			},
+			cancel : {
+				text : '关闭',
+				btnClass : 'btn-red',
+				action : function() {}
 			}
 		},
 	})
