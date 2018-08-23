@@ -208,3 +208,11 @@ function preview(event) {
 		}
 	})
 }
+
+
+//跳转到当事人见面
+function skipToClientInfomation(that) {
+	let definitionId = $(that).attr('definitionId');
+	let phone = $(that).attr('phone');
+	window.open('/jwcpxt/Skip/skipClientInformationPage?definitionId=' + definitionId + '&unitId=' + phone);
+}

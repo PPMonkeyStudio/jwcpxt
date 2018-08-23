@@ -163,11 +163,12 @@ function checkRectification(event, state) {
 }
 
 function abnormalNumber(event, state) {
-	$.confirm({
+	let abnormalNumberConfirm = $.confirm({
 		title : '异常',
 		type : 'dark',
+		boxWidth : '500px',
 		useBootstrap : false,
-		content : '确定标记为异常?',
+		content : '<form id="checkRectification"><label>意见</label><textarea class="form-control"></textarea></form>',
 		buttons : {
 			cancel : {
 				text : '关闭',
@@ -178,10 +179,15 @@ function abnormalNumber(event, state) {
 				text : '确定',
 				btnClass : 'btn-blue',
 				action : function() {
+					if (abnormalNumberConfirm.$content.find('textarea').val()) {
+						toastr.error('描述不能为空');
+						return false;
+					}
 					$.post('/jwcpxt/DissatisfiedFeedback/update_FeedbackRectificationState_byFeedbackId',
 						{
 							"feedbackRectification.jwcpxt_feedback_rectification_id" : event.id,
-							"feedbackRectification.feedback_rectification_audit_state" : state
+							"feedbackRectification.feedback_rectification_audit_state" : state,
+							"feedbackRectification.feedback_rectification_cpzx_opinion" : abnormalNumberConfirm.$content.find('textarea').val()
 						}, response => {
 							if (response == "success") {
 								toastr.success("标记成功！");

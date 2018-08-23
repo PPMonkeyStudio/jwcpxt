@@ -91,7 +91,12 @@ th {
 													<td>{{SecondDistatisDTO.unit.unit_phone}}</td>
 													<td>{{SecondDistatisDTO.serviceDefinition.service_definition_describe}}</td>
 													<td>{{SecondDistatisDTO.question.question_describe}}</td>
-													<td>{{SecondDistatisDTO.serviceClient.service_client_name}}</td>
+													<td>
+														<a href="javascript:;"  onclick="skipToClientInfomation(this)"
+														   :phone="SecondDistatisDTO.serviceClient.service_client_phone"
+														   :definitionId="SecondDistatisDTO.serviceDefinition.jwcpxt_service_definition_id">
+														{{SecondDistatisDTO.serviceClient.service_client_name}}</a>
+													</td>
 													<td>{{SecondDistatisDTO.serviceClient.service_client_phone}}</td>
 													<td>
 														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='1'">
