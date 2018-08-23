@@ -1,5 +1,6 @@
 package com.pphgzs.service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -288,5 +289,11 @@ public interface ServiceService {
 	 * @return
 	 */
 	public jwcpxt_service_instance get_serviceInstanceDo_byServiceClientID(jwcpxt_service_client serviceClient);
+
+	/**
+	 * 通过业务实例id获取业务实例对象
+	 * @throws IOException 
+	 */
+	public jwcpxt_service_instance get_serviceInstanceDo_byId(jwcpxt_service_instance serviceInstance);
 
 }

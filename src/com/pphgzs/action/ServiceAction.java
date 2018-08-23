@@ -60,6 +60,21 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 	private CountFinishReturnVisitVo countFinishReturnVisitVo;
 
 	/**
+	 * 通过业务实例id获取业务实例对象
+	 * @throws IOException 
+	 */
+	public void get_serviceInstanceDo_byId() throws IOException{
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		jwcpxt_service_instance serviceInstance1 = serviceService.get_serviceInstanceDo_byId(serviceInstance);
+		http_response.getWriter().write(gson.toJson(serviceInstance1));
+	}
+	
+	/**
 	 * 通过当事人id获取<所有>的信息
 	 * @throws IOException 
 	 */

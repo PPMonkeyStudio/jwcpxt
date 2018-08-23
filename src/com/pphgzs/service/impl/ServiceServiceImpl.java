@@ -978,4 +978,9 @@ public class ServiceServiceImpl implements ServiceService {
 		return serviceDao.get_serviceInstanceDo_byServiceClientID(serviceClient);
 	}
 
+	@Override
+	public jwcpxt_service_instance get_serviceInstanceDo_byId(jwcpxt_service_instance serviceInstance) {
+		return serviceDao.get_serviceInstance_byServiceInstanceID(serviceInstance.getJwcpxt_service_instance_id());
+	}
+
 }

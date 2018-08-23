@@ -108,10 +108,10 @@ th {
 													</td>
 													<td>
 														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='1'">
-															<a href="javascript:;" :id="SecondDistatisDTO.serviceInstance.service_instance_belong_feedback" onclick="changeState(this)"></a>
+															<a href="javascript:;" :id="SecondDistatisDTO.serviceInstance.jwcpxt_service_instance_id" onclick="changeState(this)"></a>
 														</template>
 														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='2'">
-															无操作
+															<a href="javascript:;" :id="SecondDistatisDTO.serviceInstance.jwcpxt_service_instance_id" onclick="viewReason(this)">查看</a>
 														</template>
 													</td>
 												</tr>

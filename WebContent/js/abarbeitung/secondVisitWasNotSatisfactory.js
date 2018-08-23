@@ -114,19 +114,25 @@ function changeQuery(event) {
 }
 
 function changeState(that) {
-	$.confirm({
+	let changeStateConfirm = $.confirm({
 		title : '修改',
 		type : 'dark',
+		boxWidth : '500px',
 		useBootstrap : false,
-		content : '确定修改为已处理状态?',
+		content : '<label>原因</label><textarea class="form-control"></textarea>',
 		buttons : {
 			update : {
 				text : '确定',
 				btnClass : 'btn-blue',
 				action : function() {
+					if (changeStateConfirm.$content.find('textarea').val()) {
+						toastr.error('原因不能为空');
+						return false;
+					}
 					$.post('/jwcpxt/DissatisfiedFeedback/update_ServiceInstance_State', {
-						"localserviceInstance.jwcpxt_service_instance_id" : $(that).attr('id'),
-						"serviceInstance.service_instance_feedback_state" : 2
+						"serviceInstance.jwcpxt_service_instance_id" : $(that).attr('id'),
+						"serviceInstance.service_instance_feedback_state" : 2,
+						"serviceInstance.service_instance_feedback_reason" : changeStateConfirm.$content.find('textarea').val()
 					}, response => {
 						if (response == "success") {
 							toastr.success('修改成功！');
@@ -140,6 +146,31 @@ function changeState(that) {
 			cancel : {
 				text : '关闭',
 				btnClass : 'btn-default',
+				action : function() {}
+			}
+		},
+	})
+}
+
+
+function viewReason(that) {
+	let viewReasonConfirm = $.confirm({
+		title : '查看原因',
+		type : 'dark',
+		boxWidth : '500px',
+		useBootstrap : false,
+		content : '<label>原因</label><textarea class="form-control"></textarea>',
+		onContentReady : function() {
+			$.post('/jwcpxt/Service/get_serviceInstanceDo_byId', {
+				"serviceInstance.jwcpxt_service_instance_id" : $(that).attr('id')
+			}, response => {
+				viewReasonConfirm.$content.find('textarea').val(response.service_instance_feedback_reason);
+			}, 'json');
+		},
+		buttons : {
+			update : {
+				text : '确定',
+				btnClass : 'btn-blue',
 				action : function() {}
 			}
 		},
