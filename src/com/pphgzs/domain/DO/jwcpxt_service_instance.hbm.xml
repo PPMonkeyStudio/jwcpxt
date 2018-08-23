@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018-8-22 15:45:54 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-8-23 12:33:15 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.pphgzs.domain.DO.jwcpxt_service_instance" table="JWCPXT_SERVICE_INSTANCE">
         <id name="jwcpxt_service_instance_id" type="java.lang.String">
@@ -31,6 +31,9 @@
         </property>
         <property name="service_instance_feedback_state" type="java.lang.String">
             <column name="SERVICE_INSTANCE_FEEDBACK_STATE" />
+        </property>
+        <property name="service_instance_feedback_reason" type="java.lang.String">
+            <column name="SERVICE_INSTANCE_FEEDBACK_REASON" />
         </property>
         <property name="service_instance_gmt_create" type="java.lang.String">
             <column name="SERVICE_INSTANCE_GMT_CREATE" />

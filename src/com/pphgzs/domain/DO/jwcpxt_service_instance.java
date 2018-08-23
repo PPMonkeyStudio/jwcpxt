@@ -10,6 +10,7 @@ public class jwcpxt_service_instance {
 	private String service_instance_belong_feedback = "none";
 	private String service_instance_old_service_name = "none";
 	private String service_instance_feedback_state = "1";
+	private String service_instance_feedback_reason = "";
 	private String service_instance_gmt_create;
 	private String service_instance_gmt_modified;
 
@@ -23,6 +24,14 @@ public class jwcpxt_service_instance {
 
 	public String getJwcpxt_service_instance_id() {
 		return jwcpxt_service_instance_id;
+	}
+
+	public String getService_instance_feedback_reason() {
+		return service_instance_feedback_reason;
+	}
+
+	public void setService_instance_feedback_reason(String service_instance_feedback_reason) {
+		this.service_instance_feedback_reason = service_instance_feedback_reason;
 	}
 
 	public String getService_instance_feedback_state() {
@@ -110,7 +119,8 @@ public class jwcpxt_service_instance {
 				+ ", service_instance_judge=" + service_instance_judge + ", service_instance_belong_feedback="
 				+ service_instance_belong_feedback + ", service_instance_old_service_name="
 				+ service_instance_old_service_name + ", service_instance_feedback_state="
-				+ service_instance_feedback_state + ", service_instance_gmt_create=" + service_instance_gmt_create
+				+ service_instance_feedback_state + ", service_instance_feedback_reason="
+				+ service_instance_feedback_reason + ", service_instance_gmt_create=" + service_instance_gmt_create
 				+ ", service_instance_gmt_modified=" + service_instance_gmt_modified + "]";
 	}
 
