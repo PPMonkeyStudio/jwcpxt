@@ -40,7 +40,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	public int get_dataMonthDayMount(MonthDayMountVO monthDayMountVO, int i) {
 		Session session = getSession();
 		String hql = "";
-		if (i != 2) {
+		if (i == 0 || i == 1 || i == 3) {
 			hql = hql + "select"//
 					+ " count(*)"//
 					+ " from"//
@@ -54,11 +54,15 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
 					+ " and serviceClient.service_client_gmt_modified <= :endTime"//
 					+ " and serviceInstance.service_instance_judge like :userId";
-			if (i != 0) {
+			if (i == 3) {
+				hql = hql
+						+ " AND serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != '805bba8d-34f0-449c-bc8c-e868938e0f05'";
+			}
+			if (i == 1 || i == 3) {
 				hql = hql + " AND serviceClient.service_client_visit = '1'";
 			}
 		}
-		if (i == 2) {
+		if (i == 2 || i == 4) {
 			hql = hql + "select"//
 					+ " count(*)"//
 					+ " from"//
@@ -76,8 +80,17 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
 					+ " and serviceClient.service_client_gmt_modified <= :endTime"
 					+ " and serviceInstance.service_instance_judge like :userId"//
-					+ " and serviceClient.service_client_visit='1'"//
-					+ " ) t1"//
+					+ " and serviceClient.service_client_visit='1'";//
+			if (i == 2) {
+				hql = hql
+						+ " AND serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != '805bba8d-34f0-449c-bc8c-e868938e0f05'";
+			}
+			if (i == 4) {
+				hql = hql
+						+ " AND serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID = '805bba8d-34f0-449c-bc8c-e868938e0f05'";
+
+			}
+			hql = hql + " ) t1"//
 					+ " left join"//
 					+ " ("//
 					+ " select"//
@@ -89,10 +102,15 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " where"//
 					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
 					+ " AND choice.answer_choice_option = _option.jwcpxt_option_id"//
-					+ " AND ("//
-					+ " _option.option_describe LIKE '满意'"//
-					+ " OR _option.option_describe LIKE '比较满意'"//
-					+ " )"//
+					+ " AND (";//
+			if (i == 2) {
+				hql = hql + " _option.option_describe LIKE '不满意'"//
+						+ " OR _option.option_describe LIKE '不太满意'";//
+			}
+			if (i == 4) {
+				hql = hql + " _option.option_describe LIKE '满意'";//
+			}
+			hql = hql + " )"//
 					+ " GROUP BY"//
 					+ " client.JWCPXT_SERVICE_CLIENT_ID"//
 					+ " ) t2 ON t1.JWCPXT_SERVICE_CLIENT_ID = t2.jwcpxt_service_client_id"//
@@ -843,11 +861,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " WHERE"//
 					+ " t2.jwcpxt_feedback_rectification_id IS NOT NULL";
 		}
-//		System.out.println("hql:" + hql);
-//		System.out.println("searchTimeStart：" + searchTimeStart + " 00:00:00");
-//		System.out.println("searchTimeEnd：" + searchTimeEnd + " 23:59:59");
-//		System.out.println("fatherUnitId：" + fatherUnitId);
-//		System.out.println("serviceDefinitionID：" + serviceGradeDTO.getService_id());
+		// System.out.println("hql:" + hql);
+		// System.out.println("searchTimeStart：" + searchTimeStart + " 00:00:00");
+		// System.out.println("searchTimeEnd：" + searchTimeEnd + " 23:59:59");
+		// System.out.println("fatherUnitId：" + fatherUnitId);
+		// System.out.println("serviceDefinitionID：" + serviceGradeDTO.getService_id());
 		Query query = session.createSQLQuery(hql);
 		query.setParameter("fatherUnitId", fatherUnitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());

@@ -68,13 +68,20 @@ public class StatisticsServiceImpl implements StatisticsService {
 		int totalSuccessCount = 0;
 		// 不满意数
 		// int totalNotStatisCount = 0;
-		// //
+		//
 		MonthDayMountDTO monthDayMountDTO = new MonthDayMountDTO();
 		int totalStaticCount = 0;
-		// //
+		//
 		totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 0);
 		totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 1);
-		totalStaticCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
+		// totalStaticCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
+		// 获取除安全感满意度外的成功总数
+		int totalNoAnCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 3);
+		// 获取除安全感满意度外的不满意以及不太满意
+		int totalNoAnNoStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
+		// 获取安全感满意度的满意数量
+		int totalAnStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 4);
+		totalStaticCount = (totalNoAnCount - totalNoAnNoStatisCount) + totalAnStatisCount;
 		monthDayMountDTO.setTotalCount(totalCount);
 		monthDayMountDTO.setTotalSuccessCount(totalSuccessCount);
 		monthDayMountDTO.setTotalStatisCount(totalStaticCount);
@@ -765,7 +772,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 						.equals(serviceGradeBelongUnitDTO.getServiceDefinition().getJwcpxt_service_definition_id())) {
 					statisticsGrade = statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
 							searchTimeStart, searchTimeEnd, 2);
-//					System.out.println("statisticsGrade:" + statisticsGrade);
+					// System.out.println("statisticsGrade:" + statisticsGrade);
 					// 获取改单位的整改超时数量
 					// 对应单位的数量
 					FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO = new FeedbackRectificationExceedTimeVO();

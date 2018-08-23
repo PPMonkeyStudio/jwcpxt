@@ -174,7 +174,7 @@ function abnormalNumber(event, state) {
 				text : '确定',
 				btnClass : 'btn-blue',
 				action : function() {
-					if (abnormalNumberConfirm.$content.find('textarea').val()) {
+					if (!abnormalNumberConfirm.$content.find('textarea').val()) {
 						toastr.error('描述不能为空');
 						return false;
 					}

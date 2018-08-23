@@ -125,7 +125,7 @@ function changeState(that) {
 				text : '确定',
 				btnClass : 'btn-blue',
 				action : function() {
-					if (changeStateConfirm.$content.find('textarea').val()) {
+					if (!changeStateConfirm.$content.find('textarea').val()) {
 						toastr.error('原因不能为空');
 						return false;
 					}
@@ -159,7 +159,7 @@ function viewReason(that) {
 		type : 'dark',
 		boxWidth : '500px',
 		useBootstrap : false,
-		content : '<label>原因</label><textarea class="form-control"></textarea>',
+		content : '<label>原因</label><textarea disabled class="form-control"></textarea>',
 		onContentReady : function() {
 			$.post('/jwcpxt/Service/get_serviceInstanceDo_byId', {
 				"serviceInstance.jwcpxt_service_instance_id" : $(that).attr('id')
