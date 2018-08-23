@@ -44,13 +44,17 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
-										<select class="selectpicker" title="选择业务..." name="secondDistatisVO.searchService" data-live-search="true" onchange="changeQuery(this)"></select>
-										<label style="color: black;">回访时间</label> <input
-											@change="searchRectification($event)" id="secondDistatisVO.searchTimeStart"
+										<select class="selectpicker" title="选择业务..."
+											name="secondDistatisVO.searchService" data-live-search="true"
+											onchange="changeQuery(this)"></select> <label
+											style="color: black;">回访时间</label> <input
+											@change="searchRectification($event)"
+											id="secondDistatisVO.searchTimeStart"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"><label
 											style="color: black;">&nbsp;至&nbsp;</label><input
-											@change="searchRectification($event)" id="secondDistatisVO.searchTimeEnd"
+											@change="searchRectification($event)"
+											id="secondDistatisVO.searchTimeEnd"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"> <input
 											name="secondDistatisVO.search"
@@ -70,13 +74,13 @@ th {
 													<td>问题标题</td>
 													<td>当事人姓名</td>
 													<td>当事人电话</td>
-													<td>
-														<select style="width:100px;" class="form-control" id="secondDistatisVO.feedbackState" @change="searchRectification($event)">
+													<td><select style="width: 100px;" class="form-control"
+														name="secondDistatisVO.feedbackState"
+														@change="searchRectification($event)">
 															<option value="">全部</option>
 															<option value="1">未处理</option>
 															<option value="2">已处理</option>
-														</select>
-													</td>
+													</select></td>
 													<td>操作</td>
 												</tr>
 											</thead>
@@ -108,7 +112,7 @@ th {
 													</td>
 													<td>
 														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='1'">
-															<a href="javascript:;" :id="SecondDistatisDTO.serviceInstance.jwcpxt_service_instance_id" onclick="changeState(this)"></a>
+															<a href="javascript:;" :id="SecondDistatisDTO.serviceInstance.jwcpxt_service_instance_id" onclick="changeState(this)">处理</a>
 														</template>
 														<template v-if="SecondDistatisDTO.serviceInstance.service_instance_feedback_state=='2'">
 															<a href="javascript:;" :id="SecondDistatisDTO.serviceInstance.jwcpxt_service_instance_id" onclick="viewReason(this)">查看</a>
@@ -122,8 +126,8 @@ th {
 										<div id="bottomPage" style="padding: 20px;" v-cloak>
 											<span>总记录数:<span id="currPage">{{page.totalCount}}</span></span>
 											<span>当前页数:<span id="currPage">{{page.currPage}}</span></span>
-											<span>共:<span id="totalPage">{{page.totalPage}}</span>页</span>
-											<span class="pageOperation" @click="firstPage">首页</span> <span
+											<span>共:<span id="totalPage">{{page.totalPage}}</span>页
+											</span> <span class="pageOperation" @click="firstPage">首页</span> <span
 												class="pageOperation" @click="prePage">上一页</span> <span
 												class="pageOperation" @click="nextPage">下一页</span> <span
 												class="pageOperation" @click="lastPage">末页</span> <span><input

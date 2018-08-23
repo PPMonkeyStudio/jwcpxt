@@ -170,11 +170,6 @@ function abnormalNumber(event, state) {
 		useBootstrap : false,
 		content : '<form id="checkRectification"><label>意见</label><textarea class="form-control"></textarea></form>',
 		buttons : {
-			cancel : {
-				text : '关闭',
-				btnClass : 'btn-red',
-				action : function() {}
-			},
 			save : {
 				text : '确定',
 				btnClass : 'btn-blue',
@@ -197,6 +192,11 @@ function abnormalNumber(event, state) {
 							}
 						}, 'text');
 				}
+			},
+			cancel : {
+				text : '关闭',
+				btnClass : 'btn-red',
+				action : function() {}
 			}
 		},
 	})
