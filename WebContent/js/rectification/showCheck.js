@@ -65,6 +65,7 @@ function changeQuery() {
 	queryTemp.screenCheckState = $('#searchAuditState').val();
 	queryTemp.searchHandleState = $('#searchHandleState').val();
 	queryTemp.searchService = $('#searchService').val();
+	queryTemp.currPage = 1;
 	loadData();
 }
 

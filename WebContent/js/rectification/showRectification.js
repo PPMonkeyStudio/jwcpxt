@@ -55,6 +55,7 @@ function changeQuery() {
 	queryTemp.searchHandleState = $('#searchHandleState').val();
 	queryTemp.searchTitle = $('#searchTitle').val();
 	queryTemp.searchAuditState = $('#searchAuditState').val();
+	queryTemp.currPage = 1;
 	loadData();
 }
 
@@ -97,7 +98,7 @@ function skipToLastPage() {
 // 跳页
 function skipToArbitrarilyPage() {
 	if ($('#skipPage').val() < '1'
-			|| $('#skipPage').val() > rectificationVue.rectificationVO.totalPage) {
+		|| $('#skipPage').val() > rectificationVue.rectificationVO.totalPage) {
 		toastr.error("不存在此页");
 	} else {
 		queryTemp.currPage = $('#skipPage').val();
