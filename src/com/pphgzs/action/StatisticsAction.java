@@ -20,6 +20,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
+import com.pphgzs.domain.VO.DeductMarkInfoVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
@@ -59,6 +60,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private String startTime = "0000-01-01";
 	private String endTime = "9999-12-31";
 	private String userId = "";
+	private DeductMarkInfoVO deductMarkInfoVO;
 	/*
 	 * 
 	 */
@@ -67,6 +69,21 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	/*
 	 * 
 	 */
+
+	/**
+	 * 获取对应当事人的扣分项目
+	 * 
+	 * @throws IOException
+	 */
+	public void get_DeductMarkInfo() throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		response.setContentType("text/html;charset=utf-8");
+		deductMarkInfoVO = statisticsService.get_DeductMarkInfo(deductMarkInfoVO);
+		response.getWriter().write(gson.toJson(deductMarkInfoVO));
+	}
 
 	/**
 	 * 获取当月满意数量以及当月总数量以及当日的数量
@@ -517,6 +534,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public DeductMarkInfoVO getDeductMarkInfoVO() {
+		return deductMarkInfoVO;
+	}
+
+	public void setDeductMarkInfoVO(DeductMarkInfoVO deductMarkInfoVO) {
+		this.deductMarkInfoVO = deductMarkInfoVO;
 	}
 
 }

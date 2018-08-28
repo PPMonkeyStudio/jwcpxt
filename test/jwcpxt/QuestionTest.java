@@ -16,6 +16,7 @@ import com.pphgzs.domain.DO.jwcpxt_user;
 import com.pphgzs.domain.DTO.ClientInstanceDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
 import com.pphgzs.domain.VO.ClientInfoVO;
+import com.pphgzs.domain.VO.DeductMarkInfoVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.MonthDayMountVO;
@@ -46,6 +47,12 @@ public class QuestionTest {
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
 	@Resource
 	private StatisticsService statisticsService;
+
+	@Test
+	public void gggggg() {
+		DeductMarkInfoVO deductMarkInfoVO = new DeductMarkInfoVO();
+		statisticsService.get_DeductMarkInfo(deductMarkInfoVO);
+	}
 
 	@Test
 	public void tetetet() {

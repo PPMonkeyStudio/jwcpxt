@@ -6,6 +6,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
+import com.pphgzs.domain.VO.DeductMarkInfoVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
@@ -91,5 +92,7 @@ public interface StatisticsService {
 	 * @return
 	 */
 	public MonthDayMountVO get_dataMonthDayMount(MonthDayMountVO monthDayMountVO);
+
+	public DeductMarkInfoVO get_DeductMarkInfo(DeductMarkInfoVO deductMarkInfoVO);
 
 }

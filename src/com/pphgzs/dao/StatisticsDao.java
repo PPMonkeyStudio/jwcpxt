@@ -3,13 +3,17 @@ package com.pphgzs.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.pphgzs.domain.DO.jwcpxt_answer_choice;
+import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DTO.DeductMarkFirstInfoDTO;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
+import com.pphgzs.domain.VO.DeductMarkInfoVO;
 import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
@@ -24,7 +28,7 @@ public interface StatisticsDao {
 			String searchTimeEnd);
 
 	double geteStatisticsGrade_byFatherUnit(ServiceGradeDTO serviceGradeDTO, String fatherUnitId,
-			String searchTimeStart, String searchTimeEnd,int i);
+			String searchTimeStart, String searchTimeEnd, int i);
 
 	int get_dayNum_byServiceDefinitionIDAndDate(String jwcpxt_service_definition_id, String jwcpxt_unit_id, String day);
 
@@ -136,5 +140,26 @@ public interface StatisticsDao {
 	 * @return
 	 */
 	public int get_dataMonthDayMount(MonthDayMountVO monthDayMountVO, int i);
+
+	/**
+	 * 获取对应的第一个DTO里面的东西
+	 * 
+	 * @param deductMarkInfoVO
+	 * @return
+	 */
+	public List<DeductMarkFirstInfoDTO> get_DeductMarkFirstInfo(DeductMarkInfoVO deductMarkInfoVO);
+
+	/**
+	 * 根据业务定义获取所有的问题
+	 * 
+	 * @return
+	 */
+	List<jwcpxt_question> get_listQuestion_byServiceDefinitionId(String jwcpxt_option_id);
+
+	public jwcpxt_answer_open get_answerOpen_byClientAndQuestion(String jwcpxt_question_id,
+			String jwcpxt_service_client_id);
+
+	public jwcpxt_option get_answerChoice_byClietnAndQuestion(String jwcpxt_question_id,
+			String jwcpxt_service_client_id);
 
 }

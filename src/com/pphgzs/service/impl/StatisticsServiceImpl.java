@@ -12,12 +12,19 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 
 import com.pphgzs.dao.StatisticsDao;
 import com.pphgzs.dao.UnitDao;
+import com.pphgzs.domain.DO.jwcpxt_answer_choice;
+import com.pphgzs.domain.DO.jwcpxt_answer_open;
+import com.pphgzs.domain.DO.jwcpxt_option;
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.ClientAttentionServiceDTO;
+import com.pphgzs.domain.DTO.DeductMarkFirstInfoDTO;
+import com.pphgzs.domain.DTO.DeductMarkInfoDTO;
 import com.pphgzs.domain.DTO.DissatisfiedDTO;
 import com.pphgzs.domain.DTO.MonthDayMountDTO;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
@@ -34,11 +41,11 @@ import com.pphgzs.domain.DTO.StatisticsDissatisfiedDayDataDTO;
 import com.pphgzs.domain.DTO.StatisticsDissatisfiedOptionDTO;
 import com.pphgzs.domain.DTO.UnitHaveServiceGradeDTO;
 import com.pphgzs.domain.VO.ClientAttentionServiceVO;
+import com.pphgzs.domain.VO.DeductMarkInfoVO;
 import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
-import com.pphgzs.domain.VO.SecondDistatisVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -46,6 +53,7 @@ import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
+import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.StatisticsService;
 import com.pphgzs.util.TimeUtil;
@@ -56,6 +64,85 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private UnitDao unitDao;
 	private ServiceService serviceService;
 	private DissatisfiedFeedbackService dissatisfiedFeedbackService;
+
+	/**
+	 * 
+	 */
+	@Override
+	public DeductMarkInfoVO get_DeductMarkInfo(DeductMarkInfoVO deductMarkInfoVO) {
+		DeductMarkInfoDTO deductMarkInfoDTO = new DeductMarkInfoDTO();
+		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
+		// jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
+		jwcpxt_option secondOption = new jwcpxt_option();
+		DeductMarkFirstInfoDTO deductMarkFirstInfoDTO = new DeductMarkFirstInfoDTO();
+		List<DeductMarkFirstInfoDTO> listDeductMarkFirstInfoDTO = new ArrayList<>();
+		List<jwcpxt_question> listSecondQuestion = new ArrayList<>();
+		List<DeductMarkInfoDTO> listDeductMarkInfoDTO = new ArrayList<>();
+		// 获取第一个DTO
+		listDeductMarkFirstInfoDTO = statisticsDao.get_DeductMarkFirstInfo(deductMarkInfoVO);
+		// 根据选项拿到所有的追问问题
+		for (DeductMarkFirstInfoDTO deductMarkFirstInfoDTOTmp : listDeductMarkFirstInfoDTO) {
+			deductMarkInfoDTO = new DeductMarkInfoDTO();
+			listSecondQuestion = new ArrayList<>();
+			// 获取对应的追问列表
+			listSecondQuestion = statisticsDao.get_listQuestion_byServiceDefinitionId(
+					deductMarkFirstInfoDTOTmp.getFirstOption().getJwcpxt_option_id());
+			// 如果没有追问
+			if (listSecondQuestion == null || listSecondQuestion.size() <= 0) {
+				deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+				deductMarkInfoDTO.setSecondQuestion("");
+				deductMarkInfoDTO.setSecondDescribe("");
+				listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+				continue;
+			} else {
+				// 拥有追问
+				for (jwcpxt_question secondQuestion : listSecondQuestion) {
+					answerOpen = new jwcpxt_answer_open();
+					secondOption = new jwcpxt_option();
+					// 遍历追问，判断追问类型
+					if ("3".equals(secondQuestion.getQuestion_type())) {
+						// 追问开放题回答
+						answerOpen = statisticsDao.get_answerOpen_byClientAndQuestion(
+								secondQuestion.getJwcpxt_question_id(),
+								deductMarkFirstInfoDTOTmp.getServiceClient().getJwcpxt_service_client_id());
+						// 对该追问是否回答
+						if (answerOpen == null) {
+							deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+							deductMarkInfoDTO.setSecondQuestion(secondQuestion.getQuestion_describe());
+							deductMarkInfoDTO.setSecondDescribe("");
+							listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+							continue;
+						} else {
+							deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+							deductMarkInfoDTO.setSecondQuestion(secondQuestion.getQuestion_describe());
+							deductMarkInfoDTO.setSecondDescribe(answerOpen.getAnswer_open_content());
+							listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+							continue;
+						}
+					} else if ("4".equals(secondQuestion.getQuestion_type())) {
+						// 追问选择题
+						secondOption = statisticsDao.get_answerChoice_byClietnAndQuestion(
+								secondQuestion.getJwcpxt_question_id(),
+								deductMarkFirstInfoDTOTmp.getServiceClient().getJwcpxt_service_client_id());
+						if (secondOption == null) {
+							deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+							deductMarkInfoDTO.setSecondQuestion(secondQuestion.getQuestion_describe());
+							deductMarkInfoDTO.setSecondDescribe("");
+							listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+							continue;
+						} else {
+							deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+							deductMarkInfoDTO.setSecondQuestion(secondQuestion.getQuestion_describe());
+							deductMarkInfoDTO.setSecondDescribe(secondOption.getOption_describe());
+							listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+							continue;
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * 获取对应的数量

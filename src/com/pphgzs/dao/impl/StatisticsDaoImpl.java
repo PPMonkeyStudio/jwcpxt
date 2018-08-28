@@ -8,10 +8,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.pphgzs.dao.StatisticsDao;
+import com.pphgzs.domain.DO.jwcpxt_answer_choice;
+import com.pphgzs.domain.DO.jwcpxt_answer_open;
+import com.pphgzs.domain.DO.jwcpxt_option;
+import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DTO.DeductMarkFirstInfoDTO;
 import com.pphgzs.domain.DTO.QuestionOptionAnswerDTO;
 import com.pphgzs.domain.DTO.ReturnVisitDTO;
 import com.pphgzs.domain.DTO.ServiceGradeDTO;
+import com.pphgzs.domain.VO.DeductMarkInfoVO;
 import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
@@ -31,6 +37,114 @@ public class StatisticsDaoImpl implements StatisticsDao {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public jwcpxt_option get_answerChoice_byClietnAndQuestion(String jwcpxt_question_id,
+			String jwcpxt_service_client_id) {
+		jwcpxt_option secondOption = new jwcpxt_option();
+		Session session = getSession();
+		String hql = "select from jwcpxt_answer_choice answerChoice,jwcpxt_option secondOption where answerChoice.answer_choice_option = secondOption.jwcpxt_option_id"//
+				+ " and answerChoice.answer_choice_client = :choiceClient and answer_choice_question = :choiceQuestion";
+		Query query = session.createQuery(hql);
+		query.setParameter("choiceClient", jwcpxt_service_client_id);
+		query.setParameter("answer_choice_question", jwcpxt_question_id);
+		secondOption = (jwcpxt_option) query.uniqueResult();
+		return secondOption;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public jwcpxt_answer_open get_answerOpen_byClientAndQuestion(String jwcpxt_question_id,
+			String jwcpxt_service_client_id) {
+		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
+		Session session = getSession();
+		String hql = "from jwcpxt_answer_open where answer_open_client = :clientId and answer_open_question = :questionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("clientId", jwcpxt_service_client_id);
+		query.setParameter("questionId", jwcpxt_question_id);
+		answerOpen = (jwcpxt_answer_open) query.uniqueResult();
+		return answerOpen;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<jwcpxt_question> get_listQuestion_byServiceDefinitionId(String optionId) {
+		List<jwcpxt_question> listQuestion = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_question where question_service_definition = :optionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("optionId", optionId);
+		listQuestion = query.list();
+		return listQuestion;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<DeductMarkFirstInfoDTO> get_DeductMarkFirstInfo(DeductMarkInfoVO deductMarkInfoVO) {
+		List<DeductMarkFirstInfoDTO> listDeductMarkFirstInfoDTO = new ArrayList<>();
+		Session session = getSession();
+		String hql = "select"//
+				+ " new com.pphgzs.domain.DTO.DeductMarkFirstInfoDTO(serviceClient,serviceDefinition,unit,_option,question)"//
+				+ " from"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_option _option,"//
+				+ " jwcpxt_service_client serviceClient,"//
+				+ " jwcpxt_service_instance serviceInstance,"//
+				+ " jwcpxt_unit unit,"//
+				+ " jwcpxt_service_definition serviceDefinition,"//
+				+ " jwcpxt_question question"//
+				+ " WHERE"//
+				+ " answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
+				+ " AND answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
+				+ " AND serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
+				+ " AND serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
+				+ " AND serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
+				+ " AND _option.option_question = question.jwcpxt_question_id"//
+				+ " AND _option.option_grade > 0"//
+				+ " AND serviceClient.service_client_gmt_modified >= :screenTimeStart"//
+				+ " AND serviceClient.service_client_gmt_modified <= :screenTimeEnd"//
+				+ " AND unit.jwcpxt_unit_id LIKE :unitId"//
+				+ " AND serviceInstance.service_instance_judge like :screenJudge"//
+				+ " AND serviceDefinition.jwcpxt_service_definition_id LIKE :screenService"//
+				+ " order by serviceDefinition,serviceClient";//
+		Query query = session.createQuery(hql);
+		if (deductMarkInfoVO.getScreenTimeStart().equals("")) {
+			query.setParameter("screenTimeStart", "0000-00-00 00:00:00");
+		} else {
+			query.setParameter("screenTimeStart", deductMarkInfoVO.getScreenTimeStart() + " 00:00:00");
+		}
+		if (deductMarkInfoVO.getScreenTimeEnd().equals("")) {
+			query.setParameter("screenTimeEnd", "9999-99-99 23:59:59");
+		} else {
+			query.setParameter("screenTimeEnd", deductMarkInfoVO.getScreenTimeEnd() + " 23:59:59");
+		}
+		if (deductMarkInfoVO.getScreenUnit().equals("")) {
+			query.setParameter("unitId", "%");
+		} else {
+			query.setParameter("unitId", deductMarkInfoVO.getScreenUnit());
+		}
+		if (deductMarkInfoVO.getScreenJudge().equals("")) {
+			query.setParameter("screenJudge", "%");
+		} else {
+			query.setParameter("screenJudge", deductMarkInfoVO.getScreenJudge());
+		}
+		if (deductMarkInfoVO.getScreenDefinitionId().equals("")) {
+			query.setParameter("screenService", "%");
+		} else {
+			query.setParameter("screenService", deductMarkInfoVO.getScreenDefinitionId());
+		}
+		listDeductMarkFirstInfoDTO = query.list();
+		return listDeductMarkFirstInfoDTO;
 	}
 
 	/**
