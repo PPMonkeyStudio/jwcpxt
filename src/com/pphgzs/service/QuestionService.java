@@ -39,4 +39,8 @@ public interface QuestionService {
 
 	public boolean save_answer(List<AnswerDTO> listAnswerDTO, jwcpxt_service_client serviceClient, jwcpxt_user user);
 
+	public List<jwcpxt_question> get_listQuestionBy_serviceDefiniId(jwcpxt_service_definition serviceDefinition);
+
+	public List<jwcpxt_option> get_listOptionBy_questionId(jwcpxt_question question);
+
 }

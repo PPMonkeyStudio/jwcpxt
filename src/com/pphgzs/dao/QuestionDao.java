@@ -6,6 +6,7 @@ import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.VO.QuestionVO;
 
 public interface QuestionDao {
@@ -67,5 +68,14 @@ public interface QuestionDao {
 	 * @return
 	 */
 	public jwcpxt_service_client get_serviceClient_byClientId(String clientId);
+
+	/**
+	 * 
+	 * @param serviceDefinition
+	 * @return
+	 */
+	public List<jwcpxt_question> get_listQuestionBy_serviceDefiniId(jwcpxt_service_definition serviceDefinition);
+
+	public List<jwcpxt_option> get_listOptionBy_questionId(jwcpxt_question question);
 
 }

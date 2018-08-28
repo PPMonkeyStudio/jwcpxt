@@ -33,6 +33,8 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private HttpServletRequest http_request;
 	//
 	private jwcpxt_question question;
+	private List<jwcpxt_question> listQuestion;
+	private List<jwcpxt_option> listOption;
 	private jwcpxt_option option;
 	private jwcpxt_service_definition serviceDefinition;
 	private QuestionVO questionVO;
@@ -48,6 +50,42 @@ public class QuestionAction extends ActionSupport implements ServletResponseAwar
 	private List<AnswerDTO> listAnswerDTO;
 	// 电话
 	private String phone;
+
+	/**
+	 * 获取所有的选项
+	 * 
+	 * @throws IOException
+	 */
+	public void get_listOptionBy_questionId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		if (question == null) {
+			question = new jwcpxt_question();
+			question.setJwcpxt_question_id("");
+		}
+		listOption = questionService.get_listOptionBy_questionId(question);
+		http_response.getWriter().write(gson.toJson(listOption));
+	}
+
+	// 获取所有的问题
+	public void get_listQuestionBy_serviceDefiniId() throws IOException {
+		//
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化json数据
+		Gson gson = gsonBuilder.serializeNulls().create();
+		//
+		http_response.setContentType("text/html;charset=utf-8");
+		if (serviceDefinition == null) {
+			serviceDefinition = new jwcpxt_service_definition();
+			serviceDefinition.setJwcpxt_service_definition_id("");
+		}
+		listQuestion = questionService.get_listQuestionBy_serviceDefiniId(serviceDefinition);
+		http_response.getWriter().write(gson.toJson(listQuestion));
+	}
 
 	/**
 	 * @throws IOException

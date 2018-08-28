@@ -48,6 +48,20 @@ public class QuestionTest {
 	private StatisticsService statisticsService;
 
 	@Test
+	public void tetetet() {
+		jwcpxt_question question = new jwcpxt_question();
+		question.setJwcpxt_question_id("");
+		System.out.println(questionService.get_listOptionBy_questionId(question));
+	}
+
+	@Test
+	public void ggfg() {
+		jwcpxt_service_definition ser = new jwcpxt_service_definition();
+		ser.setJwcpxt_service_definition_id("");
+		System.out.println(questionService.get_listQuestionBy_serviceDefiniId(ser).toString());
+	}
+
+	@Test
 	public void ggg() {
 		MonthDayMountVO monthDayMountVO = new MonthDayMountVO();
 		System.out.println(statisticsService.get_dataMonthDayMount(monthDayMountVO));

@@ -14,6 +14,7 @@ import com.pphgzs.domain.DO.jwcpxt_option;
 //import com.pphgzs.domain.DO.jwcpxt_option_inquiries;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
+import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.VO.QuestionVO;
 
 @SuppressWarnings("unchecked")
@@ -26,6 +27,42 @@ public class QuestionDaoImpl implements QuestionDao {
 
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<jwcpxt_option> get_listOptionBy_questionId(jwcpxt_question question) {
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_option where option_question like :questionId order by option_question";
+		Query query = session.createQuery(hql);
+		if ("".equals(question.getJwcpxt_question_id())) {
+			query.setParameter("questionId", "%");
+		} else {
+			query.setParameter("questionId", question.getJwcpxt_question_id());
+		}
+		listOption = query.list();
+		return listOption;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<jwcpxt_question> get_listQuestionBy_serviceDefiniId(jwcpxt_service_definition serviceDefinition) {
+		List<jwcpxt_question> listQuestion = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_question where question_service_definition like :serviceId and (question_type = 1 or question_type = 2) order by question_service_definition";
+		Query query = session.createQuery(hql);
+		if ("".equals(serviceDefinition.getJwcpxt_service_definition_id())) {
+			query.setParameter("serviceId", "%");
+		} else {
+			query.setParameter("serviceId", serviceDefinition.getJwcpxt_service_definition_id());
+		}
+		listQuestion = query.list();
+		return listQuestion;
 	}
 
 	/**

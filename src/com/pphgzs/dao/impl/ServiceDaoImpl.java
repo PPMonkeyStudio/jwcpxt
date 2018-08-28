@@ -163,18 +163,20 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ "	client.jwcpxt_service_client_id)"//
 					+ " t2 ON t1.jwcpxt_service_client_id = t2.jwcpxt_service_client_id";
 		}
-//		System.out.println("-----------------------");
-//		System.out.println("hql:" + hql);
-//		System.out.println("startTime：" + clientInfoVO.getStartTime());
-//		System.out.println("endTime：" + clientInfoVO.getEndTime());
-//		System.out.println("startHTime：" + clientInfoVO.getStartHTime() + " 00:00:00");
-//		System.out.println("endHTime:" + clientInfoVO.getEndHTime() + " 23:59:59");
-//		System.out.println("screenService:" + clientInfoVO.getScreenService());
-//		System.out.println("screenVisit:" + clientInfoVO.getScreenVisit());
-//		System.out.println("screenUser:" + clientInfoVO.getScreenUser());
-//		System.out.println("search:" + "%" + clientInfoVO.getSearch() + "%");
-//		System.out.println("screenClientState:" + clientInfoVO.getScreenClientState());
-//		System.out.println("-----------------------");
+		// System.out.println("-----------------------");
+		// System.out.println("hql:" + hql);
+		// System.out.println("startTime：" + clientInfoVO.getStartTime());
+		// System.out.println("endTime：" + clientInfoVO.getEndTime());
+		// System.out.println("startHTime：" + clientInfoVO.getStartHTime() + "
+		// 00:00:00");
+		// System.out.println("endHTime:" + clientInfoVO.getEndHTime() + " 23:59:59");
+		// System.out.println("screenService:" + clientInfoVO.getScreenService());
+		// System.out.println("screenVisit:" + clientInfoVO.getScreenVisit());
+		// System.out.println("screenUser:" + clientInfoVO.getScreenUser());
+		// System.out.println("search:" + "%" + clientInfoVO.getSearch() + "%");
+		// System.out.println("screenClientState:" +
+		// clientInfoVO.getScreenClientState());
+		// System.out.println("-----------------------");
 		Query query = session.createSQLQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");
@@ -275,11 +277,15 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ "	from "//
 					+ " jwcpxt_answer_choice choice,"//
 					+ " jwcpxt_option _option,"//
-					+ " jwcpxt_service_client client"//
+					+ " jwcpxt_service_client client,"//
+					+ " jwcpxt_question question"//
 					+ " where"//
 					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
 					+ " and choice.answer_choice_option = _option.jwcpxt_option_id"//
+					+ " and choice.option_question = question.jwcpxt_question_id"//
 					+ " and _option.option_describe like :screenClientState"//
+					+ " and question.jwcpxt_question_id like :questionId"//
+					+ " and _option.jwcpxt_option_id like :optionId"//
 					+ " group by"//
 					+ "	client.jwcpxt_service_client_id)"//
 					+ " t2 ON t1.jwcpxt_service_client_id = t2.jwcpxt_service_client_id"//
@@ -344,6 +350,20 @@ public class ServiceDaoImpl implements ServiceDao {
 		if (!clientInfoVO.getScreenClientState().equals("")) {
 			query.setParameter("screenVisit", "1");
 			query.setParameter("screenClientState", clientInfoVO.getScreenClientState());
+		} else {
+			query.setParameter("screenClientState", "%");
+		}
+		if (!clientInfoVO.getScreenQuestionId().equals("")) {
+			query.setParameter("screenVisit", "1");
+			query.setParameter("questionId", clientInfoVO.getScreenQuestionId());
+		} else {
+			query.setParameter("questionId", "%");
+		}
+		if (!clientInfoVO.getScreenQuestionId().equals("")) {
+			query.setParameter("screenVisit", "1");
+			query.setParameter("optionId", clientInfoVO.getScreenOptionId());
+		} else {
+			query.setParameter("optionId", "%");
 		}
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());
 		query.setMaxResults(clientInfoVO.getPageSize());

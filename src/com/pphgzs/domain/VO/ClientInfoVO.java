@@ -26,6 +26,10 @@ public class ClientInfoVO {
 	private String screenUser = "";
 	// 搜索当事人姓名、电话号码、单位
 	private String search = "";
+	// 问题id
+	private String screenQuestionId = "";
+	//
+	private String screenOptionId = "";
 	// 当事人状态筛选
 	private String screenClientState = "";
 	// 当前页
@@ -47,6 +51,22 @@ public class ClientInfoVO {
 
 	public String getStartTime() {
 		return startTime;
+	}
+
+	public String getScreenQuestionId() {
+		return screenQuestionId;
+	}
+
+	public void setScreenQuestionId(String screenQuestionId) {
+		this.screenQuestionId = screenQuestionId;
+	}
+
+	public String getScreenOptionId() {
+		return screenOptionId;
+	}
+
+	public void setScreenOptionId(String screenOptionId) {
+		this.screenOptionId = screenOptionId;
 	}
 
 	public String getStartHTime() {
@@ -154,13 +174,15 @@ public class ClientInfoVO {
 		return "ClientInfoVO [listClientInfoDTO=" + listClientInfoDTO + ", startHTime=" + startHTime + ", endHTime="
 				+ endHTime + ", startTime=" + startTime + ", endTime=" + endTime + ", screenService=" + screenService
 				+ ", screenVisit=" + screenVisit + ", screenUser=" + screenUser + ", search=" + search
+				+ ", screenQuestionId=" + screenQuestionId + ", screenOptionId=" + screenOptionId
 				+ ", screenClientState=" + screenClientState + ", currPage=" + currPage + ", totalPage=" + totalPage
 				+ ", totalCount=" + totalCount + ", pageSize=" + pageSize + "]";
 	}
 
 	public ClientInfoVO(List<ClientInfoDTO> listClientInfoDTO, String startHTime, String endHTime, String startTime,
 			String endTime, String screenService, String screenVisit, String screenUser, String search,
-			String screenClientState, int currPage, int totalPage, int totalCount, int pageSize) {
+			String screenQuestionId, String screenOptionId, String screenClientState, int currPage, int totalPage,
+			int totalCount, int pageSize) {
 		super();
 		this.listClientInfoDTO = listClientInfoDTO;
 		this.startHTime = startHTime;
@@ -171,6 +193,8 @@ public class ClientInfoVO {
 		this.screenVisit = screenVisit;
 		this.screenUser = screenUser;
 		this.search = search;
+		this.screenQuestionId = screenQuestionId;
+		this.screenOptionId = screenOptionId;
 		this.screenClientState = screenClientState;
 		this.currPage = currPage;
 		this.totalPage = totalPage;

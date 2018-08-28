@@ -56,6 +56,26 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	public List<jwcpxt_option> get_listOptionBy_questionId(jwcpxt_question question) {
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		listOption = questionDao.get_listOptionBy_questionId(question);
+		return listOption;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<jwcpxt_question> get_listQuestionBy_serviceDefiniId(jwcpxt_service_definition serviceDefinition) {
+		List<jwcpxt_question> listQuestion = new ArrayList<>();
+		listQuestion = questionDao.get_listQuestionBy_serviceDefiniId(serviceDefinition);
+		return listQuestion;
+	}
+
+	/**
 	 * 获取某业务的问题列表
 	 */
 	@Override
