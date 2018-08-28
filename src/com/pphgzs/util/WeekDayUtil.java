@@ -30,6 +30,15 @@ public class WeekDayUtil {
 		}
 	}
 
+	@Test
+	public void tett() {
+		try {
+			System.out.println(getMonthBetween("2018-08-01", "2018-08-22"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 
 	 * @param minDate
@@ -57,9 +66,18 @@ public class WeekDayUtil {
 			result.add(sdf.format(curr.getTime()));
 			curr.add(Calendar.MONTH, 1);
 		}
-		if (result.size() == 1) {
-			result.add(getFirstDayOfNextMonth(result.get(0), "yyyy-MM-dd"));
+		Calendar calBegin = Calendar.getInstance();
+		// 使用给定的 Date 设置此 Calendar 的时间
+		try {
+			calBegin.setTime(sdf.parse(maxDate));
+			calBegin.add(Calendar.DAY_OF_MONTH, 1);
+			result.add(sdf.format(calBegin.getTime()));
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
+		// if (result.size() == 1) {
+		// result.add(getFirstDayOfNextMonth(result.get(0), "yyyy-MM-dd"));
+		// }
 		return result;
 	}
 
@@ -92,6 +110,11 @@ public class WeekDayUtil {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Test
+	public void testttt() {
+		System.out.println(getDates("2018-08-01", "2018-08-31", "星期一"));
 	}
 
 	/**
@@ -140,13 +163,21 @@ public class WeekDayUtil {
 			System.out.println("统计时间格式错误!");
 			e.printStackTrace();
 		}
-		dateList.add(dateEnd);
+		Calendar calBegin = Calendar.getInstance();
+		// 使用给定的 Date 设置此 Calendar 的时间
+		try {
+			calBegin.setTime(sdf.parse(dateEnd));
+			calBegin.add(Calendar.DAY_OF_MONTH, 1);
+			dateList.add(sdf.format(calBegin.getTime()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return dateList;
 	}
 
 	@Test
 	public void ggg() {
-		
+
 	}
 
 	// 等到当期时间的周系数。星期日：1，星期一：2，星期二：3，星期三：4，星期四：5，星期五：6，星期六：7

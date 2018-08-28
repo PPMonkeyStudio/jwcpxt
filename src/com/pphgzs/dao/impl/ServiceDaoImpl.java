@@ -269,7 +269,8 @@ public class ServiceDaoImpl implements ServiceDao {
 				+ " )"//
 				+ " order by serviceClient.service_client_visit DESC,"//
 				+ " serviceClient.service_client_gmt_modified DESC";//
-		if (!clientInfoVO.getScreenClientState().equals("")) {
+		if (!clientInfoVO.getScreenClientState().equals("") || !clientInfoVO.getScreenOptionId().equals("")
+				|| !clientInfoVO.getScreenQuestionId().equals("")) {
 			hql = hql + " ) t1"//
 					+ " inner join("//
 					+ " select"//
@@ -317,6 +318,7 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("endTime", clientInfoVO.getEndTime());
 		}
+
 		if (clientInfoVO.getStartHTime().equals("")) {
 			query.setParameter("startHTime", "0000-00-00" + " 00:00:00");
 		} else {
@@ -347,23 +349,26 @@ public class ServiceDaoImpl implements ServiceDao {
 		} else {
 			query.setParameter("search", "%" + clientInfoVO.getSearch() + "%");
 		}
-		if (!clientInfoVO.getScreenClientState().equals("")) {
-			query.setParameter("screenVisit", "1");
-			query.setParameter("screenClientState", clientInfoVO.getScreenClientState());
-		} else {
-			query.setParameter("screenClientState", "%");
-		}
-		if (!clientInfoVO.getScreenQuestionId().equals("")) {
-			query.setParameter("screenVisit", "1");
-			query.setParameter("questionId", clientInfoVO.getScreenQuestionId());
-		} else {
-			query.setParameter("questionId", "%");
-		}
-		if (!clientInfoVO.getScreenQuestionId().equals("")) {
-			query.setParameter("screenVisit", "1");
-			query.setParameter("optionId", clientInfoVO.getScreenOptionId());
-		} else {
-			query.setParameter("optionId", "%");
+		if (!clientInfoVO.getScreenClientState().equals("") || !clientInfoVO.getScreenOptionId().equals("")
+				|| !clientInfoVO.getScreenQuestionId().equals("")) {
+			if (!clientInfoVO.getScreenClientState().equals("")) {
+				query.setParameter("screenVisit", "1");
+				query.setParameter("screenClientState", clientInfoVO.getScreenClientState());
+			} else {
+				query.setParameter("screenClientState", "%");
+			}
+			if (!clientInfoVO.getScreenQuestionId().equals("")) {
+				query.setParameter("screenVisit", "1");
+				query.setParameter("questionId", clientInfoVO.getScreenQuestionId());
+			} else {
+				query.setParameter("questionId", "%");
+			}
+			if (!clientInfoVO.getScreenQuestionId().equals("")) {
+				query.setParameter("screenVisit", "1");
+				query.setParameter("optionId", clientInfoVO.getScreenOptionId());
+			} else {
+				query.setParameter("optionId", "%");
+			}
 		}
 		query.setFirstResult((clientInfoVO.getCurrPage() - 1) * clientInfoVO.getPageSize());
 		query.setMaxResults(clientInfoVO.getPageSize());

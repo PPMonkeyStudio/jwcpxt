@@ -303,7 +303,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				case "2":
 					// 按周
 					listDate = WeekDayUtil.getDates(statisDissaServiceDateVO.getStartTime(),
-							statisDissaServiceDateVO.getEndTime(), "星期日");
+							statisDissaServiceDateVO.getEndTime(), "星期一");
 					break;
 				case "3":
 					// 按月
@@ -378,7 +378,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				case "2":
 					// 按周
 					listDate = WeekDayUtil.getDates(statisDissaQuestionDateVO.getStartTime(),
-							statisDissaQuestionDateVO.getEndTime(), "星期日");
+							statisDissaQuestionDateVO.getEndTime(), "星期一");
 					break;
 				case "3":
 					// 按月
@@ -466,7 +466,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				case "2":
 					// 按周
 					listDate = WeekDayUtil.getDates(statisDissaServiceDateVO.getStartTime(),
-							statisDissaServiceDateVO.getEndTime(), "星期日");
+							statisDissaServiceDateVO.getEndTime(), "星期一");
 					break;
 				case "3":
 					// 按月
@@ -535,7 +535,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				case "2":
 					// 按周
 					listDate = WeekDayUtil.getDates(statisDissatiDateVO.getStartTime(),
-							statisDissatiDateVO.getEndTime(), "星期日");
+							statisDissatiDateVO.getEndTime(), "星期一");
 					break;
 				case "3":
 					// 按月

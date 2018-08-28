@@ -141,6 +141,15 @@ public class TimeUtil {
 		}
 	}
 
+	@Test
+	public void tttt() {
+		try {
+			System.out.println(findDates("2018-08-01", "2018-08-31"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static List<String> findDates(String dBegin, String dEnd) throws ParseException {
 		Date begin = null;
 		Date end = null;
@@ -161,10 +170,8 @@ public class TimeUtil {
 			calBegin.add(Calendar.DAY_OF_MONTH, 1);
 			lDate.add(sdf.format(calBegin.getTime()));
 		}
-		if (lDate.size() == 1) {
-			calBegin.add(Calendar.DAY_OF_MONTH, 1);
-			lDate.add(sdf.format(calBegin.getTime()));
-		}
+		calBegin.add(Calendar.DAY_OF_MONTH, 1);
+		lDate.add(sdf.format(calBegin.getTime()));
 		return lDate;
 	}
 

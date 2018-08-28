@@ -265,7 +265,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
 		}
 		query.setParameter("startTime", startTime + " 00:00:00");
-		query.setParameter("endTime", endTime + " 23:59:59");
+		query.setParameter("endTime", endTime + " 00:00:00");
 		query.setParameter("serviceDefinitionId", serviceDefinition.getJwcpxt_service_definition_id());
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
@@ -352,7 +352,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			query.setParameter("unitId", statisDissaQuestionDateVO.getScreenUnit());
 		}
 		query.setParameter("startTime", startTime + " 00:00:00");
-		query.setParameter("endTime", endTime + " 23:59:59");
+		query.setParameter("endTime", endTime + " 00:00:00");
 		query.setParameter("serviceDefinitionId", statisDissaQuestionDateVO.getScreenService());
 		query.setParameter("questionId", questionOptionAnswerDTO.getQuestion().getJwcpxt_question_id());
 		query.setParameter("optionId", questionOptionAnswerDTO.getOption().getJwcpxt_option_id());
@@ -445,7 +445,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			query.setParameter("unitId", statisDissaServiceDateVO.getScreenUnit());
 		}
 		query.setParameter("startTime", startTime + " 00:00:00");
-		query.setParameter("endTime", endTime + " 23:59:59");
+		query.setParameter("endTime", endTime + " 00:00:00");
 		query.setParameter("serviceDefinitionId", serviceDefinition.getJwcpxt_service_definition_id());
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
@@ -519,7 +519,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			query.setParameter("unitId", statisDissatiDateVO.getScreenUnit());
 		}
 		query.setParameter("startTime", startTime + " 00:00:00");
-		query.setParameter("endTime", endTime + " 23:59:59");
+		query.setParameter("endTime", endTime + " 00:00:00");
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
 			return count;
@@ -566,7 +566,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			query.setParameter("unitId", statisDissatiDateVO.getScreenUnit());
 		}
 		query.setParameter("startTime", startTime + " 00:00:00");
-		query.setParameter("endTime", endTime + " 23:59:59");
+		query.setParameter("endTime", endTime + " 00:00:00");
 		query.setParameter("option", option);
 		try {
 			int count = ((Number) query.uniqueResult()).intValue();
