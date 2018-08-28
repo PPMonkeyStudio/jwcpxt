@@ -40,7 +40,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	public int get_dataMonthDayMount(MonthDayMountVO monthDayMountVO, int i) {
 		Session session = getSession();
 		String hql = "";
-		if (i == 0 || i == 1 || i == 3) {
+		if (i == 0 || i == 1 || i == 3 || i == 5 || i == 6) {
 			hql = hql + "select"//
 					+ " count(*)"//
 					+ " from"//
@@ -49,20 +49,25 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " jwcpxt_service_definition serviceDefinition"//
 					+ " where"//
 					+ " serviceClient.SERVICE_CLIENT_SERVICE_INSTANCE = serviceInstance.JWCPXT_SERVICE_INSTANCE_ID"
-					+ " and serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID"//
-					+ " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'"//
-					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
+					+ " and serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID";
+			if (i != 5 && i != 6) {
+				hql = hql + " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'";//
+			}
+			if (i == 5 || i == 6) {
+				hql = hql + " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID = 'revisit'";//
+			}
+			hql = hql + " and serviceClient.service_client_gmt_modified >= :startTime"//
 					+ " and serviceClient.service_client_gmt_modified <= :endTime"//
 					+ " and serviceInstance.service_instance_judge like :userId";
 			if (i == 3) {
 				hql = hql
 						+ " AND serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != '805bba8d-34f0-449c-bc8c-e868938e0f05'";
 			}
-			if (i == 1 || i == 3) {
+			if (i == 1 || i == 3 || i == 6) {
 				hql = hql + " AND serviceClient.service_client_visit = '1'";
 			}
 		}
-		if (i == 2 || i == 4) {
+		if (i == 2 || i == 4 || i == 7) {
 			hql = hql + "select"//
 					+ " count(*)"//
 					+ " from"//
@@ -75,9 +80,13 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " jwcpxt_service_definition serviceDefinition"//
 					+ " where"//
 					+ " serviceClient.SERVICE_CLIENT_SERVICE_INSTANCE = serviceInstance.JWCPXT_SERVICE_INSTANCE_ID"
-					+ " and serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID"//
-					+ " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'"//
-					+ " and serviceClient.service_client_gmt_modified >= :startTime"//
+					+ " and serviceInstance.SERVICE_INSTANCE_SERVICE_DEFINITION = serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID";//
+			if (i != 7) {
+				hql = hql + " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID != 'revisit'";
+			} else {
+				hql = hql + " and serviceDefinition.JWCPXT_SERVICE_DEFINITION_ID = 'revisit'";
+			}
+			hql = hql + " and serviceClient.service_client_gmt_modified >= :startTime"//
 					+ " and serviceClient.service_client_gmt_modified <= :endTime"
 					+ " and serviceInstance.service_instance_judge like :userId"//
 					+ " and serviceClient.service_client_visit='1'";//
@@ -107,7 +116,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				hql = hql + " _option.option_describe LIKE '不满意'"//
 						+ " OR _option.option_describe LIKE '不太满意'";//
 			}
-			if (i == 4) {
+			if (i == 4 || i == 7) {
 				hql = hql + " _option.option_describe LIKE '满意'";//
 			}
 			hql = hql + " )"//
@@ -428,7 +437,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceClient.service_client_gmt_modified >= :startTime "//
 				+ " and serviceClient.service_client_gmt_modified <= :endTime "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionId";
-//		System.out.println("hql:" + hql);
+		// System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -546,10 +555,10 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceClient.service_client_gmt_modified >= :startTime "//
 				+ " and serviceClient.service_client_gmt_modified <= :endTime "//
 				+ "and _option.option_describe like :option";
-//		System.out.println("hql:" + hql);
-//		System.out.println("startTime:" + startTime + " 00:00:00");
-//		System.out.println("endTime：" + endTime + " 23:59:59");
-//		System.out.println("option:" + option);
+		// System.out.println("hql:" + hql);
+		// System.out.println("startTime:" + startTime + " 00:00:00");
+		// System.out.println("endTime：" + endTime + " 23:59:59");
+		// System.out.println("option:" + option);
 		Query query = session.createQuery(hql);
 		if (statisDissatiDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");

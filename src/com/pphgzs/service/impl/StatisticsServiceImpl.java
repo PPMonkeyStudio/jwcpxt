@@ -71,17 +71,28 @@ public class StatisticsServiceImpl implements StatisticsService {
 		//
 		MonthDayMountDTO monthDayMountDTO = new MonthDayMountDTO();
 		int totalStaticCount = 0;
-		//
-		totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 0);
-		totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 1);
-		// totalStaticCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
-		// 获取除安全感满意度外的成功总数
-		int totalNoAnCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 3);
-		// 获取除安全感满意度外的不满意以及不太满意
-		int totalNoAnNoStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
-		// 获取安全感满意度的满意数量
-		int totalAnStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 4);
-		totalStaticCount = (totalNoAnCount - totalNoAnNoStatisCount) + totalAnStatisCount;
+		int totalNoAnCount = 0;
+		int totalNoAnNoStatisCount = 0;
+		int totalAnStatisCount = 0;
+		monthDayMountVO.setFlag("anquan");
+		if ("anquan".equals(monthDayMountVO.getFlag())) {
+			totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 5);
+			totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 6);
+			totalStaticCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 7);
+		} else {
+			//
+			totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 0);
+			totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 1);
+			// totalStaticCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
+			// 获取除安全感满意度外的成功总数
+			totalNoAnCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 3);
+			// 获取除安全感满意度外的不满意以及不太满意
+			totalNoAnNoStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 2);
+			// 获取安全感满意度的满意数量
+			totalAnStatisCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 4);
+			totalStaticCount = (totalNoAnCount - totalNoAnNoStatisCount) + totalAnStatisCount;
+		}
+
 		monthDayMountDTO.setTotalCount(totalCount);
 		monthDayMountDTO.setTotalSuccessCount(totalSuccessCount);
 		monthDayMountDTO.setTotalStatisCount(totalStaticCount);

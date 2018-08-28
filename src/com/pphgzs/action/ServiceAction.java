@@ -61,9 +61,10 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 
 	/**
 	 * 通过业务实例id获取业务实例对象
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
-	public void get_serviceInstanceDo_byId() throws IOException{
+	public void get_serviceInstanceDo_byId() throws IOException {
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
@@ -73,20 +74,23 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		jwcpxt_service_instance serviceInstance1 = serviceService.get_serviceInstanceDo_byId(serviceInstance);
 		http_response.getWriter().write(gson.toJson(serviceInstance1));
 	}
-	
+
 	/**
 	 * 通过当事人id获取<所有>的信息
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
-	public void get_AllInformation_ByClientId() throws IOException{
+	public void get_AllInformation_ByClientId() throws IOException {
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.serializeNulls().create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
-		AllClientNotSatisfiedInformationVo allClientNotSatisfiedInformationVo = serviceService.get_AllInformation_ByClientId(serviceClient);
-		//int count = serviceService.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
+		AllClientNotSatisfiedInformationVo allClientNotSatisfiedInformationVo = serviceService
+				.get_AllInformation_ByClientId(serviceClient);
+		// int count =
+		// serviceService.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
 		http_response.getWriter().write(gson.toJson(allClientNotSatisfiedInformationVo));
 	}
 
@@ -101,13 +105,13 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		Gson gson = gsonBuilder.serializeNulls().create();
 		//
 		http_response.setContentType("text/html;charset=utf-8");
-		if("self".equals(countFinishReturnVisitVo.getAppraisalId())){
+		if ("self".equals(countFinishReturnVisitVo.getAppraisalId())) {
 			jwcpxt_user user = new jwcpxt_user();
 			user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
 			countFinishReturnVisitVo.setAppraisalId(user.getJwcpxt_user_id());
 		}
 		int count = serviceService.get_countFinishReturnVisit_inDateAndByUserId(countFinishReturnVisitVo);
-		http_response.getWriter().write(""+count);
+		http_response.getWriter().write("" + count);
 	}
 
 	/**
@@ -205,9 +209,10 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		user = (jwcpxt_user) ActionContext.getContext().getSession().get("user");
 		if (type.equals("revisit")) {
 			clientInstanceDTO = serviceService.get_notServiceClient_byJudge_revisit(user);
-		}else if("specified".equals(type)){
-			clientInstanceDTO = serviceService.get_notServiceClient_byJudge_specified(serviceClient.getJwcpxt_service_client_id());
-		}else {
+		} else if ("specified".equals(type)) {
+			clientInstanceDTO = serviceService
+					.get_notServiceClient_byJudge_specified(serviceClient.getJwcpxt_service_client_id());
+		} else {
 			clientInstanceDTO = serviceService.get_notServiceClient_byJudge(user);
 		}
 
@@ -239,9 +244,11 @@ public class ServiceAction extends ActionSupport implements ServletResponseAware
 		List<jwcpxt_service_definition> serviceDefinitionList = serviceService.list_serviceDefinitionDO_all();
 		jwcpxt_service_definition serviceDefinition = new jwcpxt_service_definition();
 		//
-		/*serviceDefinition.setJwcpxt_service_definition_id("revisit");
-		serviceDefinition.setService_definition_describe("整改情况");
-		serviceDefinitionList.add(0, serviceDefinition);*/
+		/*
+		 * serviceDefinition.setJwcpxt_service_definition_id("revisit");
+		 * serviceDefinition.setService_definition_describe("整改情况");
+		 * serviceDefinitionList.add(0, serviceDefinition);
+		 */
 		//
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据

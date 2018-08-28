@@ -9,6 +9,8 @@ public class MonthDayMountVO {
 	private String startTime = "0000-00-00";
 	// 结束时间
 	private String endTime = "9999-99-99";
+	// 安全感满意度
+	private String flag = "";
 
 	private String userId = "";
 
@@ -30,6 +32,14 @@ public class MonthDayMountVO {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 
 	public void setStartTime(String startTime) {
