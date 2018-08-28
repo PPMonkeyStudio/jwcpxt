@@ -63,6 +63,15 @@ public class WeekDayUtil {
 		return result;
 	}
 
+	@Test
+	public void tes() {
+		try {
+			System.out.println(getMonthBetween("2018-08-01", "2018-08-22").toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 获取指定日期下个月的第一天
 	 * 
@@ -133,6 +142,11 @@ public class WeekDayUtil {
 		}
 		dateList.add(dateEnd);
 		return dateList;
+	}
+
+	@Test
+	public void ggg() {
+		
 	}
 
 	// 等到当期时间的周系数。星期日：1，星期一：2，星期二：3，星期三：4，星期四：5，星期五：6，星期六：7

@@ -322,10 +322,20 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " "//
 				+ " and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId)"//
 				+ "	and serviceDefinition.jwcpxt_service_definition_id like :serviceDefinitionId"//
-				+ " and serviceInstance.service_instance_date >= :startTime "//
-				+ " and serviceInstance.service_instance_date < :endTime "
+				+ " and serviceClient.service_client_gmt_modified >= :startTime "//
+				+ " and serviceClient.service_client_gmt_modified < :endTime "
 				+ " and question.jwcpxt_question_id like :questionId"//
 				+ " and _option.jwcpxt_option_id like :optionId";//
+		/*
+		 * System.out.println("hql:" + hql); System.out.println("startTime：" + startTime
+		 * + " 00:00:00"); System.out.println("endTime:" + endTime + " 23:59:59");
+		 * System.out.println("serviceDefinitionId:" +
+		 * statisDissaQuestionDateVO.getScreenService());
+		 * System.out.println("questionId:" +
+		 * questionOptionAnswerDTO.getQuestion().getJwcpxt_question_id());
+		 * System.out.println("optionId:" +
+		 * questionOptionAnswerDTO.getOption().getJwcpxt_option_id());
+		 */
 		Query query = session.createQuery(hql);
 		if (statisDissaQuestionDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -415,9 +425,10 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ ""//
 				+ " and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId) "//
-				+ " and serviceInstance.service_instance_date >= :startTime "//
-				+ " and serviceInstance.service_instance_date < :endTime "//
+				+ " and serviceClient.service_client_gmt_modified >= :startTime "//
+				+ " and serviceClient.service_client_gmt_modified <= :endTime "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = :serviceDefinitionId";
+//		System.out.println("hql:" + hql);
 		Query query = session.createQuery(hql);
 		if (statisDissaServiceDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -490,8 +501,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ ""//
 				+ " and unit.jwcpxt_unit_id like :unitId"//
-				+ " and serviceInstance.service_instance_date >= :startTime"//
-				+ " and serviceInstance.service_instance_date < :endTime ";//
+				+ " and serviceClient.service_client_gmt_modified >= :startTime "//
+				+ " and serviceClient.service_client_gmt_modified <= :endTime ";//
 		Query query = session.createQuery(hql);
 		if (statisDissatiDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -532,9 +543,13 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ "and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id "//
 				+ ""//
 				+ "and (unit.jwcpxt_unit_id like :unitId or unit.unit_father like :unitId) "//
-				+ "and serviceInstance.service_instance_date >= :startTime "//
-				+ "and serviceInstance.service_instance_date < :endTime "//
+				+ " and serviceClient.service_client_gmt_modified >= :startTime "//
+				+ " and serviceClient.service_client_gmt_modified <= :endTime "//
 				+ "and _option.option_describe like :option";
+//		System.out.println("hql:" + hql);
+//		System.out.println("startTime:" + startTime + " 00:00:00");
+//		System.out.println("endTime：" + endTime + " 23:59:59");
+//		System.out.println("option:" + option);
 		Query query = session.createQuery(hql);
 		if (statisDissatiDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -608,9 +623,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and (unit.unit_father=:unitID or unit.jwcpxt_unit_id = :unitID) "//
 				+ " and serviceInstance.service_instance_belong_unit=unit.jwcpxt_unit_id "//
 				+ " and serviceInstance.service_instance_service_definition=:serviceDefinitionID "//
-				+ " and serviceInstance.service_instance_date >= :startTime "//
-				+ " and serviceInstance.service_instance_date <= :endTime "//
-				//
+				+ " and serviceClient.service_client_gmt_modified >= :startTime "//
+				+ " and serviceClient.service_client_gmt_modified <= :endTime "//
 				+ " and option.option_push='1' "//
 		;
 		Query query = session.createQuery(hql);
@@ -649,9 +663,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				//
 				+ " and serviceInstance.service_instance_belong_unit=:unitID "//
 				+ " and serviceInstance.service_instance_service_definition=:serviceDefinitionID "//
-				+ " and serviceInstance.service_instance_date >= :startTime "//
-				+ " and serviceInstance.service_instance_date <= :endTime "//
-				//
+				+ " and serviceClient.service_client_gmt_modified >= :startTime "//
+				+ " and serviceClient.service_client_gmt_modified <= :endTime "//
 				+ " and option.option_push='1' "//
 		;
 		Query query = session.createQuery(hql);
@@ -692,8 +705,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				//
 				+ " and (unit.unit_father=:unitID or unit.jwcpxt_unit_id=:unitID) "//
 				+ " and serviceInstance.service_instance_service_definition=:serviceDefinitionID "//
-				+ " and serviceInstance.service_instance_date like :day "//
-				//
+				+ " and serviceClient.service_client_gmt_modified like :day "//
 				+ " and _option.option_push='1' "//
 		;
 		Query query = session.createQuery(hql);
@@ -732,7 +744,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				//
 				+ " and serviceInstance.service_instance_belong_unit=:unitID "//
 				+ " and serviceInstance.service_instance_service_definition=:serviceDefinitionID "//
-				+ " and serviceInstance.service_instance_date like :day "//
+				+ " and serviceClient.service_client_gmt_modified like :day "//
 				//
 				+ " and _option.option_push='1' "//
 		;

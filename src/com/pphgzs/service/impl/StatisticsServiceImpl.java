@@ -330,7 +330,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				statisDIssaServiceDTO.setServiceDefinition(serviceDefinition);
 				listStatisDissaServiceDTO.add(statisDIssaServiceDTO);
 			}
-			statisDIssaServiceDateDTO.setDateScale(listDate.get(i));
+			statisDIssaServiceDateDTO.setDateScale(listDate.get(i - 1));
 			statisDIssaServiceDateDTO.setListStatisDIssaServiceDTO(listStatisDissaServiceDTO);
 			listStatisDIssaServiceDateDTO.add(statisDIssaServiceDateDTO);
 		}
@@ -418,7 +418,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				listStatisQuestionDTO.add(statisQuestionDTO);
 			}
 			statisDissaQuestionDateDTO.setListStatisQuestionDTO(listStatisQuestionDTO);
-			statisDissaQuestionDateDTO.setDateScale(listDate.get(i));
+			statisDissaQuestionDateDTO.setDateScale(listDate.get(i - 1));
 			listStatisQuestionDateDTO.add(statisDissaQuestionDateDTO);
 		}
 		statisDissaQuestionDateVO.setListStatisQuestionDTO(listStatisQuestionDateDTO);
@@ -489,7 +489,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				statisDIssaServiceDTO.setServiceDefinition(serviceDefinition);
 				listStatisDissaServiceDTO.add(statisDIssaServiceDTO);
 			}
-			statisDIssaServiceDateDTO.setDateScale(listDate.get(i));
+			statisDIssaServiceDateDTO.setDateScale(listDate.get(i - 1));
 			statisDIssaServiceDateDTO.setListStatisDIssaServiceDTO(listStatisDissaServiceDTO);
 			listStatisDIssaServiceDateDTO.add(statisDIssaServiceDateDTO);
 		}
@@ -569,7 +569,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 			}
 			statisticsDissatisfiedOptionDTO.setOption("满意");
 			listDissaOptionDTO.add(statisticsDissatisfiedOptionDTO);
-			statisticsDissatisfiedDateDTO.setDateScale(listDate.get(i));
+			statisticsDissatisfiedDateDTO.setDateScale(listDate.get(i - 1));
 			statisticsDissatisfiedDateDTO.setListDissaOptionDTO(listDissaOptionDTO);
 			listStatDissDateDTO.add(statisticsDissatisfiedDateDTO);
 		}

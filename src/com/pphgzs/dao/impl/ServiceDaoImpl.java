@@ -163,6 +163,18 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ "	client.jwcpxt_service_client_id)"//
 					+ " t2 ON t1.jwcpxt_service_client_id = t2.jwcpxt_service_client_id";
 		}
+//		System.out.println("-----------------------");
+//		System.out.println("hql:" + hql);
+//		System.out.println("startTime：" + clientInfoVO.getStartTime());
+//		System.out.println("endTime：" + clientInfoVO.getEndTime());
+//		System.out.println("startHTime：" + clientInfoVO.getStartHTime() + " 00:00:00");
+//		System.out.println("endHTime:" + clientInfoVO.getEndHTime() + " 23:59:59");
+//		System.out.println("screenService:" + clientInfoVO.getScreenService());
+//		System.out.println("screenVisit:" + clientInfoVO.getScreenVisit());
+//		System.out.println("screenUser:" + clientInfoVO.getScreenUser());
+//		System.out.println("search:" + "%" + clientInfoVO.getSearch() + "%");
+//		System.out.println("screenClientState:" + clientInfoVO.getScreenClientState());
+//		System.out.println("-----------------------");
 		Query query = session.createSQLQuery(hql);
 		if (clientInfoVO.getStartTime().equals("")) {
 			query.setParameter("startTime", "0000-00-00");

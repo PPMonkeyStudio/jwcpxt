@@ -690,7 +690,7 @@ function randerDissatisfactionProblem(res, title) {
 				replaceQuestion = question.replace("请问", "").replace("有没有向您", answer).replace("？", "");
 			}*/
 
-			_source[j + 1][0] = question;
+			_source[j + 1][0] = question + answer;
 			_source[j + 1].push(elt1.count);
 		})
 	})
