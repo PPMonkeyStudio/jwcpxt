@@ -283,7 +283,7 @@ public class ServiceDaoImpl implements ServiceDao {
 					+ " where"//
 					+ " choice.answer_choice_client = client.jwcpxt_service_client_id"//
 					+ " and choice.answer_choice_option = _option.jwcpxt_option_id"//
-					+ " and choice.option_question = question.jwcpxt_question_id"//
+					+ " and choice.answer_choice_question = question.jwcpxt_question_id"//
 					+ " and _option.option_describe like :screenClientState"//
 					+ " and question.jwcpxt_question_id like :questionId"//
 					+ " and _option.jwcpxt_option_id like :optionId"//

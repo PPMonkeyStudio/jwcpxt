@@ -910,9 +910,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					//
 					+ " and (unit.unit_father = :fatherUnitId or unit.jwcpxt_unit_id= :fatherUnitId)" // 二级单位ID等于传过来的单位ID
 					+ " and serviceInstance.service_instance_service_definition = :serviceDefinitionID "//
-					//
-					+ " and serviceInstance.service_instance_date >= :searchTimeStart "//
-					+ " and serviceInstance.service_instance_date <= :searchTimeEnd ";
+					+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
+					+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd";//
+			//
+			// + " and serviceInstance.service_instance_date >= :searchTimeStart "//
+			// + " and serviceInstance.service_instance_date <= :searchTimeEnd ";
 		}
 		if (i == 2) {
 			hql = hql + "SELECT"//
@@ -954,9 +956,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " OR unit.jwcpxt_unit_id = :fatherUnitId"//
 					+ " )"//
 					+ " AND serviceInstance.service_instance_service_definition = :serviceDefinitionID"//
-					+ " AND serviceInstance.service_instance_date >= :searchTimeStart"//
-					+ " AND serviceInstance.service_instance_date <= :searchTimeEnd"//
-					+ " ) coun"//
+					+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
+					+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd" + " ) coun"//
 					+ " WHERE"//
 					+ " serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
 					+ " AND answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
@@ -967,9 +968,8 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " OR unit.jwcpxt_unit_id = :fatherUnitId"//
 					+ " )"//
 					+ " AND serviceInstance.service_instance_service_definition = :serviceDefinitionID"//
-					+ " AND serviceInstance.service_instance_date >= :searchTimeStart"//
-					+ " AND serviceInstance.service_instance_date <= :searchTimeEnd"//
-					+ " ) t1"//
+					+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
+					+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd" + " ) t1"//
 					+ " LEFT JOIN ("//
 					+ " SELECT"//
 					+ " feedbackRectification.jwcpxt_feedback_rectification_id"//
@@ -989,9 +989,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " AND serviceClient.SERVICE_CLIENT_SERVICE_INSTANCE = serviceInstance.JWCPXT_SERVICE_INSTANCE_ID"//
 					+ " AND serviceInstance.SERVICE_INSTANCE_BELONG_UNIT = unit.JWCPXT_UNIT_ID"//
 					+ " AND ("//
-					+ " unit.unit_father = :fatherUnitId" + " OR unit.jwcpxt_unit_id = :fatherUnitId" + " )"
+					+ " unit.unit_father = :fatherUnitId"//
+					+ " OR unit.jwcpxt_unit_id = :fatherUnitId"//
+					+ " )"//
 					+ " AND _option.OPTION_GRADE > 0"//
-					+ " AND serviceInstance.service_instance_date <= :searchTimeEnd"//
+					+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd"
 					+ " ) t2 ON t2.jwcpxt_feedback_rectification_id = t1.SERVICE_INSTANCE_BELONG_FEEDBACK"//
 					+ " WHERE"//
 					+ " t2.jwcpxt_feedback_rectification_id IS NOT NULL";

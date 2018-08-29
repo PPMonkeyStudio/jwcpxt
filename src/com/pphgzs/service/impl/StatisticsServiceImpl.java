@@ -12,11 +12,9 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 
 import com.pphgzs.dao.StatisticsDao;
 import com.pphgzs.dao.UnitDao;
-import com.pphgzs.domain.DO.jwcpxt_answer_choice;
 import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
@@ -53,7 +51,6 @@ import com.pphgzs.domain.VO.StatisticsDissatisfiedDateCountVO;
 import com.pphgzs.domain.VO.StatisticsDissatisfiedDayDataVO;
 import com.pphgzs.domain.VO.StatisticsVO;
 import com.pphgzs.service.DissatisfiedFeedbackService;
-import com.pphgzs.service.QuestionService;
 import com.pphgzs.service.ServiceService;
 import com.pphgzs.service.StatisticsService;
 import com.pphgzs.util.TimeUtil;
@@ -241,7 +238,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 		int totalNoAnCount = 0;
 		int totalNoAnNoStatisCount = 0;
 		int totalAnStatisCount = 0;
-		monthDayMountVO.setFlag("anquan");
 		if ("anquan".equals(monthDayMountVO.getFlag())) {
 			totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 5);
 			totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 6);
