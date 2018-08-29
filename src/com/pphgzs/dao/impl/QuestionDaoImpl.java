@@ -33,6 +33,38 @@ public class QuestionDaoImpl implements QuestionDao {
 	 * 
 	 */
 	@Override
+	public jwcpxt_answer_open get_answerOpen_byClientAndQuestion(String jwcpxt_service_client_id,
+			String jwcpxt_question_id) {
+		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
+		Session session = getSession();
+		String hql = "from jwcpxt_answer_open where answer_open_client = :clientId and answer_open_question = :questionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("clientId", jwcpxt_service_client_id);
+		query.setParameter("questionId", jwcpxt_question_id);
+		answerOpen = (jwcpxt_answer_open) query.uniqueResult();
+		return answerOpen;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public jwcpxt_answer_choice get_answerChoice_byClientAndQuestion(String jwcpxt_service_client_id,
+			String jwcpxt_question_id) {
+		jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
+		Session session = getSession();
+		String hql = "from jwcpxt_answer_choice where answer_choice_client = :clientId and answer_choice_question = :questionId";
+		Query query = session.createQuery(hql);
+		query.setParameter("clientId", jwcpxt_service_client_id);
+		query.setParameter("questionId", jwcpxt_question_id);
+		answerChoice = (jwcpxt_answer_choice) query.uniqueResult();
+		return answerChoice;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
 	public List<jwcpxt_option> get_listOptionBy_questionId(jwcpxt_question question) {
 		List<jwcpxt_option> listOption = new ArrayList<>();
 		Session session = getSession();

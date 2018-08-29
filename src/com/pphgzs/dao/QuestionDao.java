@@ -78,4 +78,10 @@ public interface QuestionDao {
 
 	public List<jwcpxt_option> get_listOptionBy_questionId(jwcpxt_question question);
 
+	public jwcpxt_answer_choice get_answerChoice_byClientAndQuestion(String jwcpxt_service_client_id,
+			String jwcpxt_question_id);
+
+	public jwcpxt_answer_open get_answerOpen_byClientAndQuestion(String jwcpxt_service_client_id,
+			String jwcpxt_question_id);
+
 }

@@ -672,6 +672,13 @@ public class QuestionServiceImpl implements QuestionService {
 				if (option == null) {
 					continue;
 				}
+				// 判断对于该问题改当事人是否已经回答
+				answerChoice = questionDao.get_answerChoice_byClientAndQuestion(
+						serviceClient.getJwcpxt_service_client_id(), question.getJwcpxt_question_id());
+				if (answerChoice != null) {
+					continue;
+				}
+				answerChoice = new jwcpxt_answer_choice();
 				// 存储选择题回答
 				answerChoice.setJwcpxt_answer_choice_id(uuidUtil.getUuid());
 				answerChoice.setAnswer_choice_client(serviceClient.getJwcpxt_service_client_id());
@@ -755,6 +762,14 @@ public class QuestionServiceImpl implements QuestionService {
 			} else if ("2".equals(question.getQuestion_type().trim())
 					|| "3".equals(question.getQuestion_type().trim())) {
 				// 如果是开放题
+				// 判断对于该问题该当事人是否已经作答
+				answerOpen = questionDao.get_answerOpen_byClientAndQuestion(serviceClient.getJwcpxt_service_client_id(),
+						question.getJwcpxt_question_id());
+				if (answerOpen != null) {
+					continue;
+				}
+				answerOpen = new jwcpxt_answer_open();
+				// 存储
 				answerOpen.setJwcpxt_answer_open_id(uuidUtil.getUuid());
 				answerOpen.setAnswer_open_client(serviceClient.getJwcpxt_service_client_id());
 				answerOpen.setAnswer_open_content(answerDTO.getAnswerOpen().getAnswer_open_content());
