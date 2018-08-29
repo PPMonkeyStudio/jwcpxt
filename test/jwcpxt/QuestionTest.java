@@ -119,8 +119,8 @@ public class QuestionTest {
 	@Test
 	public void get_statisDissaQuestionDateVOTest() {
 		StatisDissaQuestionDateVO statisDissaQuestionDateVO = new StatisDissaQuestionDateVO();
-		statisDissaQuestionDateVO.setStartTime("2018-07-10");
-		statisDissaQuestionDateVO.setEndTime("2018-07-21");
+		statisDissaQuestionDateVO.setStartTime("2018-08-01");
+		statisDissaQuestionDateVO.setEndTime("2018-08-31");
 		statisDissaQuestionDateVO.setScreenService("0efe566e-8e91-4c9c-af69-19b09c77133b");
 		System.out.println(statisticsService.get_statisDissaQuestionDateVO(statisDissaQuestionDateVO));
 	}

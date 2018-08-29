@@ -522,6 +522,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 		List<String> listDate = new ArrayList<>();
 		List<QuestionOptionAnswerDTO> listQuestionOption = new ArrayList<>();
 		List<QuestionOptionAnswerDTO> listOldQuestionOption = new ArrayList<>();
+		List<QuestionOptionAnswerDTO> listOldQuestionOption2 = new ArrayList<>();
+		List<jwcpxt_question> listQuestion = new ArrayList<>();
+		List<jwcpxt_option> listOption = new ArrayList<>();
 		List<StatisDissaQuestionDateDTO> listStatisQuestionDateDTO = new ArrayList<>();
 		StatisDissaQuestionDateDTO statisDissaQuestionDateDTO = new StatisDissaQuestionDateDTO();
 		List<StatisQuestionDTO> listStatisQuestionDTO = new ArrayList<>();
@@ -560,6 +563,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		}
 		// 获取该业务的所有推送的问题以及选项
 		listQuestionOption = statisticsDao.get_pushQuestionOption(statisDissaQuestionDateVO);
+		// 根据选项获取扣分的追问
 		// 去重
 		for (QuestionOptionAnswerDTO questionOptionAnswerDTO : listQuestionOption) {
 			int flag = 0;
@@ -576,6 +580,33 @@ public class StatisticsServiceImpl implements StatisticsService {
 				}
 				if (flag == 0) {
 					listOldQuestionOption.add(questionOptionAnswerDTO);
+				}
+			}
+		}
+		listOldQuestionOption2.addAll(listOldQuestionOption);
+		// 根据选项获取追问
+		for (QuestionOptionAnswerDTO questionOptionAnswerDTO : listOldQuestionOption2) {
+			listQuestion = new ArrayList<>();
+			if (questionOptionAnswerDTO.getOption() != null
+					&& questionOptionAnswerDTO.getOption().getJwcpxt_option_id() != null
+					&& !"".equals(questionOptionAnswerDTO.getOption().getJwcpxt_option_id())) {
+				// 获得追问问题
+				listQuestion = statisticsDao.get_listQuestion_byServiceDefinitionId(
+						questionOptionAnswerDTO.getOption().getJwcpxt_option_id());
+				for (jwcpxt_question secondQuestion : listQuestion) {
+					if (secondQuestion != null && "4".equals(secondQuestion.getQuestion_type())) {
+						// 获取对应的扣分选项
+						listOption = statisticsDao.get_listOption_byQuestionId(secondQuestion.getJwcpxt_question_id());
+						if (listOption != null && listOption.size() > 0) {
+							// 如果不等于空并且长度大于0
+							for (jwcpxt_option option : listOption) {
+								questionOptionAnswerDTO = new QuestionOptionAnswerDTO();
+								questionOptionAnswerDTO.setOption(option);
+								questionOptionAnswerDTO.setQuestion(secondQuestion);
+								listOldQuestionOption.add(questionOptionAnswerDTO);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -1059,7 +1090,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 					statisticsGrade = statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
 							searchTimeStart, searchTimeEnd, 1);
 				}
-
 				// 统计这个单位下这个业务所得分
 				//
 				// if (unit.getUnit_grade() == 2) {
@@ -1072,10 +1102,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 				// searchTimeEnd);
 				// }
 
-				if ("revisit"
-						.equals(serviceGradeBelongUnitDTO.getServiceDefinition().getJwcpxt_service_definition_id())) {
-
-				}
+				// if ("revisit"
+				// .equals(serviceGradeBelongUnitDTO.getServiceDefinition().getJwcpxt_service_definition_id()))
+				// {
+				//
+				// }
 				totalGrade = totalGrade + statisticsGrade;
 				statisticsGrade = ((int) (statisticsGrade * 10000 + 0.5)) / 10000.0;
 				totalGrade = ((int) (totalGrade * 10000 + 0.5)) / 10000.0;

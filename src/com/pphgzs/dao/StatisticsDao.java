@@ -162,4 +162,6 @@ public interface StatisticsDao {
 	public jwcpxt_option get_answerChoice_byClietnAndQuestion(String jwcpxt_question_id,
 			String jwcpxt_service_client_id);
 
+	public List<jwcpxt_option> get_listOption_byQuestionId(String jwcpxt_question_id);
+
 }

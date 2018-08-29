@@ -40,6 +40,20 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	}
 
 	/**
+	 * 获取分数大于0 的某问题选项
+	 */
+	@Override
+	public List<jwcpxt_option> get_listOption_byQuestionId(String jwcpxt_question_id) {
+		List<jwcpxt_option> listOption = new ArrayList<>();
+		Session session = getSession();
+		String hql = "from jwcpxt_option where option_question = :questionId and option_grade > 0";
+		Query query = session.createQuery(hql);
+		query.setParameter("questionId", jwcpxt_question_id);
+		listOption = query.list();
+		return listOption;
+	}
+
+	/**
 	 * 
 	 */
 	@Override
@@ -424,9 +438,12 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	public int get_countStatisDateDTO(StatisDissaQuestionDateVO statisDissaQuestionDateVO, String startTime,
 			String endTime, QuestionOptionAnswerDTO questionOptionAnswerDTO) {
 		Session session = getSession();
-		String hql = "select count(*) from"//
-				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
-				+ " jwcpxt_answer_choice answerChoice,"//
+		String hql = "select count(*) from";//
+		if ("1".equals(questionOptionAnswerDTO.getQuestion().getQuestion_type())
+				|| "2".equals(questionOptionAnswerDTO.getQuestion().getQuestion_type())) {
+			hql = hql + " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,";//
+		}
+		hql = hql + " jwcpxt_answer_choice answerChoice,"//
 				+ "	jwcpxt_option _option,"//
 				+ "	jwcpxt_question question,"//
 				+ " jwcpxt_service_client serviceClient,"//
@@ -435,9 +452,13 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " jwcpxt_service_definition serviceDefinition"//
 				+ " where"//
 				+ " "//
-				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id"//
-				+ " and answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
-				+ "	and answerChoice.answer_choice_question = question.jwcpxt_question_id"//
+				+ " answerChoice.answer_choice_option = _option.jwcpxt_option_id";//
+		if ("1".equals(questionOptionAnswerDTO.getQuestion().getQuestion_type())
+				|| "2".equals(questionOptionAnswerDTO.getQuestion().getQuestion_type())) {
+			hql = hql
+					+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id";//
+		}
+		hql = hql + "	and answerChoice.answer_choice_question = question.jwcpxt_question_id"//
 				+ " and answerChoice.answer_choice_client = serviceClient.jwcpxt_service_client_id"//
 				+ " and serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
@@ -449,16 +470,17 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " and serviceClient.service_client_gmt_modified < :endTime "
 				+ " and question.jwcpxt_question_id like :questionId"//
 				+ " and _option.jwcpxt_option_id like :optionId";//
-		/*
-		 * System.out.println("hql:" + hql); System.out.println("startTime：" + startTime
-		 * + " 00:00:00"); System.out.println("endTime:" + endTime + " 23:59:59");
-		 * System.out.println("serviceDefinitionId:" +
-		 * statisDissaQuestionDateVO.getScreenService());
-		 * System.out.println("questionId:" +
-		 * questionOptionAnswerDTO.getQuestion().getJwcpxt_question_id());
-		 * System.out.println("optionId:" +
-		 * questionOptionAnswerDTO.getOption().getJwcpxt_option_id());
-		 */
+
+		// System.out.println("hql:" + hql);
+		// System.out.println("startTime：" + startTime + " 00:00:00");
+		// System.out.println("endTime:" + endTime + " 23:59:59");
+		// System.out.println("serviceDefinitionId:" +
+		// statisDissaQuestionDateVO.getScreenService());
+		// System.out.println("questionId:" +
+		// questionOptionAnswerDTO.getQuestion().getJwcpxt_question_id());
+		// System.out.println("optionId:" +
+		// questionOptionAnswerDTO.getOption().getJwcpxt_option_id());
+
 		Query query = session.createQuery(hql);
 		if (statisDissaQuestionDateVO.getScreenUnit().equals("")) {
 			query.setParameter("unitId", "%%");
@@ -894,7 +916,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		String hql = "";
 		if (i == 1) {
 			hql = hql + " select "//
-					+ " ((count(distinct serviceClient.JWCPXT_SERVICE_CLIENT_ID)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient.JWCPXT_SERVICE_CLIENT_ID)  "//
+					+ " (((count(distinct serviceClient.JWCPXT_SERVICE_CLIENT_ID)*100)  -  sum(_option.option_grade))  /  count(distinct serviceClient.JWCPXT_SERVICE_CLIENT_ID))*100  "//
 					+ " from "//
 					+ " jwcpxt_unit unit , "//
 					+ " jwcpxt_service_instance serviceInstance , "//
@@ -998,11 +1020,6 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " WHERE"//
 					+ " t2.jwcpxt_feedback_rectification_id IS NOT NULL";
 		}
-		// System.out.println("hql:" + hql);
-		// System.out.println("searchTimeStart：" + searchTimeStart + " 00:00:00");
-		// System.out.println("searchTimeEnd：" + searchTimeEnd + " 23:59:59");
-		// System.out.println("fatherUnitId：" + fatherUnitId);
-		// System.out.println("serviceDefinitionID：" + serviceGradeDTO.getService_id());
 		Query query = session.createSQLQuery(hql);
 		query.setParameter("fatherUnitId", fatherUnitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
@@ -1017,12 +1034,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		} else {
 			query.setParameter("searchTimeEnd", searchTimeEnd + " 23:59:59");
 		}
-
 		//
 		//
 		try {
 			double count = ((Number) query.uniqueResult()).intValue();
-			return (count / 100) * serviceGradeDTO.getGrade();
+			return (count / 10000) * serviceGradeDTO.getGrade();
 		} catch (ClassCastException e) {
 			return serviceGradeDTO.getGrade();
 		} catch (NullPointerException e) {
