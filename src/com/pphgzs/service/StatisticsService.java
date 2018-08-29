@@ -95,4 +95,8 @@ public interface StatisticsService {
 
 	public DeductMarkInfoVO get_DeductMarkInfo(DeductMarkInfoVO deductMarkInfoVO);
 
+	public DeductMarkInfoVO getAllDeductMarkInfo(DeductMarkInfoVO deductMarkInfoVO);
+
+	void writetDeductExcel(DeductMarkInfoVO deductMarkInfoVO, HSSFWorkbook wb);
+
 }

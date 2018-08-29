@@ -47,11 +47,11 @@ public class StatisticsDaoImpl implements StatisticsDao {
 			String jwcpxt_service_client_id) {
 		jwcpxt_option secondOption = new jwcpxt_option();
 		Session session = getSession();
-		String hql = "select from jwcpxt_answer_choice answerChoice,jwcpxt_option secondOption where answerChoice.answer_choice_option = secondOption.jwcpxt_option_id"//
+		String hql = "select secondOption from jwcpxt_answer_choice answerChoice,jwcpxt_option secondOption where answerChoice.answer_choice_option = secondOption.jwcpxt_option_id"//
 				+ " and answerChoice.answer_choice_client = :choiceClient and answer_choice_question = :choiceQuestion";
 		Query query = session.createQuery(hql);
 		query.setParameter("choiceClient", jwcpxt_service_client_id);
-		query.setParameter("answer_choice_question", jwcpxt_question_id);
+		query.setParameter("choiceQuestion", jwcpxt_question_id);
 		secondOption = (jwcpxt_option) query.uniqueResult();
 		return secondOption;
 	}
@@ -116,7 +116,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " AND unit.jwcpxt_unit_id LIKE :unitId"//
 				+ " AND serviceInstance.service_instance_judge like :screenJudge"//
 				+ " AND serviceDefinition.jwcpxt_service_definition_id LIKE :screenService"//
-				+ " order by serviceDefinition,serviceClient";//
+				+ " order by serviceDefinition,unit,serviceClient";//
 		Query query = session.createQuery(hql);
 		if (deductMarkInfoVO.getScreenTimeStart().equals("")) {
 			query.setParameter("screenTimeStart", "0000-00-00 00:00:00");

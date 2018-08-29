@@ -67,14 +67,14 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 	/**
 	 * 
+	 * 
 	 */
 	@Override
-	public DeductMarkInfoVO get_DeductMarkInfo(DeductMarkInfoVO deductMarkInfoVO) {
+	public DeductMarkInfoVO getAllDeductMarkInfo(DeductMarkInfoVO deductMarkInfoVO) {
 		DeductMarkInfoDTO deductMarkInfoDTO = new DeductMarkInfoDTO();
 		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
 		// jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
 		jwcpxt_option secondOption = new jwcpxt_option();
-		DeductMarkFirstInfoDTO deductMarkFirstInfoDTO = new DeductMarkFirstInfoDTO();
 		List<DeductMarkFirstInfoDTO> listDeductMarkFirstInfoDTO = new ArrayList<>();
 		List<jwcpxt_question> listSecondQuestion = new ArrayList<>();
 		List<DeductMarkInfoDTO> listDeductMarkInfoDTO = new ArrayList<>();
@@ -141,7 +141,87 @@ public class StatisticsServiceImpl implements StatisticsService {
 				}
 			}
 		}
-		return null;
+		deductMarkInfoVO.setListDeductMarkInfoDTO(listDeductMarkInfoDTO);
+		return deductMarkInfoVO;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public DeductMarkInfoVO get_DeductMarkInfo(DeductMarkInfoVO deductMarkInfoVO) {
+		DeductMarkInfoDTO deductMarkInfoDTO = new DeductMarkInfoDTO();
+		jwcpxt_answer_open answerOpen = new jwcpxt_answer_open();
+		// jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
+		jwcpxt_option secondOption = new jwcpxt_option();
+		List<DeductMarkFirstInfoDTO> listDeductMarkFirstInfoDTO = new ArrayList<>();
+		List<jwcpxt_question> listSecondQuestion = new ArrayList<>();
+		List<DeductMarkInfoDTO> listDeductMarkInfoDTO = new ArrayList<>();
+		// 获取第一个DTO
+		listDeductMarkFirstInfoDTO = statisticsDao.get_DeductMarkFirstInfo(deductMarkInfoVO);
+		// 根据选项拿到所有的追问问题
+		for (DeductMarkFirstInfoDTO deductMarkFirstInfoDTOTmp : listDeductMarkFirstInfoDTO) {
+			deductMarkInfoDTO = new DeductMarkInfoDTO();
+			listSecondQuestion = new ArrayList<>();
+			// 获取对应的追问列表
+			listSecondQuestion = statisticsDao.get_listQuestion_byServiceDefinitionId(
+					deductMarkFirstInfoDTOTmp.getFirstOption().getJwcpxt_option_id());
+			// 如果没有追问
+			if (listSecondQuestion == null || listSecondQuestion.size() <= 0) {
+				deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+				deductMarkInfoDTO.setSecondQuestion("");
+				deductMarkInfoDTO.setSecondDescribe("");
+				listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+				continue;
+			} else {
+				// 拥有追问
+				for (jwcpxt_question secondQuestion : listSecondQuestion) {
+					answerOpen = new jwcpxt_answer_open();
+					secondOption = new jwcpxt_option();
+					// 遍历追问，判断追问类型
+					if ("3".equals(secondQuestion.getQuestion_type())) {
+						// 追问开放题回答
+						answerOpen = statisticsDao.get_answerOpen_byClientAndQuestion(
+								secondQuestion.getJwcpxt_question_id(),
+								deductMarkFirstInfoDTOTmp.getServiceClient().getJwcpxt_service_client_id());
+						// 对该追问是否回答
+						if (answerOpen == null) {
+							deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+							deductMarkInfoDTO.setSecondQuestion(secondQuestion.getQuestion_describe());
+							deductMarkInfoDTO.setSecondDescribe("");
+							listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+							continue;
+						} else {
+							deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+							deductMarkInfoDTO.setSecondQuestion(secondQuestion.getQuestion_describe());
+							deductMarkInfoDTO.setSecondDescribe(answerOpen.getAnswer_open_content());
+							listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+							continue;
+						}
+					} else if ("4".equals(secondQuestion.getQuestion_type())) {
+						// 追问选择题
+						secondOption = statisticsDao.get_answerChoice_byClietnAndQuestion(
+								secondQuestion.getJwcpxt_question_id(),
+								deductMarkFirstInfoDTOTmp.getServiceClient().getJwcpxt_service_client_id());
+						if (secondOption == null) {
+							deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+							deductMarkInfoDTO.setSecondQuestion(secondQuestion.getQuestion_describe());
+							deductMarkInfoDTO.setSecondDescribe("");
+							listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+							continue;
+						} else {
+							deductMarkInfoDTO.setDeductMarkFirstInfoDTO(deductMarkFirstInfoDTOTmp);
+							deductMarkInfoDTO.setSecondQuestion(secondQuestion.getQuestion_describe());
+							deductMarkInfoDTO.setSecondDescribe(secondOption.getOption_describe());
+							listDeductMarkInfoDTO.add(deductMarkInfoDTO);
+							continue;
+						}
+					}
+				}
+			}
+		}
+		deductMarkInfoVO.setListDeductMarkInfoDTO(listDeductMarkInfoDTO);
+		return deductMarkInfoVO;
 	}
 
 	/**
@@ -777,6 +857,98 @@ public class StatisticsServiceImpl implements StatisticsService {
 		}
 		statisticsDissatisfiedDayDataVO.setStatisticsDissatisfiedDayData(statisticsDissatisfiedDayDataDTOList);
 		return statisticsDissatisfiedDayDataVO;
+	}
+
+	@Override
+	public void writetDeductExcel(DeductMarkInfoVO deductMarkInfoVO, HSSFWorkbook wb) {
+		HSSFSheet sheet = wb.createSheet("统计数据");
+		HSSFRow row = sheet.createRow(0);
+		HSSFCell cell;
+		int sheetHead_num = 0;
+		/**
+		 * 设置表头
+		 */
+		// 业务
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("业务名称");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("单位名称");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("当事人姓名");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("当事人性别");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("当事人电话");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("回访问题");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("所选选项");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("追问问题");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("追问回答");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("回访时间");
+		if (deductMarkInfoVO == null || deductMarkInfoVO.getListDeductMarkInfoDTO() == null
+				|| deductMarkInfoVO.getListDeductMarkInfoDTO().size() <= 0) {
+			return;
+		}
+		/**
+		 * 写入数据 遍历VO
+		 */
+		int listNum = 1;
+		for (DeductMarkInfoDTO deductMarkInfoDTO : deductMarkInfoVO.getListDeductMarkInfoDTO()) {
+			/*
+			 * 一行
+			 */
+			row = sheet.createRow(listNum++);
+			/*
+			 * 
+			 */
+			sheetHead_num = 0;
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getServiceDefinition()
+					.getService_definition_describe());
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getUnit().getUnit_name());
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(
+					deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getServiceClient().getService_client_name());
+			cell = row.createCell(sheetHead_num++);
+			if ("1".equals(deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getServiceClient().getService_client_sex())) {
+				cell.setCellValue("男");
+			} else if ("2"
+					.equals(deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getServiceClient().getService_client_sex())) {
+				cell.setCellValue("女");
+			}
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(
+					deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getServiceClient().getService_client_phone());
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getFirstQuestion().getQuestion_describe());
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getFirstOption().getOption_describe());
+			if (deductMarkInfoDTO.getSecondQuestion() == null || "".equals(deductMarkInfoDTO.getSecondQuestion())) {
+				cell = row.createCell(sheetHead_num++);
+				cell.setCellValue("无");
+				cell = row.createCell(sheetHead_num++);
+				cell.setCellValue("无");
+			} else {
+				cell = row.createCell(sheetHead_num++);
+				cell.setCellValue(deductMarkInfoDTO.getSecondQuestion());
+				if (deductMarkInfoDTO.getSecondDescribe() == null || "".equals(deductMarkInfoDTO.getSecondDescribe())) {
+					cell = row.createCell(sheetHead_num++);
+					cell.setCellValue("无");
+				} else {
+					cell = row.createCell(sheetHead_num++);
+					cell.setCellValue(deductMarkInfoDTO.getSecondDescribe());
+				}
+			}
+			cell = row.createCell(sheetHead_num++);
+			cell.setCellValue(
+					deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getServiceClient().getService_client_gmt_modified());
+
+		}
 	}
 
 	@Override

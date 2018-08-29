@@ -326,7 +326,6 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		/**
 		 * 写入文件
 		 */
-
 		try {
 			HSSFWorkbook wb = new HSSFWorkbook();
 			/**
@@ -350,7 +349,36 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return "exportStatisticsExcel";
+	}
 
+	public String exportDeductExcel() {
+		deductMarkInfoVO = new DeductMarkInfoVO();
+		deductMarkInfoVO = statisticsService.getAllDeductMarkInfo(deductMarkInfoVO);
+		/**
+		 * 写入文件
+		 */
+		try {
+			HSSFWorkbook wb = new HSSFWorkbook();
+			/**
+			 * 写
+			 */
+
+			statisticsService.writetDeductExcel(deductMarkInfoVO, wb);
+
+			/**
+			 * 写完毕
+			 */
+			// 第七步，将文件存到流中
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			wb.write(os);
+			byte[] fileContent = os.toByteArray();
+			ByteArrayInputStream is = new ByteArrayInputStream(fileContent);
+			inputStream = is; // 文件流
+			excelFileName = "" + TimeUtil.getStringSecond() + ".xls"; // 设置下载的文件名
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "exportStatisticsExcel";
 	}
 	/*

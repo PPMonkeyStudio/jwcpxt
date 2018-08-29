@@ -51,7 +51,8 @@ public class QuestionTest {
 	@Test
 	public void gggggg() {
 		DeductMarkInfoVO deductMarkInfoVO = new DeductMarkInfoVO();
-		statisticsService.get_DeductMarkInfo(deductMarkInfoVO);
+		System.out
+				.println(statisticsService.get_DeductMarkInfo(deductMarkInfoVO).getListDeductMarkInfoDTO().toString());
 	}
 
 	@Test
