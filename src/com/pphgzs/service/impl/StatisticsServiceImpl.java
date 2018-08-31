@@ -44,6 +44,7 @@ import com.pphgzs.domain.VO.DissatisfiedVO;
 import com.pphgzs.domain.VO.FeedbackRectificationExceedTimeVO;
 import com.pphgzs.domain.VO.MonthDayMountVO;
 import com.pphgzs.domain.VO.ReturnVisitVO;
+import com.pphgzs.domain.VO.SecondDistatisVO;
 import com.pphgzs.domain.VO.StatisDissaQuestionDateVO;
 import com.pphgzs.domain.VO.StatisDissaServiceDateVO;
 import com.pphgzs.domain.VO.StatisDissatiDateVO;
@@ -1069,19 +1070,17 @@ public class StatisticsServiceImpl implements StatisticsService {
 						.equals(serviceGradeBelongUnitDTO.getServiceDefinition().getJwcpxt_service_definition_id())) {
 					statisticsGrade = statisticsDao.geteStatisticsGrade_byFatherUnit(serviceGradeDTO, unitIds[i],
 							searchTimeStart, searchTimeEnd, 2);
-					// System.out.println("statisticsGrade:" + statisticsGrade);
+					System.out.println("statisticsGrade:" + statisticsGrade);
 					// 获取改单位的整改超时数量
 					// 对应单位的数量
 					FeedbackRectificationExceedTimeVO feedbackRectificationExceedTimeVO = new FeedbackRectificationExceedTimeVO();
 					feedbackRectificationExceedTimeVO.setSearch(unit.getUnit_name());
 					feedbackRectificationExceedTimeVO.setSearchTimeStart(searchTimeStart);
 					feedbackRectificationExceedTimeVO.setSearchTimeEnd(searchTimeEnd);
-					/*
-					 * SecondDistatisVO secondDistatisVO = new SecondDistatisVO();
-					 * secondDistatisVO.setSearch(unit.getUnit_name());
-					 * secondDistatisVO.setSearchTimeStart(searchTimeStart);
-					 * secondDistatisVO.setSearchTimeEnd(searchTimeEnd);
-					 */
+					// SecondDistatisVO secondDistatisVO = new SecondDistatisVO();
+					// secondDistatisVO.setSearch(unit.getUnit_name());
+					// secondDistatisVO.setSearchTimeStart(searchTimeStart);
+					// secondDistatisVO.setSearchTimeEnd(searchTimeEnd);
 					cout = dissatisfiedFeedbackService.get_countExceedTimeFive(feedbackRectificationExceedTimeVO);
 					// System.out.println("cout:" + cout);
 					statisticsGrade = (statisticsGrade - cout * 3) < 0 ? 0 : (statisticsGrade - cout * 3);

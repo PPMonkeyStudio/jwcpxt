@@ -940,9 +940,9 @@ public class StatisticsDaoImpl implements StatisticsDao {
 		}
 		if (i == 2) {
 			hql = hql + "SELECT"//
-					+ " ("//
+					+ " (("//
 					+ " (t1.total * 100) - sum(t1.option_grade)"//
-					+ " ) / t1.total"//
+					+ " ) / t1.total)*100"//
 					+ " FROM"//
 					+ " ("//
 					+ " SELECT"//
@@ -1020,7 +1020,14 @@ public class StatisticsDaoImpl implements StatisticsDao {
 					+ " WHERE"//
 					+ " t2.jwcpxt_feedback_rectification_id IS NOT NULL";
 		}
-		Query query = session.createSQLQuery(hql);
+		/*
+		 * System.out.println("---------------------------------------");
+		 * System.out.println("fatherUnitId：" + fatherUnitId);
+		 * System.out.println("serviceDefinitionID:" + serviceGradeDTO.getService_id());
+		 * System.out.println("searchTimeStart:" + searchTimeStart + " 00:00:00");
+		 * System.out.println("searchTimeEnd:" + searchTimeEnd + " 23:59:59");
+		 * System.out.println("---------------------------------------");
+		 */		Query query = session.createSQLQuery(hql);
 		query.setParameter("fatherUnitId", fatherUnitId);
 		query.setParameter("serviceDefinitionID", serviceGradeDTO.getService_id());
 		//
