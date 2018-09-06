@@ -239,7 +239,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		int totalNoAnCount = 0;
 		int totalNoAnNoStatisCount = 0;
 		int totalAnStatisCount = 0;
-		if ("anquan".equals(monthDayMountVO.getFlag())) {
+		if ("auquan".equals(monthDayMountVO.getFlag())) {
 			totalCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 5);
 			totalSuccessCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 6);
 			totalStaticCount = statisticsDao.get_dataMonthDayMount(monthDayMountVO, 7);

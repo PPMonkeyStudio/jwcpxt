@@ -127,7 +127,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " AND _option.option_grade > 0"//
 				+ " AND serviceClient.service_client_gmt_modified >= :screenTimeStart"//
 				+ " AND serviceClient.service_client_gmt_modified <= :screenTimeEnd"//
-				+ " AND unit.jwcpxt_unit_id LIKE :unitId"//
+				+ " AND (unit.jwcpxt_unit_id LIKE :unitId or unit.unit_father like :unitId)"//
 				+ " AND serviceInstance.service_instance_judge like :screenJudge"//
 				+ " AND serviceDefinition.jwcpxt_service_definition_id LIKE :screenService"//
 				+ " order by serviceDefinition,unit,serviceClient";//

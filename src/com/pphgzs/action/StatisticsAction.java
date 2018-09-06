@@ -61,6 +61,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	private String endTime = "9999-12-31";
 	private String userId = "";
 	private DeductMarkInfoVO deductMarkInfoVO;
+	private String flag = "";
 	/*
 	 * 
 	 */
@@ -115,6 +116,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 		monthDayMountVO.setUserId(userId);
 		monthDayMountVO.setEndTime(endTime);
 		monthDayMountVO.setStartTime(startTime);
+		monthDayMountVO.setFlag(flag);
 		monthDayMountVO = statisticsService.get_dataMonthDayMount(monthDayMountVO);
 		response.getWriter().write(gson.toJson(monthDayMountVO.getMonthDayMountDTO()));
 	}
@@ -353,6 +355,7 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	}
 
 	public String exportDeductExcel() {
+		System.out.println("deductMarkInfoVO:" + deductMarkInfoVO);
 		deductMarkInfoVO = statisticsService.getAllDeductMarkInfo(deductMarkInfoVO);
 		/**
 		 * 写入文件
@@ -500,6 +503,14 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 
 	public StatisticsDissatisfiedDayDataVO getStatisticsDissatisfiedDayDataVO() {
 		return statisticsDissatisfiedDayDataVO;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 
 	public void setStatisticsDissatisfiedDayDataVO(StatisticsDissatisfiedDayDataVO statisticsDissatisfiedDayDataVO) {
