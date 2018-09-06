@@ -15,6 +15,7 @@ $(function() {
 		isUnit : false,
 		allAppraisal : [],
 		allService : [],
+		allUnit : [],
 		screenUser_chart : ''
 	};
 
@@ -51,7 +52,6 @@ $(function() {
 					queryData["clientInfoVO.search"] = unitText;
 				}
 
-
 				$.post('/jwcpxt/LoginAndLogout/getCurrentUser', {}, response => {
 					if (response.jwcpxt_unit_id) {
 						myData.isUnit = true;
@@ -67,11 +67,6 @@ $(function() {
 					}, 'json')
 					this.getInfo(queryData);
 				}, 'json');
-				// 获取所有的业务
-				$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
-					myData.allService = response;
-				}, 'json');
-
 			},
 			getInfo (pramas) {
 				$.post('/jwcpxt/Service/get_clientInfoVO_byUserId', pramas, response => {
@@ -82,6 +77,17 @@ $(function() {
 					myData.page.pageSize = response.pageSize;
 					this.pageInit(response);
 					myData.ready = true;
+
+					//加快页面数据显示
+					// 获取所有的业务
+					$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
+						myData.allService = response;
+					}, 'json');
+					// 获取所有的单位
+					$.post('/jwcpxt/Unit/list_unitDO_all', {}, response => {
+						myData.allUnit = response;
+					}, 'json');
+
 				}, 'json');
 			},
 			pageInit (response) {
@@ -104,23 +110,33 @@ $(function() {
 			pageTo (definition_id, client_id) {
 				window.location.href = `/jwcpxt/Skip/skipPoliceAssessmentPage?type=specified&definitionId=${definition_id}&serviceClientId=${client_id}`;
 			},
-			reviewSituation ($event) {
+			reviewSituation ($event, type) {
 				$.post('/jwcpxt/Statistics/downloadData', {
 					"startTime" : queryData["clientInfoVO.startHTime"],
 					"endTime" : queryData["clientInfoVO.endHTime"],
-					"userId" : queryData["clientInfoVO.screenUser"]
+					"userId" : queryData["clientInfoVO.screenUser"],
+					"flag" : type
 				}, response => {
-					function toPercent(point){
-					    var str=Number(point*100).toFixed(2);
-					    str+="%";
-					    return str;
+					function toPercent(point) {
+						var str = Number(point * 100).toFixed(2);
+						str += "%";
+						return str;
 					}
-					let sucess = toPercent(response.totalSuccessCount/response.totalCount);
-					let statis = toPercent(response.totalStatisCount/response.totalSuccessCount);
-					$($event.target)
-					.siblings('p')
-					.html("回访总数:"+response.totalCount+",成功总数:"+response.totalSuccessCount+",满意总数:"+response.totalStatisCount+",回访成功率为:"+sucess+",满意率为:"+statis);
+					let sucess = toPercent(response.totalSuccessCount / response.totalCount);
+					let statis = toPercent(response.totalStatisCount / response.totalSuccessCount);
+					if (type == "auquan") {
+						$($event.target)
+							.siblings('p')
+							.html("整改总数:" + response.totalCount + ",成功总数:" + response.totalSuccessCount + ",满意总数:" + response.totalStatisCount + ",整改成功率为:" + sucess + ",满意率为:" + statis);
+					} else {
+						$($event.target)
+							.siblings('p')
+							.html("回访总数:" + response.totalCount + ",成功总数:" + response.totalSuccessCount + ",满意总数:" + response.totalStatisCount + ",回访成功率为:" + sucess + ",满意率为:" + statis);
+					}
 				}, 'json');
+			},
+			exportClient () {
+				exportUnClient();
 			},
 			firstPage () {
 				if (myData.page.isFirstPage) {
@@ -396,6 +412,117 @@ $(function() {
 				cancel : {
 					text : '关闭',
 					btnClass : 'btn-blue'
+				}
+			},
+		})
+	}
+
+	//导出不满意当事人
+	function exportUnClient() {
+		//allAppraisal : [];
+		//allService : [];
+		let appraisalOption = function() {
+			let str = "";
+			myData.allAppraisal.forEach(function(elt, i) {
+				str += `<option vlaue="${elt.user_account}">${elt.user_name}</option>`;
+			})
+			return str;
+		}();
+
+		let serviceOption = function() {
+			let str = "";
+			myData.allService.forEach(function(elt, i) {
+				str += `<option vlaue="${elt.jwcpxt_service_definition_id}">${elt.service_definition_describe}</option>`;
+			})
+			return str;
+		}();
+
+		let unitOption = function() {
+			let str = "";
+			myData.allUnit.forEach(function(elt, i) {
+				str += `<option vlaue="${elt.jwcpxt_unit_id}">${elt.unit_name}</option>`;
+			})
+			return str;
+		}();
+		let exportUnClientConfirm = $.confirm({
+			title : '导出条件',
+			type : 'dark',
+			boxWidth : '500px',
+			useBootstrap : false,
+			smoothContent : false, //关闭动画
+			content : `
+			<form id="exportUnClientConfirm">
+				<div class="form-group">
+					<label>回访时间</label>
+						<div class="form-group">
+							<input type="text" class="form-control mydate" id="screenTimeStart" style="width:50%; float:left;" placeholder="起始时间">
+							<input type="text" class="form-control mydate" id="screenTimeEnd" style="width:50%" placeholder="结束时间">
+						</div>
+				</div>
+				<div class="form-group">
+					<label>单位</label>
+						<div class="form-group">
+							<select class="form-control" id="screenUnit">
+								<option value="">全部单位</option>
+								${unitOption}
+							</select>
+						</div>
+				</div>
+				<div class="form-group">
+					<label>业务</label>
+						<div class="form-group">
+							<select class="form-control" id="screenDefinitionId">
+								<option value="">全部业务</option>
+								${serviceOption}
+							</select>
+						</div>
+				</div>
+				<div class="form-group">
+					<label>测评员</label>
+						<div class="form-group">
+							<select class="form-control" id="screenJudge">
+								<option value="">全部业务</option>
+								${appraisalOption}
+							</select>
+						</div>
+				</div>
+			</form>
+			`,
+			onContentReady : function() {
+				exportUnClientConfirm.$content.find('.mydate').datetimepicker({
+					pickerPosition : "top-right",
+					yearStart : 1900, // 设置最小年份
+					yearEnd : 2050, // 设置最大年份
+					yearOffset : 0, // 年偏差
+					timepicker : false, // 关闭时间选项
+					format : 'Y-m-d', // 格式化日期年-月-日
+					minDate : '1900/01/01', // 设置最小日期
+					maxDate : '2050/01/01', // 设置最大日期
+				});
+				setTimeout(function() {
+					$('.xdsoft_datetimepicker').css('z-index', 99999999);
+				}, 0);
+			},
+			buttons : {
+				exp : {
+					text : '导出',
+					btnClass : 'btn-blue',
+					action : function() {
+						let form = $('#exportForm');
+						//先清空表单
+						form.empty();
+						form.attr('action', '/jwcpxt/Statistics/exportDeductExcel');
+						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenTimeStart" value="${exportUnClientConfirm.$content.find("#screenTimeStart").val()}">`));
+						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenTimeEnd" value="${exportUnClientConfirm.$content.find("#screenTimeEnd").val()}">`));
+						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenUnit" value="${exportUnClientConfirm.$content.find("#screenUnit").val()}">`));
+						form.append($(`<input type="hidden" name="screenDefinitionId" value="${exportUnClientConfirm.$content.find("#screenDefinitionId").val()}">`));
+						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenJudge" value="${exportUnClientConfirm.$content.find("#screenJudge").val()}">`));
+						form.submit(); //自动提交
+					}
+				},
+				cancel : {
+					text : '关闭',
+					btnClass : 'btn-default'
 				}
 			},
 		})

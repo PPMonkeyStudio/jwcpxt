@@ -84,6 +84,11 @@ th {
 													@click="previewChart">
 													<i class="fa fa-adjust"></i>图表
 												</button>
+												
+												<button type="button" class="btn btn-default"
+													@click="exportClient">
+													<i class="fa fa-superpowers"></i>导出不满意当事人
+												</button>
 											</div>
 										</div>
 										<input @keyup="queryClient" placeholder="搜索内容(姓名、电话号码、单位名称)"
@@ -208,8 +213,11 @@ th {
 												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">跳转</button>
 										</span> <span>
 											<button class="btn btn-default"
-												@click="reviewSituation($event)"
+												@click="reviewSituation($event,'requer')"
 												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">回访信息</button>
+											<button class="btn btn-default"
+												@click="reviewSituation($event,'auquan')"
+												style="height: 30px; vertical-align: middle; margin-bottom: 3px;">整改信息</button>
 											<P></P>
 										</span>
 									</div>
@@ -219,6 +227,7 @@ th {
 					</div>
 				</div>
 			</div>
+			<form id="exportForm"></form>
 		</div>
 		<!-- 引入底部 -->
 		<s:action name="skipFooter" namespace="/Skip" executeResult="true" />
