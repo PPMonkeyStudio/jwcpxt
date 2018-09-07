@@ -2,10 +2,17 @@
  * 
  */
 
+var MounthFristDay = function() {
+	let date_ = new Date();
+	let mounth = (date_.getMonth() + 1).length > 1 ? (date_.getMonth() + 1) : '0' + (date_.getMonth() + 1);
+	let dataVa = date_.getFullYear() + '-' + mounth + '-01';
+	return dataVa;
+}();
+
 var discontentVue;
 var queryTemp = {
 	'currPage' : '1',
-	'searchTimeStart' : '',
+	'searchTimeStart' : MounthFristDay,
 	'searchTimeEnd' : '',
 	'searchStatus' : '-1',
 	'searchTitle' : '',
@@ -19,7 +26,7 @@ $(function() {
 			discontentVO : ''
 		}
 	})
-	$('#startTime').val('');
+	$('#startTime').val(MounthFristDay);
 	$('#endTime').val('');
 	loadData();
 	//获取所有的业务
