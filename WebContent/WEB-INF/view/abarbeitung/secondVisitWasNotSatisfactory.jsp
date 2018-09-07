@@ -50,12 +50,12 @@ th {
 											style="color: black;">回访时间</label> <input
 											@change="searchRectification($event)"
 											name="secondDistatisVO.searchTimeStart"
-											class="mydate form-control"
+											class="mydate form-control" placeholder="起始时间"
 											style="display: inline; width: 150px;"><label
 											style="color: black;">&nbsp;至&nbsp;</label><input
 											@change="searchRectification($event)"
 											name="secondDistatisVO.searchTimeEnd"
-											class="mydate form-control"
+											class="mydate form-control" placeholder="结束时间"
 											style="display: inline; width: 150px;"> <input
 											name="secondDistatisVO.search"
 											style="display: inline; width: 250px;"

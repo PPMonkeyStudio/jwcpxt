@@ -18,7 +18,6 @@ var MounthFristDay = function() {
 	let date_ = new Date();
 	let mounth = (date_.getMonth() + 1).length > 1 ? (date_.getMonth() + 1) : '0' + (date_.getMonth() + 1);
 	let dataVa = date_.getFullYear() + '-' + mounth + '-01';
-	$('input[name="secondDistatisVO.searchTimeStart"]').val(dataVa);
 	return dataVa;
 }();
 
@@ -104,7 +103,7 @@ let MyVm = new Vue({
 	},
 	mounted () {
 		this.getInfo(queryData);
-
+		$('input[name="secondDistatisVO.searchTimeStart"]').val(MounthFristDay);
 		//获取所有的业务
 		$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
 			let str = `<option value="">全部</option>`;
