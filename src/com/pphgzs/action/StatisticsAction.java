@@ -355,7 +355,6 @@ public class StatisticsAction implements ServletRequestAware, ServletResponseAwa
 	}
 
 	public String exportDeductExcel() {
-		System.out.println("deductMarkInfoVO:" + deductMarkInfoVO);
 		deductMarkInfoVO = statisticsService.getAllDeductMarkInfo(deductMarkInfoVO);
 		/**
 		 * 写入文件
