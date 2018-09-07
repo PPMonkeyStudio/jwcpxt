@@ -424,7 +424,7 @@ $(function() {
 		let appraisalOption = function() {
 			let str = "";
 			myData.allAppraisal.forEach(function(elt, i) {
-				str += `<option vlaue="${elt.user_account}">${elt.user_name}</option>`;
+				str += `<option value="${elt.user_account}">${elt.user_name}</option>`;
 			})
 			return str;
 		}();
@@ -432,7 +432,7 @@ $(function() {
 		let serviceOption = function() {
 			let str = "";
 			myData.allService.forEach(function(elt, i) {
-				str += `<option vlaue="${elt.jwcpxt_service_definition_id}">${elt.service_definition_describe}</option>`;
+				str += `<option value="${elt.jwcpxt_service_definition_id}">${elt.service_definition_describe}</option>`;
 			})
 			return str;
 		}();
@@ -440,7 +440,7 @@ $(function() {
 		let unitOption = function() {
 			let str = "";
 			myData.allUnit.forEach(function(elt, i) {
-				str += `<option vlaue="${elt.jwcpxt_unit_id}">${elt.unit_name}</option>`;
+				str += `<option value="${elt.jwcpxt_unit_id}">${elt.unit_name}</option>`;
 			})
 			return str;
 		}();
@@ -481,7 +481,7 @@ $(function() {
 					<label>测评员</label>
 						<div class="form-group">
 							<select class="form-control" id="screenJudge">
-								<option value="">全部业务</option>
+								<option value="">全部测评员</option>
 								${appraisalOption}
 							</select>
 						</div>
