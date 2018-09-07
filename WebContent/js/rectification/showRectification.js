@@ -11,7 +11,7 @@ var MounthFristDay = function() {
 var rectificationVue;
 
 var queryTemp = {
-	startTime : MounthFristDay,
+	startTime : '',
 	endTime : '',
 	currPage : '1',
 	searchHandleState : '-1',
@@ -26,7 +26,7 @@ $(function() {
 			rectificationVO : ''
 		}
 	})
-	$('#searchTimeStart').val(MounthFristDay);
+	$('#searchTimeStart').val('');
 	$('#searchTimeEnd').val('');
 	$('#searchTitle').val('');
 	loadData();

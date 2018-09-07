@@ -30,7 +30,7 @@ $(function() {
 		"clientInfoVO.currPage" : 1,
 		"clientInfoVO.startTime" : '',
 		"clientInfoVO.endTime" : '',
-		"clientInfoVO.startHTime" : MounthFristDay,
+		"clientInfoVO.startHTime" : '',
 		"clientInfoVO.endHTime" : '',
 		"clientInfoVO.screenService" : '',
 		"clientInfoVO.screenVisit" : '',
@@ -189,7 +189,7 @@ $(function() {
 		},
 		mounted () {
 			this.before();
-			$('input[name="clientInfoVO.startHTime"]').val(MounthFristDay);
+//			$('input[name="clientInfoVO.startHTime"]').val(MounthFristDay);
 		},
 	})
 
