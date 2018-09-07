@@ -25,7 +25,7 @@ let queryData = {
 	"secondDistatisVO.currPage" : 1,
 	"secondDistatisVO.search" : '',
 	"secondDistatisVO.searchService" : '',
-	"secondDistatisVO.searchTimeStart" : MounthFristDay,
+	"secondDistatisVO.searchTimeStart" : '',
 	"secondDistatisVO.searchTimeEnd" : '',
 	"secondDistatisVO.feedbackState" : ''
 }
@@ -103,7 +103,7 @@ let MyVm = new Vue({
 	},
 	mounted () {
 		this.getInfo(queryData);
-		$('input[name="secondDistatisVO.searchTimeStart"]').val(MounthFristDay);
+		//$('input[name="secondDistatisVO.searchTimeStart"]').val(MounthFristDay);
 		//获取所有的业务
 		$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
 			let str = `<option value="">全部</option>`;

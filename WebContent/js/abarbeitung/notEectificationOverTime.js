@@ -23,7 +23,7 @@ var MounthFristDay = function() {
 
 let queryData = {
 	"feedbackRectificationExceedTimeVO.currPage" : 1,
-	"feedbackRectificationExceedTimeVO.searchTimeStart" : MounthFristDay,
+	"feedbackRectificationExceedTimeVO.searchTimeStart" : '',
 	"feedbackRectificationExceedTimeVO.searchTimeEnd" : '',
 	"feedbackRectificationExceedTimeVO.searchService" : '',
 	"feedbackRectificationExceedTimeVO.search" : ''
@@ -102,7 +102,7 @@ let MyVm = new Vue({
 	},
 	mounted () {
 		this.getInfo(queryData);
-		$('input[name="feedbackRectificationExceedTimeVO.searchTimeStart"]').val(MounthFristDay);
+//		$('input[name="feedbackRectificationExceedTimeVO.searchTimeStart"]').val(MounthFristDay);
 		//获取所有的业务
 		$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
 			let str = `<option value="">全部</option>`;
