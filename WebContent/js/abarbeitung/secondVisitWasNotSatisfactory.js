@@ -14,11 +14,19 @@ let myData = {
 	},
 };
 
+var MounthFristDay = function() {
+	let date_ = new Date();
+	let mounth = (date_.getMonth() + 1).length > 1 ? (date_.getMonth() + 1) : '0' + (date_.getMonth() + 1);
+	let dataVa = date_.getFullYear() + '-' + mounth + '-01';
+	$('input[name="secondDistatisVO.searchTimeStart"]').val(dataVa);
+	return dataVa;
+}();
+
 let queryData = {
 	"secondDistatisVO.currPage" : 1,
 	"secondDistatisVO.search" : '',
 	"secondDistatisVO.searchService" : '',
-	"secondDistatisVO.searchTimeStart" : '',
+	"secondDistatisVO.searchTimeStart" : MounthFristDay,
 	"secondDistatisVO.searchTimeEnd" : '',
 	"secondDistatisVO.feedbackState" : ''
 }

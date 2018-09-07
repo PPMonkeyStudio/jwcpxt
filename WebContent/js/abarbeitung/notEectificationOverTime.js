@@ -14,9 +14,17 @@ let myData = {
 	},
 };
 
+var MounthFristDay = function() {
+	let date_ = new Date();
+	let mounth = (date_.getMonth() + 1).length > 1 ? (date_.getMonth() + 1) : '0' + (date_.getMonth() + 1);
+	let dataVa = date_.getFullYear() + '-' + mounth + '-01';
+	$('input[name="feedbackRectificationExceedTimeVO.searchTimeStart"]').val(dataVa);
+	return dataVa;
+}();
+
 let queryData = {
 	"feedbackRectificationExceedTimeVO.currPage" : 1,
-	"feedbackRectificationExceedTimeVO.searchTimeStart" : '',
+	"feedbackRectificationExceedTimeVO.searchTimeStart" : MounthFristDay,
 	"feedbackRectificationExceedTimeVO.searchTimeEnd" : '',
 	"feedbackRectificationExceedTimeVO.searchService" : '',
 	"feedbackRectificationExceedTimeVO.search" : ''

@@ -424,7 +424,7 @@ $(function() {
 		let appraisalOption = function() {
 			let str = "";
 			myData.allAppraisal.forEach(function(elt, i) {
-				str += `<option value="${elt.user_account}">${elt.user_name}</option>`;
+				str += `<option value="${elt.jwcpxt_user_id}">${elt.user_name}</option>`;
 			})
 			return str;
 		}();
@@ -444,6 +444,7 @@ $(function() {
 			})
 			return str;
 		}();
+		
 		let exportUnClientConfirm = $.confirm({
 			title : '导出条件',
 			type : 'dark',
@@ -515,7 +516,7 @@ $(function() {
 						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenTimeStart" value="${exportUnClientConfirm.$content.find("#screenTimeStart").val()}">`));
 						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenTimeEnd" value="${exportUnClientConfirm.$content.find("#screenTimeEnd").val()}">`));
 						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenUnit" value="${exportUnClientConfirm.$content.find("#screenUnit").val()}">`));
-						form.append($(`<input type="hidden" name="screenDefinitionId" value="${exportUnClientConfirm.$content.find("#screenDefinitionId").val()}">`));
+						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenDefinitionId" value="${exportUnClientConfirm.$content.find("#screenDefinitionId").val()}">`));
 						form.append($(`<input type="hidden" name="deductMarkInfoVO.screenJudge" value="${exportUnClientConfirm.$content.find("#screenJudge").val()}">`));
 						form.submit(); //自动提交
 					}

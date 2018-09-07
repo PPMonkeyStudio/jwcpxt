@@ -49,12 +49,12 @@ th {
 											onchange="changeQuery(this)"></select> <label
 											style="color: black;">回访时间</label> <input
 											@change="searchRectification($event)"
-											id="secondDistatisVO.searchTimeStart"
+											name="secondDistatisVO.searchTimeStart"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"><label
 											style="color: black;">&nbsp;至&nbsp;</label><input
 											@change="searchRectification($event)"
-											id="secondDistatisVO.searchTimeEnd"
+											name="secondDistatisVO.searchTimeEnd"
 											class="mydate form-control"
 											style="display: inline; width: 150px;"> <input
 											name="secondDistatisVO.search"

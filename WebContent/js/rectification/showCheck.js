@@ -2,9 +2,16 @@
  * 
  */
 
+var MounthFristDay = function() {
+	let date_ = new Date();
+	let mounth = (date_.getMonth() + 1).length > 1 ? (date_.getMonth() + 1) : '0' + (date_.getMonth() + 1);
+	let dataVa = date_.getFullYear() + '-' + mounth + '-01';
+	return dataVa;
+}();
+
 var checkVue;
 var queryTemp = {
-	screenStartTime : '',
+	screenStartTime : MounthFristDay,
 	screenEndTime : '',
 	currPage : '1',
 	screenSearch : '',
@@ -20,7 +27,7 @@ $(function() {
 			checkVO : ''
 		}
 	})
-	$('#searchTimeStart').val('');
+	$('#searchTimeStart').val(MounthFristDay);
 	$('#searchTimeEnd').val('');
 	$('#searchTitle').val('');
 	loadData();
