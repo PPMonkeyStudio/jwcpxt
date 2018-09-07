@@ -12,7 +12,7 @@ var MounthFristDay = function() {
 var discontentVue;
 var queryTemp = {
 	'currPage' : '1',
-	'searchTimeStart' : MounthFristDay,
+	'searchTimeStart' : '',
 	'searchTimeEnd' : '',
 	'searchStatus' : '-1',
 	'searchTitle' : '',
@@ -26,7 +26,7 @@ $(function() {
 			discontentVO : ''
 		}
 	})
-	$('#startTime').val(MounthFristDay);
+	$('#startTime').val('');
 	$('#endTime').val('');
 	loadData();
 	//获取所有的业务

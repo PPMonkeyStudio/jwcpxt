@@ -11,7 +11,7 @@ var MounthFristDay = function() {
 
 var checkVue;
 var queryTemp = {
-	screenStartTime : MounthFristDay,
+	screenStartTime : '',
 	screenEndTime : '',
 	currPage : '1',
 	screenSearch : '',
@@ -27,7 +27,7 @@ $(function() {
 			checkVO : ''
 		}
 	})
-	$('#searchTimeStart').val(MounthFristDay);
+	$('#searchTimeStart').val('');
 	$('#searchTimeEnd').val('');
 	$('#searchTitle').val('');
 	loadData();
