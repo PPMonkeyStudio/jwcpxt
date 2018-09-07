@@ -1,11 +1,17 @@
 /**
  * 
  */
+var MounthFristDay = function() {
+	let date_ = new Date();
+	let mounth = (date_.getMonth() + 1).length > 1 ? (date_.getMonth() + 1) : '0' + (date_.getMonth() + 1);
+	let dataVa = date_.getFullYear() + '-' + mounth + '-01';
+	return dataVa;
+}();
 
 var rectificationVue;
 
 var queryTemp = {
-	startTime : '',
+	startTime : MounthFristDay,
 	endTime : '',
 	currPage : '1',
 	searchHandleState : '-1',
@@ -20,7 +26,7 @@ $(function() {
 			rectificationVO : ''
 		}
 	})
-	$('#searchTimeStart').val('');
+	$('#searchTimeStart').val(MounthFristDay);
 	$('#searchTimeEnd').val('');
 	$('#searchTitle').val('');
 	loadData();

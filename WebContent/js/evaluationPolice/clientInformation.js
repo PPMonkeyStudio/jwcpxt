@@ -19,11 +19,18 @@ $(function() {
 		screenUser_chart : ''
 	};
 
+	var MounthFristDay = function() {
+		let date_ = new Date();
+		let mounth = (date_.getMonth() + 1).length > 1 ? (date_.getMonth() + 1) : '0' + (date_.getMonth() + 1);
+		let dataVa = date_.getFullYear() + '-' + mounth + '-01';
+		return dataVa;
+	}();
+	
 	let queryData = {
 		"clientInfoVO.currPage" : 1,
 		"clientInfoVO.startTime" : '',
 		"clientInfoVO.endTime" : '',
-		"clientInfoVO.startHTime" : '',
+		"clientInfoVO.startHTime" : MounthFristDay,
 		"clientInfoVO.endHTime" : '',
 		"clientInfoVO.screenService" : '',
 		"clientInfoVO.screenVisit" : '',
@@ -182,6 +189,7 @@ $(function() {
 		},
 		mounted () {
 			this.before();
+			$('input[name="clientInfoVO.startHTime"]').val(MounthFristDay);
 		},
 	})
 
