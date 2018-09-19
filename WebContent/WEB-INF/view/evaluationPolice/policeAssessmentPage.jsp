@@ -148,7 +148,7 @@ th {
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('安全感满意度')>-1">
 													    <p> 安全感满意度:</p>
-													    <p> 您好,这里是萍乡市公安局服务群众测评中心,我们想对您就当地社会治安状况做个电话调查,需要和您说几分钟时间。</p>
+													    <p> 您好,这里是萍乡市公安局服务群众测评中心,我们想对您就当地社会治安状况做个电话调查,需要耽误您几分钟。</p>
 												   </template>
 												   <template v-else-if="serviceDefinition.service_definition_describe.indexOf('整改')>-1">
 													    <p> 整改回访:</p>

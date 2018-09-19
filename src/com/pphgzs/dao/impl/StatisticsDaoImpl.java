@@ -104,7 +104,7 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	 * 
 	 */
 	@Override
-	public List<DeductMarkFirstInfoDTO> get_DeductMarkFirstInfo(DeductMarkInfoVO deductMarkInfoVO) {
+	public List<DeductMarkFirstInfoDTO> get_DeductMarkFirstInfo(DeductMarkInfoVO deductMarkInfoVO, int i) {
 		List<DeductMarkFirstInfoDTO> listDeductMarkFirstInfoDTO = new ArrayList<>();
 		Session session = getSession();
 		String hql = "select"//
@@ -123,9 +123,22 @@ public class StatisticsDaoImpl implements StatisticsDao {
 				+ " AND serviceClient.service_client_service_instance = serviceInstance.jwcpxt_service_instance_id"//
 				+ " AND serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ " AND serviceInstance.service_instance_service_definition = serviceDefinition.jwcpxt_service_definition_id"//
-				+ " AND _option.option_question = question.jwcpxt_question_id"//
-				+ " AND _option.option_grade > 0"//
-				+ " AND serviceClient.service_client_gmt_modified >= :screenTimeStart"//
+				+ " AND _option.option_question = question.jwcpxt_question_id";//
+		if (i == 1) {
+			hql = hql + " AND _option.option_grade > 0";
+		} else {
+			hql = hql + " AND ("//
+					+ " _option.option_describe LIKE '比较安全'"//
+					+ " OR _option.option_describe LIKE '安全'"//
+					+ " OR _option.option_describe LIKE '有好转'"//
+					+ " OR _option.option_describe LIKE '和去年一样'"//
+					+ " OR ("//
+					+ " question.question_describe LIKE '%建议%'"//
+					+ " AND _option.option_describe LIKE '%有%'"//
+					+ " )"//
+					+ " )";
+		}
+		hql = hql + " AND serviceClient.service_client_gmt_modified >= :screenTimeStart"//
 				+ " AND serviceClient.service_client_gmt_modified <= :screenTimeEnd"//
 				+ " AND (unit.jwcpxt_unit_id LIKE :unitId or unit.unit_father like :unitId)"//
 				+ " AND serviceInstance.service_instance_judge like :screenJudge"//

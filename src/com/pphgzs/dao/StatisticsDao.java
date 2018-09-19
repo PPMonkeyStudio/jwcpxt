@@ -147,7 +147,7 @@ public interface StatisticsDao {
 	 * @param deductMarkInfoVO
 	 * @return
 	 */
-	public List<DeductMarkFirstInfoDTO> get_DeductMarkFirstInfo(DeductMarkInfoVO deductMarkInfoVO);
+	public List<DeductMarkFirstInfoDTO> get_DeductMarkFirstInfo(DeductMarkInfoVO deductMarkInfoVO,int i);
 
 	/**
 	 * 根据业务定义获取所有的问题

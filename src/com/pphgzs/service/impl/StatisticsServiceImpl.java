@@ -74,10 +74,17 @@ public class StatisticsServiceImpl implements StatisticsService {
 		// jwcpxt_answer_choice answerChoice = new jwcpxt_answer_choice();
 		jwcpxt_option secondOption = new jwcpxt_option();
 		List<DeductMarkFirstInfoDTO> listDeductMarkFirstInfoDTO = new ArrayList<>();
+		List<DeductMarkFirstInfoDTO> listDeductMarkFirstInfoDTONess = new ArrayList<>();
 		List<jwcpxt_question> listSecondQuestion = new ArrayList<>();
 		List<DeductMarkInfoDTO> listDeductMarkInfoDTO = new ArrayList<>();
 		// 获取第一个DTO
-		listDeductMarkFirstInfoDTO = statisticsDao.get_DeductMarkFirstInfo(deductMarkInfoVO);
+		listDeductMarkFirstInfoDTO = statisticsDao.get_DeductMarkFirstInfo(deductMarkInfoVO, 1);
+		// 添加 安全、比较安全、不太安全、不安全、有好转、和去年一样、比去年差、
+		listDeductMarkFirstInfoDTONess = statisticsDao.get_DeductMarkFirstInfo(deductMarkInfoVO, 2);
+		// 合并
+		if (listDeductMarkFirstInfoDTONess != null && listDeductMarkFirstInfoDTONess.size() > 0) {
+			listDeductMarkFirstInfoDTO.addAll(listDeductMarkFirstInfoDTONess);
+		}
 		// 根据选项拿到所有的追问问题
 		for (DeductMarkFirstInfoDTO deductMarkFirstInfoDTOTmp : listDeductMarkFirstInfoDTO) {
 			deductMarkInfoDTO = new DeductMarkInfoDTO();
@@ -156,7 +163,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		List<jwcpxt_question> listSecondQuestion = new ArrayList<>();
 		List<DeductMarkInfoDTO> listDeductMarkInfoDTO = new ArrayList<>();
 		// 获取第一个DTO
-		listDeductMarkFirstInfoDTO = statisticsDao.get_DeductMarkFirstInfo(deductMarkInfoVO);
+		listDeductMarkFirstInfoDTO = statisticsDao.get_DeductMarkFirstInfo(deductMarkInfoVO, 1);
 		// 根据选项拿到所有的追问问题
 		for (DeductMarkFirstInfoDTO deductMarkFirstInfoDTOTmp : listDeductMarkFirstInfoDTO) {
 			deductMarkInfoDTO = new DeductMarkInfoDTO();

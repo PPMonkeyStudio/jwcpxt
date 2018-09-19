@@ -62,6 +62,13 @@ th {
 											<option value="不满意">不满意</option>
 											<option value="不了解">不了解</option>
 											<option value="有建议">建议</option>
+											<option value="安全">安全</option>
+											<option value="比较安全">比较安全</option>
+											<option value="不太安全">不太安全</option>
+											<option value="不安全">不安全</option>
+											<option value="有好转">有好转</option>
+											<option value="和去年一样">和去年一样</option>
+											<option value="比去年差">比去年差</option>
 										</select>
 										<div style="float: left; margin-left: 10px;">
 											<div class="form-group" style="margin: auto;">
@@ -84,7 +91,7 @@ th {
 													@click="previewChart">
 													<i class="fa fa-adjust"></i>图表
 												</button>
-												
+
 												<button type="button" class="btn btn-default"
 													@click="exportClient">
 													<i class="fa fa-superpowers"></i>导出不满意当事人
