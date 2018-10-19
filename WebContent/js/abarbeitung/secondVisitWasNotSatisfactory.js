@@ -108,7 +108,7 @@ let MyVm = new Vue({
 		$.post('/jwcpxt/Service/list_serviceDefinition_all', {}, response => {
 			let str = `<option value="">全部</option>`;
 			response.forEach(function(elt, i) {
-				str += `<option value="${elt.jwcpxt_service_definition_id}">${elt.service_definition_describe}</option>`;
+				str += `<option value="${elt.service_definition_describe}">${elt.service_definition_describe}</option>`;
 			})
 			$('select[name="secondDistatisVO.searchService"]').html(str).selectpicker('refresh');
 		}, 'json');

@@ -105,7 +105,8 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " unit.unit_name like :search"//
 				+ " or question.question_describe like :search"//
 				+ " or unit.unit_contacts_name like :search"//
-				+ " )" + " and serviceDefinition.jwcpxt_service_definition_id like :searchService"//
+				+ " )"//
+				+ " and serviceInstance.service_instance_old_service_name like :searchService"//
 				+ " and serviceInstance.service_instance_feedback_state like :feedbackState"//
 				+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
 				+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd"//
@@ -177,7 +178,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " or question.question_describe like :search"//
 				+ " or unit.unit_contacts_name like :search"//
 				+ " )"//
-				+ " and serviceDefinition.jwcpxt_service_definition_id like :searchService"
+				+ " and serviceInstance.service_instance_old_service_name like :searchService"
 				+ " and serviceInstance.service_instance_feedback_state like :feedbackState"//
 				+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
 				+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd";//
