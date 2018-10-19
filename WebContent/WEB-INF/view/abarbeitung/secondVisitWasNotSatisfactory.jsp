@@ -44,9 +44,9 @@ th {
 								</div>
 								<div class="content table-responsive table-full-width">
 									<div style="float: right; margin-right: 10px;">
-										<select class="selectpicker" title="选择业务..."
+										<%-- <select class="selectpicker" title="选择业务..."
 											name="secondDistatisVO.searchService" data-live-search="true"
-											onchange="changeQuery(this)"></select> <label
+											onchange="changeQuery(this)"></select> --%> <label
 											style="color: black;">回访时间</label> <input
 											@change="searchRectification($event)"
 											name="secondDistatisVO.searchTimeStart"

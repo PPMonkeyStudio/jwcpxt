@@ -170,7 +170,7 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceInstance.service_instance_belong_unit = unit.jwcpxt_unit_id"//
 				+ " "//
 				+ " and serviceDefinition.jwcpxt_service_definition_id = 'revisit'"//
-				+ " and question.question_describe like '%整改结果d%满意%'"//
+				+ " and question.question_describe like '%整改结果%满意%'"//
 				+ " and _option.option_describe like '不满意'"//
 				+ " and ("//
 				+ " unit.unit_name like :search"//
@@ -182,10 +182,10 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " and serviceClient.service_client_gmt_modified >= :searchTimeStart"//
 				+ " and serviceClient.service_client_gmt_modified <= :searchTimeEnd";//
 		//
+		// System.out.println(hql);
 		Query query = session.createSQLQuery(hql);
 		if ("".equals(secondDistatisVO.getSearch())) {
 			query.setParameter("search", "%");
-			// System.out.println("1");
 		} else {
 			query.setParameter("search", "%" + secondDistatisVO.getSearch() + "%");
 		}
@@ -205,11 +205,13 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 			query.setParameter("searchTimeStart", "0000-00-00 00:00:00");
 		} else {
 			query.setParameter("searchTimeStart", secondDistatisVO.getSearchTimeStart() + " 00:00:00");
+			// System.out.println(secondDistatisVO.getSearchTimeStart() + " 00:00:00");
 		}
 		if ("".equals(secondDistatisVO.getSearchTimeEnd())) {
 			// System.out.println("4");
 			query.setParameter("searchTimeEnd", "9999-99-99 23:59:59");
 		} else {
+			// System.out.println(secondDistatisVO.getSearchTimeEnd() + " 23:59:59");
 			query.setParameter("searchTimeEnd", secondDistatisVO.getSearchTimeEnd() + " 23:59:59");
 		}
 		try {
