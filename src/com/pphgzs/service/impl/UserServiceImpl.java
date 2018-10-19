@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -246,6 +247,7 @@ public class UserServiceImpl implements UserService {
 					entry_exit.setEntry_exit_client_id_type(cell.getStringCellValue());
 					break;
 				case 4:
+					cell.setCellType(Cell.CELL_TYPE_STRING);
 					String phone = cell.getStringCellValue().trim();
 					if (phone.length() > 11) {
 						continue cell;
@@ -334,6 +336,7 @@ public class UserServiceImpl implements UserService {
 					entry_exit.setEntry_exit_client_id_type(cell.getStringCellValue());
 					break;
 				case 4:
+					cell.setCellType(Cell.CELL_TYPE_STRING);
 					String phone = cell.getStringCellValue().trim();
 					if (phone.length() > 11) {
 						continue cell;
