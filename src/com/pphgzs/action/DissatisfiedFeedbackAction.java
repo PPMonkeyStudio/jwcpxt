@@ -105,10 +105,11 @@ public class DissatisfiedFeedbackAction extends ActionSupport implements Servlet
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.serializeNulls().create();
-		//
+		// 
 		http_response.setContentType("text/html;charset=utf-8");
 		feedbackRectificationExceedTimeVO = dissatisfiedFeedbackService
 				.get_checkFeedbackRectificationVO(feedbackRectificationExceedTimeVO);
+		System.out.println(feedbackRectificationExceedTimeVO);
 		http_response.getWriter().write(gson.toJson(feedbackRectificationExceedTimeVO));
 	}
 
