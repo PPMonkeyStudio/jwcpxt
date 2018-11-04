@@ -67,6 +67,7 @@ public class UserDaoImpl implements UserDao {
 				+ " where "//
 				+ " user_state!=2 "//
 				+ " and user_type=1"//
+				+ " and user_account not in('1000009','1000008')"//
 				+ " order by rand()";
 		//
 		Query query = session.createQuery(hql);
