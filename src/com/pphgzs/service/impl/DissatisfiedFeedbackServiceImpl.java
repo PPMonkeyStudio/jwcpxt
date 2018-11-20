@@ -6,6 +6,7 @@ import java.util.List;
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
@@ -187,6 +188,15 @@ public class DissatisfiedFeedbackServiceImpl implements DissatisfiedFeedbackServ
 					return false;
 				}
 				if (!"revisit".equals(serviceDefinition.getJwcpxt_service_definition_id())) {
+					/**
+					 * 判断当前业务是否是属于不满意项目
+					 */
+					// 根据反馈整改表获得所属选项
+					jwcpxt_option option = dissatisfiedFeedbackDao
+							.getOptionByFeedback(checkFeedbackRectification.getJwcpxt_feedback_rectification_id());
+					if(option==null || option.getOption_grade() == 0) {
+						return true;
+					}
 					/*
 					 * 测评中心通过之后，生成业务实例
 					 */

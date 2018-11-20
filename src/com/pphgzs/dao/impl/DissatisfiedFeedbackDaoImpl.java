@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import com.pphgzs.dao.DissatisfiedFeedbackDao;
 import com.pphgzs.domain.DO.jwcpxt_dissatisfied_feedback;
 import com.pphgzs.domain.DO.jwcpxt_feedback_rectification;
+import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_service_client;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
 import com.pphgzs.domain.DO.jwcpxt_service_instance;
@@ -997,7 +998,8 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 				+ " jwcpxt_service_client serviceClient,"//
 				+ " jwcpxt_service_instance serviceInstance"//
 				+ " SET dissatisfiedFeedback.dissatisfied_feedback_state = '3',"//
-				+ " dissatisfiedFeedback.dissatisfied_feedback_audit_opinion = '同一当事人，与上条合并推送'"//
+				+ " dissatisfiedFeedback.dissatisfied_feedback_gmt_modified = '" + TimeUtil.getStringSecond()//
+				+ "' ,dissatisfiedFeedback.dissatisfied_feedback_audit_opinion = '同一当事人，与上条合并推送'"//
 				+ " WHERE"//
 				+ " dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerAnswer.JWCPXT_ANSWER_CHOICE_ID"//
 				+ " AND answerAnswer.ANSWER_CHOICE_CLIENT = serviceClient.JWCPXT_SERVICE_CLIENT_ID"//
@@ -1010,6 +1012,28 @@ public class DissatisfiedFeedbackDaoImpl implements DissatisfiedFeedbackDao {
 		query.setParameter("unitId", jwcpxt_unit_id);
 		query.executeUpdate();
 		session.clear();
+	}
+
+	@Override
+	public jwcpxt_option getOptionByFeedback(String id) {
+		jwcpxt_option _option = new jwcpxt_option();
+		Session session = getSession();
+		String hql = "select _option"//
+				+ " FROM"//
+				+ " jwcpxt_feedback_rectification feedbackRectification,"//
+				+ " jwcpxt_dissatisfied_feedback dissatisfiedFeedback,"//
+				+ " jwcpxt_answer_choice answerChoice,"//
+				+ " jwcpxt_option _option"//
+				+ " where "//
+				+ " feedbackRectification.feedback_rectification_dissatisfied_feedback = "
+				+ " dissatisfiedFeedback.jwcpxt_dissatisfied_feedback_id"//
+				+ " and dissatisfiedFeedback.dissatisfied_feedback_answer_choice = answerChoice.jwcpxt_answer_choice_id"//
+				+ " AND answerChoice.answer_choice_option = _option.jwcpxt_option_id"//
+				+ " AND feedbackRectification.jwcpxt_feedback_rectification_id = :id";
+		Query query = session.createQuery(hql);
+		query.setParameter("id", id);
+		_option = (jwcpxt_option) query.uniqueResult();
+		return _option;
 	}
 
 }

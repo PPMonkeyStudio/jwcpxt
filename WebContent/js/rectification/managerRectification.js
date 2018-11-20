@@ -58,6 +58,7 @@ function preview(event) {
 			+ '<table class="table table-bordered">'
 			+ '<tr><td style="width:150px">问题标题</td><td colspan="3">{{ transfer.feedback_rectification_title }}</td></tr>'
 			+ '<tr><td>收集渠道</td><td style="width:300px">{{ transfer.feedback_rectification_collect_channel }}</td><td style="width:150px">收集时间</td><td>{{ transfer.feedback_rectification_collect_time }}</td></tr>'
+			+ '<tr><td style="width:150px">推送时间</td><td colspan="3">{{ transfer.feedback_rectification_gmt_create }}</td></tr>'
 			+ '<tr><td>当事人</td><td>{{ transfer.feedback_rectification_client_name }}</td><td>联系电话</td><td>{{ transfer.feedback_rectification_client_phone }}</td></tr>'
 			+ '<tr><td>问题简述</td><td colspan="3">{{ transfer.feedback_rectification_question_describe }}</td></tr>'
 			+ '<tr><td>协调情况</td><td colspan="3">转交{{ transfer.feedback_rectification_unit_name }}办理</td></tr>'

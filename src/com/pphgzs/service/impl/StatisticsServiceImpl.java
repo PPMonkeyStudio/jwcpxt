@@ -19,6 +19,7 @@ import com.pphgzs.domain.DO.jwcpxt_answer_open;
 import com.pphgzs.domain.DO.jwcpxt_option;
 import com.pphgzs.domain.DO.jwcpxt_question;
 import com.pphgzs.domain.DO.jwcpxt_service_definition;
+import com.pphgzs.domain.DO.jwcpxt_service_instance;
 import com.pphgzs.domain.DO.jwcpxt_unit;
 import com.pphgzs.domain.DTO.ClientAttentionServiceDTO;
 import com.pphgzs.domain.DTO.DeductMarkFirstInfoDTO;
@@ -895,6 +896,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 	@Override
 	public void writetDeductExcel(DeductMarkInfoVO deductMarkInfoVO, HSSFWorkbook wb) {
+		jwcpxt_service_instance serviceInstance = null;
 		HSSFSheet sheet = wb.createSheet("统计数据");
 		HSSFRow row = sheet.createRow(0);
 		HSSFCell cell;
@@ -923,6 +925,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 		cell.setCellValue("追问回答");
 		cell = row.createCell(sheetHead_num++);
 		cell.setCellValue("回访时间");
+		cell = row.createCell(sheetHead_num++);
+		cell.setCellValue("原业务");
 		if (deductMarkInfoVO == null || deductMarkInfoVO.getListDeductMarkInfoDTO() == null
 				|| deductMarkInfoVO.getListDeductMarkInfoDTO().size() <= 0) {
 			return;
@@ -981,6 +985,19 @@ public class StatisticsServiceImpl implements StatisticsService {
 			cell = row.createCell(sheetHead_num++);
 			cell.setCellValue(
 					deductMarkInfoDTO.getDeductMarkFirstInfoDTO().getServiceClient().getService_client_gmt_modified());
+			serviceInstance = new jwcpxt_service_instance();
+			serviceInstance.setJwcpxt_service_instance_id(deductMarkInfoDTO.getDeductMarkFirstInfoDTO()
+					.getServiceClient().getService_client_service_instance());
+			serviceInstance = serviceService.get_serviceInstanceDo_byId(serviceInstance);
+			if (serviceInstance == null || serviceInstance.getService_instance_old_service_name() == null
+					|| "".equals(serviceInstance.getService_instance_old_service_name())
+					|| "none".equals(serviceInstance.getService_instance_old_service_name())) {
+				cell = row.createCell(sheetHead_num++);
+				cell.setCellValue("无");
+			}else {
+				cell = row.createCell(sheetHead_num++);
+				cell.setCellValue(serviceInstance.getService_instance_old_service_name());
+			}
 
 		}
 	}
